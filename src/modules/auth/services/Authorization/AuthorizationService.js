@@ -1,13 +1,13 @@
 import axios from 'axios';
 import LocalStorageService from 'utils/LocalStorageService';
-import { APP_CONFIG } from 'utils/appConfig';
+import CONFIG from 'config.js';
 import { setAuthenticationHeader } from 'utils/axiosHeaders';
 import AuthenticationService from '../Authentication/AuthenticationService';
 
 export default class AuthorizationService {
   storageService;
   constructor() {
-    this.storageService = new LocalStorageService(APP_CONFIG.AUTHORIZATION_STORAGE_NAME);
+    this.storageService = new LocalStorageService(CONFIG.AUTHORIZATION_STORAGE_NAME);
   }
 
   isAuthorized = async (permission) => {
@@ -40,7 +40,7 @@ export default class AuthorizationService {
 
             setAuthenticationHeader(jwt);
             axios
-              .get(APP_CONFIG.API_BASEPATH + '/Auth/GetPermissionsOfCurrentUser')
+              .get(CONFIG.API_BASEPATH + '/Auth/GetPermissionsOfCurrentUser')
               .then((response) => {
                 window.sessionStorage.setItem('auth', 'Loaded');
                 this.storageService.AddItem(response.data);
@@ -62,7 +62,7 @@ export default class AuthorizationService {
 
   refreshUserPermissions = async () => {
     axios
-      .get(APP_CONFIG.API_BASEPATH + '/Auth/GetPermissionsOfCurrentUser')
+      .get(CONFIG.API_BASEPATH + '/Auth/GetPermissionsOfCurrentUser')
       .then((response) => {
         this.storageService.AddItem(response.data);
         this.redirectToDashboard();
@@ -72,6 +72,6 @@ export default class AuthorizationService {
       });
   };
   redirectToLogin = () => {
-    window.location.replace(APP_CONFIG.LOGIN_PATH);
+    window.location.replace(CONFIG.LOGIN_PATH);
   };
 }

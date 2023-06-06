@@ -1,17 +1,26 @@
 // ==============================|| THEME CONFIG  ||============================== //
 
-const config = {
-  defaultPath: '/dashboard/default',
-  fontFamily: `'Public Sans', sans-serif`,
-  i18n: 'en',
-  miniDrawer: false,
-  container: true,
-  mode: 'light',
-  presetColor: 'default',
-  themeDirection: 'ltr'
+const CONFIG = {
+  DEFAULT_PATH: '/dashboard',
+  FONT_FAMILY: `'Public Sans', sans-serif`,
+  I18N: 'en',
+  MINIDRAWER: false,
+  CONTAINER: true,
+  MODE: 'light',
+  PRESET_COLOR: 'default',
+  THEME_DIRECTION: 'ltr',
+  API_BASEPATH: 'https://localhost:7134', // isDevelopment ? 'https://localhost:7134/': 'https://website.com', // application api basepath
+  FRONT_PATH: 'http://localhost:3000',
+  DASHBOARD_PATH: 'http://localhost:3000/dashboard',
+  LOGIN_PATH: 'http://localhost:3000/login',
+
+  AUTHENTICATION_DEFAULT_STORAGE: 'localStorage', //'cookie',
+  AUTHENTICATION_STORAGE_NAME: 'HydraAuthenticationStorage',
+  AUTHORIZATION_STORAGE_NAME: 'HydraAuthorizationStorage'
 };
 
-export default config;
+export default CONFIG;
+
 export const drawerWidth = 260;
 
 export const twitterColor = '#1DA1F2';

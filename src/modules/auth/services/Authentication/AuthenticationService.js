@@ -1,23 +1,23 @@
 import axios from 'axios';
 import CookieService from 'utils/CookieService';
 import LocalStorageService from 'utils/LocalStorageService';
-import { APP_CONFIG } from 'utils/appConfig';
 import { setAuthenticationHeader } from 'utils/axiosHeaders';
 import AuthorizationService from '../Authorization/AuthorizationService';
+import CONFIG from 'config.js';
 
 export default class AuthenticationService {
   storageService;
   constructor() {
     this.storageService =
-      APP_CONFIG.AUTHENTICATION_DEFAULT_STORAGE === 'cookie'
-        ? new CookieService(APP_CONFIG.AUTHENTICATION_STORAGE_NAME)
-        : new LocalStorageService(APP_CONFIG.AUTHENTICATION_STORAGE_NAME);
+      CONFIG.AUTHENTICATION_DEFAULT_STORAGE === 'cookie'
+        ? new CookieService(CONFIG.AUTHENTICATION_STORAGE_NAME)
+        : new LocalStorageService(CONFIG.AUTHENTICATION_STORAGE_NAME);
   }
 
   login = async (userName, password, rememberMe) => {
     return new Promise((resolve, reject) => {
       axios
-        .get(APP_CONFIG.API_BASEPATH + '/Auth/Login', {
+        .get(CONFIG.API_BASEPATH + '/Auth/Login', {
           params: {
             userName: userName,
             password: password,
@@ -40,11 +40,11 @@ export default class AuthenticationService {
     });
   };
   getUser = async () => {
-    return this.parseJwt(this.storageService.getItem(APP_CONFIG.AUTHENTICATION_STORAGE_NAME));
+    return this.parseJwt(this.storageService.getItem(CONFIG.AUTHENTICATION_STORAGE_NAME));
   };
 
   getJwt = () => {
-    return this.storageService.getItem(APP_CONFIG.AUTHENTICATION_STORAGE_NAME);
+    return this.storageService.getItem(CONFIG.AUTHENTICATION_STORAGE_NAME);
   };
 
   parseJwt = (token) => {
@@ -54,16 +54,16 @@ export default class AuthenticationService {
   };
 
   redirectToLogin = () => {
-    window.location.replace(APP_CONFIG.LOGIN_PATH);
+    window.location.replace(CONFIG.LOGIN_PATH);
   };
 
   redirectToDashboard = () => {
-    window.location.replace(APP_CONFIG.DASHBOARD_PATH);
+    window.location.replace(CONFIG.DASHBOARD_PATH);
   };
 
   isAuthenticated = async () => {
     return new Promise((resolve) => {
-      var token = this.storageService.getItem(APP_CONFIG.AUTHENTICATION_STORAGE_NAME);
+      var token = this.storageService.getItem(CONFIG.AUTHENTICATION_STORAGE_NAME);
       if (token == null) {
         // var isRefreshedToken = this.refreshToken();
         // if (isRefreshedToken) {
@@ -79,7 +79,7 @@ export default class AuthenticationService {
 
   refreshToken = () => {
     axios
-      .get(APP_CONFIG.API_BASEPATH + '/Auth/RefreshToken')
+      .get(CONFIG.API_BASEPATH + '/Auth/RefreshToken')
       .then((response) => {
         setAuthenticationHeader(response.data);
         this.storageService.deleteItem();
@@ -93,7 +93,7 @@ export default class AuthenticationService {
   };
 
   logout = () => {
-    axios.get(APP_CONFIG.API_BASEPATH + '/Auth/SignOut');
+    axios.get(CONFIG.API_BASEPATH + '/Auth/SignOut');
     this.storageService.deleteItem();
   };
 }

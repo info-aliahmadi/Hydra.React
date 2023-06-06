@@ -1,131 +1,63 @@
-# Mantis Free React Material UI Dashboard Template [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Download%20Mantis%20React%20-%20The%20professional%20Material%20designed%20React%20Admin%20Dashboard%20Template%20&url=https://mantisdashboard.io&via=codedthemes&hashtags=reactjs,webdev,developers,javascript)
+# Full React Project with dashboard (open to develop any requirement)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Price](https://img.shields.io/badge/price-FREE-0098f7.svg)](https://github.com/codedthemes/mantis-free-react-admin-template/blob/main/LICENSE)
-[![GitHub package version](https://img.shields.io/github/package-json/v/codedthemes/mantis-free-react-admin-template)](https://github.com/codedthemes/mantis-free-react-admin-template/)
 
-Mantis is a free and open source React redux dashboard template made using the Material UI React component library with aim of flexibility and better customizability.
+## Description
 
-### Name Derived From Nature
+This project is built using React version 18 and is designed to provide a robust authentication and authorization system. It utilizes JWT tokens and a combination of local storage and cookie storage to store user authentication information and permissions.
 
-Mantis Logo is inspired from the insect name - 'Mantises' as they have triangular heads with flexible Necks. Also, the name is derived from two popular UI frameworks, Material UI and Ant Design (M-Ant-is).
+The project also features a customizable dashboard theme, making it easy to develop and add new requirements. Whether you need to add new features or modify existing ones, this project provides a solid foundation to build upon.
 
-Mantis has Ant Design principal on top of the MAterial UI React component library.
+## Features
 
-:star: :star: :star: Support us by giving star (Top right of this page) if you like the theme :star: :star: :star:
+- User authentication and authorization with React context API for state management.
+- JWT token-based authentication
+- Local and cookie storage for storing authentication information
+- Customizable dashboard theme
+- Open to developing any additional requirements
 
-![mantis-free-react-dashboard-template.jpg](https://mantisdashboard.io/adv-banner-images/og-social-v1.1.0.png)
+## Installation
 
-The [Pro version](https://mantisdashboard.io) of Mantis react template includes features such as TypeScript, apps, authentication methods (i.e. JWT, Auth0, Firebase), advance components, form plugins, layouts, widgets, and more.
+1. Clone the repository:
+`git clone https://github.com/info-aliahmadi/Hydra.React.git`
 
-| [Mantis Free](https://mantisdashboard.io/free) | [Mantis Pro](https://mantisdashboard.io)                                         |
-| ---------------------------------------------- | :------------------------------------------------------------------------------- |
-| **7** Demo pages                               | **85+** Demo pages                                                               |
-| -                                              | ✓ Multi-language                                                                 |
-| -                                              | ✓ Dark/Light Mode 🌓                                                             |
-| -                                              | ✓ TypeScript version                                                             |
-| -                                              | ✓ Design files (Figma)                                                           |
-| -                                              | ✓ Multiple color options                                                         |
-| -                                              | ✓ RTL                                                                            |
-| -                                              | ✓ JWT, Firebase, Auth0, AWS authentication                                       |
-| -                                              | ✓ [More components](https://mantisdashboard.io/components-overview/autocomplete) |
-| ✓ MIT License                                  | ✓ [Pro License](https://mui.com/store/license/)                                  |
+2. Install dependencies:
+`npm install`
 
-## Why Mantis?
+3. Start the development server:
+`npm start`
 
-Mantis offers everything needed to build an advanced dashboard application. In the initial release, we included following high-end features,
+4. Open your browser and visit:
+`http://localhost:3000`
 
-- Support React18.
-- Professional user interface.
-- Material UI React components.
-- Fully responsive, all modern browser supported.
-- Easy to use code structure
-- Flexible & high-Performance code
-- Simple documentation
+## Configuration
 
-## Free Mantis React version
+The project may require certain configurations to connect to your specific backend or to modify the authentication and authorization settings. Here are the key files to look into for configuration:
 
-#### Preview
+- src/config.js: Contains configuration variables such as API endpoints, Authentication and Authorization Storage Types and names, or any other environment-specific settings.
 
-- [Demo](https://mantisdashboard.io/free)
+## Usage
 
-#### Download
+This project provides a starting point for building a React application with authentication and authorization features. Here are a few guidelines on how to use and extend it:
 
-- [Download from GitHub](https://github.com/codedthemes/mantis-free-react-admin-template)
+- Authentication and Authorization: The project already includes a basic authentication and authorization system. You can customize it or extend it to fit your specific requirements. Look into the `src/modules/auth/services` folder to modify the authentication flow and user permissions.
 
-## Mantis Pro version
+- Dashboard Theme: The project comes with a pre-built dashboard theme [Mantis Free React Material UI Dashboard Template](https://github.com/codedthemes/mantis-free-react-admin-template) free version. You can modify the styling and layout by editing the files in the `src/themes` folder. Feel free to add additional components or modify existing ones to match your desired design.
 
-#### Preview
+- Adding New Features: To add new features to the project, follow these general steps:
 
-- [Demo](https://mantisdashboard.io)
+-- Create a new folder in `src/modules` folder and follow like other modules.
+-- Define the necessary routes in the `src/modules/YOUR_MODULE/routes` folder.
+-- Implement any required API calls or data handling in `src/modules/YOUR_MODULE/services` folder.
+-- Add any necessary authentication or authorization checks (by adding `<Authorize permission="YOUR_PERMISSION">` component on any route or component).
+-- Integrate the new component into the existing application by updating the appropriate files.
 
-#### Purchase
+## Contributing
 
-- [Buy now](https://mui.com/store/items/mantis-react-admin-dashboard-template/)
+Contributions to this project are welcome. If you encounter any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
 
-## Table of contents
+Please ensure that your contributions adhere to the project's coding standards and practices.
 
-- [Getting started](#getting-started)
-- [Documentation](#documentation)
-- [Technology stack](#technology-stack)
-- [Author](#author)
-- [Issues?](#issues)
-- [License](#license)
-- [More products](#more-free-react-material-admin-templates)
-- [Follow us](#follow-us)
+## Contact
 
-## Getting started
-
-Clone from GitHub
-
-```
-git clone https://github.com/codedthemes/mantis-free-react-admin-template.git
-yarn
-yarn start
-```
-
-## Documentation
-
-[Mantis documentation](https://codedthemes.gitbook.io/mantis/) helps you out in all aspects from Installation to deployment.
-
-## Technology stack
-
-- [Material UI V5](https://mui.com/core/)
-- Built with React Hooks API.
-- Redux & React context API for state management.
-- Redux toolkit.
-- React Router for navigation routing.
-- Support for react-script.
-- Code splitting.
-- CSS-in-JS.
-
-## Author
-
-Mantis is managed by team [CodedThemes](https://codedthemes.com).
-
-## Issues
-
-Please generate a [GitHub issue](https://github.com/codedthemes/mantis-free-react-admin-template/issues) if you found a bug in any version. We are try our best to resolve the issue.
-
-## License
-
-- Licensed under [MIT](https://github.com/codedthemes/datta-able-bootstrap-dashboard/blob/master/LICENSE)
-
-## Checkout free React Material admin dashboard templates
-
-- [Free Materially](https://codedthemes.com/item/materially-free-reactjs-admin-template/)
-- [Free Berry](https://mui.com/store/items/berry-react-material-admin-free/)
-
-## Checkout premium React Material admin dashboard templates
-
-- [Materially](https://codedthemes.com/item/materially-reactjs-admin-dashboard/)
-- [Berry](https://mui.com/store/items/berry-react-material-admin/)
-
-## Follow us
-
-- Website [https://mantisdashboard.io](https://mantisdashboard.io)
-- Blog [https://blog.mantisdashboard.io](https://blog.mantisdashboard.io)
-- CodedThemes [https://codedthemes.com](https://codedthemes.com)
-- Dribbble [https://dribbble.com/codedthemes](https://dribbble.com/codedthemes)
-- Facebook [https://www.facebook.com/codedthemes](https://www.facebook.com/codedthemes)
-- Twitter [https://twitter.com/codedthemes](https://twitter.com/codedthemes)
+For any questions or inquiries, please contact [Ali Ahmadi](mailto: info.aliahmadi@gmail.com).

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // project import
 import Logo from './Logo';
-import config from 'config';
+import CONFIG from 'config.js';
 import { activeItem } from 'store/reducers/menu';
 
 // ==============================|| MAIN LOGO ||============================== //
@@ -20,7 +20,7 @@ const LogoSection = ({ sx, to }) => {
       disableRipple
       component={Link}
       onClick={() => dispatch(activeItem({ openItem: [defaultId] }))}
-      to={!to ? config.defaultPath : to}
+      to={!to ? CONFIG.DEFAULT_PATH : to}
       sx={sx}
     >
       <Logo />
