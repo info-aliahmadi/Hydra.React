@@ -1,5 +1,5 @@
 // material-ui
-import { Breadcrumbs, Divider, Grid, Link, Stack, Typography } from '@mui/material';
+import { Breadcrumbs, Divider, Grid, Link, Stack, TextField, Typography } from '@mui/material';
 
 // project import
 import ComponentSkeleton from './ComponentSkeleton';
@@ -14,6 +14,9 @@ const ComponentTypography = () => (
         <Stack spacing={3}>
           <MainCard title="Basic" codeHighlight>
             <Stack spacing={0.75} sx={{ mt: -1.5 }}>
+              <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+              <TextField id="filled-basic" label="Filled" variant="filled" />
+              <TextField id="standard-basic" label="Standard" variant="standard" />
               <Typography variant="h1">Inter</Typography>
               <Typography variant="h5">Font Family</Typography>
               <Breadcrumbs aria-label="breadcrumb">

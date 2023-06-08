@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 // material-ui
-import { Box, Card, Grid, Stack, Typography } from '@mui/material';
+import { Box, Card, CircularProgress, Grid, Stack, Typography } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
@@ -82,6 +82,7 @@ const ComponentColor = () => (
       <Grid item xs={12} sm={6} md={4}>
         <MainCard title="Secondary Color" codeHighlight>
           <Stack>
+            <CircularProgress color="secondary" />
             <ColorBox bgcolor="secondary.lighter" data={{ label: 'Grey-1', color: '#fafafa' }} title="secondary.lighter" dark />
             <ColorBox bgcolor="secondary.100" data={{ label: 'Grey-2', color: '#f5f5f5' }} title="secondary[100]" dark />
             <ColorBox bgcolor="secondary.200" data={{ label: 'Grey-3', color: '#f0f0f0' }} title="secondary[200]" dark />

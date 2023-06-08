@@ -10,12 +10,15 @@ import Palette from './palette';
 import Typography from './typography';
 import CustomShadows from './shadows';
 import componentsOverride from './overrides';
+import createCache from '@emotion/cache';
+import { prefixer } from 'stylis';
+import stylisRTLPlugin from 'stylis-plugin-rtl';
+import { CacheProvider } from '@emotion/react';
 
 // ==============================|| DEFAULT THEME - MAIN  ||============================== //
 
 export default function ThemeCustomization({ children }) {
   const theme = Palette('light', 'default');
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const themeTypography = Typography(`'Public Sans', sans-serif`);
   const themeCustomShadows = useMemo(() => CustomShadows(theme), [theme]);
@@ -48,13 +51,32 @@ export default function ThemeCustomization({ children }) {
 
   const themes = createTheme(themeOptions);
   themes.components = componentsOverride(themes);
+  // Create rtl cache
+  const cacheRtl = createCache({
+    key: 'muirtl',
+    stylisPlugins: [prefixer, stylisRTLPlugin]
+  });
+  debugger
+  if (themes.direction == 'rtl') {
+    debugger;
+    document.dir = 'rtl';
+  }
 
   return (
     <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={themes}>
-        <CssBaseline />
-        {children}
-      </ThemeProvider>
+      {themes.direction == 'rtl' ? (
+        <CacheProvider value={cacheRtl}>
+          <ThemeProvider theme={themes}>
+            <CssBaseline />
+            {children}
+          </ThemeProvider>
+        </CacheProvider>
+      ) : (
+        <ThemeProvider theme={themes}>
+          <CssBaseline />
+          {children}
+        </ThemeProvider>
+      )}
     </StyledEngineProvider>
   );
 }

@@ -1,8 +1,12 @@
 import Loadable from 'components/Loadable';
 import { lazy } from 'react';
 
+const AuthLogin = Loadable(lazy(() => import('modules/auth/pages/authentication/Login')));
+
+const AuthRegister = Loadable(lazy(() => import('modules/auth/pages/authentication/Register')));
+
 // render - dashboard
-const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
+const DashboardDefault = Loadable(lazy(() => import('modules/auth/pages/home/dashboard')));
 
 // render - sample page
 const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
@@ -14,6 +18,16 @@ const Typography = Loadable(lazy(() => import('pages/components-overview/Typogra
 
 const AuthRoutes = [
   {
+    key: 'loginkey',
+    path: 'login',
+    element: <AuthLogin />
+  },
+  {
+    key: 'registerkey',
+    path: 'register',
+    element: <AuthRegister />
+  },
+  {
     key: 'dashboard',
     path: 'dashboard',
     permission: 'AUTH_GET.PERMISSION.LIST',
@@ -22,13 +36,13 @@ const AuthRoutes = [
   {
     key: 'sample-page',
     path: 'sample-page',
-    permission: 'authorization',
+    permission: 'AUTH_GET.PERMISSION.LIST',
     element: <SamplePage />
   },
   {
     key: 'typography',
     path: 'typography',
-    permission: 'authorization',
+    permission: 'AUTH_GET.PERMISSION.LIST',
     element: <Typography />
   }
 ];

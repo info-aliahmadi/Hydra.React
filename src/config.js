@@ -4,11 +4,11 @@ const CONFIG = {
   DEFAULT_PATH: '/dashboard',
   FONT_FAMILY: `'Public Sans', sans-serif`,
   I18N: 'en',
-  MINIDRAWER: false,
+  MINIDRAWER: true,
   CONTAINER: true,
   MODE: 'light',
   PRESET_COLOR: 'default',
-  THEME_DIRECTION: 'ltr',
+  THEME_DIRECTION: 'rtl',
   API_BASEPATH: 'https://localhost:7134', // isDevelopment ? 'https://localhost:7134/': 'https://website.com', // application api basepath
   FRONT_PATH: 'http://localhost:3000',
   DASHBOARD_PATH: 'http://localhost:3000/dashboard',
@@ -22,6 +22,8 @@ const CONFIG = {
 export default CONFIG;
 
 export const drawerWidth = 260;
+
+export const drawerMinimizeWidth = 60;
 
 export const twitterColor = '#1DA1F2';
 export const facebookColor = '#3b5998';

@@ -32,7 +32,7 @@ const utilities = {
       type: 'item',
       url: '/typography',
       icon: icons.FontSizeOutlined,
-      permission: 'authorization'
+      permission: 'AUTH_GET.PERMISSION.LIST'
     },
     {
       id: 'util-color',
@@ -57,7 +57,7 @@ const utilities = {
       url: '/icons/ant',
       icon: icons.AntDesignOutlined,
       breadcrumbs: false,
-      permission: 'authorization'
+      permission: 'AUTH_GET.PERMISSION.LIST'
     }
   ]
 };

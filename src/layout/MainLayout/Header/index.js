@@ -9,7 +9,7 @@ import AppBarStyled from './AppBarStyled';
 import HeaderContent from './HeaderContent';
 
 // assets
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { GlobalOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 // ==============================|| MAIN LAYOUT - HEADER ||============================== //
 
@@ -19,6 +19,11 @@ const Header = ({ open, handleDrawerToggle }) => {
 
   const iconBackColor = 'grey.100';
   const iconBackColorOpen = 'grey.200';
+
+  const handleRTL = () => {
+    debugger
+    theme.direction = 'rtl';
+  };
 
   // common header
   const mainHeader = (
@@ -32,6 +37,17 @@ const Header = ({ open, handleDrawerToggle }) => {
         sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : iconBackColor, ml: { xs: 0, lg: -2 } }}
       >
         {!open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      </IconButton>
+      <span style={{ margin: '0 10px' }}></span>
+      <IconButton
+        disableRipple
+        aria-label="open drawer"
+        onClick={handleRTL}
+        edge="start"
+        color="secondary"
+        sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : iconBackColor, ml: { xs: 0, lg: -2 } }}
+      >
+        {!open ? <GlobalOutlined /> : <GlobalOutlined />}
       </IconButton>
       <HeaderContent />
     </Toolbar>

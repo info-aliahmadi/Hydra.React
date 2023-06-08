@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import { Grid, Stack, Typography } from '@mui/material';
+import { CircularProgress, Grid, Stack, Typography } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
@@ -61,7 +61,8 @@ const ComponentShadow = () => {
                 <ShadowBox shadow="0" />
               </Grid>
               <Grid item xs={6} sm={4} md={3} lg={2}>
-                <ShadowBox shadow="1" />
+                <CircularProgress color="secondary" />
+                <ShadowBox shadow="1"></ShadowBox>
               </Grid>
               <Grid item xs={6} sm={4} md={3} lg={2}>
                 <ShadowBox shadow="2" />

@@ -15,7 +15,9 @@ import {
   InputLabel,
   OutlinedInput,
   Stack,
-  Typography
+  Typography,
+  TextField,
+  CircularProgress
 } from '@mui/material';
 
 // third party
@@ -86,7 +88,9 @@ const AuthLogin = () => {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="userName-login">UserName</InputLabel>
+                  <CircularProgress color="secondary" />
+                  <CircularProgress color="success" />
+                  <CircularProgress color="inherit" />
                   <OutlinedInput
                     id="userName-login"
                     type="text"

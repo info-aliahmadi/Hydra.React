@@ -1,8 +1,7 @@
 // project import
 import ThemeCustomization from 'themes';
 import ScrollTop from 'components/ScrollTop';
-import PrivateRoutes from 'routes/PrivateRoutes';
-import PublicRoutes from 'routes/PublicRoutes';
+import { PrivateRoutes, PublicRoutes } from 'routes/Routes';
 import { Routes } from 'react-router-dom';
 
 // ==============================|| APP - THEME, ROUTER, LOCAL  ||============================== //
@@ -11,8 +10,8 @@ const App = () => (
   <ThemeCustomization>
     <ScrollTop>
       <Routes>
-        {PrivateRoutes}
         {PublicRoutes}
+        {PrivateRoutes}
       </Routes>
     </ScrollTop>
   </ThemeCustomization>
