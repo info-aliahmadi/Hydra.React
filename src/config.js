@@ -8,7 +8,7 @@ const CONFIG = {
   CONTAINER: true,
   MODE: 'light',
   PRESET_COLOR: 'default',
-  THEME_DIRECTION: 'rtl',
+  THEME_DIRECTION: 'ltr',
   API_BASEPATH: 'https://localhost:7134', // isDevelopment ? 'https://localhost:7134/': 'https://website.com', // application api basepath
   FRONT_PATH: 'http://localhost:3000',
   DASHBOARD_PATH: 'http://localhost:3000/dashboard',

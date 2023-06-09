@@ -88,9 +88,6 @@ const AuthLogin = () => {
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Stack spacing={1}>
-                  <CircularProgress color="secondary" />
-                  <CircularProgress color="success" />
-                  <CircularProgress color="inherit" />
                   <OutlinedInput
                     id="userName-login"
                     type="text"

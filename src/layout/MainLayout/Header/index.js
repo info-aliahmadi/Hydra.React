@@ -21,8 +21,7 @@ const Header = ({ open, handleDrawerToggle }) => {
   const iconBackColorOpen = 'grey.200';
 
   const handleRTL = () => {
-    debugger
-    theme.direction = 'rtl';
+    theme.setDirection('rtl');
   };
 
   // common header

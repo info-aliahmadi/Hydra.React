@@ -60,15 +60,15 @@ const NavItem = ({ item, level }) => {
         py: !drawerOpen && level === 1 ? 1.25 : 1,
         ...(drawerOpen && {
           '&:hover': {
-            bgcolor: 'primary.lighter'
+            bgcolor: theme.palette.primary.lighter
           },
           '&.Mui-selected': {
-            bgcolor: 'primary.lighter',
+            bgcolor: theme.palette.primary.lighter,
             borderRight: `2px solid ${theme.palette.primary.main}`,
             color: iconSelectedColor,
             '&:hover': {
               color: iconSelectedColor,
-              bgcolor: 'primary.lighter'
+              bgcolor: theme.palette.primary.lighter
             }
           }
         }),
