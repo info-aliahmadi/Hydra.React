@@ -30,7 +30,7 @@ export default function ThemeCustomization({ children }) {
     setMode(mode);
   }
 
-  const theme = Palette('dark', 'default');
+  const theme = Palette('light', 'default');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const themeTypography = Typography(`'Public Sans', sans-serif`);
   const themeCustomShadows = useMemo(() => CustomShadows(theme), [theme]);
@@ -65,7 +65,6 @@ export default function ThemeCustomization({ children }) {
 
   const themes = createTheme(themeOptions);
 
-  debugger;
   themes.components = componentsOverride(themes);
   // Create rtl cache
   const cacheRtl = createCache({

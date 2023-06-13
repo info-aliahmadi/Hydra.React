@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "src",
-    // "paths": {
-    //   "publicFolder/*": ["public/*"]
-    // },
     "target": "ES6",
     "jsx": "react",
     "module": "commonjs",

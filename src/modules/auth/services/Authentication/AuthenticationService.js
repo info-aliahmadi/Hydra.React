@@ -17,7 +17,7 @@ export default class AuthenticationService {
   login = async (userName, password, rememberMe) => {
     return new Promise((resolve, reject) => {
       axios
-        .get(CONFIG.API_BASEPATH + '/Auth/Login', {
+        .get(CONFIG.LOGIN_API_PATH, {
           params: {
             userName: userName,
             password: password,
@@ -79,7 +79,7 @@ export default class AuthenticationService {
 
   refreshToken = () => {
     axios
-      .get(CONFIG.API_BASEPATH + '/Auth/RefreshToken')
+      .get(CONFIG.REFRESH_TOKEN_API_PATH)
       .then((response) => {
         setAuthenticationHeader(response.data);
         this.storageService.deleteItem();
@@ -93,7 +93,7 @@ export default class AuthenticationService {
   };
 
   logout = () => {
-    axios.get(CONFIG.API_BASEPATH + '/Auth/SignOut');
+    axios.get(CONFIG.LOGOUT_API_PATH);
     this.storageService.deleteItem();
   };
 }
