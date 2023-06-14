@@ -3,7 +3,6 @@
 const CONFIG = {
   DEFAULT_PATH: '/dashboard',
   FONT_FAMILY: `'Public Sans', sans-serif`,
-  I18N: 'en',
   MINIDRAWER: true,
   CONTAINER: true,
   MODE: 'light',
@@ -20,7 +19,6 @@ const CONFIG = {
   AUTHENTICATION_DEFAULT_STORAGE: 'localStorage', //'cookie',
   AUTHENTICATION_STORAGE_NAME: 'HydraAuthenticationStorage',
   AUTHORIZATION_STORAGE_NAME: 'HydraAuthorizationStorage',
-  LOCALIZATION_STORAGE_NAME: 'HydraLanguageStorage',
   DEFAULT_LANGUAGE: 'fr'
 };
 

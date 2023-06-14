@@ -1,4 +1,4 @@
-import { StrictMode } from 'react';
+import { StrictMode, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -25,13 +25,15 @@ const root = createRoot(container); // createRoot(container!) if you use TypeScr
 root.render(
   <StrictMode>
     <ReduxProvider store={store}>
-      <AuthenticationProvider>
-        <AuthorizationProvider>
-          <BrowserRouter basename="/">
-            <App />
-          </BrowserRouter>
-        </AuthorizationProvider>
-      </AuthenticationProvider>
+      <Suspense fallback="...is loading">
+        <AuthenticationProvider>
+          <AuthorizationProvider>
+            <BrowserRouter basename="/">
+              <App />
+            </BrowserRouter>
+          </AuthorizationProvider>
+        </AuthenticationProvider>
+      </Suspense>
     </ReduxProvider>
   </StrictMode>
 );

@@ -34,8 +34,8 @@ import avatar1 from 'assets/images/users/avatar-1.png';
 import avatar2 from 'assets/images/users/avatar-2.png';
 import avatar3 from 'assets/images/users/avatar-3.png';
 import avatar4 from 'assets/images/users/avatar-4.png';
-import InputLabel from 'themes/overrides/InputLabel';
 import { useTranslation } from 'react-i18next';
+import LocalizationService from 'Localization/LocalizationService';
 
 // avatar style
 const avatarSX = {
@@ -69,11 +69,20 @@ const status = [
     label: 'This Year'
   }
 ];
+const lngs = [
+  { code: 'en', nativeName: 'English' },
+  { code: 'fr', nativeName: 'Francais' }
+];
 
 // ==============================|| DASHBOARD - DEFAULT ||============================== //
 
 const DashboardDefault = () => {
   const [t, i18n] = useTranslation();
+
+  const changeLanguage = (lng) => {
+    let locService = new LocalizationService();
+    locService.setCurrentLanguage(i18n, lng);
+  };
 
   const [value, setValue] = useState('today');
   const [slot, setSlot] = useState('week');
@@ -85,8 +94,18 @@ const DashboardDefault = () => {
         <Typography variant="h5">Dashboard</Typography>
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
+        <div>
+          <button type="button" onClick={() => changeLanguage('fr')}>
+            fr
+          </button>
+          <button type="button" onClick={() => changeLanguage('en')}>
+            en
+          </button>
+        </div>
+        {/* <Button onClick={changeLang}>Change Lang</Button> */}
         <TextField id="outlined-basic" label="Outlined" variant="outlined" />
         <p>{t('title')}</p>
+        <p>{t('description.part1')}</p>
         <CircularProgress color="secondary" />
         <CircularProgress color="success" />
         <CircularProgress color="inherit" />
