@@ -9,7 +9,7 @@ import AppBarStyled from './AppBarStyled';
 import HeaderContent from './HeaderContent';
 
 // assets
-import { GlobalOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 // ==============================|| MAIN LAYOUT - HEADER ||============================== //
 
@@ -28,6 +28,7 @@ const Header = ({ open, handleDrawerToggle }) => {
   const mainHeader = (
     <Toolbar>
       <IconButton
+        title="Minimize the Sidebar"
         disableRipple
         aria-label="open drawer"
         onClick={handleDrawerToggle}
@@ -37,8 +38,8 @@ const Header = ({ open, handleDrawerToggle }) => {
       >
         {!open ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </IconButton>
-      <span style={{ margin: '0 10px' }}></span>
-      <IconButton
+      {/*  <span style={{ margin: '0 10px' }}></span>
+   <IconButton
         disableRipple
         aria-label="open drawer"
         onClick={handleRTL}
@@ -47,7 +48,8 @@ const Header = ({ open, handleDrawerToggle }) => {
         sx={{ color: 'text.primary', bgcolor: open ? iconBackColorOpen : iconBackColor, ml: { xs: 0, lg: -2 } }}
       >
         {!open ? <GlobalOutlined /> : <GlobalOutlined />}
-      </IconButton>
+      </IconButton> */}
+
       <HeaderContent />
     </Toolbar>
   );

@@ -14,23 +14,28 @@ import createCache from '@emotion/cache';
 import { prefixer } from 'stylis';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import { CacheProvider } from '@emotion/react';
+import LocalStorageService from 'utils/LocalStorageService';
 import CONFIG from 'config';
 
 // ==============================|| DEFAULT THEME - MAIN  ||============================== //
 
 export default function ThemeCustomization({ children }) {
+  const themeModeStorage = new LocalStorageService(CONFIG.THEME_MODE_STORAGE_NAME);
+  const themeMode = themeModeStorage.getItem();
+
+  const [mode, setMode] = useState(themeMode ? themeMode : CONFIG.DEFAULT_THEME_MODE);
   const [direction, setDirection] = useState(CONFIG.THEME_DIRECTION);
-  const [mode, setMode] = useState(CONFIG.MODE);
 
   function changeDirection(dir) {
     setDirection(dir);
     document.dir = dir;
   }
   function changeMode(mode) {
+    themeModeStorage.AddItem(mode);
     setMode(mode);
   }
 
-  const theme = Palette('light', 'default');
+  const theme = Palette(mode, 'default');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const themeTypography = Typography(`'Public Sans', sans-serif`);
   const themeCustomShadows = useMemo(() => CustomShadows(theme), [theme]);

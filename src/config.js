@@ -5,7 +5,8 @@ const CONFIG = {
   FONT_FAMILY: `'Public Sans', sans-serif`,
   MINIDRAWER: true,
   CONTAINER: true,
-  MODE: 'light',
+  DEFAULT_THEME_MODE: 'light',
+  THEME_MODE_STORAGE_NAME: 'HydraThemeMode',
   PRESET_COLOR: 'default',
   THEME_DIRECTION: 'ltr',
   API_BASEPATH: 'https://localhost:7134', // isDevelopment ? 'https://localhost:7134/': 'https://website.com', // application api basepath
@@ -19,7 +20,7 @@ const CONFIG = {
   AUTHENTICATION_DEFAULT_STORAGE: 'localStorage', //'cookie',
   AUTHENTICATION_STORAGE_NAME: 'HydraAuthenticationStorage',
   AUTHORIZATION_STORAGE_NAME: 'HydraAuthorizationStorage',
-  DEFAULT_LANGUAGE: 'fr'
+  DEFAULT_LANGUAGE: 'en'
 };
 
 export default CONFIG;

@@ -27,8 +27,9 @@ export default class LocalizationService {
               console.log(error);
               reject(error);
             });
+        } else {
+          resolve(this.getDefaultLanguage());
         }
-        resolve(this.getDefaultLanguage());
       });
     });
   };
