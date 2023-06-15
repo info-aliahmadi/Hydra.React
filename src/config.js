@@ -10,6 +10,7 @@ const CONFIG = {
   PRESET_COLOR: 'default',
   THEME_DIRECTION: 'ltr',
   API_BASEPATH: 'https://localhost:7134', // isDevelopment ? 'https://localhost:7134/': 'https://website.com', // application api basepath
+  AVATAR_BASEPATH: 'https://localhost:7134/avatar/',
   LOGIN_API_PATH: 'https://localhost:7134/Auth/Login',
   REFRESH_TOKEN_API_PATH: 'https://localhost:7134/Auth/RefreshToken',
   LOGOUT_API_PATH: 'https://localhost:7134/Auth/SignOut',
@@ -20,6 +21,7 @@ const CONFIG = {
   AUTHENTICATION_DEFAULT_STORAGE: 'localStorage', //'cookie',
   AUTHENTICATION_STORAGE_NAME: 'HydraAuthenticationStorage',
   AUTHORIZATION_STORAGE_NAME: 'HydraAuthorizationStorage',
+  LANGUAGE_STORAGE_NAME: 'i18nextLng',
   DEFAULT_LANGUAGE: 'en'
 };
 

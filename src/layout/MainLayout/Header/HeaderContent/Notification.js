@@ -26,7 +26,7 @@ import Transitions from 'components/@extended/Transitions';
 
 // assets
 import { BellOutlined, CloseOutlined, GiftOutlined, MessageOutlined, SettingOutlined } from '@ant-design/icons';
-
+import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
 // sx styles
 const avatarSX = {
   width: 36,
@@ -79,7 +79,7 @@ const Notification = () => {
         onClick={handleToggle}
       >
         <Badge badgeContent={4} color="primary">
-          <BellOutlined />
+          <NotificationsNoneOutlinedIcon />
         </Badge>
       </IconButton>
       <Popper

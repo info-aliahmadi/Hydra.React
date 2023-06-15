@@ -16,7 +16,7 @@ const pages = {
   permission: 'AUTH_GET.PERMISSION.LIST',
   children: [
     {
-      id: 'login1',
+      id: 'login',
       title: 'Login',
       type: 'item',
       url: '/login',
@@ -25,7 +25,7 @@ const pages = {
       permission: 'AUTH_GET.PERMISSION.LIST'
     },
     {
-      id: 'register1',
+      id: 'register',
       title: 'Register',
       type: 'item',
       url: '/register',

@@ -7,6 +7,7 @@ import { Box, List, Typography } from '@mui/material';
 // project import
 import NavItem from './NavItem';
 import Authorize from 'modules/auth/services/Authorization/Authorize';
+import { useTranslation } from 'react-i18next';
 
 // ==============================|| NAVIGATION - LIST GROUP ||============================== //
 
@@ -52,14 +53,16 @@ const NavGroupSwitch = ({ menuItem }) => {
 };
 
 const NavList = ({ item, navCollapse, drawerOpen }) => {
+  const [t] = useTranslation();
+  const nsTranslation = 'navigation.';
   return (
     <List
       subheader={
-        item.title &&
+        item.id &&
         drawerOpen && (
           <Box sx={{ pl: 3, mb: 1.5 }}>
             <Typography variant="subtitle2" color="textSecondary">
-              {item.title}
+              {t(nsTranslation + item.id)}
             </Typography>
             {/* only available in paid version */}
           </Box>

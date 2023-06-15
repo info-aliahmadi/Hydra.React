@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 // material-ui
 import { CssBaseline, StyledEngineProvider } from '@mui/material';
@@ -16,6 +16,8 @@ import stylisRTLPlugin from 'stylis-plugin-rtl';
 import { CacheProvider } from '@emotion/react';
 import LocalStorageService from 'utils/LocalStorageService';
 import CONFIG from 'config';
+import i18n from 'Localization/i18n';
+import IranSans from './fonts/IranSans';
 
 // ==============================|| DEFAULT THEME - MAIN  ||============================== //
 
@@ -24,11 +26,22 @@ export default function ThemeCustomization({ children }) {
   const themeMode = themeModeStorage.getItem();
 
   const [mode, setMode] = useState(themeMode ? themeMode : CONFIG.DEFAULT_THEME_MODE);
-  const [direction, setDirection] = useState(CONFIG.THEME_DIRECTION);
+
+  const [direction, setDirection] = useState(i18n.dir());
+  const initFonts = i18n.dir() == 'rtl' ? `iran` : `'Public Sans', sans-serif`;
+  const [fonts, setFonts] = useState(initFonts);
+
+  useEffect(() => {
+    document.dir = i18n.dir();
+  }, []);
+
+  useEffect(() => {
+    document.dir = direction;
+    direction === 'rtl' ? setFonts(`iran`) : setFonts(`'Public Sans', sans-serif`);
+  }, [direction]);
 
   function changeDirection(dir) {
     setDirection(dir);
-    document.dir = dir;
   }
   function changeMode(mode) {
     themeModeStorage.AddItem(mode);
@@ -37,7 +50,7 @@ export default function ThemeCustomization({ children }) {
 
   const theme = Palette(mode, 'default');
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const themeTypography = Typography(`'Public Sans', sans-serif`);
+  const themeTypography = Typography(fonts);
   const themeCustomShadows = useMemo(() => CustomShadows(theme), [theme]);
 
   const themeOptions = useMemo(
@@ -72,6 +85,7 @@ export default function ThemeCustomization({ children }) {
 
   themes.components = componentsOverride(themes);
   // Create rtl cache
+
   const cacheRtl = createCache({
     key: 'muirtl',
     stylisPlugins: [prefixer, stylisRTLPlugin]
@@ -79,10 +93,11 @@ export default function ThemeCustomization({ children }) {
 
   return (
     <StyledEngineProvider injectFirst>
-      {themes.direction == 'rtl' ? (
+      {direction == 'rtl' ? (
         <CacheProvider value={cacheRtl}>
           <ThemeProvider theme={themes}>
             <CssBaseline />
+            <IranSans />
             {children}
           </ThemeProvider>
         </CacheProvider>

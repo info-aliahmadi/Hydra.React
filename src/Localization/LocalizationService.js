@@ -1,3 +1,4 @@
+import { useTheme } from '@mui/material';
 import axios from 'axios';
 import CONFIG from 'config.js';
 import AuthenticationService from 'modules/auth/services/Authentication/AuthenticationService';
@@ -34,12 +35,13 @@ export default class LocalizationService {
     });
   };
 
-  setCurrentLanguage = async (i18n, lang) => {
-    i18n.changeLanguage(lang);
+  setCurrentLanguage = async (i18n, theme, lang) => {
+    i18n.changeLanguage(lang.key);
+    theme.setDirection(i18n.dir(lang.key));
     let isAuthenticate = this.authenticateService.isAuthenticated();
     if (isAuthenticate) {
       setAuthenticationHeader(this.authenticateService.getJwt());
-      axios.get(CONFIG.API_BASEPATH + '/Auth/SetDefaultLanguage', { params: { defaultLanguage: lang } }).catch((error) => {
+      axios.get(CONFIG.API_BASEPATH + '/Auth/SetDefaultLanguage', { params: { defaultLanguage: lang.key } }).catch((error) => {
         console.log(error);
       });
     }

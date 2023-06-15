@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 
 // material-ui
 import { useTheme } from '@mui/material/styles';
@@ -26,8 +26,10 @@ import ProfileTab from './ProfileTab';
 import SettingTab from './SettingTab';
 
 // assets
-import avatar1 from 'assets/images/users/avatar-1.png';
+import Anonymous from 'assets/images/users/anonymous.png';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
+import { AuthenticationContext } from 'modules/auth/services/Authentication/AuthenticationProvider';
+import CONFIG from 'config';
 
 // tab panel wrapper
 function TabPanel({ children, value, index, ...other }) {
@@ -56,8 +58,13 @@ function a11yProps(index) {
 const Profile = () => {
   const theme = useTheme();
 
+  let authenticationService = useContext(AuthenticationContext);
+  const [user] = useState(authenticationService.getUser());
+
+  const avatar = user.avatar ? CONFIG.AVATAR_BASEPATH + user.avatar : Anonymous;
+
   const handleLogout = async () => {
-    // logout
+    authenticationService.logout();
   };
 
   const anchorRef = useRef(null);
@@ -97,8 +104,8 @@ const Profile = () => {
         onClick={handleToggle}
       >
         <Stack direction="row" spacing={2} alignItems="center" sx={{ p: 0.5 }}>
-          <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} />
-          <Typography variant="subtitle1">John Doe</Typography>
+          <Avatar alt="profile user" src={avatar} sx={{ width: 32, height: 32 }} />
+          <Typography variant="subtitle1">{user.family_name}</Typography>
         </Stack>
       </ButtonBase>
       <Popper
@@ -139,11 +146,11 @@ const Profile = () => {
                       <Grid container justifyContent="space-between" alignItems="center">
                         <Grid item>
                           <Stack direction="row" spacing={1.25} alignItems="center">
-                            <Avatar alt="profile user" src={avatar1} sx={{ width: 32, height: 32 }} />
+                            <Avatar alt="profile user" src={avatar} sx={{ width: 32, height: 32 }} />
                             <Stack>
-                              <Typography variant="h6">John Doe</Typography>
+                              <Typography variant="h6">{user.family_name}</Typography>
                               <Typography variant="body2" color="textSecondary">
-                                UI/UX Designer
+                                {user.email}
                               </Typography>
                             </Stack>
                           </Stack>

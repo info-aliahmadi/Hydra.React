@@ -39,7 +39,7 @@ export default class AuthenticationService {
         });
     });
   };
-  getUser = async () => {
+  getUser = () => {
     return this.parseJwt(this.storageService.getItem(CONFIG.AUTHENTICATION_STORAGE_NAME));
   };
 
@@ -93,7 +93,8 @@ export default class AuthenticationService {
   };
 
   logout = () => {
-    axios.get(CONFIG.LOGOUT_API_PATH);
+    setAuthenticationHeader(this.getJwt());
     this.storageService.deleteItem();
+    this.redirectToLogin();
   };
 }

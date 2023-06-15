@@ -1,5 +1,5 @@
 // material-ui
-import { Box, IconButton, useMediaQuery, useTheme } from '@mui/material';
+import { Badge, Box, IconButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 
 // project import
 import Search from './Search';
@@ -8,6 +8,7 @@ import Notification from './Notification';
 import MobileSection from './MobileSection';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import Localization from './Localization';
 
 // ==============================|| HEADER - CONTENT ||============================== //
 
@@ -25,31 +26,33 @@ const HeaderContent = () => {
       {matchesXs && <Box sx={{ width: '100%', ml: 1 }} />}
 
       {theme.palette.mode == 'light' ? (
-        <IconButton
-          title="Switch to Dark Theme"
-          disableRipple
-          aria-label="open drawer"
-          onClick={() => handleThemeMode('dark')}
-          edge="start"
-          color="secondary"
-          sx={{ color: 'text.primary' }}
-        >
-          <Brightness4Icon />
-        </IconButton>
+        <Tooltip title="Switch to Dark Theme">
+          <IconButton
+            disableRipple
+            aria-label="open drawer"
+            onClick={() => handleThemeMode('dark')}
+            edge="start"
+            color="secondary"
+            sx={{ color: 'text.primary' }}
+          >
+            <Brightness4Icon />
+          </IconButton>
+        </Tooltip>
       ) : (
-        <IconButton
-          title="Switch to Light Theme"
-          disableRipple
-          aria-label="open drawer"
-          onClick={() => handleThemeMode('light')}
-          edge="start"
-          color="secondary"
-          sx={{ color: 'text.primary' }}
-        >
-          <Brightness7Icon />
-        </IconButton>
+        <Tooltip title="Switch to Light Theme">
+          <IconButton
+            disableRipple
+            aria-label="open drawer"
+            onClick={() => handleThemeMode('light')}
+            edge="start"
+            color="secondary"
+            sx={{ color: 'text.primary' }}
+          >
+            <Brightness7Icon />
+          </IconButton>
+        </Tooltip>
       )}
-
+      <Localization />
       <Notification />
       {!matchesXs && <Profile />}
       {matchesXs && <MobileSection />}
