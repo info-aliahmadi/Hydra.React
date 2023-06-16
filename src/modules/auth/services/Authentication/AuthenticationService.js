@@ -17,7 +17,7 @@ export default class AuthenticationService {
   login = async (userName, password, rememberMe) => {
     return new Promise((resolve, reject) => {
       axios
-        .get(CONFIG.LOGIN_API_PATH, {
+        .post(CONFIG.LOGIN_API_PATH, null, {
           params: {
             userName: userName,
             password: password,
@@ -35,10 +35,12 @@ export default class AuthenticationService {
           });
         })
         .catch((error) => {
+          console.log(error);
           reject(error);
         });
     });
   };
+
   getUser = () => {
     return this.parseJwt(this.storageService.getItem(CONFIG.AUTHENTICATION_STORAGE_NAME));
   };

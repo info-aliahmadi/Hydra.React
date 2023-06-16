@@ -14,6 +14,8 @@ const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
 // render - utilities
 const Typography = Loadable(lazy(() => import('pages/components-overview/Typography')));
 
+const Profile = Loadable(lazy(() => import('modules/auth/pages/Account/Profile/Profile')));
+
 // ==============================|| MAIN ROUTING ||============================== //
 
 const AuthRoutes = [
@@ -44,6 +46,12 @@ const AuthRoutes = [
     path: 'typography',
     permission: 'AUTH_GET.PERMISSION.LIST',
     element: <Typography />
+  },
+  {
+    key: 'profile',
+    path: 'profile',
+    permission: 'AUTH_GET.PERMISSION.LIST',
+    element: <Profile />
   }
 ];
 

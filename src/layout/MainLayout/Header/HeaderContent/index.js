@@ -9,6 +9,7 @@ import MobileSection from './MobileSection';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import Localization from './Localization';
+import { useTranslation } from 'react-i18next';
 
 // ==============================|| HEADER - CONTENT ||============================== //
 
@@ -17,6 +18,7 @@ const HeaderContent = () => {
 
   const theme = useTheme();
 
+  const [t] = useTranslation();
   const handleThemeMode = (mode) => {
     theme.setMode(mode);
   };
@@ -26,7 +28,7 @@ const HeaderContent = () => {
       {matchesXs && <Box sx={{ width: '100%', ml: 1 }} />}
 
       {theme.palette.mode == 'light' ? (
-        <Tooltip title="Switch to Dark Theme">
+        <Tooltip title={t('tooltips.switch-to-darkmode')}>
           <IconButton
             disableRipple
             aria-label="open drawer"
@@ -39,7 +41,7 @@ const HeaderContent = () => {
           </IconButton>
         </Tooltip>
       ) : (
-        <Tooltip title="Switch to Light Theme">
+        <Tooltip title={t('tooltips.switch-to-lightmode')}>
           <IconButton
             disableRipple
             aria-label="open drawer"

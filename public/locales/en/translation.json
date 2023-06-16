@@ -18,5 +18,34 @@
     "support": "Support",
     "sample-page": "Sample Page",
     "documentation": "Documentation"
+  },
+  "pages-title" : {
+    "profile": "Profile",
+    "change-password": "Change Password"
+  },
+  "fields-name" : {
+    "fullname": "Fullname",
+    "firstname": "Firstname",
+    "lastname": "LastName",
+    "email": "Email",
+    "username": "Username",
+    "phone-number": "Phone Number"
+  },
+  "buttons-name" : {
+    "submit": "Submit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "delete": "Delete",
+    "detail": "Detail"
+  },
+  "validation": {
+    "required-username": "Username is required",
+    "valid-email": "Must be a valid email",
+    "required-email": "Email is required"
+  },
+  "tooltips": {
+    "switch-to-darkmode": "Switch to Dark Theme",
+    "switch-to-lightmode": "Switch to Light Theme"
   }
 }
