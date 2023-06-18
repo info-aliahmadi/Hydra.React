@@ -28,7 +28,7 @@
     "firstname": "Firstname",
     "lastname": "LastName",
     "email": "Email",
-    "username": "Username",
+    "userName": "Username",
     "phone-number": "Phone Number"
   },
   "buttons-name" : {
@@ -40,7 +40,7 @@
     "detail": "Detail"
   },
   "validation": {
-    "required-username": "Username is required",
+    "required-userName": "Userame is required",
     "valid-email": "Must be a valid email",
     "required-email": "Email is required"
   },

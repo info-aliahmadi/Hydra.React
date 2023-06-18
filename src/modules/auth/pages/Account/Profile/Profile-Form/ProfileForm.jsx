@@ -34,20 +34,31 @@ const ProfileForm = () => {
     loadUser();
   }, []);
 
+  const handleUpdate = (user) => {
+    accountService
+      .updateCurrentUser(user)
+      .then((userData) => {
+        debugger;
+        setUser(userData);
+      })
+      .catch((error) => {
+        debugger;
+      });
+  };
   return (
     <>
       <Formik
         initialValues={{
           fullName: user?.fullName,
-          username: user?.username,
+          userName: user?.userName,
           phoneNumber: user?.phoneNumber,
           email: user?.email
         }}
         enableReinitialize={true}
         validationSchema={Yup.object().shape({
-          username: Yup.string()
+          userName: Yup.string()
             .max(255)
-            .required(t(validation + 'requiredUsername')),
+            .required(t(validation + 'requireduserName')),
           email: Yup.string()
             .email(t(validation + 'valid-email'))
             .max(255)
@@ -55,6 +66,8 @@ const ProfileForm = () => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
+            debugger;
+            handleUpdate(values);
             setStatus({ success: false });
             setSubmitting(false);
           } catch (err) {
@@ -91,22 +104,22 @@ const ProfileForm = () => {
               </Grid>
               <Grid item xs={12} md={6}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="username-signup">{t(fieldsName + 'username')}</InputLabel>
+                  <InputLabel htmlFor="userName-signup">{t(fieldsName + 'userName')}</InputLabel>
                   <OutlinedInput
                     fullWidth
-                    error={Boolean(touched.username && errors.username)}
-                    id="username-signup"
+                    error={Boolean(touched.userName && errors.userName)}
+                    id="userName-signup"
                     type="lastname"
-                    value={values.username}
-                    name="username"
+                    value={values.userName}
+                    name="userName"
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    placeholder={t(fieldsName + 'username')}
+                    placeholder={t(fieldsName + 'userName')}
                     inputProps={{}}
                   />
-                  {touched.username && errors.username && (
+                  {touched.userName && errors.userName && (
                     <FormHelperText error id="helper-text-lastname-signup">
-                      {errors.username}
+                      {errors.userName}
                     </FormHelperText>
                   )}
                 </Stack>
@@ -156,7 +169,7 @@ const ProfileForm = () => {
                   )}
                 </Stack>
               </Grid>
-              <Grid item xs={3} >
+              <Grid item xs={3}>
                 <AnimateButton>
                   <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="primary">
                     {t(buttonName + 'save')}

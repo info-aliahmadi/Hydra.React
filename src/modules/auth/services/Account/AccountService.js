@@ -19,5 +19,24 @@ export default class AccountService {
     });
   };
 
-  updateUser = (user) => {};
+  updateCurrentUser = async (user) => {
+    debugger;
+    let ssss = JSON.stringify(user);
+    return new Promise((resolve, reject) => {
+      axios
+        .post(CONFIG.API_BASEPATH + '/auth/updateCurrentUser', {
+          fullName: user.fullName,
+          email: user.email,
+          userName: user.userName,
+          phoneNumber: user.phoneNumber
+        })
+        .then((response) => {
+          debugger;
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
 }
