@@ -13,6 +13,7 @@ import AnimateButton from 'components/@extended/AnimateButton';
 // assets
 import { useTranslation } from 'react-i18next';
 import AccountService from 'modules/auth/services/Account/AccountService';
+import AuthenticationService from 'modules/auth/services/Authentication/AuthenticationService';
 
 // ============================|| FIREBASE - REGISTER ||============================ //
 
@@ -38,8 +39,8 @@ const ProfileForm = () => {
     accountService
       .updateCurrentUser(user)
       .then((userData) => {
-        debugger;
-        setUser(userData);
+        let authenticationService = new AuthenticationService();
+        authenticationService.refreshToken();
       })
       .catch((error) => {
         debugger;

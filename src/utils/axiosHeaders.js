@@ -5,12 +5,12 @@ export function setAuthenticationHeader(token) {
   let tokenBearer = token ? 'Bearer ' + token : '';
   axios.defaults.headers.common['Authorization'] = tokenBearer;
   axios.defaults.headers.common['accept'] = '*/*';
-  axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+  axios.defaults.headers.post['Content-Type'] = 'application/json';
 }
 export function setDefaultHeader() {
   var jwt = new AuthenticationService().getJwt();
   let tokenBearer = jwt ? 'Bearer ' + jwt : '';
   axios.defaults.headers.common['Authorization'] = tokenBearer;
   axios.defaults.headers.common['accept'] = '*/*';
-  axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+  axios.defaults.headers.post['Content-Type'] = 'application/json';
 }

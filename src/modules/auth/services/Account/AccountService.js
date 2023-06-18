@@ -20,18 +20,12 @@ export default class AccountService {
   };
 
   updateCurrentUser = async (user) => {
-    debugger;
+    user.id = 0;
     let ssss = JSON.stringify(user);
     return new Promise((resolve, reject) => {
       axios
-        .post(CONFIG.API_BASEPATH + '/auth/updateCurrentUser', {
-          fullName: user.fullName,
-          email: user.email,
-          userName: user.userName,
-          phoneNumber: user.phoneNumber
-        })
+        .post(CONFIG.API_BASEPATH + '/auth/updateCurrentUser', user)
         .then((response) => {
-          debugger;
           resolve(response.data);
         })
         .catch((error) => {
