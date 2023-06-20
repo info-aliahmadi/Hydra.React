@@ -20,21 +20,9 @@ export default class AccountService {
   };
 
   updateCurrentUser = async (user) => {
-    setDefaultHeader('multipart/form-data');
-    // const obj = {
-    //   hello: "world"
-    // };
-    debugger;
-    const data = new FormData();
-    data.append('fullName', user.fullName);
-    data.append('userName', user.userName);
-    data.append('phoneNumber', user.phoneNumber);
-    data.append('email', user.email);
-    data.append('avatarFile', user.avatarFile);
-    // setDefaultHeader('application/octet-stream');
     return new Promise((resolve, reject) => {
       axios
-        .post(CONFIG.API_BASEPATH + '/auth/updateCurrentUser', data)
+        .post(CONFIG.API_BASEPATH + '/auth/updateCurrentUser', user)
         .then((response) => {
           resolve(response.data);
         })

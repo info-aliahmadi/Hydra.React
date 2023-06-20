@@ -1,7 +1,19 @@
 import { useEffect, useState } from 'react';
 
 // material-ui
-import { Avatar, Button, ButtonBase, Divider, FormHelperText, Grid, InputLabel, OutlinedInput, Stack } from '@mui/material';
+import {
+  Alert,
+  Avatar,
+  Button,
+  ButtonBase,
+  FormHelperText,
+  Grid,
+  InputLabel,
+  OutlinedInput,
+  Snackbar,
+  Stack,
+  Tooltip
+} from '@mui/material';
 
 // third party
 import * as Yup from 'yup';
@@ -16,16 +28,24 @@ import AccountService from 'modules/auth/services/Account/AccountService';
 import AuthenticationService from 'modules/auth/services/Authentication/AuthenticationService';
 import CONFIG from 'config';
 import Anonymous from 'assets/images/users/anonymous.png';
-
+import Notify from 'components/@extended/Notify';
 // ============================|| FIREBASE - REGISTER ||============================ //
 
 const ProfileForm = () => {
   const [t] = useTranslation();
-  const [avatarPreview, setAvatarPreview] = useState(Anonymous);
+  const [avatarPreview, setAvatarPreview] = useState();
   let accountService = new AccountService();
 
-  const [fieldsName, validation, buttonName] = ['fields-name.', 'validation.', 'buttons-name.'];
+  const [fieldsName, validation, buttonName] = ['fields.', 'validation.', 'buttons.'];
   const [user, setUser] = useState();
+  const [notify, setNotify] = useState({ open: false });
+
+  // const handleClose = (event, reason) => {
+  //   // if (reason === 'clickaway') {
+  //   //   return;
+  //   // }
+  //   setOpen(false);
+  // };
 
   const loadUser = () => {
     accountService.getCurrentUser().then((userData) => {
@@ -40,16 +60,18 @@ const ProfileForm = () => {
   const handleUpdate = (user) => {
     accountService
       .updateCurrentUser(user)
-      .then((userData) => {
+      .then(() => {
         let authenticationService = new AuthenticationService();
         authenticationService.refreshToken();
+        setNotify({ open: true });
       })
       .catch((error) => {
-        debugger;
+        setNotify({ open: true, type: 'error', description: error.message });
       });
   };
   return (
     <>
+      <Notify notify={notify} setNotify={setNotify}></Notify>
       <Formik
         initialValues={{
           fullName: user?.fullName,
@@ -87,31 +109,50 @@ const ProfileForm = () => {
             <Grid container spacing={3} direction="column">
               <Grid container item spacing={0} direction="row" justifyContent="flex-end" alignItems="flex-start">
                 <Grid item xs={12} md={2}>
-                  <Stack>
-                    <ButtonBase variant="contained" component="label">
-                      <input
-                        type="file"
-                        hidden
-                        accept="image/*"
-                        name="avatarFile"
-                        onChange={(e) => {
-                          const fileReader = new FileReader();
-                          fileReader.readAsDataURL(e.target.files[0]);
-                          fileReader.onload = () => {
-                            if (fileReader.readyState === 2) {
-                              setFieldValue('avatarFile', e.target.files[0]);
-                              setAvatarPreview(fileReader.result);
-                            }
-                          };
-                        }}
-                      />
-                      <Avatar
-                        alt="profile user"
-                        src={avatarPreview ? avatarPreview : values.avatar ? CONFIG.AVATAR_BASEPATH + values.avatar : Anonymous}
-                        sx={{ width: 85, height: 85 }}
-                      />
-                    </ButtonBase>
-                  </Stack>
+                  <Tooltip title={t('tooltips.edit-avatar')}>
+                    <Stack>
+                      <ButtonBase variant="contained" component="label">
+                        <input
+                          type="file"
+                          hidden
+                          accept="image/*"
+                          name="avatarFile"
+                          onChange={(e) => {
+                            const fileReader = new FileReader();
+                            fileReader.readAsDataURL(e.target.files[0]);
+                            fileReader.onload = () => {
+                              if (fileReader.readyState === 2) {
+                                setFieldValue('avatarFile', fileReader.result);
+                                setAvatarPreview(fileReader.result);
+                              }
+                            };
+                          }}
+                        />
+                        <div
+                          style={{
+                            position: 'relative'
+                          }}
+                        >
+                          <Avatar
+                            alt="profile user"
+                            src={avatarPreview ? avatarPreview : values.avatar ? CONFIG.AVATAR_BASEPATH + values.avatar : Anonymous}
+                            sx={{ width: 85, height: 85 }}
+                          ></Avatar>{' '}
+                          <span
+                            style={{
+                              background: 'rgb(0 0 0 / 40%)',
+                              position: 'absolute',
+                              width: '100%',
+                              textAlign: 'center',
+                              bottom: '30px'
+                            }}
+                          >
+                            {t('buttons.edit')}
+                          </span>
+                        </div>
+                      </ButtonBase>
+                    </Stack>
+                  </Tooltip>
                 </Grid>
               </Grid>
               <Grid container item spacing={3} justifyContent="center">

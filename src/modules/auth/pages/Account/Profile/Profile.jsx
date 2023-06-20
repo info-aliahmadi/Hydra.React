@@ -14,7 +14,7 @@ function Profile() {
     <>
       <Grid container spacing={0} justifyContent="center">
         <Grid item xs={12} sm={12} md={6} lg={6}>
-          <MainCard title={t('pages-title.profile')} codeHighlight>
+          <MainCard title={t('pages.profile')} codeHighlight>
             <ProfileForm />
           </MainCard>
         </Grid>

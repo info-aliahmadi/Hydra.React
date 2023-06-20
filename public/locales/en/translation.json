@@ -19,11 +19,11 @@
     "sample-page": "Sample Page",
     "documentation": "Documentation"
   },
-  "pages-title" : {
+  "pages": {
     "profile": "Profile",
     "change-password": "Change Password"
   },
-  "fields-name" : {
+  "fields": {
     "fullname": "Fullname",
     "firstname": "Firstname",
     "lastname": "LastName",
@@ -31,7 +31,7 @@
     "userName": "Username",
     "phone-number": "Phone Number"
   },
-  "buttons-name" : {
+  "buttons": {
     "submit": "Submit",
     "save": "Save",
     "cancel": "Cancel",
@@ -46,6 +46,13 @@
   },
   "tooltips": {
     "switch-to-darkmode": "Switch to Dark Theme",
-    "switch-to-lightmode": "Switch to Light Theme"
+    "switch-to-lightmode": "Switch to Light Theme",
+    "edit-avatar": "Edit Avatar"
+  },
+  "alert": {
+    "success": "Success!",
+    "success-description": "The operation done successfully.",
+    "error": "Error!",
+    "error-description": "The operation failed."
   }
 }

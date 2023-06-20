@@ -60,7 +60,6 @@ const Profile = () => {
 
   let authenticationService = useContext(AuthenticationContext);
   const [user] = useState(authenticationService.getUser());
-
   const avatar = user.avatar ? CONFIG.AVATAR_BASEPATH + user.avatar : Anonymous;
 
   const handleLogout = async () => {
