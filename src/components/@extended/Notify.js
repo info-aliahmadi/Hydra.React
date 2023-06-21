@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function Notify(props) {
-  debugger;
   const Strong = styled.strong`
     font-weight: 900;
     margin: auto 5px;

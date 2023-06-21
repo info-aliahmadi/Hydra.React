@@ -20,8 +20,11 @@
     "documentation": "Documentation"
   },
   "pages": {
-    "profile": "Profile",
-    "change-password": "Change Password"
+    "edit-profile": "Edit Profile",
+    "change-password": "Change Password",
+    "language": "Language",
+    "account-settings": "Account Settings",
+    "history": "History"
   },
   "fields": {
     "fullname": "Fullname",
@@ -29,7 +32,10 @@
     "lastname": "LastName",
     "email": "Email",
     "userName": "Username",
-    "phone-number": "Phone Number"
+    "phone-number": "Phone Number",
+    "old-password": "Old Password",
+    "confirm-password": "Confirm Password",
+    "new-password": "New Password"
   },
   "buttons": {
     "submit": "Submit",
@@ -37,12 +43,16 @@
     "cancel": "Cancel",
     "edit": "Edit",
     "delete": "Delete",
-    "detail": "Detail"
+    "detail": "Detail",
+    "change-password": "Change Password"
   },
   "validation": {
     "required-userName": "Userame is required",
     "valid-email": "Must be a valid email",
-    "required-email": "Email is required"
+    "required-email": "Email is required",
+    "required-old-password": "Required Old Password",
+    "required-confirm-password": "Required Confirm Password",
+    "required-new-password": "Required New Password"
   },
   "tooltips": {
     "switch-to-darkmode": "Switch to Dark Theme",

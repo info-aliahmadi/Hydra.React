@@ -31,4 +31,16 @@ export default class AccountService {
         });
     });
   };
+  changePassword = async (passwords) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(CONFIG.API_BASEPATH + '/auth/changePassword', passwords)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
 }

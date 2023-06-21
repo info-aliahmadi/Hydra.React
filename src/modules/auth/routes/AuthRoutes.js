@@ -15,6 +15,8 @@ const SamplePage = Loadable(lazy(() => import('pages/extra-pages/SamplePage')));
 const Typography = Loadable(lazy(() => import('pages/components-overview/Typography')));
 
 const Profile = Loadable(lazy(() => import('modules/auth/pages/Account/Profile/Profile')));
+const ChangePassword = Loadable(lazy(() => import('modules/auth/pages/Account/ChangePassword/ChangePassword')));
+const ChangeLanguage = Loadable(lazy(() => import('modules/auth/pages/Settings/Language/ChangeLanguage')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -52,6 +54,18 @@ const AuthRoutes = [
     path: 'profile',
     permission: 'AUTH_GET.PERMISSION.LIST',
     element: <Profile />
+  },
+  {
+    key: 'change-password',
+    path: 'changepassword',
+    permission: 'AUTH_GET.PERMISSION.LIST',
+    element: <ChangePassword />
+  },
+  {
+    key: 'change-language',
+    path: 'changelanguage',
+    permission: 'AUTH_GET.PERMISSION.LIST',
+    element: <ChangeLanguage />
   }
 ];
 

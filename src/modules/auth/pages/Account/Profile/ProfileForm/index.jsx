@@ -85,7 +85,7 @@ const ProfileForm = () => {
         validationSchema={Yup.object().shape({
           userName: Yup.string()
             .max(255)
-            .required(t(validation + 'requireduserName')),
+            .required(t(validation + 'required-username')),
           email: Yup.string()
             .email(t(validation + 'valid-email'))
             .max(255)
@@ -93,9 +93,9 @@ const ProfileForm = () => {
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
+            setStatus({ success: true });
+            setSubmitting(true);
             handleUpdate(values);
-            setStatus({ success: false });
-            setSubmitting(false);
           } catch (err) {
             console.error(err);
             setStatus({ success: false });

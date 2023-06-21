@@ -6,7 +6,6 @@ import { Box, IconButton, Menu, MenuItem, Tooltip } from '@mui/material';
 // project import
 
 // assets
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import languageList from 'Localization/languageList';
 import { useTranslation } from 'react-i18next';
 import LocalizationService from 'Localization/LocalizationService';
