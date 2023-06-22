@@ -54,7 +54,7 @@ const HeaderContent = () => {
           </IconButton>
         </Tooltip>
       )}
-      <Localization />
+      {/* <Localization /> */}
       <Notification />
       {!matchesXs && <Profile />}
       {matchesXs && <MobileSection />}
