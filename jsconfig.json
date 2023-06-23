@@ -6,6 +6,6 @@
     "module": "commonjs",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "public"]
+  "include": ["src/**/*", "public"],
+  "exclude": ["node_modules"]
 }

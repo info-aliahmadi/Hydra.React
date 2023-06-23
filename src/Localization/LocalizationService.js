@@ -1,4 +1,3 @@
-import { useTheme } from '@mui/material';
 import axios from 'axios';
 import CONFIG from 'config.js';
 import AuthenticationService from 'modules/auth/services/Authentication/AuthenticationService';
