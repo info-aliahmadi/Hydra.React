@@ -7,11 +7,10 @@ export const AuthenticationContext = React.createContext({
   getJwt: () => ({}),
   loginRedirect: () => ({}),
   navigateToDashboard: () => ({}),
-  isAuthenticated: () => ({}),
+  isAuthenticated: async () => ({}),
   refreshToken: () => ({}),
   logout: () => ({})
 });
-
 export const AuthenticationConsumer = AuthenticationContext.Consumer;
 
 export class AuthenticationProvider extends Component {

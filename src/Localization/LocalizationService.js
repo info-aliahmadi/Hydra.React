@@ -10,7 +10,7 @@ export default class LocalizationService {
   }
 
   getCurrentLanguage = async () => {
-    return new Promise((resolve, reject) => {
+    let result = new Promise((resolve, reject) => {
       this.authenticateService.isAuthenticated().then((isAuthenticate) => {
         if (isAuthenticate) {
           setAuthenticationHeader(this.authenticateService.getJwt());
@@ -32,6 +32,7 @@ export default class LocalizationService {
         }
       });
     });
+    return await result;
   };
 
   setCurrentLanguage = async (i18n, theme, lang) => {

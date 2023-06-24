@@ -10,14 +10,8 @@ function Authorize(props) {
   useEffect(() => {
     const authorizitionCheck = async () => {
       if (props.permission) {
-        isAuthorized(props.permission)
-          .then((isAuthorized) => {
-            setIsAuthorizedResult(isAuthorized);
-          })
-          .catch((error) => {
-            setIsAuthorizedResult(false);
-            console.log(error);
-          });
+        let result = await isAuthorized(props.permission);
+        setIsAuthorizedResult(result);
       }
     };
     authorizitionCheck();

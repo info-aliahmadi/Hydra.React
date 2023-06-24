@@ -1,47 +1,45 @@
-import React from 'react'; //const DashboardDefault = React.lazy(() => import("Demo/Dashboard/Default"));
-import AuthRoutes from 'modules/auth/routes/AuthRoutes';
-import CmsRoutes from 'modules/cms/routes/CmsRoutes';
+import React, { Suspense } from 'react'; //const DashboardDefault = React.lazy(() => import("Demo/Dashboard/Default"));
+
 import { Route } from 'react-router-dom';
-import Authenticate from 'modules/auth/services/Authentication/Authenticate';
 import MainLayout from 'layout/MainLayout';
 import MinimalLayout from 'layout/MinimalLayout';
+import Authorize from 'modules/auth/services/Authorization/Authorize';
+import AuthRoutes from 'modules/auth/routes/AuthRoutes';
+import CmsRoutes from 'modules/cms/routes/CmsRoutes';
+import Authenticate from 'modules/auth/services/Authentication/Authenticate';
 
 let collectedRoutes = [...AuthRoutes, ...CmsRoutes];
-
-// collect private routes with permission attribute
-const allPrivateRoutes = collectedRoutes
-  .filter((x) => x.permission)
-  .map((route) => {
-    return (
-      route.element && (
-        <Route key={route.key} path={route.path} element={<Authenticate permission={route.permission}>{route.element}</Authenticate>} />
-      )
-    );
-  });
-
-// collect private routes without permission attribute
-const allPublicRoutes = collectedRoutes
-  .filter((x) => !x.permission)
-  .map((route) => {
-    return route.element && <Route key={route.key} path={route.path} element={route.element} />;
-  });
-
 export const PrivateRoutes = (
   <Route
     key="MainLayoutKey"
     path="/"
     element={
-      <Authenticate justAuthenticate={true}>
-        <MainLayout />
+      <Authenticate>
+        <Suspense fallback="...is loading">
+          <MainLayout />
+        </Suspense>
       </Authenticate>
     }
   >
-    {allPrivateRoutes}
+    {collectedRoutes
+      .filter((x) => x.permission)
+      .map((route) => {
+        return (
+          route.element && (
+            <Route key={route.key} path={route.path} element={<Authorize permission={route.permission}>{route.element}</Authorize>} />
+          )
+        );
+      })}
   </Route>
 );
 
+// collect private routes without permission attribute
 export const PublicRoutes = (
   <Route key="MinimalLayoutKey" path="/" element={<MinimalLayout />}>
-    {allPublicRoutes}
+    {collectedRoutes
+      .filter((x) => !x.permission)
+      .map((route) => {
+        return route.element && <Route key={route.key} path={route.path} element={route.element} />;
+      })}
   </Route>
 );

@@ -1,5 +1,4 @@
 // ==============================|| THEME CONFIG  ||============================== //
-
 const CONFIG = {
   DEFAULT_PATH: '/dashboard',
   FONT_FAMILY: `'Public Sans', sans-serif`,
@@ -9,7 +8,7 @@ const CONFIG = {
   THEME_MODE_STORAGE_NAME: 'HydraThemeMode',
   PRESET_COLOR: 'default',
   THEME_DIRECTION: 'ltr',
-  API_BASEPATH: 'https://localhost:7134', // isDevelopment ? 'https://localhost:7134/': 'https://website.com', // application api basepath
+  API_BASEPATH: process.env.NODE_ENV === 'production' ? 'https://website.com' : 'https://localhost:7134', // application api basepath
   AVATAR_BASEPATH: 'https://localhost:7134/avatar/',
   LOGIN_API_PATH: 'https://localhost:7134/Auth/Login',
   REFRESH_TOKEN_API_PATH: 'https://localhost:7134/Auth/RefreshToken',

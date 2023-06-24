@@ -1,6 +1,5 @@
 import { StrictMode, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 
 // scroll bar
 import 'simplebar/src/simplebar.css';
@@ -12,30 +11,36 @@ import { Provider as ReduxProvider } from 'react-redux';
 import 'assets/third-party/apex-chart.css';
 
 // project import
-import App from './App';
-import { store } from 'store';
+
 import reportWebVitals from './reportWebVitals';
 import { AuthenticationProvider } from 'modules/auth/services/Authentication/AuthenticationProvider';
 import { AuthorizationProvider } from 'modules/auth/services/Authorization/AuthorizationProvider';
+import { BrowserRouter } from 'react-router-dom';
+import App from './App';
+import { store } from 'store';
 
 // ==============================|| MAIN - REACT DOM RENDER  ||============================== //
 
 const container = document.getElementById('root');
 const root = createRoot(container); // createRoot(container!) if you use TypeScript
 root.render(
-  <StrictMode>
-    <ReduxProvider store={store}>
-      <Suspense fallback="...is loading">
-        <AuthenticationProvider>
+  // <StrictMode>
+  <ReduxProvider store={store}>
+    <Suspense fallback="...is loading">
+      <AuthenticationProvider>
+        <Suspense fallback="...is loading">
           <AuthorizationProvider>
-            <BrowserRouter basename="/">
-              <App />
-            </BrowserRouter>
+            <Suspense fallback="...is loading">
+              <BrowserRouter basename="/">
+                <App />
+              </BrowserRouter>
+            </Suspense>
           </AuthorizationProvider>
-        </AuthenticationProvider>
-      </Suspense>
-    </ReduxProvider>
-  </StrictMode>
+        </Suspense>
+      </AuthenticationProvider>
+    </Suspense>
+  </ReduxProvider>
+  // </StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

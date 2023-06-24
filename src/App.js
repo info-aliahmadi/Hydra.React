@@ -1,12 +1,11 @@
 // project import
-import ThemeCustomization from 'themes';
-import ScrollTop from 'components/ScrollTop';
-import { PrivateRoutes, PublicRoutes } from 'routes/Routes';
-import { Routes } from 'react-router-dom';
-// import { LocalizationProvider } from 'Localization/LocalizationProvider';
-import './Localization/i18n';
 import { Suspense } from 'react';
-// import './Localization/i18n';
+import './Localization/i18n';
+import ThemeCustomization from 'themes';
+
+import ScrollTop from 'components/ScrollTop';
+import { Routes } from 'react-router-dom';
+import { PrivateRoutes, PublicRoutes } from 'routes/Routes';
 // ==============================|| APP - THEME, ROUTER, LOCAL  ||============================== //
 
 const App = () => {
@@ -23,5 +22,4 @@ const App = () => {
     </Suspense>
   );
 };
-
 export default App;

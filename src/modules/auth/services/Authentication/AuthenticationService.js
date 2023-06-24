@@ -64,7 +64,7 @@ export default class AuthenticationService {
   };
 
   isAuthenticated = async () => {
-    return new Promise((resolve) => {
+    let myPromise = new Promise((resolve) => {
       var token = this.storageService.getItem(CONFIG.AUTHENTICATION_STORAGE_NAME);
       if (token == null) {
         // var isRefreshedToken = this.refreshToken();
@@ -77,6 +77,7 @@ export default class AuthenticationService {
       const expired = Date.now() >= exp * 1000;
       return resolve(!expired);
     });
+    return await myPromise;
   };
 
   refreshToken = () => {

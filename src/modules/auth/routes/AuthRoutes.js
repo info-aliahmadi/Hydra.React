@@ -37,7 +37,7 @@ const AuthRoutes = [
   },
   {
     key: 'dashboard',
-    path: 'dashboard',
+    path: '/dashboard',
     permission: 'AUTH_GET.PERMISSION.LIST',
     element: <DashboardDefault />
   },

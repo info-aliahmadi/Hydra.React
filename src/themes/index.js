@@ -93,7 +93,7 @@ export default function ThemeCustomization({ children }) {
 
   return (
     <StyledEngineProvider injectFirst>
-      {direction == 'rtl' ? (
+      {direction === 'rtl' ? (
         <CacheProvider value={cacheRtl}>
           <ThemeProvider theme={themes}>
             <CssBaseline />
