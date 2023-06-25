@@ -6,7 +6,7 @@ import MainCard from 'components/MainCard';
 import TableCard from 'components/TableCard';
 import { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import MaterialTable from 'components/MaterialTable';
+import MaterialTable from 'components/MaterialTable/MaterialTable';
 import RoleService from 'modules/auth/services/Security/RoleService';
 
 // ===============================|| COLOR BOX ||=============================== //
@@ -19,15 +19,20 @@ function RoleList() {
     () => [
       {
         accessorKey: 'id',
-        header: '#'
+        header: '#',
+        type: 'number'
       },
       {
         accessorKey: 'name',
-        header: 'Role Name'
+        header: 'Role Name',
+        enableClickToCopy: true,
+        type: 'string'
+        // filterVariant: 'text' | 'select' | 'multi-select' | 'range' | 'range-slider' | 'checkbox',
       },
       {
         accessorKey: 'normalizedName',
-        header: 'Normalized Name'
+        header: 'Normalized Name',
+        type: 'string'
       }
     ],
     []
@@ -39,7 +44,7 @@ function RoleList() {
         <Grid item xs={12} sm={12} md={6} lg={6}>
           <MainCard title={t('pages.edit-profile')} codeHighlight>
             <TableCard>
-              <MaterialTable columns={columns} dataApi={service.getRoleList} />
+              <MaterialTable columns={columns} dataApi={service.getRoleList} enableRowActions enableGlobalFilter />
             </TableCard>
           </MainCard>
         </Grid>

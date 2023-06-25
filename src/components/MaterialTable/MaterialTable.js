@@ -8,11 +8,10 @@ import { IconButton, Tooltip } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 
-// import loc from './locales/fa/table.json';
 // ===============================|| COLOR BOX ||=============================== //
 
 function ReactTable(props) {
-  const [i18n] = useTranslation();
+  const [t, i18n] = useTranslation();
   const [tableLocale, setTableLocale] = useState(null);
   let currentLanguage = i18n.language;
 
@@ -24,10 +23,85 @@ function ReactTable(props) {
     pageSize: 10
   });
 
+  let numbersFields = props.columns.filter((x) => x.type === 'number');
+  let stringFields = props.columns.filter((x) => x.type === 'string');
+  let dateFields = props.columns.filter((x) => x.type === 'date');
+
+  let numberFilterMode = [
+    'equals',
+    'notEquals',
+    'between',
+    'betweenInclusive',
+    'greaterThan',
+    'greaterThanOrEqualTo',
+    'lessThan',
+    'lessThanOrEqualTo',
+    'empty',
+    'notEmpty'
+  ];
+  let stringFilterMode = ['equals', 'notEquals', 'contains', 'notContains', 'startsWith', 'endsWith', 'empty', 'notEmpty'];
+
+  let dateFilterMode = [
+    'equals',
+    'notEquals',
+    'between',
+    'betweenInclusive',
+    'greaterThan',
+    'greaterThanOrEqualTo',
+    'lessThan',
+    'lessThanOrEqualTo',
+    'empty',
+    'notEmpty'
+  ];
+  function setFilterMode() {
+    numbersFields.forEach((element) => {
+      element.columnFilterModeOptions = numberFilterMode;
+    });
+    stringFields.forEach((element) => {
+      element.columnFilterModeOptions = stringFilterMode;
+    });
+    dateFields.forEach((element) => {
+      element.columnFilterModeOptions = dateFilterMode;
+    });
+  }
+  setFilterMode();
+  function GetDefaultFilterFunc() {
+    let numbersDefaultFilters = numbersFields.map((x) => x.accessorKey);
+    let defaulFilters = {};
+    for (let i = 0; i < numbersDefaultFilters.length; i++) {
+      let fieldName = numbersDefaultFilters[i];
+      defaulFilters[fieldName] = 'equals';
+    }
+    let stringFieldsNames = stringFields.map((x) => x.accessorKey);
+    for (let i = 0; i < stringFieldsNames.length; i++) {
+      let fieldName = stringFieldsNames[i];
+      defaulFilters[fieldName] = 'contains';
+    }
+    let dateFieldsNames = dateFields.map((x) => x.accessorKey);
+    for (let i = 0; i < dateFieldsNames.length; i++) {
+      let fieldName = dateFieldsNames[i];
+      defaulFilters[fieldName] = 'equals';
+    }
+    return defaulFilters;
+  }
+
+  function setOperationFields(columnFilterF, columnFilters) {
+    let keys = Object.keys(columnFilterF);
+    for (let i = 0; i < keys.length; i++) {
+      let fieldName = keys[i];
+      let fieldValue = columnFilterF[fieldName];
+      let element = _.find(columnFilters, ['id', fieldName]);
+      element ? (element.operation = fieldValue) : undefined;
+    }
+  }
+
+  const [columnFilterFns, setColumnFilterFns] = useState(GetDefaultFilterFunc());
+
   const { data, isError, isFetching, isLoading, refetch } = useQuery({
     queryKey: [
       'table-data',
       columnFilters, //refetch when columnFilters changes
+      columnFilterFns, //refetch when columnFilters changes
       globalFilter, //refetch when globalFilter changes
       pagination.pageIndex, //refetch when pagination.pageIndex changes
       pagination.pageSize, //refetch when pagination.pageSize changes
@@ -35,8 +109,10 @@ function ReactTable(props) {
     ],
     queryFn: async () => {
       let searchParams = {};
-      searchParams['start'] = pagination.pageIndex * pagination.pageSize;
-      searchParams['size'] = pagination.pageSize;
+      searchParams['pageIndex'] = pagination.pageIndex;
+      searchParams['pageSize'] = pagination.pageSize;
+      setOperationFields(columnFilterFns, columnFilters);
+
       searchParams['filters'] = JSON.stringify(columnFilters ?? []);
       searchParams['globalFilter'] = globalFilter ?? '';
       searchParams['sorting'] = JSON.stringify(sorting ?? []);
@@ -46,9 +122,7 @@ function ReactTable(props) {
       }
 
       const response = await props.dataApi(JSON.stringify(searchParams));
-      debugger;
-      //const json = response.json();
-      return response;
+      return response.data;
     },
     keepPreviousData: true
   });
@@ -101,9 +175,13 @@ function ReactTable(props) {
     <>
       <MaterialReactTable
         columns={props?.columns}
-        data={data?.data ?? []} //data is undefined on first render
-        initialState={{ showColumnFilters: true }}
+        data={data?.items ?? []} //data is undefined on first render
+        initialState={{ showColumnFilters: false }}
+        enableColumnFilterModes
+        enableColumnOrdering
+        enablePinning
         manualFiltering
+        showSkeletons
         manualPagination
         manualSorting
         muiToolbarAlertBannerProps={
@@ -114,7 +192,9 @@ function ReactTable(props) {
               }
             : undefined
         }
+        positionToolbarAlertBanner="center"
         onColumnFiltersChange={setColumnFilters}
+        onColumnFilterFnsChange={setColumnFilterFns}
         onGlobalFilterChange={setGlobalFilter}
         onPaginationChange={setPagination}
         onSortingChange={setSorting}
@@ -125,9 +205,10 @@ function ReactTable(props) {
             </IconButton>
           </Tooltip>
         )}
-        rowCount={data?.meta?.totalRowCount ?? 0}
+        rowCount={data?.totalItems ?? 0}
         state={{
           columnFilters,
+          columnFilterFns,
           globalFilter,
           isLoading,
           pagination,
@@ -136,6 +217,7 @@ function ReactTable(props) {
           sorting
         }}
         localization={tableLocale}
+        {...props}
       />
     </>
   );
