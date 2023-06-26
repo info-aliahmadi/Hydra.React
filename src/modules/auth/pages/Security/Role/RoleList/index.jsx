@@ -1,52 +1,24 @@
 // material-ui
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
-import TableCard from 'components/TableCard';
-import { useMemo } from 'react';
+import RoleDataGrid from './RoleDataGrid';
 import { useTranslation } from 'react-i18next';
-import MaterialTable from 'components/MaterialTable/MaterialTable';
-import RoleService from 'modules/auth/services/Security/RoleService';
-
 // ===============================|| COLOR BOX ||=============================== //
 
 function RoleList() {
   const [t] = useTranslation();
-  const service = new RoleService();
-
-  const columns = useMemo(
-    () => [
-      {
-        accessorKey: 'id',
-        header: '#',
-        type: 'number'
-      },
-      {
-        accessorKey: 'name',
-        header: 'Role Name',
-        enableClickToCopy: true,
-        type: 'string'
-        // filterVariant: 'text' | 'select' | 'multi-select' | 'range' | 'range-slider' | 'checkbox',
-      },
-      {
-        accessorKey: 'normalizedName',
-        header: 'Normalized Name',
-        type: 'string'
-      }
-    ],
-    []
-  );
-
   return (
     <>
-      <Grid container spacing={0} justifyContent="center">
-        <Grid item xs={12} sm={12} md={6} lg={6}>
-          <MainCard title={t('pages.edit-profile')} codeHighlight>
-            <TableCard>
-              <MaterialTable columns={columns} dataApi={service.getRoleList} enableRowActions enableGlobalFilter />
-            </TableCard>
-          </MainCard>
+      <Grid container justifyContent="center" direction="row" alignItems="flex-start">
+        <Grid container spacing={3} item xs={12} sm={12} md={6} lg={6} direction="column">
+          <Grid item>
+            <Typography variant="h5">{t('pages.roles')}</Typography>
+          </Grid>
+          <Grid item>
+            <RoleDataGrid />
+          </Grid>
         </Grid>
       </Grid>
     </>

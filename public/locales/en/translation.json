@@ -17,14 +17,22 @@
     "ant-icons": "Icons",
     "support": "Support",
     "sample-page": "Sample Page",
-    "documentation": "Documentation"
+    "documentation": "Documentation",
+    "roles": "Roles",
+    "permissions": "Permissions",
+    "access": "Access"
   },
   "pages": {
     "edit-profile": "Edit Profile",
     "change-password": "Change Password",
     "language": "Language",
     "account-settings": "Account Settings",
-    "history": "History"
+    "roles": "Roles",
+    "permissions": "Permissions",
+    "access": "Access",
+    "cards": {
+      "roles-list": "Roles List"
+    }
   },
   "fields": {
     "fullname": "Fullname",
@@ -35,7 +43,11 @@
     "phone-number": "Phone Number",
     "old-password": "Old Password",
     "confirm-password": "Confirm Password",
-    "new-password": "New Password"
+    "new-password": "New Password",
+    "role": {
+      "name": "Name",
+      "normalizedname": "Normalized Name"
+    }
   },
   "buttons": {
     "submit": "Submit",
@@ -44,7 +56,11 @@
     "edit": "Edit",
     "delete": "Delete",
     "detail": "Detail",
-    "change-password": "Change Password"
+    "change-password": "Change Password",
+    "role": {
+      "add": "Add New Role",
+      "edit": "Edit Role"
+    }
   },
   "validation": {
     "required-userName": "Userame is required",
@@ -52,7 +68,11 @@
     "required-email": "Email is required",
     "required-old-password": "Required Old Password",
     "required-confirm-password": "Required Confirm Password",
-    "required-new-password": "Required New Password"
+    "required-new-password": "Required New Password",
+    "role": {
+      "required-role-name": "Role name Is Required",
+      "maxlength-role-normalizedname": "Max Length is 255 Characters"
+    }
   },
   "tooltips": {
     "switch-to-darkmode": "Switch to Dark Theme",

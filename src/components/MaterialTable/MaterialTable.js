@@ -2,19 +2,25 @@
 
 // project import
 import { MaterialReactTable } from 'material-react-table';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconButton, Tooltip } from '@mui/material';
+import { Button, IconButton, Tooltip } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+// import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 
 // ===============================|| COLOR BOX ||=============================== //
 
-function ReactTable(props) {
+function MaterialTable(props) {
   const [t, i18n] = useTranslation();
   const [tableLocale, setTableLocale] = useState(null);
   let currentLanguage = i18n.language;
+  //data and fetching state
+  const [data, setData] = useState([]);
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRefetching, setIsRefetching] = useState(false);
 
+  //table state
   const [columnFilters, setColumnFilters] = useState([]);
   const [globalFilter, setGlobalFilter] = useState('');
   const [sorting, setSorting] = useState([]);
@@ -64,7 +70,6 @@ function ReactTable(props) {
       element.columnFilterModeOptions = dateFilterMode;
     });
   }
-  setFilterMode();
   function GetDefaultFilterFunc() {
     let numbersDefaultFilters = numbersFields.map((x) => x.accessorKey);
     let defaulFilters = {};
@@ -94,20 +99,16 @@ function ReactTable(props) {
       element ? (element.operation = fieldValue) : undefined;
     }
   }
-
   const [columnFilterFns, setColumnFilterFns] = useState(GetDefaultFilterFunc());
+  useEffect(() => {
+    debugger;
+    async function fetchData() {
+      if (!data.length) {
+        setIsLoading(true);
+      } else {
+        setIsRefetching(true);
+      }
 
-  const { data, isError, isFetching, isLoading, refetch } = useQuery({
-    queryKey: [
-      'table-data',
-      columnFilters, //refetch when columnFilters changes
-      columnFilterFns, //refetch when columnFilters changes
-      globalFilter, //refetch when globalFilter changes
-      pagination.pageIndex, //refetch when pagination.pageIndex changes
-      pagination.pageSize, //refetch when pagination.pageSize changes
-      sorting //refetch when sorting changes
-    ],
-    queryFn: async () => {
       let searchParams = {};
       searchParams['pageIndex'] = pagination.pageIndex;
       searchParams['pageSize'] = pagination.pageSize;
@@ -120,16 +121,26 @@ function ReactTable(props) {
         let surplusSearchParams = props.searchParams;
         searchParams = { ...searchParams, surplusSearchParams };
       }
-
-      const response = await props.dataApi(JSON.stringify(searchParams));
-      return response.data;
-    },
-    keepPreviousData: true
-  });
+      try {
+        const response = await props.dataApi(JSON.stringify(searchParams));
+        setData(response.data);
+      } catch (error) {
+        setIsError(true);
+        console.error(error);
+        return;
+      }
+      setIsError(false);
+      setIsLoading(false);
+      setIsRefetching(false);
+    }
+    fetchData();
+  }, [columnFilters, globalFilter, pagination.pageIndex, pagination.pageSize, sorting]);
 
   const supportedLanguage = ['de', 'en', 'es', 'fa', 'fr', 'it', 'nl', 'pt'];
 
   useEffect(() => {
+    setFilterMode();
+
     if (supportedLanguage.find((x) => x == currentLanguage)) {
       let loadedLanguage;
       switch (currentLanguage) {
@@ -171,6 +182,9 @@ function ReactTable(props) {
         });
     }
   }, []);
+  const handleNewRow = () => {
+    setIsRefetching(true);
+  };
   return (
     <>
       <MaterialReactTable
@@ -179,7 +193,7 @@ function ReactTable(props) {
         initialState={{ showColumnFilters: false }}
         enableColumnFilterModes
         enableColumnOrdering
-        enablePinning
+        enablePinning={props?.enablePinning ? true : false}
         manualFiltering
         showSkeletons
         manualPagination
@@ -198,13 +212,17 @@ function ReactTable(props) {
         onGlobalFilterChange={setGlobalFilter}
         onPaginationChange={setPagination}
         onSortingChange={setSorting}
-        renderTopToolbarCustomActions={() => (
-          <Tooltip arrow title="Refresh Data">
-            <IconButton onClick={() => refetch()}>
-              <RefreshIcon />
-            </IconButton>
-          </Tooltip>
-        )}
+        enableRowActions={props?.enableRowActions ? true : false}
+        renderRowActions={props?.renderRowActions && props.renderRowActions}
+        renderTopToolbarCustomActions={
+          props?.renderTopToolbarCustomActions
+            ? props.renderTopToolbarCustomActions
+            : () => (
+                <Button color="primary" onClick={() => handleNewRow()} variant="contained">
+                  {t('buttons.role.add')}
+                </Button>
+              )
+        }
         rowCount={data?.totalItems ?? 0}
         state={{
           columnFilters,
@@ -213,21 +231,13 @@ function ReactTable(props) {
           isLoading,
           pagination,
           showAlertBanner: isError,
-          showProgressBars: isFetching,
+          showProgressBars: isRefetching,
           sorting
         }}
         localization={tableLocale}
-        {...props}
       />
     </>
   );
 }
-const queryClient = new QueryClient();
 
-const MaterialTable = (props) => (
-  <QueryClientProvider client={queryClient}>
-    <ReactTable {...props} />
-  </QueryClientProvider>
-);
-
-export default MaterialTable;
+export default React.memo(MaterialTable);

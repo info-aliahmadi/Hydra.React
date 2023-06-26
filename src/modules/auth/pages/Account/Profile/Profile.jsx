@@ -1,5 +1,5 @@
 // material-ui
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
@@ -12,11 +12,16 @@ function Profile() {
   const [t] = useTranslation();
   return (
     <>
-      <Grid container spacing={0} justifyContent="center">
-        <Grid item xs={12} sm={12} md={6} lg={6}>
-          <MainCard title={t('pages.edit-profile')} codeHighlight>
-            <ProfileForm />
-          </MainCard>
+      <Grid container justifyContent="center" direction="row" alignItems="flex-start">
+        <Grid container spacing={3} item xs={12} sm={12} md={6} lg={6} direction="column">
+          <Grid item>
+            <Typography variant="h5">{t('pages.edit-profile')}</Typography>
+          </Grid>
+          <Grid item>
+            <MainCard codeHighlight>
+              <ProfileForm />
+            </MainCard>
+          </Grid>
         </Grid>
       </Grid>
     </>

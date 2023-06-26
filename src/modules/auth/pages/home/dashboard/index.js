@@ -36,6 +36,7 @@ import avatar3 from 'assets/images/users/avatar-3.png';
 import avatar4 from 'assets/images/users/avatar-4.png';
 import { useTranslation } from 'react-i18next';
 import LocalizationService from 'Localization/LocalizationService';
+import ChildComponent from './ChildComponent';
 
 // avatar style
 const avatarSX = {
@@ -78,37 +79,27 @@ const lngs = [
 
 const DashboardDefault = () => {
   const [t, i18n] = useTranslation();
-
+  const [state, setState] = useState();
   const changeLanguage = (lng) => {
     let locService = new LocalizationService();
     locService.setCurrentLanguage(i18n, lng);
   };
-
+  const clicked = (lng) => {
+    setState(1);
+  };
   const [value, setValue] = useState('today');
   const [slot, setSlot] = useState('week');
 
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
+     
       {/* row 1 */}
       <Grid item xs={12} sx={{ mb: -2.25 }}>
         <Typography variant="h5">Dashboard</Typography>
+        <Button onClick={() => clicked()}>Click Me</Button>
+      <ChildComponent />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
-        <div>
-          <button type="button" onClick={() => changeLanguage('fr')}>
-            fr
-          </button>
-          <button type="button" onClick={() => changeLanguage('en')}>
-            en
-          </button>
-        </div>
-        {/* <Button onClick={changeLang}>Change Lang</Button> */}
-        <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-        <p>{t('title')}</p>
-        <p>{t('description.part1')}</p>
-        <CircularProgress color="secondary" />
-        <CircularProgress color="success" />
-        <CircularProgress color="inherit" />
         <AnalyticEcommerce title="Total Page Views" count="4,42,236" percentage={59.3} extra="35,000" />
       </Grid>
       <Grid item xs={12} sm={6} md={4} lg={3}>
