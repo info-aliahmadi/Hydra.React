@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function ChildComponent(props) {
+  debugger;
+  const [tableLocale, setTableLocale] = useState();
   debugger;
   return <div>Hello</div>;
 }

@@ -55,10 +55,12 @@ export default class RoleService {
     });
   };
   deleteRole = async (roleId) => {
+    debugger;
     return new Promise((resolve, reject) => {
       axios
         .get(CONFIG.API_BASEPATH + '/auth/deleteRole', { params: { roleId: roleId } })
         .then((response) => {
+          debugger;
           resolve(response.data);
         })
         .catch((error) => {

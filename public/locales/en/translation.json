@@ -59,7 +59,8 @@
     "change-password": "Change Password",
     "role": {
       "add": "Add New Role",
-      "edit": "Edit Role"
+      "edit": "Edit Role",
+      "delete": "Delete Role"
     }
   },
   "validation": {
@@ -79,10 +80,22 @@
     "switch-to-lightmode": "Switch to Light Theme",
     "edit-avatar": "Edit Avatar"
   },
-  "alert": {
+  "notification": {
     "success": "Success!",
     "success-description": "The operation done successfully.",
     "error": "Error!",
     "error-description": "The operation failed."
+  },
+  "dialog": {
+    "add": {
+      "title": "Add New {{item}}"
+    },
+    "edit": {
+      "title": "Edit {{item}}"
+    },
+    "delete": {
+      "title": "Delete {{item}}",
+      "description": "Are You Sure to Delete This Item Permanently?"
+    }
   }
 }

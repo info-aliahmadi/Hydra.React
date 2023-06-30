@@ -54,8 +54,8 @@ const Palette = (mode) => {
             // palette values for dark mode
 
             common: {
-              black: '#1a1a1a',
-              white: '#bfbfbf'
+              black: '#111111',
+              white: '#dadada'
             },
             ...paletteColor,
             text: {

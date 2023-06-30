@@ -18,6 +18,7 @@ import TableCell from './TableCell';
 import Tabs from './Tabs';
 import Typography from './Typography';
 import Tooltip from './Tooltip';
+import DialogContent from './DialogContent';
 
 // ==============================|| OVERRIDES - MAIN ||============================== //
 
@@ -38,6 +39,7 @@ export default function ComponentsOverrides(theme) {
     TableCell(theme),
     Tabs(),
     Typography(),
-    Tooltip(theme)
+    Tooltip(theme),
+    DialogContent(theme)
   );
 }

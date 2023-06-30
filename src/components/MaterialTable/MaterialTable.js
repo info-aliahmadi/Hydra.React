@@ -2,7 +2,7 @@
 
 // project import
 import { MaterialReactTable } from 'material-react-table';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, IconButton, Tooltip } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -10,7 +10,16 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 
 // ===============================|| COLOR BOX ||=============================== //
 
-function MaterialTable(props) {
+function MaterialTable({
+  columns,
+  dataApi,
+  refetch,
+  addSearchParams,
+  enablePinning,
+  enableRowActions,
+  renderRowActions,
+  renderTopToolbarCustomActions
+}) {
   const [t, i18n] = useTranslation();
   const [tableLocale, setTableLocale] = useState(null);
   let currentLanguage = i18n.language;
@@ -29,9 +38,9 @@ function MaterialTable(props) {
     pageSize: 10
   });
 
-  let numbersFields = props.columns.filter((x) => x.type === 'number');
-  let stringFields = props.columns.filter((x) => x.type === 'string');
-  let dateFields = props.columns.filter((x) => x.type === 'date');
+  let numbersFields = columns.filter((x) => x.type === 'number');
+  let stringFields = columns.filter((x) => x.type === 'string');
+  let dateFields = columns.filter((x) => x.type === 'date');
 
   let numberFilterMode = [
     'equals',
@@ -101,7 +110,6 @@ function MaterialTable(props) {
   }
   const [columnFilterFns, setColumnFilterFns] = useState(GetDefaultFilterFunc());
   useEffect(() => {
-    debugger;
     async function fetchData() {
       if (!data.length) {
         setIsLoading(true);
@@ -117,12 +125,11 @@ function MaterialTable(props) {
       searchParams['filters'] = JSON.stringify(columnFilters ?? []);
       searchParams['globalFilter'] = globalFilter ?? '';
       searchParams['sorting'] = JSON.stringify(sorting ?? []);
-      if (props.searchParams) {
-        let surplusSearchParams = props.searchParams;
-        searchParams = { ...searchParams, surplusSearchParams };
+      if (addSearchParams) {
+        searchParams = { ...searchParams, addSearchParams };
       }
       try {
-        const response = await props.dataApi(JSON.stringify(searchParams));
+        const response = await dataApi(JSON.stringify(searchParams));
         setData(response.data);
       } catch (error) {
         setIsError(true);
@@ -134,7 +141,7 @@ function MaterialTable(props) {
       setIsRefetching(false);
     }
     fetchData();
-  }, [columnFilters, globalFilter, pagination.pageIndex, pagination.pageSize, sorting]);
+  }, [columnFilters, globalFilter, pagination.pageIndex, pagination.pageSize, sorting, refetch]);
 
   const supportedLanguage = ['de', 'en', 'es', 'fa', 'fr', 'it', 'nl', 'pt'];
 
@@ -182,18 +189,18 @@ function MaterialTable(props) {
         });
     }
   }, []);
-  const handleNewRow = () => {
+  const handleRefresh = () => {
     setIsRefetching(true);
   };
   return (
     <>
       <MaterialReactTable
-        columns={props?.columns}
+        columns={columns}
         data={data?.items ?? []} //data is undefined on first render
         initialState={{ showColumnFilters: false }}
         enableColumnFilterModes
         enableColumnOrdering
-        enablePinning={props?.enablePinning ? true : false}
+        enablePinning={enablePinning ? true : false}
         manualFiltering
         showSkeletons
         manualPagination
@@ -212,14 +219,14 @@ function MaterialTable(props) {
         onGlobalFilterChange={setGlobalFilter}
         onPaginationChange={setPagination}
         onSortingChange={setSorting}
-        enableRowActions={props?.enableRowActions ? true : false}
-        renderRowActions={props?.renderRowActions && props.renderRowActions}
+        enableRowActions={enableRowActions ? true : false}
+        renderRowActions={renderRowActions && renderRowActions}
         renderTopToolbarCustomActions={
-          props?.renderTopToolbarCustomActions
-            ? props.renderTopToolbarCustomActions
+          renderTopToolbarCustomActions
+            ? renderTopToolbarCustomActions
             : () => (
-                <Button color="primary" onClick={() => handleNewRow()} variant="contained">
-                  {t('buttons.role.add')}
+                <Button color="primary" onClick={() => handleRefresh()} variant="contained">
+                  Refresh
                 </Button>
               )
         }
@@ -240,4 +247,4 @@ function MaterialTable(props) {
   );
 }
 
-export default React.memo(MaterialTable);
+export default memo(MaterialTable);

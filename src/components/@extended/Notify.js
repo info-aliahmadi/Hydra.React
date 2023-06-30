@@ -36,14 +36,14 @@ export default function Notify(props) {
           data-i18n="[html]content.body"
         >
           <Strong>
-            {props.notify.title ? t(props.notify.title) : props.notify.type == 'error' ? t('alert.error') : t('alert.success')}
+            {props.notify.title ? t(props.notify.title) : props.notify.type == 'error' ? t('notification.error') : t('notification.success')}
           </Strong>
 
           {props.notify.description
             ? t(props.notify.description)
             : props.notify.type == 'error'
-            ? t('alert.error-description')
-            : t('alert.success-description')}
+            ? t('notification.error-description')
+            : t('notification.success-description')}
         </Alert>
       </Snackbar>
     </>
