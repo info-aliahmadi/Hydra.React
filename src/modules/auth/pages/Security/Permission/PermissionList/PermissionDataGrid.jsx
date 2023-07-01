@@ -1,5 +1,5 @@
 // material-ui
-import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
+import { Box, Button, IconButton, Tooltip,Typography } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
@@ -7,17 +7,16 @@ import TableCard from 'components/TableCard';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MaterialTable from 'components/MaterialTable/MaterialTable';
-import RoleService from 'modules/auth/services/Security/RoleService';
+import PermissionService from 'modules/auth/services/Security/PermissionService';
 import { Delete } from '@mui/icons-material';
 import { Edit } from '@mui/icons-material';
-import AddOrEditRole from '../AddOrEditRole';
-import DeleteRole from '../DeleteRole';
-import PermissionRoleDataGrid from '../../PermissionRole/PermissionRoleList/PermissionRoleDataGrid';
+import AddOrEditPermission from '../AddOrEditPermission';
+import DeletePermission from '../DeletePermission';
 // ===============================|| COLOR BOX ||=============================== //
 
-function RoleDataGrid() {
+function PermissionDataGrid() {
   const [t] = useTranslation();
-  const service = new RoleService();
+  const service = new PermissionService();
   const [isNew, setIsNew] = useState(true);
   const [rowId, setRowId] = useState(0);
   const [open, setOpen] = useState(false);
@@ -33,7 +32,7 @@ function RoleDataGrid() {
       },
       {
         accessorKey: 'name',
-        header: 'Role Name',
+        header: 'Permission Name',
         enableClickToCopy: true,
         type: 'string'
         // filterVariant: 'text' | 'select' | 'multi-select' | 'range' | 'range-slider' | 'checkbox',
@@ -53,9 +52,9 @@ function RoleDataGrid() {
     setOpen(true);
   };
   const handleEditRow = (row) => {
-    let roleId = row.getValue('id');
+    let permissionId = row.getValue('id');
     setIsNew(false);
-    setRowId(roleId);
+    setRowId(permissionId);
     setOpen(true);
   };
   const handleDeleteRow = (row) => {
@@ -66,18 +65,17 @@ function RoleDataGrid() {
     setRefetch(Date.now());
   };
 
-  const handleRoleList = useCallback(async (x) => {
-    return await service.getRoleList(x);
+  const handlePermissionList = useCallback(async (x) => {
+    return await service.getPermissionList(x);
   }, []);
   const AddRow = useCallback(
     () => (
       <Button color="primary" onClick={handleNewRow} variant="contained">
-        {t('buttons.role.add')}
+        {t('buttons.permission.add')}
       </Button>
     ),
     []
   );
-
   const DeleteOrEdit = useCallback(
     ({ row }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
@@ -97,23 +95,22 @@ function RoleDataGrid() {
   );
   return (
     <>
-      <MainCard title={t('pages.cards.roles-list')} codeHighlight>
+      <MainCard title={t('pages.cards.permissions-list')} codeHighlight>
         <TableCard>
           <MaterialTable
             refetch={refetch}
             columns={columns}
-            dataApi={handleRoleList}
+            dataApi={handlePermissionList}
             enableRowActions
             renderRowActions={DeleteOrEdit}
             renderTopToolbarCustomActions={AddRow}
-            renderDetailPanel={({ row }) => <PermissionRoleDataGrid dataSet={row.original.permissions} roleId={row.getValue('id')} />}
           />
         </TableCard>
       </MainCard>
-      <AddOrEditRole isNew={isNew} roleId={rowId} open={open} setOpen={setOpen} refetch={handleRefetch} />
-      <DeleteRole row={row} open={openDelete} setOpen={setOpenDelete} refetch={handleRefetch} />
+      <AddOrEditPermission isNew={isNew} permissionId={rowId} open={open} setOpen={setOpen} refetch={handleRefetch} />
+      <DeletePermission row={row} open={openDelete} setOpen={setOpenDelete} refetch={handleRefetch} />
     </>
   );
 }
 
-export default RoleDataGrid;
+export default PermissionDataGrid;

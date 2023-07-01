@@ -31,7 +31,8 @@
     "permissions": "Permissions",
     "access": "Access",
     "cards": {
-      "roles-list": "Roles List"
+      "roles-list": "Roles List",
+      "permissions-list": "Permissions List"
     }
   },
   "fields": {
@@ -45,6 +46,10 @@
     "confirm-password": "Confirm Password",
     "new-password": "New Password",
     "role": {
+      "name": "Name",
+      "normalizedname": "Normalized Name"
+    },
+    "permission": {
       "name": "Name",
       "normalizedname": "Normalized Name"
     }
@@ -61,6 +66,12 @@
       "add": "Add New Role",
       "edit": "Edit Role",
       "delete": "Delete Role"
+    },
+    "permission": {
+      "add": "Add New Permission",
+      "edit": "Edit Permission",
+      "delete": "Delete Permission",
+      "add-permission-to-role": "Add Permission"
     }
   },
   "validation": {
@@ -73,6 +84,10 @@
     "role": {
       "required-role-name": "Role name Is Required",
       "maxlength-role-normalizedname": "Max Length is 255 Characters"
+    },
+    "permission": {
+      "required-permission-name": "Permission name Is Required",
+      "maxlength-permission-normalizedname": "Max Length is 255 Characters"
     }
   },
   "tooltips": {

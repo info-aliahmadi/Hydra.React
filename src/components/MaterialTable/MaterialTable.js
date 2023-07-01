@@ -13,18 +13,36 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 function MaterialTable({
   columns,
   dataApi,
+  dataSet,
   refetch,
   addSearchParams,
+  enableColumnActions,
+  enableTopToolbar,
+  enableColumnFilters,
+  enablePagination,
+  enableSorting,
+  enableColumnOrdering,
+  enableBottomToolbar,
+  enableDensityToggle,
+  enableFullScreenToggle,
+  enableGlobalFilterModes,
+
+  enableColumnFilterModes,
+  manualFiltering,
+  manualPagination,
+  manualSorting,
+
   enablePinning,
   enableRowActions,
   renderRowActions,
-  renderTopToolbarCustomActions
+  renderTopToolbarCustomActions,
+  renderDetailPanel
 }) {
   const [t, i18n] = useTranslation();
   const [tableLocale, setTableLocale] = useState(null);
   let currentLanguage = i18n.language;
   //data and fetching state
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(dataSet ? dataSet : []);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
@@ -140,7 +158,11 @@ function MaterialTable({
       setIsLoading(false);
       setIsRefetching(false);
     }
-    fetchData();
+    if (dataApi) {
+      fetchData();
+    } else {
+      setData(dataSet);
+    }
   }, [columnFilters, globalFilter, pagination.pageIndex, pagination.pageSize, sorting, refetch]);
 
   const supportedLanguage = ['de', 'en', 'es', 'fa', 'fr', 'it', 'nl', 'pt'];
@@ -196,15 +218,24 @@ function MaterialTable({
     <>
       <MaterialReactTable
         columns={columns}
-        data={data?.items ?? []} //data is undefined on first render
+        data={dataApi ? data?.items ?? [] : data} //data is undefined on first render
         initialState={{ showColumnFilters: false }}
-        enableColumnFilterModes
-        enableColumnOrdering
-        enablePinning={enablePinning ? true : false}
-        manualFiltering
+        enableTopToolbar={(enableTopToolbar && true) ?? true}
+        enableColumnActions={(enableColumnActions && true) ?? true}
+        enableColumnFilters={(enableColumnFilters && true) ?? true}
+        enablePagination={(enablePagination && true) ?? true}
+        enableSorting={(enableSorting && true) ?? true}
+        enableColumnOrdering={(enableColumnOrdering && true) ?? true}
+        enableBottomToolbar={(enableBottomToolbar && true) ?? true}
+        enablePinning={(enablePinning && true) ?? true}
+        enableDensityToggle={(enableDensityToggle && true) ?? true}
+        enableFullScreenToggle={(enableFullScreenToggle && true) ?? true}
+        enableGlobalFilterModes={(enableGlobalFilterModes && true) ?? true}
+        enableColumnFilterModes={(enableColumnFilterModes && true) ?? true}
+        manualFiltering={(manualFiltering && true) ?? true}
         showSkeletons
-        manualPagination
-        manualSorting
+        manualPagination={(manualPagination && true) ?? true}
+        manualSorting={(manualSorting && true) ?? true}
         muiToolbarAlertBannerProps={
           isError
             ? {
@@ -230,7 +261,8 @@ function MaterialTable({
                 </Button>
               )
         }
-        rowCount={data?.totalItems ?? 0}
+        renderDetailPanel={renderDetailPanel && renderDetailPanel}
+        rowCount={dataApi ? data?.totalItems ?? 0 : data?.length}
         state={{
           columnFilters,
           columnFilterFns,
