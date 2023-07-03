@@ -8,11 +8,11 @@ import CloseIcon from '@mui/icons-material/Close';
 // assets
 import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
-import PermissionRoleService from 'modules/auth/services/Security/PermissionRoleService';
+import UsersService from 'modules/auth/services/Users/UsersService';
 
-const DeletePermissionRole = ({ row, roleId, permissionRow, open, setOpen, data, setData, refetch }) => {
+const DeleteUser = ({ row, open, setOpen, refetch }) => {
   const [t] = useTranslation();
-  let permissionService = new PermissionRoleService();
+  let userService = new UsersService();
   const [notify, setNotify] = useState({ open: false });
 
   const onClose = () => {
@@ -20,16 +20,13 @@ const DeletePermissionRole = ({ row, roleId, permissionRow, open, setOpen, data,
   };
 
   const handleSubmit = () => {
-    let permissionId = permissionRow.original.id;
-    permissionService
-      .deletePermissionRole(permissionId, roleId)
+    let userId = row.getValue('id');
+    userService
+      .deleteUser(userId)
       .then(() => {
-        setNotify({ open: true });
-        data.splice(permissionRow.index, 1);
-        setData([...data]);
-        row.original.permissions = [...data];
-        refetch();
         onClose();
+        setNotify({ open: true });
+        refetch();
       })
       .catch((error) => {
         setNotify({ open: true, type: 'error', description: error.message });
@@ -55,7 +52,7 @@ const DeletePermissionRole = ({ row, roleId, permissionRow, open, setOpen, data,
       <Notify notify={notify} setNotify={setNotify}></Notify>
       <Dialog open={open} onClose={onClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         <DialogTitle id="alert-dialog-title">
-          <Typography variant="h3"> {t('buttons.permission.delete')}</Typography>
+          <Typography variant="h3"> {t('buttons.user.delete')}</Typography>
           <CloseDialog />
         </DialogTitle>
         <DialogContent>
@@ -75,4 +72,4 @@ const DeletePermissionRole = ({ row, roleId, permissionRow, open, setOpen, data,
   );
 };
 
-export default DeletePermissionRole;
+export default DeleteUser;

@@ -1,5 +1,5 @@
 // material-ui
-import { Box, Button, Grid, IconButton, Tooltip } from '@mui/material';
+import { Box, Button, FormHelperText, Grid, IconButton, Tooltip } from '@mui/material';
 
 // project import
 import { useCallback, useMemo, useState } from 'react';
@@ -9,15 +9,20 @@ import { Delete } from '@mui/icons-material';
 import DeletePermissionRole from '../DeletePermissionRole';
 import PermissionAutoComplete from '../../Permission/PermissionAutoComplete';
 import PermissionRoleService from 'modules/auth/services/Security/PermissionRoleService';
+import Notify from 'components/@extended/Notify';
 // ===============================|| COLOR BOX ||=============================== //
 
-function PermissionRoleDataGrid({ roleId, dataSet }) {
+function PermissionRoleDataGrid({ row }) {
   const [t] = useTranslation();
-  const [data, setData] = useState(() => dataSet);
+  const [data, setData] = useState(() => row.original.permissions);
   const [permissionId, setPermissionId] = useState();
   const [openDelete, setOpenDelete] = useState(false);
-  const [row, setRow] = useState({});
+  const [notify, setNotify] = useState(false);
   const [refetch, setRefetch] = useState();
+  const [permissionRow, setPermissionRow] = useState();
+
+  let roleId = row.original.id;
+
   const columns = useMemo(
     () => [
       {
@@ -37,16 +42,27 @@ function PermissionRoleDataGrid({ roleId, dataSet }) {
   );
 
   const handleNewRow = () => {
-    debugger;
+    if (!(permissionId > 0)) {
+      setPermissionId(0);
+      return;
+    }
     let permissionRoleService = new PermissionRoleService();
-    permissionRoleService.addPermissionRole(permissionId, roleId).then((permission) => {
-      data.push(permission?.data);
-      setData([...data]);
-      handleRefetch();
-    });
+    permissionRoleService
+      .addPermissionRole(permissionId, roleId)
+      .then((permission) => {
+        data.push(permission?.data);
+        setData([...data]);
+        row.original.permissions = [...data];
+        handleRefetch();
+        setPermissionId(null);
+        setNotify({ open: true });
+      })
+      .catch((error) => {
+        setNotify({ open: true, type: 'error', description: error });
+      });
   };
   const handleDeleteRow = (row) => {
-    setRow(row);
+    setPermissionRow(row);
     setOpenDelete(true);
   };
   const handleRefetch = () => {
@@ -67,16 +83,20 @@ function PermissionRoleDataGrid({ roleId, dataSet }) {
   );
   return (
     <>
+      <Notify notify={notify} setNotify={setNotify}></Notify>
       <Grid container spacing={3} direction="row">
-        <Grid item md={2}>
-          <Button color="primary" onClick={handleNewRow} variant="contained">
+        <Grid item xd={4} sm={4} md={3} lg={3}>
+          <Button color="warning" onClick={handleNewRow} variant="outlined" sx={{ marginTop: '5px' }}>
             {t('buttons.permission.add-permission-to-role')}
           </Button>
         </Grid>
-        <Grid item md={6}>
+        <Grid item xd={8} sm={6} md={6} lg={6}>
           <PermissionAutoComplete value={permissionId} setValue={setPermissionId} />
+          <FormHelperText error id="helper-text-name">
+            {permissionId == 0 ? t('validation.permission.required-permission-name') : ''}
+          </FormHelperText>
         </Grid>
-        <Grid item md={12}>
+        <Grid item xd={12} sm={12} md={12}>
           <MaterialTable
             refetch={refetch}
             columns={columns}
@@ -101,10 +121,11 @@ function PermissionRoleDataGrid({ roleId, dataSet }) {
 
       <DeletePermissionRole
         row={row}
+        permissionRow={permissionRow}
         roleId={roleId}
         open={openDelete}
         setOpen={setOpenDelete}
-        dataSet={data}
+        data={data}
         setData={setData}
         refetch={handleRefetch}
       />

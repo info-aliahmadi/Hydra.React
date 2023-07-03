@@ -4,7 +4,7 @@
 import { MaterialReactTable } from 'material-react-table';
 import { useEffect, useState, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, IconButton, Tooltip } from '@mui/material';
+import { Button, Checkbox, IconButton, Tooltip } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 // import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 
@@ -22,6 +22,7 @@ function MaterialTable({
   enablePagination,
   enableSorting,
   enableColumnOrdering,
+  enableColumnResizing,
   enableBottomToolbar,
   enableDensityToggle,
   enableFullScreenToggle,
@@ -36,6 +37,7 @@ function MaterialTable({
   enableRowActions,
   renderRowActions,
   renderTopToolbarCustomActions,
+  renderRowActionMenuItems,
   renderDetailPanel
 }) {
   const [t, i18n] = useTranslation();
@@ -58,6 +60,7 @@ function MaterialTable({
 
   let numbersFields = columns.filter((x) => x.type === 'number');
   let stringFields = columns.filter((x) => x.type === 'string');
+  let booleanFields = columns.filter((x) => x.type === 'boolean');
   let dateFields = columns.filter((x) => x.type === 'date');
 
   let numberFilterMode = [
@@ -73,6 +76,8 @@ function MaterialTable({
     'notEmpty'
   ];
   let stringFilterMode = ['equals', 'notEquals', 'contains', 'notContains', 'startsWith', 'endsWith', 'empty', 'notEmpty'];
+
+  let booleanFilterMode = ['equals', 'notEquals', 'empty', 'notEmpty'];
 
   let dateFilterMode = [
     'equals',
@@ -93,8 +98,21 @@ function MaterialTable({
     stringFields.forEach((element) => {
       element.columnFilterModeOptions = stringFilterMode;
     });
+    booleanFields.forEach((element) => {
+      element.columnFilterModeOptions = booleanFilterMode;
+    });
     dateFields.forEach((element) => {
       element.columnFilterModeOptions = dateFilterMode;
+    });
+  }
+  function setCells() {
+    booleanFields.forEach((element) => {
+      if (!element.Cell) {
+        element.Cell = ({ renderedCellValue }) =>
+          renderedCellValue != null && (
+            <Checkbox checked={renderedCellValue ? true : false} title={renderedCellValue ? 'Yes' : 'No'} color="default" disabled />
+          );
+      }
     });
   }
   function GetDefaultFilterFunc() {
@@ -109,6 +127,12 @@ function MaterialTable({
       let fieldName = stringFieldsNames[i];
       defaulFilters[fieldName] = 'contains';
     }
+    let booleanFieldsNames = booleanFields.map((x) => x.accessorKey);
+    for (let i = 0; i < booleanFieldsNames.length; i++) {
+      let fieldName = booleanFieldsNames[i];
+      defaulFilters[fieldName] = 'equals';
+    }
+
     let dateFieldsNames = dateFields.map((x) => x.accessorKey);
     for (let i = 0; i < dateFieldsNames.length; i++) {
       let fieldName = dateFieldsNames[i];
@@ -169,6 +193,7 @@ function MaterialTable({
 
   useEffect(() => {
     setFilterMode();
+    setCells();
 
     if (supportedLanguage.find((x) => x == currentLanguage)) {
       let loadedLanguage;
@@ -229,6 +254,7 @@ function MaterialTable({
         enableBottomToolbar={(enableBottomToolbar && true) ?? true}
         enablePinning={(enablePinning && true) ?? true}
         enableDensityToggle={(enableDensityToggle && true) ?? true}
+        enableColumnResizing={(enableColumnResizing && true) ?? true}
         enableFullScreenToggle={(enableFullScreenToggle && true) ?? true}
         enableGlobalFilterModes={(enableGlobalFilterModes && true) ?? true}
         enableColumnFilterModes={(enableColumnFilterModes && true) ?? true}
@@ -261,6 +287,7 @@ function MaterialTable({
                 </Button>
               )
         }
+        renderRowActionMenuItems={renderRowActionMenuItems && renderRowActionMenuItems}
         renderDetailPanel={renderDetailPanel && renderDetailPanel}
         rowCount={dataApi ? data?.totalItems ?? 0 : data?.length}
         state={{

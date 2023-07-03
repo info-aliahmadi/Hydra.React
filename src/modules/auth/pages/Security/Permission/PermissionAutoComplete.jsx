@@ -3,18 +3,30 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import CircularProgress from '@mui/material/CircularProgress';
 import PermissionService from 'modules/auth/services/Security/PermissionService';
+import { useState } from 'react';
+import { useEffect } from 'react';
 
 export default function PermissionAutoComplete({ value, setValue }) {
-  const [open, setOpen] = React.useState(false);
-  const [options, setOptions] = React.useState([]);
-  const [newValue, setNewValue] = React.useState(value);
-  const [loading, setLoading] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [options, setOptions] = useState([]);
+  const [newValue, setNewValue] = useState(value ?? '');
+  const [loading, setLoading] = useState(false);
 
-  React.useEffect(() => {
+  const [clear, setClear] = useState('');
+
+  useEffect(() => {
     if (!open) {
       setOptions([]);
     }
   }, [open]);
+
+  useEffect(() => {
+    if (value == null || value === undefined) {
+      setClear(Date.now());
+      setOptions([]);
+    }
+  }, [value]);
+
   const onChange = (event, newValue) => {
     setValue(newValue?.id);
     setNewValue(newValue);
@@ -31,42 +43,48 @@ export default function PermissionAutoComplete({ value, setValue }) {
   };
 
   return (
-    <Autocomplete
-      id="permissionId"
-      value={newValue}
-      sx={{ minWidth: 300 }}
-      open={open}
-      onOpen={() => {
-        setOpen(true);
-      }}
-      onClose={() => {
-        setOpen(false);
-      }}
-      //   inputValue={newValue}s
-      onInputChange={onInputChange}
-      onChange={onChange}
-      //   defaultValue
-      isOptionEqualToValue={(option, value) => option.id === value.id}
-      getOptionLabel={(option) => option.name}
-      options={options}
-      loading={loading}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          variant="filled"
-          size="small"
-          label="Select Permission"
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <React.Fragment>
-                {loading ? <CircularProgress color="inherit" size={15} /> : null}
-                {params.InputProps.endAdornment}
-              </React.Fragment>
-            )
-          }}
-        />
-      )}
-    />
+    <>
+      <Autocomplete
+        key={clear}
+        id="permissionId"
+        clearOnBlur={true}
+        clearOnEscape={true}
+        autoSelect={true}
+        sx={{ minWidth: 300 }}
+        open={open}
+        onOpen={() => {
+          setOpen(true);
+        }}
+        onClose={() => {
+          setOpen(false);
+        }}
+        //   inputValue={newValue}s
+        onInputChange={onInputChange}
+        onChange={onChange}
+        //   defaultValue
+        isOptionEqualToValue={(option, value) => option.id === value.id}
+        getOptionLabel={(option) => option.name}
+        options={options}
+        loading={loading}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            variant="filled"
+            value={newValue}
+            size="small"
+            label="Select Permission"
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: (
+                <React.Fragment>
+                  {loading ? <CircularProgress color="inherit" size={15} /> : null}
+                  {params.InputProps.endAdornment}
+                </React.Fragment>
+              )
+            }}
+          />
+        )}
+      />
+    </>
   );
 }

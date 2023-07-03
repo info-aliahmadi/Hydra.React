@@ -18,6 +18,7 @@
     "support": "Support",
     "sample-page": "Sample Page",
     "documentation": "Documentation",
+    "users": "Users",
     "roles": "Roles",
     "permissions": "Permissions",
     "access": "Access"
@@ -27,16 +28,18 @@
     "change-password": "Change Password",
     "language": "Language",
     "account-settings": "Account Settings",
+    "users": "Users",
     "roles": "Roles",
     "permissions": "Permissions",
     "access": "Access",
     "cards": {
+      "users-list": "Users List",
       "roles-list": "Roles List",
       "permissions-list": "Permissions List"
     }
   },
   "fields": {
-    "fullname": "Fullname",
+    "name": "Name",
     "firstname": "Firstname",
     "lastname": "LastName",
     "email": "Email",
@@ -62,6 +65,11 @@
     "delete": "Delete",
     "detail": "Detail",
     "change-password": "Change Password",
+    "user": {
+      "add": "Add New User",
+      "edit": "Edit User",
+      "delete": "Delete User"
+    },
     "role": {
       "add": "Add New Role",
       "edit": "Edit Role",

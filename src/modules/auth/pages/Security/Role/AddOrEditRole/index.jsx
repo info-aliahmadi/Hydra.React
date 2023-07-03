@@ -11,7 +11,6 @@ import {
   Grid,
   InputLabel,
   OutlinedInput,
-  Paper,
   Stack
 } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
@@ -39,13 +38,14 @@ const AddOrEditRole = ({ roleId, isNew, open, setOpen, refetch }) => {
       setRole(result);
     });
   };
+  useEffect(() => {
+    if (isNew == false && roleId > 0) loadRole();
+  }, [roleId, isNew, open]);
+
   const onClose = () => {
     setOpen(false);
     setRole({});
   };
-  useEffect(() => {
-    if (isNew == false && roleId > 0) loadRole();
-  }, [roleId]);
 
   const handleSubmit = (role) => {
     debugger;

@@ -23,6 +23,7 @@ const ChangeLanguage = Loadable(lazy(() => import('modules/auth/pages/Settings/L
 const RoleList = Loadable(lazy(() => import('modules/auth/pages/Security/Role/RoleList')));
 
 const PermissionList = Loadable(lazy(() => import('modules/auth/pages/Security/Permission/PermissionList')));
+const UsersList = Loadable(lazy(() => import('modules/auth/pages/Users/UsersList')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -84,6 +85,12 @@ const AuthRoutes = [
     path: 'permissionlist',
     permission: 'AUTH_GET.PERMISSION.LIST',
     element: <PermissionList />
+  },
+  {
+    key: 'users-list',
+    path: 'userslist',
+    permission: 'AUTH_GET.PERMISSION.LIST',
+    element: <UsersList />
   }
 ];
 

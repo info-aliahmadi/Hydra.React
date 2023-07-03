@@ -1,13 +1,14 @@
 // assets
 import { LoginOutlined, ProfileOutlined } from '@ant-design/icons';
-import { Badge, EnhancedEncryption, Security } from '@mui/icons-material';
+import { Badge, EnhancedEncryption, Security, People } from '@mui/icons-material';
 // icons
 const icons = {
   LoginOutlined,
   ProfileOutlined,
   Badge,
   EnhancedEncryption,
-  Security
+  Security,
+  People
 };
 
 // ==============================|| MENU ITEMS - EXTRA PAGES ||============================== //
@@ -18,6 +19,15 @@ const pages = {
   type: 'group',
   permission: 'AUTH_GET.PERMISSION.LIST',
   children: [
+    {
+      id: 'users',
+      title: 'Users',
+      type: 'item',
+      url: '/usersList',
+      icon: icons.People,
+      breadcrumbs: false,
+      permission: 'AUTH_GET.PERMISSION.LIST'
+    },
     {
       id: 'roles',
       title: 'Roles',

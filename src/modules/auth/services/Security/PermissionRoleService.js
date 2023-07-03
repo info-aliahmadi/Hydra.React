@@ -14,7 +14,7 @@ export default class PermissionRoleService {
           resolve(response.data);
         })
         .catch((error) => {
-          reject(error.Errors);
+          reject(error);
         });
     });
   };
@@ -27,21 +27,19 @@ export default class PermissionRoleService {
           resolve(response.data);
         })
         .catch((error) => {
-          reject(error.Errors);
+          reject(error);
         });
     });
   };
   deletePermissionRole = async (permissionId, roleId) => {
-    debugger;
     return new Promise((resolve, reject) => {
       axios
         .get(CONFIG.API_BASEPATH + '/auth/DismissPermissionToRoleByRoleId', { params: { roleId: roleId, permissionId: permissionId } })
         .then((response) => {
-          debugger;
           resolve(response.data);
         })
         .catch((error) => {
-          reject(error.Errors);
+          reject(error);
         });
     });
   };

@@ -106,7 +106,7 @@ function RoleDataGrid() {
             enableRowActions
             renderRowActions={DeleteOrEdit}
             renderTopToolbarCustomActions={AddRow}
-            renderDetailPanel={({ row }) => <PermissionRoleDataGrid dataSet={row.original.permissions} roleId={row.getValue('id')} />}
+            renderDetailPanel={({ row }) => <PermissionRoleDataGrid row={row} />}
           />
         </TableCard>
       </MainCard>

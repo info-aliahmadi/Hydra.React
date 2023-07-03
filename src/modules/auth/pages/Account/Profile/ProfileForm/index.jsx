@@ -74,7 +74,7 @@ const ProfileForm = () => {
       <Notify notify={notify} setNotify={setNotify}></Notify>
       <Formik
         initialValues={{
-          fullName: user?.fullName,
+          name: user?.name,
           userName: user?.userName,
           phoneNumber: user?.phoneNumber,
           email: user?.email,
@@ -158,21 +158,21 @@ const ProfileForm = () => {
               <Grid container item spacing={3} justifyContent="center">
                 <Grid item xs={12} md={6}>
                   <Stack spacing={1}>
-                    <InputLabel htmlFor="fullName-signup">{t(fieldsName + 'fullname')}</InputLabel>
+                    <InputLabel htmlFor="name-signup">{t(fieldsName + 'name')}</InputLabel>
                     <OutlinedInput
-                      id="fullName-login"
-                      type="fullName"
-                      value={values.fullName}
-                      name="fullName"
+                      id="name-login"
+                      type="name"
+                      value={values.name}
+                      name="name"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      placeholder={t(fieldsName + 'fullname')}
+                      placeholder={t(fieldsName + 'name')}
                       fullWidth
-                      error={Boolean(touched.fullName && errors.fullName)}
+                      error={Boolean(touched.name && errors.name)}
                     />
-                    {touched.fullName && errors.fullName && (
-                      <FormHelperText error id="helper-text-fullName-signup">
-                        {errors.fullName}
+                    {touched.name && errors.name && (
+                      <FormHelperText error id="helper-text-name-signup">
+                        {errors.name}
                       </FormHelperText>
                     )}
                   </Stack>

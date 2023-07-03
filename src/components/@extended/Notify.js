@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import { Alert, Snackbar } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { Alert, Snackbar, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-export default function Notify(props) {
+function Notify({ notify, setNotify }) {
   const Strong = styled.strong`
     font-weight: 900;
     margin: auto 5px;
@@ -11,18 +11,26 @@ export default function Notify(props) {
   const [open, setOpen] = useState();
   const [t] = useTranslation();
 
+  let description = notify.type == 'error' ? t('notification.error-description') : t('notification.success-description');
+  if (notify.type === 'error' && notify.description) {
+    if (notify.description?.response?.data?.message) {
+      description = notify.description?.response?.data?.message;
+    } else {
+      description = notify.description;
+    }
+  }
+
   useEffect(() => {
-    setOpen(props.notify.open);
-  }, [props.notify.open]);
+    setOpen(notify.open);
+  }, [notify.open]);
 
   const handleClose = (event, reason) => {
-    props.setNotify({ ...props.notify, open: false });
+    setNotify({ ...notify, open: false });
   };
 
   return (
     <>
       <Snackbar
-        {...props}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={open}
         // autoHideDuration={6000}
@@ -30,22 +38,18 @@ export default function Notify(props) {
       >
         <Alert
           onClose={handleClose}
-          severity={props.notify.type ? props.notify.type : 'success'}
+          severity={notify.type ? notify.type : 'success'}
           variant="filled"
           sx={{ width: '100%' }}
           data-i18n="[html]content.body"
         >
-          <Strong>
-            {props.notify.title ? t(props.notify.title) : props.notify.type == 'error' ? t('notification.error') : t('notification.success')}
-          </Strong>
-
-          {props.notify.description
-            ? t(props.notify.description)
-            : props.notify.type == 'error'
-            ? t('notification.error-description')
-            : t('notification.success-description')}
+          <Typography variant="h5">
+            <Strong>{notify.title ? t(notify.title) : notify.type == 'error' ? t('notification.error') : t('notification.success')}</Strong>
+          </Typography>
+          <Typography variant="h6">{description}</Typography>
         </Alert>
       </Snackbar>
     </>
   );
 }
+export default React.memo(Notify);
