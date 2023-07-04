@@ -1,5 +1,17 @@
 // material-ui
-import { Avatar, Box, Button, Checkbox, IconButton, ListItemIcon, MenuItem, Tooltip, Typography } from '@mui/material';
+import {
+  Avatar,
+  Box,
+  Button,
+  Checkbox,
+  IconButton,
+  InputAdornment,
+  ListItemIcon,
+  MenuItem,
+  TextField,
+  Tooltip,
+  Typography
+} from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
@@ -8,16 +20,18 @@ import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MaterialTable from 'components/MaterialTable/MaterialTable';
 import UsersService from 'modules/auth/services/Users/UsersService';
-import { AccountCircle, Delete, Send } from '@mui/icons-material';
+import { AccountCircle, Delete, Send, Clear } from '@mui/icons-material';
 import { Edit } from '@mui/icons-material';
 import AddOrEditUser from '../AddOrEditUser';
 import DeleteUser from '../DeleteUser';
 import Anonymous from 'assets/images/users/anonymous.png';
 import CONFIG from 'config';
+import { DatePicker } from '@mui/x-date-pickers';
+import moment from 'moment';
 // ===============================|| COLOR BOX ||=============================== //
 
 function UsersDataGrid() {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
   const service = new UsersService();
   const [isNew, setIsNew] = useState(true);
   const [rowId, setRowId] = useState(0);
@@ -25,6 +39,35 @@ function UsersDataGrid() {
   const [openDelete, setOpenDelete] = useState(false);
   const [row, setRow] = useState({});
   const [refetch, setRefetch] = useState();
+  const slotExample = () => <Clear />;
+  const dateFiler = ({ column, header, table }) => {
+    debugger;
+    let xxx = header.column.columnDef._filterFn;
+    return (
+      <DatePicker
+        onChange={(value) => header.column.setFilterValue((old) => (xxx == 'equals' ? value || '' : [value, old?.[0]] || ''))}
+        clearable
+        // InputProps={{
+        //   endAdornment: (
+        //     <IconButton onClick={() => handleDateChange(null)}>
+        //       <Clear />
+        //     </IconButton>
+        //   )
+        // }}
+        slots={{ startAdornment: [slotExample] }}
+        slotProps={{
+          textField: { variant: 'standard', endAdornment: slotExample },
+          actionBar: {
+            actions: ['clear', 'today']
+          }
+        }}
+      />
+    );
+  };
+  const dateFilerFn = (row, _columnIds, filterValue) => {
+    debugger;
+    row.getValue('dob').toLowerCase() === filterValue.toLowerCase();
+  };
   const columns = useMemo(
     () => [
       {
@@ -70,9 +113,7 @@ function UsersDataGrid() {
         accessorKey: 'emailConfirmed',
         header: 'Email Confirmed',
         type: 'boolean',
-        enableResizing: true,
-        Cell: ({ renderedCellValue }) =>
-          renderedCellValue != null && <Checkbox checked={renderedCellValue ? true : false} color="success" />
+        enableResizing: true
       },
       {
         accessorKey: 'phoneNumber',
@@ -85,26 +126,37 @@ function UsersDataGrid() {
         header: 'PhoneNumber Confirmed',
         type: 'boolean'
       },
-      {
-        accessorKey: 'lockoutEnabled',
-        header: 'Lockout Enabled',
-        type: 'boolean'
-      },
+      // {
+      //   accessorKey: 'lockoutEnabled',
+      //   header: 'Lockout Enabled',
+      //   type: 'boolean'
+      // },
       {
         accessorKey: 'dob',
         header: 'Register Date',
-        type: 'date'
-      },
-      {
-        accessorKey: 'lockoutEnd',
-        header: 'Lockout End',
-        type: 'string'
-      },
-      {
-        accessorKey: 'accessFailedCount',
-        header: 'Access Failed Count',
-        type: 'number'
+        type: 'date',
+        Filter: dateFiler
+        // filterFn: dateFilerFn
+
+        // muiTableHeadCellFilterTextFieldProps: {
+        //   type: 'date',
+        // },
+        // sortingFn: 'datetime',
+        // Cell: ({ renderedCellValue }) =>
+        //   renderedCellValue != null && (
+        //     <span>{new Intl.DateTimeFormat(i18n.language, { dateStyle: 'short', timeStyle: 'short' }).format(new Date(renderedCellValue))}</span>
+        //   )
       }
+      // {
+      //   accessorKey: 'lockoutEnd',
+      //   header: 'Lockout End',
+      //   type: 'string'
+      // },
+      // {
+      //   accessorKey: 'accessFailedCount',
+      //   header: 'Access Failed Count',
+      //   type: 'number'
+      // }
     ],
     []
   );
@@ -185,8 +237,11 @@ function UsersDataGrid() {
     ),
     []
   );
+  const [value, setValue] = useState(moment('2023-05-18T01:47:49.8655649'));
   return (
     <>
+      {/* <DatePicker value={value} onChange={(newValue) => setValue(newValue)} /> */}
+      {/* <span>{moment('2023-05-18T01:47:49.8655649').format('YYYY/M/D h:m')}</span> */}
       <MainCard title={t('pages.cards.users-list')} codeHighlight>
         <TableCard>
           <MaterialTable

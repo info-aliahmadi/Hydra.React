@@ -16,9 +16,14 @@ import stylisRTLPlugin from 'stylis-plugin-rtl';
 import { CacheProvider } from '@emotion/react';
 import LocalStorageService from 'utils/LocalStorageService';
 import CONFIG from 'config';
+
 import i18n from 'Localization/i18n';
+
 import IranSans from './fonts/IranSans';
 
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import { AdapterDateFnsJalali } from '@mui/x-date-pickers/AdapterDateFnsJalali';
 // ==============================|| DEFAULT THEME - MAIN  ||============================== //
 
 export default function ThemeCustomization({ children }) {
@@ -94,18 +99,22 @@ export default function ThemeCustomization({ children }) {
   return (
     <StyledEngineProvider injectFirst>
       {direction === 'rtl' ? (
-        <CacheProvider value={cacheRtl}>
+        <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
+          <CacheProvider value={cacheRtl}>
+            <ThemeProvider theme={themes}>
+              <CssBaseline />
+              <IranSans />
+              {children}
+            </ThemeProvider>
+          </CacheProvider>
+        </LocalizationProvider>
+      ) : (
+        <LocalizationProvider dateAdapter={AdapterMoment}>
           <ThemeProvider theme={themes}>
             <CssBaseline />
-            <IranSans />
             {children}
           </ThemeProvider>
-        </CacheProvider>
-      ) : (
-        <ThemeProvider theme={themes}>
-          <CssBaseline />
-          {children}
-        </ThemeProvider>
+        </LocalizationProvider>
       )}
     </StyledEngineProvider>
   );

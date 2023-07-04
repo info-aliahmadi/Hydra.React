@@ -21,7 +21,9 @@ const CONFIG = {
   AUTHENTICATION_STORAGE_NAME: 'HydraAuthenticationStorage',
   AUTHORIZATION_STORAGE_NAME: 'HydraAuthorizationStorage',
   LANGUAGE_STORAGE_NAME: 'i18nextLng',
-  DEFAULT_LANGUAGE: 'en'
+  DEFAULT_LANGUAGE: 'en',
+  DATE_STYLE: 'short', // "full" | "long" | "medium" | "short",
+  TIME_STYLE: 'short' // "full" | "long" | "medium" | "short"
 };
 
 export default CONFIG;

@@ -6,6 +6,7 @@ import { useEffect, useState, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Checkbox, IconButton, Tooltip } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import CONFIG from 'config';
 // import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
 
 // ===============================|| COLOR BOX ||=============================== //
@@ -62,6 +63,7 @@ function MaterialTable({
   let stringFields = columns.filter((x) => x.type === 'string');
   let booleanFields = columns.filter((x) => x.type === 'boolean');
   let dateFields = columns.filter((x) => x.type === 'date');
+  let dateTimeFields = columns.filter((x) => x.type === 'dateTime');
 
   let numberFilterMode = [
     'equals',
@@ -76,8 +78,6 @@ function MaterialTable({
     'notEmpty'
   ];
   let stringFilterMode = ['equals', 'notEquals', 'contains', 'notContains', 'startsWith', 'endsWith', 'empty', 'notEmpty'];
-
-  let booleanFilterMode = ['equals', 'notEquals', 'empty', 'notEmpty'];
 
   let dateFilterMode = [
     'equals',
@@ -99,9 +99,12 @@ function MaterialTable({
       element.columnFilterModeOptions = stringFilterMode;
     });
     booleanFields.forEach((element) => {
-      element.columnFilterModeOptions = booleanFilterMode;
+      element.filterVariant = 'checkbox';
     });
     dateFields.forEach((element) => {
+      element.columnFilterModeOptions = dateFilterMode;
+    });
+    dateTimeFields.forEach((element) => {
       element.columnFilterModeOptions = dateFilterMode;
     });
   }
@@ -111,6 +114,28 @@ function MaterialTable({
         element.Cell = ({ renderedCellValue }) =>
           renderedCellValue != null && (
             <Checkbox checked={renderedCellValue ? true : false} title={renderedCellValue ? 'Yes' : 'No'} color="default" disabled />
+          );
+      }
+    });
+    dateFields.forEach((element) => {
+      if (!element.Cell) {
+        element.Cell = ({ renderedCellValue }) =>
+          renderedCellValue != null && (
+            <span>{new Intl.DateTimeFormat(currentLanguage, { dateStyle: [CONFIG.DATE_STYLE] }).format(new Date(renderedCellValue))}</span>
+          );
+      }
+    });
+    dateTimeFields.forEach((element) => {
+      if (!element.Cell) {
+        element.Cell = ({ renderedCellValue }) =>
+          renderedCellValue != null && (
+            <span>
+              {new Intl.DateTimeFormat(currentLanguage, {
+                dateStyle: [CONFIG.DATE_STYLE],
+                timeStyle: [CONFIG.TIME_STYLE],
+                hour12: false
+              }).format(new Date(renderedCellValue))}
+            </span>
           );
       }
     });
@@ -136,6 +161,12 @@ function MaterialTable({
     let dateFieldsNames = dateFields.map((x) => x.accessorKey);
     for (let i = 0; i < dateFieldsNames.length; i++) {
       let fieldName = dateFieldsNames[i];
+      defaulFilters[fieldName] = 'equals';
+    }
+
+    let dateTimeFieldsNames = dateTimeFields.map((x) => x.accessorKey);
+    for (let i = 0; i < dateTimeFieldsNames.length; i++) {
+      let fieldName = dateTimeFieldsNames[i];
       defaulFilters[fieldName] = 'equals';
     }
     return defaulFilters;

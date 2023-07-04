@@ -3,8 +3,7 @@
     "baseUrl": "src",
     "target": "ES6",
     "jsx": "react",
-    "module": "commonjs",
-    "allowSyntheticDefaultImports": true
+    "module": "commonjs"
   },
   "include": ["src/**/*", "public"],
   "exclude": ["node_modules"]
