@@ -7,9 +7,34 @@ import { useTranslation } from 'react-i18next';
 import { Button, Checkbox, IconButton, Tooltip } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import CONFIG from 'config';
-// import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query';
+import { DatePicker } from '@mui/x-date-pickers';
 
 // ===============================|| COLOR BOX ||=============================== //
+const dateFilter = ({ header, rangeFilterIndex }) => {
+  let filterFn = header.column.getFilterFn().name;
+  let doubleActive = filterFn == 'between' || filterFn == 'betweenInclusive';
+  const setFilterValue = (old, value, rangeFilterIndex) => {
+    if (doubleActive) {
+      old[rangeFilterIndex] = value;
+      return old;
+    }
+    return value || '';
+  };
+
+  return (
+    <DatePicker
+      key={rangeFilterIndex}
+      onChange={(value) => header.column.setFilterValue((old) => setFilterValue(old, value, rangeFilterIndex))}
+      clearable
+      slotProps={{
+        textField: { variant: 'standard' },
+        actionBar: {
+          actions: ['clear', 'today']
+        }
+      }}
+    />
+  );
+};
 
 function MaterialTable({
   columns,
@@ -103,9 +128,11 @@ function MaterialTable({
     });
     dateFields.forEach((element) => {
       element.columnFilterModeOptions = dateFilterMode;
+      element.Filter = dateFilter;
     });
     dateTimeFields.forEach((element) => {
       element.columnFilterModeOptions = dateFilterMode;
+      element.Filter = dateFilter;
     });
   }
   function setCells() {
@@ -173,12 +200,16 @@ function MaterialTable({
   }
 
   function setOperationFields(columnFilterF, columnFilters) {
+    debugger;
     let keys = Object.keys(columnFilterF);
     for (let i = 0; i < keys.length; i++) {
       let fieldName = keys[i];
       let fieldValue = columnFilterF[fieldName];
       let element = _.find(columnFilters, ['id', fieldName]);
-      element ? (element.operation = fieldValue) : undefined;
+      if (element) {
+        element.operation = fieldValue;
+        element.type = _.find(columns, ['accessorKey', fieldName]).type;
+      }
     }
   }
   const [columnFilterFns, setColumnFilterFns] = useState(GetDefaultFilterFunc());

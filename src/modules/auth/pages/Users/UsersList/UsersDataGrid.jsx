@@ -40,12 +40,21 @@ function UsersDataGrid() {
   const [row, setRow] = useState({});
   const [refetch, setRefetch] = useState();
   const slotExample = () => <Clear />;
-  const dateFiler = ({ column, header, table }) => {
-    debugger;
-    let xxx = header.column.columnDef._filterFn;
+  const dateFilter = ({ header, rangeFilterIndex }) => {
+    let filterFn = header.column.getFilterFn().name;
+    let doubleActive = filterFn == 'between' || filterFn == 'betweenInclusive';
+    const setFilterValue = (old, value, rangeFilterIndex) => {
+      if (doubleActive) {
+        old[rangeFilterIndex] = value;
+        return old;
+      }
+      return value || '';
+    };
+
     return (
       <DatePicker
-        onChange={(value) => header.column.setFilterValue((old) => (xxx == 'equals' ? value || '' : [value, old?.[0]] || ''))}
+        key={rangeFilterIndex}
+        onChange={(value) => header.column.setFilterValue((old) => setFilterValue(old, value, rangeFilterIndex))}
         clearable
         // InputProps={{
         //   endAdornment: (
@@ -64,10 +73,7 @@ function UsersDataGrid() {
       />
     );
   };
-  const dateFilerFn = (row, _columnIds, filterValue) => {
-    debugger;
-    row.getValue('dob').toLowerCase() === filterValue.toLowerCase();
-  };
+
   const columns = useMemo(
     () => [
       {
@@ -134,8 +140,7 @@ function UsersDataGrid() {
       {
         accessorKey: 'dob',
         header: 'Register Date',
-        type: 'date',
-        Filter: dateFiler
+        type: 'date'
         // filterFn: dateFilerFn
 
         // muiTableHeadCellFilterTextFieldProps: {
