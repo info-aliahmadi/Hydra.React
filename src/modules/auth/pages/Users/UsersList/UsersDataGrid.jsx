@@ -140,7 +140,7 @@ function UsersDataGrid() {
       {
         accessorKey: 'dob',
         header: 'Register Date',
-        type: 'date'
+        type: 'dateTime'
         // filterFn: dateFilerFn
 
         // muiTableHeadCellFilterTextFieldProps: {
@@ -225,24 +225,7 @@ function UsersDataGrid() {
     ],
     []
   );
-  const DeleteOrEdit = useCallback(
-    ({ row }) => (
-      <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <Tooltip arrow placement="top-start" title="Delete">
-          <IconButton color="error" onClick={() => handleDeleteRow(row)}>
-            <Delete />
-          </IconButton>
-        </Tooltip>
-        <Tooltip arrow placement="top-start" title="Edit">
-          <IconButton onClick={() => handleEditRow(row)}>
-            <Edit />
-          </IconButton>
-        </Tooltip>
-      </Box>
-    ),
-    []
-  );
-  const [value, setValue] = useState(moment('2023-05-18T01:47:49.8655649'));
+
   return (
     <>
       {/* <DatePicker value={value} onChange={(newValue) => setValue(newValue)} /> */}

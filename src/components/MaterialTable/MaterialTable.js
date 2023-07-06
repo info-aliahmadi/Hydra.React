@@ -8,6 +8,7 @@ import { Button, Checkbox, IconButton, Tooltip } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import CONFIG from 'config';
 import { DatePicker } from '@mui/x-date-pickers';
+import moment from 'moment-jalaali';
 
 // ===============================|| COLOR BOX ||=============================== //
 const dateFilter = ({ header, rangeFilterIndex }) => {
@@ -15,10 +16,10 @@ const dateFilter = ({ header, rangeFilterIndex }) => {
   let doubleActive = filterFn == 'between' || filterFn == 'betweenInclusive';
   const setFilterValue = (old, value, rangeFilterIndex) => {
     if (doubleActive) {
-      old[rangeFilterIndex] = value;
+      old[rangeFilterIndex] = value ? moment(value).format('YYYY/MM/DD') : '';
       return old;
     }
-    return value || '';
+    return value ? moment(value).format('YYYY/MM/DD') : '';
   };
 
   return (
@@ -148,7 +149,7 @@ function MaterialTable({
       if (!element.Cell) {
         element.Cell = ({ renderedCellValue }) =>
           renderedCellValue != null && (
-            <span>{new Intl.DateTimeFormat(currentLanguage, { dateStyle: [CONFIG.DATE_STYLE] }).format(new Date(renderedCellValue))}</span>
+            <span>{new Intl.DateTimeFormat(currentLanguage, { dateStyle: [CONFIG.DATE_STYLE] }).format(moment(renderedCellValue))}</span>
           );
       }
     });
@@ -161,7 +162,7 @@ function MaterialTable({
                 dateStyle: [CONFIG.DATE_STYLE],
                 timeStyle: [CONFIG.TIME_STYLE],
                 hour12: false
-              }).format(new Date(renderedCellValue))}
+              }).format(moment(renderedCellValue))}
             </span>
           );
       }
@@ -200,7 +201,6 @@ function MaterialTable({
   }
 
   function setOperationFields(columnFilterF, columnFilters) {
-    debugger;
     let keys = Object.keys(columnFilterF);
     for (let i = 0; i < keys.length; i++) {
       let fieldName = keys[i];
