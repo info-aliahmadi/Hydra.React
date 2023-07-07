@@ -34,6 +34,10 @@
     "access": "Access",
     "cards": {
       "users-list": "Users List",
+      "user-add": "Add User",
+      "user-edit": "Edit User",
+      "user-profile": "Profile",
+      "user-security": "Security",
       "roles-list": "Roles List",
       "permissions-list": "Permissions List"
     }
@@ -55,6 +59,19 @@
     "permission": {
       "name": "Name",
       "normalizedname": "Normalized Name"
+    },
+    "user": {
+      "name": "Name",
+      "userName": "Username",
+      "email": "Email",
+      "emailConfirmed": "Email Confirmed",
+      "phoneNumber": "PhoneNumber",
+      "phoneNumberConfirmed": "PhoneNumber Confirmed",
+      "registerDate": "Register Date",
+      "lockoutEnabled": "Lockout Enabled",
+      "lockoutEnd": "Lockout End",
+      "accessFailedCount": "Access Failed Count",
+      "defaultLanguage": "Default Language"
     }
   },
   "buttons": {
@@ -66,6 +83,7 @@
     "detail": "Detail",
     "change-password": "Change Password",
     "user": {
+      "save": "Add New User",
       "add": "Add New User",
       "edit": "Edit User",
       "delete": "Delete User"

@@ -1,16 +1,18 @@
 // material-ui
 import {
+  Autocomplete,
   Avatar,
   Box,
   Button,
   Checkbox,
-  IconButton,
-  InputAdornment,
+  FormControlLabel,
+  Grid,
+  InputLabel,
   ListItemIcon,
   MenuItem,
+  OutlinedInput,
   TextField,
-  Tooltip,
-  Typography
+  Tooltip
 } from '@mui/material';
 
 // project import
@@ -20,65 +22,27 @@ import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MaterialTable from 'components/MaterialTable/MaterialTable';
 import UsersService from 'modules/auth/services/Users/UsersService';
-import { AccountCircle, Delete, Send, Clear } from '@mui/icons-material';
-import { Edit } from '@mui/icons-material';
-import AddOrEditUser from '../AddOrEditUser';
-import DeleteUser from '../DeleteUser';
+import { AccountCircle, Send } from '@mui/icons-material';
 import Anonymous from 'assets/images/users/anonymous.png';
 import CONFIG from 'config';
-import { DatePicker } from '@mui/x-date-pickers';
+import { Stack } from '@mui/system';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 // ===============================|| COLOR BOX ||=============================== //
 
 function UsersDataGrid() {
   const [t, i18n] = useTranslation();
   const service = new UsersService();
-  const [isNew, setIsNew] = useState(true);
-  const [rowId, setRowId] = useState(0);
-  const [open, setOpen] = useState(false);
-  const [openDelete, setOpenDelete] = useState(false);
-  const [row, setRow] = useState({});
   const [refetch, setRefetch] = useState();
-  const slotExample = () => <Clear />;
-  const dateFilter = ({ header, rangeFilterIndex }) => {
-    let filterFn = header.column.getFilterFn().name;
-    let doubleActive = filterFn == 'between' || filterFn == 'betweenInclusive';
-    const setFilterValue = (old, value, rangeFilterIndex) => {
-      if (doubleActive) {
-        old[rangeFilterIndex] = value;
-        return old;
-      }
-      return value || '';
-    };
+  const navigate = useNavigate();
 
-    return (
-      <DatePicker
-        key={rangeFilterIndex}
-        onChange={(value) => header.column.setFilterValue((old) => setFilterValue(old, value, rangeFilterIndex))}
-        clearable
-        // InputProps={{
-        //   endAdornment: (
-        //     <IconButton onClick={() => handleDateChange(null)}>
-        //       <Clear />
-        //     </IconButton>
-        //   )
-        // }}
-        slots={{ startAdornment: [slotExample] }}
-        slotProps={{
-          textField: { variant: 'standard', endAdornment: slotExample },
-          actionBar: {
-            actions: ['clear', 'today']
-          }
-        }}
-      />
-    );
-  };
+  const [fieldsName, buttonName] = ['fields.user.', 'buttons.user.'];
 
   const columns = useMemo(
     () => [
       {
         accessorKey: 'name',
-        header: 'Name',
+        header: t(fieldsName + 'name'),
         enableClickToCopy: true,
         type: 'string',
         Cell: ({ renderedCellValue, row }) => (
@@ -103,84 +67,44 @@ function UsersDataGrid() {
       },
       {
         accessorKey: 'userName',
-        header: 'UserName',
+        header: t(fieldsName + 'userName'),
         enableClickToCopy: true,
         type: 'string',
         enableResizing: true
       },
       {
         accessorKey: 'email',
-        header: 'Email',
+        header: t(fieldsName + 'email'),
         enableClickToCopy: true,
         type: 'string',
         enableResizing: true
       },
       {
         accessorKey: 'emailConfirmed',
-        header: 'Email Confirmed',
+        header: t(fieldsName + 'emailConfirmed'),
         type: 'boolean',
         enableResizing: true
       },
       {
         accessorKey: 'phoneNumber',
-        header: 'PhoneNumber',
+        header: t(fieldsName + 'phoneNumber'),
         type: 'string',
         enableResizing: true
       },
       {
         accessorKey: 'phoneNumberConfirmed',
-        header: 'PhoneNumber Confirmed',
+        header: t(fieldsName + 'phoneNumberConfirmed'),
         type: 'boolean'
       },
-      // {
-      //   accessorKey: 'lockoutEnabled',
-      //   header: 'Lockout Enabled',
-      //   type: 'boolean'
-      // },
       {
-        accessorKey: 'dob',
-        header: 'Register Date',
+        accessorKey: 'registerdate',
+        header: t(fieldsName + 'registerdate'),
         type: 'dateTime'
-        // filterFn: dateFilerFn
-
-        // muiTableHeadCellFilterTextFieldProps: {
-        //   type: 'date',
-        // },
-        // sortingFn: 'datetime',
-        // Cell: ({ renderedCellValue }) =>
-        //   renderedCellValue != null && (
-        //     <span>{new Intl.DateTimeFormat(i18n.language, { dateStyle: 'short', timeStyle: 'short' }).format(new Date(renderedCellValue))}</span>
-        //   )
       }
-      // {
-      //   accessorKey: 'lockoutEnd',
-      //   header: 'Lockout End',
-      //   type: 'string'
-      // },
-      // {
-      //   accessorKey: 'accessFailedCount',
-      //   header: 'Access Failed Count',
-      //   type: 'number'
-      // }
     ],
     []
   );
 
-  const handleNewRow = () => {
-    setIsNew(true);
-    setRowId(0);
-    setOpen(true);
-  };
-  const handleEditRow = (row) => {
-    let userId = row.original.id;
-    setIsNew(false);
-    setRowId(userId);
-    setOpen(true);
-  };
-  const handleDeleteRow = (row) => {
-    setRow(row);
-    setOpenDelete(true);
-  };
   const handleRefetch = () => {
     setRefetch(Date.now());
   };
@@ -190,18 +114,24 @@ function UsersDataGrid() {
   }, []);
   const AddRow = useCallback(
     () => (
-      <Button color="primary" onClick={handleNewRow} variant="contained">
-        {t('buttons.user.add')}
+      <Button
+        color="primary"
+        variant="contained"
+        onClick={() => {
+          navigate('/user/add');
+        }}
+      >
+        {t(buttonName + 'add')}
       </Button>
     ),
     []
   );
   const RowActionMenuItems = useCallback(
-    ({ closeMenu }) => [
+    ({ closeMenu, row }) => [
       <MenuItem
         key={0}
         onClick={() => {
-          closeMenu();
+          navigate('/user/edit/' + row.original.id);
         }}
         sx={{ m: 0 }}
       >
@@ -225,12 +155,168 @@ function UsersDataGrid() {
     ],
     []
   );
-
+  const UserDetail = ({ row }) => {
+    return (
+      <Grid container spacing={3} direction="row">
+        <Grid container item spacing={3} xd={12} sm={6} md={3} lg={3} direction="row" justifyContent="center" alignItems="center">
+          <Grid item xs={12} md={12}>
+            <Stack>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem',
+                  margin: '10px'
+                }}
+              >
+                <Avatar
+                  loading="lazy"
+                  alt="profile user"
+                  src={row.original.avatar ? CONFIG.AVATAR_BASEPATH + row.original.avatar : Anonymous}
+                  sx={{ width: 100, height: 100 }}
+                ></Avatar>
+                <span>{row.original.name}</span>
+              </Box>
+            </Stack>
+          </Grid>
+        </Grid>
+        <Grid container item spacing={3} xd={12} sm={6} md={6} lg={6}>
+          <Grid item xs={12} md={3}>
+            <Stack spacing={1}>
+              <InputLabel htmlFor="name">{t(fieldsName + 'name')}</InputLabel>
+              <OutlinedInput id="name" type="text" value={row.original.name} fullWidth disabled />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Stack spacing={1}>
+              <InputLabel htmlFor="userName">{t(fieldsName + 'userName')}</InputLabel>
+              <OutlinedInput id="userName" type="text" value={row.original.userName} fullWidth disabled />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Stack spacing={1}>
+              <InputLabel htmlFor="email">{t(fieldsName + 'email')}</InputLabel>
+              <OutlinedInput id="email" type="text" value={row.original.email} fullWidth disabled />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Stack spacing={1}>
+              <InputLabel htmlFor="emailConfirmed">{t(fieldsName + 'emailConfirmed')}</InputLabel>
+              <FormControlLabel
+                disabled
+                control={
+                  <Checkbox
+                    id="emailConfirmed"
+                    checked={row.original.emailConfirmed ? true : false}
+                    title={row.original.emailConfirmed ? 'Yes' : 'No'}
+                    color="default"
+                    disabled
+                  />
+                }
+                label={t(fieldsName + 'emailConfirmed')}
+              />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Stack spacing={1}>
+              <InputLabel htmlFor="phoneNumber">{t(fieldsName + 'phoneNumber')}</InputLabel>
+              <OutlinedInput id="phoneNumber" type="text" value={row.original.phoneNumber} fullWidth disabled />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Stack spacing={1}>
+              <InputLabel htmlFor="phoneNumberConfirmed">{t(fieldsName + 'phoneNumberConfirmed')}</InputLabel>{' '}
+              <FormControlLabel
+                disabled
+                control={
+                  <Checkbox
+                    id="phoneNumberConfirmed"
+                    checked={row.original.phoneNumberConfirmed ? true : false}
+                    title={row.original.phoneNumberConfirmed ? 'Yes' : 'No'}
+                    color="default"
+                    disabled
+                  />
+                }
+                label={t(fieldsName + 'phoneNumberConfirmed')}
+              />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Stack spacing={1}>
+              <InputLabel htmlFor="registerDate">{t(fieldsName + 'registerDate')}</InputLabel>
+              <OutlinedInput
+                id="registerDate"
+                type="text"
+                value={new Intl.DateTimeFormat(i18n.language, {
+                  dateStyle: 'long',
+                  timeStyle: [CONFIG.TIME_STYLE],
+                  hour12: false
+                }).format(moment(row.original.registerDate))}
+                fullWidth
+                disabled
+              />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Stack spacing={1}>
+              <InputLabel htmlFor="lockoutEnabled">{t(fieldsName + 'lockoutEnabled')}</InputLabel>
+              <FormControlLabel
+                disabled
+                control={
+                  <Checkbox
+                    id="lockoutEnabled"
+                    checked={row.original.lockoutEnabled ? true : false}
+                    title={row.original.lockoutEnabled ? 'Yes' : 'No'}
+                    color="default"
+                    disabled
+                  />
+                }
+                label={t(fieldsName + 'lockoutEnabled')}
+              />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Stack spacing={1}>
+              <InputLabel htmlFor="lockoutEnd">{t(fieldsName + 'lockoutEnd')}</InputLabel>
+              <OutlinedInput id="lockoutEnd" type="text" value={row.original.lockoutEnd} fullWidth disabled />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Stack spacing={1}>
+              <InputLabel htmlFor="accessFailedCount">{t(fieldsName + 'accessFailedCount')}</InputLabel>
+              <OutlinedInput id="accessFailedCount" type="text" value={row.original.accessFailedCount} fullWidth disabled />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={3}>
+            <Stack spacing={1}>
+              <InputLabel htmlFor="defaultLanguage">{t(fieldsName + 'defaultLanguage')}</InputLabel>
+              <OutlinedInput id="defaultLanguage" type="text" value={row.original.defaultLanguage} fullWidth disabled />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Stack spacing={1}>
+              <InputLabel htmlFor="roles">{t('pages.roles')}</InputLabel>
+              <Autocomplete
+                size="small"
+                disabled
+                multiple
+                id="tags-outlined"
+                options={row.original.roles}
+                getOptionLabel={(option) => option.name}
+                defaultValue={row.original.roles}
+                filterSelectedOptions
+                renderInput={(params) => <TextField {...params} placeholder={t('pages.roles')} />}
+              />
+              {/* <OutlinedInput id="roles" type="text" value={row.original.roles[0].name} fullWidth disabled /> */}
+            </Stack>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  };
   return (
     <>
-      {/* <DatePicker value={value} onChange={(newValue) => setValue(newValue)} /> */}
-      {/* <span>{moment('2023-05-18T01:47:49.8655649').format('YYYY/M/D h:m')}</span> */}
-      <MainCard title={t('pages.cards.users-list')} codeHighlight>
+      <MainCard title={t('pages.cards.users-list')}>
         <TableCard>
           <MaterialTable
             refetch={refetch}
@@ -239,12 +325,10 @@ function UsersDataGrid() {
             enableRowActions
             renderTopToolbarCustomActions={AddRow}
             renderRowActionMenuItems={RowActionMenuItems}
-            // renderDetailPanel={({ row }) => <PermissionUserDataGrid row={row} />}
+            renderDetailPanel={({ row }) => <UserDetail row={row} />}
           />
         </TableCard>
       </MainCard>
-      <AddOrEditUser isNew={isNew} userId={rowId} open={open} setOpen={setOpen} refetch={handleRefetch} />
-      <DeleteUser row={row} open={openDelete} setOpen={setOpenDelete} refetch={handleRefetch} />
     </>
   );
 }

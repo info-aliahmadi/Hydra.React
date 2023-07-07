@@ -158,9 +158,9 @@ const ProfileForm = () => {
               <Grid container item spacing={3} justifyContent="center">
                 <Grid item xs={12} md={6}>
                   <Stack spacing={1}>
-                    <InputLabel htmlFor="name-signup">{t(fieldsName + 'name')}</InputLabel>
+                    <InputLabel htmlFor="name">{t(fieldsName + 'name')}</InputLabel>
                     <OutlinedInput
-                      id="name-login"
+                      id="name"
                       type="name"
                       value={values.name}
                       name="name"
@@ -179,11 +179,11 @@ const ProfileForm = () => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Stack spacing={1}>
-                    <InputLabel htmlFor="userName-signup">{t(fieldsName + 'userName')}</InputLabel>
+                    <InputLabel htmlFor="userName">{t(fieldsName + 'userName')}</InputLabel>
                     <OutlinedInput
                       fullWidth
                       error={Boolean(touched.userName && errors.userName)}
-                      id="userName-signup"
+                      id="userName"
                       type="lastname"
                       value={values.userName}
                       name="userName"
@@ -193,7 +193,7 @@ const ProfileForm = () => {
                       inputProps={{}}
                     />
                     {touched.userName && errors.userName && (
-                      <FormHelperText error id="helper-text-lastname-signup">
+                      <FormHelperText error id="helper-text-lastname">
                         {errors.userName}
                       </FormHelperText>
                     )}
@@ -201,11 +201,11 @@ const ProfileForm = () => {
                 </Grid>
                 <Grid item xs={12} md={6}>
                   <Stack spacing={1}>
-                    <InputLabel htmlFor="email-signup">{t(fieldsName + 'email')}</InputLabel>
+                    <InputLabel htmlFor="email">{t(fieldsName + 'email')}</InputLabel>
                     <OutlinedInput
                       fullWidth
                       error={Boolean(touched.email && errors.email)}
-                      id="email-login"
+                      id="email"
                       type="email"
                       value={values.email}
                       name="email"
@@ -215,7 +215,7 @@ const ProfileForm = () => {
                       inputProps={{}}
                     />
                     {touched.email && errors.email && (
-                      <FormHelperText error id="helper-text-email-signup">
+                      <FormHelperText error id="helper-text-email">
                         {errors.email}
                       </FormHelperText>
                     )}
@@ -224,7 +224,7 @@ const ProfileForm = () => {
 
                 <Grid item xs={12} md={6}>
                   <Stack spacing={1}>
-                    <InputLabel htmlFor="phoneNumber-signup">{t(fieldsName + 'phone-number')}</InputLabel>
+                    <InputLabel htmlFor="phoneNumber">{t(fieldsName + 'phoneNumber')}</InputLabel>
                     <OutlinedInput
                       fullWidth
                       error={Boolean(touched.phoneNumber && errors.phoneNumber)}
@@ -234,11 +234,11 @@ const ProfileForm = () => {
                       name="phoneNumber"
                       onBlur={handleBlur}
                       onChange={handleChange}
-                      placeholder={t(fieldsName + 'phone-number')}
+                      placeholder={t(fieldsName + 'phoneNumber')}
                       inputProps={{}}
                     />
                     {touched.phoneNumber && errors.phoneNumber && (
-                      <FormHelperText error id="helper-text-lastname-signup">
+                      <FormHelperText error id="helper-text-phoneNumber">
                         {errors.phoneNumber}
                       </FormHelperText>
                     )}
