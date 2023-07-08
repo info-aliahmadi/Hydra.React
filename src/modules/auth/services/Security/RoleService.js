@@ -18,6 +18,18 @@ export default class RoleService {
         });
     });
   };
+  getAllRoles = async () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(CONFIG.API_BASEPATH + '/auth/GetAllRoles')
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error.Errors);
+        });
+    });
+  };
   getRoleById = async (roleId) => {
     return new Promise((resolve, reject) => {
       axios

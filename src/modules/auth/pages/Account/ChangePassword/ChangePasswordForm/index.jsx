@@ -36,8 +36,6 @@ const ChangePasswordForm = () => {
   const [t] = useTranslation();
   const [level, setLevel] = useState();
 
-  const [fieldsName, validation, buttonName] = ['fields.', 'validation.', 'buttons.'];
-
   const [showPassword, setShowPassword] = useState(false);
   const [notify, setNotify] = useState({ open: false });
 
@@ -107,7 +105,7 @@ const ChangePasswordForm = () => {
                 <Grid container spacing={2} direction="column" justifyContent="center">
                   <Grid item xs={12}>
                     <Stack>
-                      <InputLabel htmlFor="old-password">{t(fieldsName + 'old-password')}</InputLabel>
+                      <InputLabel htmlFor="old-password">{t('fields.old-password')}</InputLabel>
                       <OutlinedInput
                         fullWidth
                         error={Boolean(touched.oldPassword && errors.oldPassword)}
@@ -128,7 +126,7 @@ const ChangePasswordForm = () => {
                   </Grid>
                   <Grid item xs={12}>
                     <Stack>
-                      <InputLabel htmlFor="new-password">{t(fieldsName + 'new-password')}</InputLabel>
+                      <InputLabel htmlFor="new-password">{t('fields.new-password')}</InputLabel>
                       <OutlinedInput
                         fullWidth
                         error={Boolean(touched.newPassword && errors.newPassword)}

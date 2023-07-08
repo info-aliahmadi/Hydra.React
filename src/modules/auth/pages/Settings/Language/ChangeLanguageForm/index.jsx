@@ -22,7 +22,6 @@ const ChangeLanguageForm = () => {
   const [t, i18n] = useTranslation();
 
   let currentLanguage = languageList.find((l) => l.key === i18n.language);
-  const [fieldsName, validation, buttonName] = ['fields.', 'validation.', 'buttons.'];
 
   const [notify, setNotify] = useState({ open: false });
 

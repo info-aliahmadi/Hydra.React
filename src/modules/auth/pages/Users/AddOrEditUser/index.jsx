@@ -2,24 +2,35 @@ import { useEffect, useState } from 'react';
 
 // material-ui
 import {
+  Box,
   Avatar,
+  FormControl,
   Button,
   ButtonBase,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
+  Checkbox,
+  FormControlLabel,
   Divider,
   FormHelperText,
+  InputAdornment,
   Grid,
   InputLabel,
   OutlinedInput,
   Stack,
   Tooltip,
-  Typography
+  Typography,
+  Select,
+  MenuItem,
+  Chip
 } from '@mui/material';
+import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
+
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Edit from '@mui/icons-material/Edit';
+import Save from '@mui/icons-material/Save';
+import ArrowBack from '@mui/icons-material/ArrowBack';
+import { strengthColor, strengthIndicator } from 'utils/password-strength';
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -30,43 +41,49 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
 import UsersService from 'modules/auth/services/Users/UsersService';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Anonymous from 'assets/images/users/anonymous.png';
 import CONFIG from 'config';
 import MainCard from 'components/MainCard';
+import languageList from 'Localization/languageList';
+import SelectRole from '../../Security/Role/SelectRole';
 
 export default function AddOrEditUser() {
   const [t] = useTranslation();
   const params = useParams();
+  const operation = params.operation;
+  const id = params.id;
   let userService = new UsersService();
   const [fieldsName, validation, buttonName] = ['fields.user.', 'validation.user.', 'buttons.user.'];
   const [user, setUser] = useState();
   const [notify, setNotify] = useState({ open: false });
   const [avatarPreview, setAvatarPreview] = useState();
+  const [showPassword, setShowPassword] = useState(false);
+  const [passwordLevel, setPasswordLevel] = useState();
+  const navigate = useNavigate();
 
   const loadUser = () => {
-    userService.getUserById(params.id).then((result) => {
+    userService.getUserById(id).then((result) => {
       setUser(result);
     });
   };
   useEffect(() => {
-    if (params.operation == 'edit' && params.id > 0) loadUser();
-  }, [params]);
+    if (operation == 'edit' && id > 0) loadUser();
+  }, [operation, id]);
 
   const onClose = () => {
-    setOpen(false);
-    setUser({});
+    if (operation == 'add') {
+      setUser({});
+    }
   };
 
   const handleSubmit = (user) => {
-    debugger;
-    if (params.operation == 'add') {
+    if (operation == 'add') {
       userService
         .addUser(user)
         .then(() => {
           onClose();
           setNotify({ open: true });
-          refetch();
         })
         .catch((error) => {
           setNotify({ open: true, type: 'error', description: error.message });
@@ -77,7 +94,6 @@ export default function AddOrEditUser() {
         .then(() => {
           onClose();
           setNotify({ open: true });
-          refetch();
         })
         .catch((error) => {
           setNotify({ open: true, type: 'error', description: error.message });
@@ -99,7 +115,17 @@ export default function AddOrEditUser() {
       <CloseIcon />
     </IconButton>
   );
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
 
+  const changePassword = (value) => {
+    const temp = strengthIndicator(value);
+    setPasswordLevel(strengthColor(temp));
+  };
   return (
     <>
       <Notify notify={notify} setNotify={setNotify}></Notify>
@@ -112,21 +138,26 @@ export default function AddOrEditUser() {
           phoneNumber: user?.phoneNumber,
           email: user?.email,
           avatar: user?.avatar,
-          avatarFile: user?.avatarFile
+          avatarFile: user?.avatarFile,
+          emailConfirmed: user?.emailConfirmed,
+          phoneNumberConfirmed: user?.phoneNumberConfirmed,
+          lockoutEnabled: user?.lockoutEnabled,
+          lockoutEnd: user?.lockoutEnd,
+          accessFailedCount: user?.accessFailedCount,
+          defaultLanguage: user?.defaultLanguage,
+          roleIds: user?.roleIds
         }}
         enableReinitialize={true}
         validationSchema={Yup.object().shape({
-          userName: Yup.string()
-            .max(255)
-            .required(t(validation + 'required-username')),
-          email: Yup.string()
-            .email(t(validation + 'valid-email'))
-            .max(255)
-            .required(t(validation + 'required-email'))
+          userName: Yup.string().max(255).required(t('validation.required-userName')),
+          email: Yup.string().email(t('validation.valid-email')).max(255).required(t('validation.required-email')),
+          roleIds: Yup.array().min(1, t('validation.role.required-role-name')),
+          password: operation == 'add' ? Yup.string().max(255).required(t('validation.required-password')) : Yup.string().optional()
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
             setStatus({ success: true });
+
             setSubmitting(true);
             handleSubmit(values);
           } catch (err) {
@@ -137,16 +168,19 @@ export default function AddOrEditUser() {
           }
         }}
       >
-        {({ errors, handleBlur, handleChange, setFieldValue, handleSubmit, isSubmitting, touched, values }) => (
+        {({ errors, handleBlur, handleChange, setFieldValue, handleSubmit, isSubmitting, touched, values, set }) => (
           <form noValidate onSubmit={handleSubmit}>
             <Grid container justifyContent="center" direction="row" alignItems="flex-start">
-              <Grid container spacing={3} item xs={12} sm={12} md={6} lg={6} direction="column">
+              <Grid container spacing={3} item xs={12} sm={12} md={10} lg={10} xl={7} direction="column">
                 <Grid item>
-                  <Typography variant="h5">{t('pages.cards.user-' + params.operation)}</Typography>
+                  <Typography variant="h5">{t('pages.cards.user-' + operation)}</Typography>
                 </Grid>
                 <Grid item>
-                  <MainCard title={t('pages.cards.user-profile')}>
+                  <MainCard>
                     <Grid container spacing={3} direction="column">
+                      <Grid item xs={12} md={12}>
+                        <Divider textAlign="left">{t('pages.cards.user-profile')}</Divider>
+                      </Grid>
                       <Grid container item spacing={0} direction="row" justifyContent="flex-end" alignItems="flex-start">
                         <Grid item xs={12} md={2}>
                           <Tooltip title={t('tooltips.edit-avatar')}>
@@ -187,7 +221,7 @@ export default function AddOrEditUser() {
                                       bottom: '30px'
                                     }}
                                   >
-                                    {t('buttons.edit')}
+                                    <Edit />
                                   </span>
                                 </div>
                               </ButtonBase>
@@ -195,8 +229,8 @@ export default function AddOrEditUser() {
                           </Tooltip>
                         </Grid>
                       </Grid>
-                      <Grid container item spacing={3} justifyContent="center">
-                        <Grid item xs={12} md={6}>
+                      <Grid container item spacing={3}>
+                        <Grid item xs={12} md={6} lg={6} xl={4}>
                           <Stack spacing={1}>
                             <InputLabel htmlFor="name">{t(fieldsName + 'name')}</InputLabel>
                             <OutlinedInput
@@ -217,7 +251,7 @@ export default function AddOrEditUser() {
                             )}
                           </Stack>
                         </Grid>
-                        <Grid item xs={12} md={6}>
+                        <Grid item xs={12} md={6} lg={6} xl={4}>
                           <Stack spacing={1}>
                             <InputLabel htmlFor="userName">{t(fieldsName + 'userName')}</InputLabel>
                             <OutlinedInput
@@ -239,7 +273,7 @@ export default function AddOrEditUser() {
                             )}
                           </Stack>
                         </Grid>
-                        <Grid item xs={12} md={6}>
+                        <Grid item xs={12} md={6} lg={6} xl={4}>
                           <Stack spacing={1}>
                             <InputLabel htmlFor="email">{t(fieldsName + 'email')}</InputLabel>
                             <OutlinedInput
@@ -261,8 +295,7 @@ export default function AddOrEditUser() {
                             )}
                           </Stack>
                         </Grid>
-
-                        <Grid item xs={12} md={6}>
+                        <Grid item xs={12} md={6} lg={6} xl={4}>
                           <Stack spacing={1}>
                             <InputLabel htmlFor="phoneNumber">{t(fieldsName + 'phoneNumber')}</InputLabel>
                             <OutlinedInput
@@ -274,7 +307,7 @@ export default function AddOrEditUser() {
                               name="phoneNumber"
                               onBlur={handleBlur}
                               onChange={handleChange}
-                              placeholder={t(fieldsName + 'phone-number')}
+                              placeholder={t(fieldsName + 'phoneNumber')}
                               inputProps={{}}
                             />
                             {touched.phoneNumber && errors.phoneNumber && (
@@ -282,26 +315,220 @@ export default function AddOrEditUser() {
                                 {errors.phoneNumber}
                               </FormHelperText>
                             )}
-                          </Stack> 
+                          </Stack>
                         </Grid>
-                        <Grid item xs={12} md={12}>
-                        <Divider textAlign="left">{t('pages.cards.user-security')}</Divider>
+                        {operation == 'edit' && (
+                          <Grid item xs={12} md={6} lg={6} xl={4}>
+                            <Stack spacing={1}>
+                              <InputLabel htmlFor="emailConfirmed">{t(fieldsName + 'emailConfirmed')}</InputLabel>
+                              <FormControlLabel
+                                disabled
+                                control={
+                                  <Checkbox
+                                    id="emailConfirmed"
+                                    checked={values.emailConfirmed ? true : false}
+                                    title={values.emailConfirmed ? 'Yes' : 'No'}
+                                    color="default"
+                                    disabled
+                                  />
+                                }
+                                label={t(fieldsName + 'emailConfirmed')}
+                              />
+                            </Stack>
+                          </Grid>
+                        )}
+                        {operation == 'edit' && (
+                          <Grid item xs={12} md={6} lg={6} xl={4}>
+                            <Stack spacing={1}>
+                              <InputLabel htmlFor="phoneNumberConfirmed">{t(fieldsName + 'phoneNumberConfirmed')}</InputLabel>
+                              <FormControlLabel
+                                disabled
+                                control={
+                                  <Checkbox
+                                    id="phoneNumberConfirmed"
+                                    checked={values.phoneNumberConfirmed ? true : false}
+                                    title={values.phoneNumberConfirmed ? 'Yes' : 'No'}
+                                    color="default"
+                                    disabled
+                                  />
+                                }
+                                label={t(fieldsName + 'phoneNumberConfirmed')}
+                              />
+                            </Stack>
+                          </Grid>
+                        )}
+                        <Grid item xs={12} md={6} lg={6} xl={4}>
+                          <Stack spacing={1}>
+                            <InputLabel id="defaultLanguage">{t(fieldsName + 'defaultLanguage')}</InputLabel>
+                            <Select
+                              labelId="defaultLanguage"
+                              id="defaultLanguage"
+                              value={values.defaultLanguage}
+                              label="Default Language"
+                              onChange={handleChange}
+                            >
+                              {languageList.map((language) => (
+                                <MenuItem key={'page' + language.key} value={language.key}>
+                                  <img src={language.icon} alt={language.name} style={{ width: '20px', margin: '0px 5px' }} />{' '}
+                                  {language.name}
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </Stack>
                         </Grid>
-                        <Grid container item spacing={3} justifyContent="center" alignItems="center" direction="row">
-                          <Grid item xs={12} sm={6} md={3}>
-                            <AnimateButton>
-                              <Button
-                                disableElevation
-                                disabled={isSubmitting}
+                        <Grid item xs={12} md={12} lg={12}>
+                          <Divider textAlign="left">
+                            {t('pages.cards.user-security')}
+                            {/* <Chip label={t('pages.cards.user-security')} /> */}
+                          </Divider>
+                        </Grid>
+                        <Grid container item xs={12} md={12} lg={6} xl={6} spacing={1}>
+                          <Grid item xs={12} md={6} lg={12} xl={12}>
+                            <Stack spacing={1}>
+                              <InputLabel htmlFor="newPassword">{t(fieldsName + 'password')}</InputLabel>
+                              <OutlinedInput
+                                autocomplete="off"
                                 fullWidth
-                                size="large"
-                                type="submit"
-                                variant="contained"
-                                color="primary"
-                              >
-                                {t(buttonName + 'save')}
-                              </Button>
-                            </AnimateButton>
+                                error={Boolean(touched.password && errors.password)}
+                                id="newPassword"
+                                type={showPassword ? 'text' : 'password'}
+                                value={values.password}
+                                name="newPassword"
+                                onBlur={handleBlur}
+                                onChange={(e) => {
+                                  handleChange(e);
+                                  changePassword(e.target.value);
+                                }}
+                                endAdornment={
+                                  <InputAdornment position="end">
+                                    <IconButton
+                                      aria-label="toggle password visibility"
+                                      onClick={handleClickShowPassword}
+                                      onMouseDown={handleMouseDownPassword}
+                                      edge="end"
+                                      size="large"
+                                    >
+                                      {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                                    </IconButton>
+                                  </InputAdornment>
+                                }
+                                placeholder="******"
+                                inputProps={{}}
+                              />
+                              {touched.password && errors.password && (
+                                <FormHelperText error id="helper-text-password">
+                                  {errors.password}
+                                </FormHelperText>
+                              )}
+                            </Stack>
+                            <FormControl sx={{ mt: 2 }}>
+                              <Grid container spacing={0} alignItems="center">
+                                <Grid item>
+                                  <Box sx={{ bgcolor: passwordLevel?.color, width: 85, height: 8, borderRadius: '7px' }} />
+                                </Grid>
+                                <Grid item>
+                                  <Typography variant="subtitle1" fontSize="0.75rem">
+                                    {passwordLevel?.label}
+                                  </Typography>
+                                </Grid>
+                              </Grid>
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={12} md={6} lg={12} xl={12}>
+                            <Stack spacing={1}>
+                              <InputLabel htmlFor="roleIds">{t('pages.roles')}</InputLabel>
+                              <SelectRole
+                                defaultValues={values?.roleIds}
+                                fieldName={'roleIds'}
+                                setFieldValue={setFieldValue}
+                                error={Boolean(touched.roleIds && errors.roleIds)}
+                              />
+                              {touched.roleIds && errors.roleIds && (
+                                <FormHelperText error id="helper-roleIds">
+                                  {errors.roleIds}
+                                </FormHelperText>
+                              )}
+                            </Stack>
+                          </Grid>
+                        </Grid>
+                        {operation == 'edit' && (
+                          <Grid container item xs={12} md={12} lg={6} xl={6}>
+                            <MainCard title={'User Try to Login'}>
+                              <Grid container xs={12} md={12} lg={12} xl={12} spacing={3}>
+                                <Grid item xs={12} md={6} lg={6} xl={4}>
+                                  <Stack spacing={1}>
+                                    <InputLabel htmlFor="lockoutEnabled">{t(fieldsName + 'lockoutEnabled')}</InputLabel>
+                                    <FormControlLabel
+                                      disabled
+                                      control={
+                                        <Checkbox
+                                          id="lockoutEnabled"
+                                          checked={values.lockoutEnabled ? true : false}
+                                          title={values.lockoutEnabled ? 'Yes' : 'No'}
+                                          color="default"
+                                          disabled
+                                        />
+                                      }
+                                      label={t(fieldsName + 'lockoutEnabled')}
+                                    />
+                                  </Stack>
+                                </Grid>
+                                <Grid item xs={12} md={6} lg={6} xl={4}>
+                                  <Stack spacing={1}>
+                                    <InputLabel htmlFor="lockoutEnd">{t(fieldsName + 'lockoutEnd')}</InputLabel>
+                                    <OutlinedInput id="lockoutEnd" type="text" value={values.lockoutEnd} fullWidth disabled />
+                                  </Stack>
+                                </Grid>
+                                <Grid item xs={12} md={6} lg={6} xl={4}>
+                                  <Stack spacing={1}>
+                                    <InputLabel htmlFor="accessFailedCount">{t(fieldsName + 'accessFailedCount')}</InputLabel>
+                                    <OutlinedInput id="accessFailedCount" type="text" value={values.accessFailedCount} fullWidth disabled />
+                                  </Stack>
+                                </Grid>
+                              </Grid>
+                            </MainCard>
+                          </Grid>
+                        )}
+                        <Grid container item spacing={3} direction="row" justifyContent="space-between" alignItems="center">
+                          <Grid item>
+                            <Stack direction="row" spacing={2}>
+                              {' '}
+                              <AnimateButton>
+                                <Button
+                                  size="large"
+                                  onClick={() => {
+                                    navigate('/usersList');
+                                  }}
+                                  variant="outlined"
+                                  color="secondary"
+                                  startIcon={<ArrowBack />}
+                                >
+                                  {t('buttons.cancel')}
+                                </Button>
+                              </AnimateButton>
+                              <AnimateButton>
+                                <Button
+                                  disa
+                                  disabled={isSubmitting}
+                                  size="large"
+                                  type="submit"
+                                  variant="contained"
+                                  color="primary"
+                                  startIcon={<Save />}
+                                >
+                                  {operation == 'edit' ? t(buttonName + 'save') : t(buttonName + 'add')}
+                                </Button>
+                              </AnimateButton>
+                            </Stack>
+                          </Grid>
+                          <Grid item>
+                            {operation == 'edit' && (
+                              <AnimateButton>
+                                <Button size="large" variant="contained" color="error" startIcon={<DeleteIcon />}>
+                                  {t(buttonName + 'delete')}
+                                </Button>
+                              </AnimateButton>
+                            )}
                           </Grid>
                         </Grid>
                       </Grid>

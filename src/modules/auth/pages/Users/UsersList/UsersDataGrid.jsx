@@ -28,6 +28,7 @@ import CONFIG from 'config';
 import { Stack } from '@mui/system';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
+import SelectRole from '../../Security/Role/SelectRole';
 // ===============================|| COLOR BOX ||=============================== //
 
 function UsersDataGrid() {
@@ -105,10 +106,6 @@ function UsersDataGrid() {
     []
   );
 
-  const handleRefetch = () => {
-    setRefetch(Date.now());
-  };
-
   const handleUserList = useCallback(async (filters) => {
     return await service.getUserList(filters);
   }, []);
@@ -118,7 +115,7 @@ function UsersDataGrid() {
         color="primary"
         variant="contained"
         onClick={() => {
-          navigate('/user/add');
+          navigate('/user/add/0');
         }}
       >
         {t(buttonName + 'add')}
@@ -296,18 +293,7 @@ function UsersDataGrid() {
           <Grid item xs={12} md={4}>
             <Stack spacing={1}>
               <InputLabel htmlFor="roles">{t('pages.roles')}</InputLabel>
-              <Autocomplete
-                size="small"
-                disabled
-                multiple
-                id="tags-outlined"
-                options={row.original.roles}
-                getOptionLabel={(option) => option.name}
-                defaultValue={row.original.roles}
-                filterSelectedOptions
-                renderInput={(params) => <TextField {...params} placeholder={t('pages.roles')} />}
-              />
-              {/* <OutlinedInput id="roles" type="text" value={row.original.roles[0].name} fullWidth disabled /> */}
+              <SelectRole disabled defaultValues={row.original.roleIds} />
             </Stack>
           </Grid>
         </Grid>

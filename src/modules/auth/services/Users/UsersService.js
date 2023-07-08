@@ -55,7 +55,6 @@ export default class UsersService {
     });
   };
   deleteUser = async (userId) => {
-    debugger;
     return new Promise((resolve, reject) => {
       axios
         .get(CONFIG.API_BASEPATH + '/auth/deleteUser', { params: { userId: userId } })

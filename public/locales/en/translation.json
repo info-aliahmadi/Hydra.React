@@ -71,7 +71,8 @@
       "lockoutEnabled": "Lockout Enabled",
       "lockoutEnd": "Lockout End",
       "accessFailedCount": "Access Failed Count",
-      "defaultLanguage": "Default Language"
+      "defaultLanguage": "Default Language",
+      "password": "Password"
     }
   },
   "buttons": {
@@ -83,7 +84,7 @@
     "detail": "Detail",
     "change-password": "Change Password",
     "user": {
-      "save": "Add New User",
+      "save": "Save",
       "add": "Add New User",
       "edit": "Edit User",
       "delete": "Delete User"
@@ -105,7 +106,7 @@
     "valid-email": "Must be a valid email",
     "required-email": "Email is required",
     "required-old-password": "Required Old Password",
-    "required-confirm-password": "Required Confirm Password",
+    "required-password": "Required Password",
     "required-new-password": "Required New Password",
     "role": {
       "required-role-name": "Role name Is Required",
