@@ -98,8 +98,8 @@ function UsersDataGrid() {
         type: 'boolean'
       },
       {
-        accessorKey: 'registerdate',
-        header: t(fieldsName + 'registerdate'),
+        accessorKey: 'registerDate',
+        header: t(fieldsName + 'registerDate'),
         type: 'dateTime'
       }
     ],

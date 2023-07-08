@@ -25,6 +25,7 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
 import RoleService from 'modules/auth/services/Security/RoleService';
+import setServerErrors from 'utils/setServerErrors';
 
 const AddOrEditRole = ({ roleId, isNew, open, setOpen, refetch }) => {
   const [t] = useTranslation();
@@ -47,32 +48,34 @@ const AddOrEditRole = ({ roleId, isNew, open, setOpen, refetch }) => {
     setRole({});
   };
 
-  const handleSubmit = (role) => {
-    debugger;
+  const handleSubmit = (role, setErrors) => {
     if (isNew == true) {
       roleService
         .addRole(role)
         .then(() => {
           onClose();
+          setRole({});
           setNotify({ open: true });
           refetch();
         })
         .catch((error) => {
-          setNotify({ open: true, type: 'error', description: error.message });
+          setNotify({ open: true, type: 'error', description: error });
+          setServerErrors(error, setErrors);
         });
     } else {
       roleService
         .updateRole(role)
         .then(() => {
           onClose();
+          setRole({});
           setNotify({ open: true });
           refetch();
         })
         .catch((error) => {
-          setNotify({ open: true, type: 'error', description: error.message });
+          setServerErrors(error, setErrors);
+          setNotify({ open: true, type: 'error', description: error });
         });
     }
-    setRole({});
   };
   const CloseDialog = () => (
     <IconButton
@@ -108,9 +111,7 @@ const AddOrEditRole = ({ roleId, isNew, open, setOpen, refetch }) => {
           })}
           onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
             try {
-              setStatus({ success: true });
-              setSubmitting(true);
-              handleSubmit(values);
+              handleSubmit(values, setErrors);
             } catch (err) {
               console.error(err);
               setStatus({ success: false });
@@ -119,7 +120,7 @@ const AddOrEditRole = ({ roleId, isNew, open, setOpen, refetch }) => {
             }
           }}
         >
-          {({ errors, handleBlur, handleChange, setFieldValue, handleSubmit, isSubmitting, touched, values }) => (
+          {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
             <form noValidate onSubmit={handleSubmit}>
               <DialogTitle>
                 {t('dialog.' + (isNew == true ? 'add' : 'edit') + '.title', { item: 'Role' })}
@@ -133,7 +134,7 @@ const AddOrEditRole = ({ roleId, isNew, open, setOpen, refetch }) => {
                       <OutlinedInput
                         id="name"
                         type="text"
-                        value={values.name}
+                        value={values.name || ''}
                         name="name"
                         onBlur={handleBlur}
                         onChange={handleChange}
@@ -156,7 +157,7 @@ const AddOrEditRole = ({ roleId, isNew, open, setOpen, refetch }) => {
                         error={Boolean(touched.normalizedName && errors.normalizedName)}
                         id="normalizedName"
                         type="text"
-                        value={values.normalizedName}
+                        value={values.normalizedName || ''}
                         name="normalizedName"
                         onBlur={handleBlur}
                         onChange={handleChange}

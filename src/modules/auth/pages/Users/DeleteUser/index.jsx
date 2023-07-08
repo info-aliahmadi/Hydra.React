@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
 import UsersService from 'modules/auth/services/Users/UsersService';
 
-const DeleteUser = ({ row, open, setOpen, refetch }) => {
+const DeleteUser = ({ userId, open, setOpen }) => {
   const [t] = useTranslation();
   let userService = new UsersService();
   const [notify, setNotify] = useState({ open: false });
@@ -20,13 +20,14 @@ const DeleteUser = ({ row, open, setOpen, refetch }) => {
   };
 
   const handleSubmit = () => {
-    let userId = row.getValue('id');
     userService
       .deleteUser(userId)
       .then(() => {
         onClose();
         setNotify({ open: true });
-        refetch();
+        setTimeout(function () {
+          window.location.replace('/usersList');
+        }, 4000);
       })
       .catch((error) => {
         setNotify({ open: true, type: 'error', description: error.message });

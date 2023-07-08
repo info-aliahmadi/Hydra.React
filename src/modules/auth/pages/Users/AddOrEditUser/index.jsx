@@ -47,6 +47,8 @@ import CONFIG from 'config';
 import MainCard from 'components/MainCard';
 import languageList from 'Localization/languageList';
 import SelectRole from '../../Security/Role/SelectRole';
+import DeleteUser from '../DeleteUser';
+import setServerErrors from 'utils/setServerErrors';
 
 export default function AddOrEditUser() {
   const [t] = useTranslation();
@@ -60,6 +62,7 @@ export default function AddOrEditUser() {
   const [avatarPreview, setAvatarPreview] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const [passwordLevel, setPasswordLevel] = useState();
+  const [openDelete, setOpenDelete] = useState(false);
   const navigate = useNavigate();
 
   const loadUser = () => {
@@ -71,50 +74,34 @@ export default function AddOrEditUser() {
     if (operation == 'edit' && id > 0) loadUser();
   }, [operation, id]);
 
-  const onClose = () => {
-    if (operation == 'add') {
-      setUser({});
-    }
-  };
+  const onClose = () => {};
 
-  const handleSubmit = (user) => {
+  const handleSubmit = (user, resetForm, setErrors) => {
     if (operation == 'add') {
       userService
         .addUser(user)
         .then(() => {
-          onClose();
+          resetForm();
+          setAvatarPreview();
           setNotify({ open: true });
         })
         .catch((error) => {
-          setNotify({ open: true, type: 'error', description: error.message });
+          setServerErrors(error, setErrors);
+          setNotify({ open: true, type: 'error', description: error });
         });
     } else {
       userService
         .updateUser(user)
-        .then(() => {
-          onClose();
+        .then((result) => {
+          setUser(result);
           setNotify({ open: true });
         })
         .catch((error) => {
-          setNotify({ open: true, type: 'error', description: error.message });
+          setServerErrors(error, setErrors);
+          setNotify({ open: true, type: 'error', description: error });
         });
     }
-    setUser({});
   };
-  const CloseDialog = () => (
-    <IconButton
-      aria-label="close"
-      onClick={onClose}
-      sx={{
-        position: 'absolute',
-        right: 8,
-        top: 8,
-        color: (theme) => theme.palette.grey[500]
-      }}
-    >
-      <CloseIcon />
-    </IconButton>
-  );
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -145,21 +132,20 @@ export default function AddOrEditUser() {
           lockoutEnd: user?.lockoutEnd,
           accessFailedCount: user?.accessFailedCount,
           defaultLanguage: user?.defaultLanguage,
+          password: user?.password,
           roleIds: user?.roleIds
         }}
         enableReinitialize={true}
         validationSchema={Yup.object().shape({
           userName: Yup.string().max(255).required(t('validation.required-userName')),
           email: Yup.string().email(t('validation.valid-email')).max(255).required(t('validation.required-email')),
-          roleIds: Yup.array().min(1, t('validation.role.required-role-name')),
-          password: operation == 'add' ? Yup.string().max(255).required(t('validation.required-password')) : Yup.string().optional()
+          roleIds: Yup.array().min(1, t('validation.role.required-role-name')).required(t('validation.role.required-role-name')),
+          password:
+            operation == 'add' ? Yup.string().max(255).required(t('validation.required-password')) : Yup.string().nullable().optional()
         })}
-        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
+        onSubmit={(values, { setErrors, setStatus, setSubmitting, resetForm }) => {
           try {
-            setStatus({ success: true });
-
-            setSubmitting(true);
-            handleSubmit(values);
+            handleSubmit(values, resetForm, setErrors);
           } catch (err) {
             console.error(err);
             setStatus({ success: false });
@@ -168,7 +154,7 @@ export default function AddOrEditUser() {
           }
         }}
       >
-        {({ errors, handleBlur, handleChange, setFieldValue, handleSubmit, isSubmitting, touched, values, set }) => (
+        {({ errors, handleBlur, handleChange, setFieldValue, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit}>
             <Grid container justifyContent="center" direction="row" alignItems="flex-start">
               <Grid container spacing={3} item xs={12} sm={12} md={10} lg={10} xl={7} direction="column">
@@ -212,7 +198,15 @@ export default function AddOrEditUser() {
                                     src={avatarPreview ? avatarPreview : values.avatar ? CONFIG.AVATAR_BASEPATH + values.avatar : Anonymous}
                                     sx={{ width: 85, height: 85 }}
                                   ></Avatar>
-                                  <span
+                                  <Chip
+                                    // label=""
+                                    // onClick={handleClick}
+                                    // onDelete={handleDelete}
+                                    icon={<DeleteIcon />}
+                                  >
+                                    <DeleteIcon />
+                                  </Chip>
+                                  {/* <span
                                     style={{
                                       background: 'rgb(0 0 0 / 40%)',
                                       position: 'absolute',
@@ -221,8 +215,8 @@ export default function AddOrEditUser() {
                                       bottom: '30px'
                                     }}
                                   >
-                                    <Edit />
-                                  </span>
+                                    <DeleteIcon />
+                                  </span> */}
                                 </div>
                               </ButtonBase>
                             </Stack>
@@ -236,7 +230,7 @@ export default function AddOrEditUser() {
                             <OutlinedInput
                               id="name"
                               type="text"
-                              value={values.name}
+                              value={values.name || ''}
                               name="name"
                               onBlur={handleBlur}
                               onChange={handleChange}
@@ -259,7 +253,7 @@ export default function AddOrEditUser() {
                               error={Boolean(touched.userName && errors.userName)}
                               id="userName"
                               type="lastname"
-                              value={values.userName}
+                              value={values.userName || ''}
                               name="userName"
                               onBlur={handleBlur}
                               onChange={handleChange}
@@ -281,7 +275,7 @@ export default function AddOrEditUser() {
                               error={Boolean(touched.email && errors.email)}
                               id="email"
                               type="email"
-                              value={values.email}
+                              value={values.email || ''}
                               name="email"
                               onBlur={handleBlur}
                               onChange={handleChange}
@@ -303,7 +297,7 @@ export default function AddOrEditUser() {
                               error={Boolean(touched.phoneNumber && errors.phoneNumber)}
                               id="phoneNumber"
                               type="lastname"
-                              value={values.phoneNumber}
+                              value={values.phoneNumber || ''}
                               name="phoneNumber"
                               onBlur={handleBlur}
                               onChange={handleChange}
@@ -361,11 +355,15 @@ export default function AddOrEditUser() {
                           <Stack spacing={1}>
                             <InputLabel id="defaultLanguage">{t(fieldsName + 'defaultLanguage')}</InputLabel>
                             <Select
+                              key={values.defaultLanguage}
                               labelId="defaultLanguage"
                               id="defaultLanguage"
-                              value={values.defaultLanguage}
+                              value={values.defaultLanguage || ''}
+                              onBlur={handleBlur}
+                              // onChange={handleChange}
+                              error={Boolean(touched.defaultLanguage && errors.defaultLanguage)}
                               label="Default Language"
-                              onChange={handleChange}
+                              onChange={(e) => setFieldValue('defaultLanguage', e.target.value)}
                             >
                               {languageList.map((language) => (
                                 <MenuItem key={'page' + language.key} value={language.key}>
@@ -392,8 +390,8 @@ export default function AddOrEditUser() {
                                 error={Boolean(touched.password && errors.password)}
                                 id="newPassword"
                                 type={showPassword ? 'text' : 'password'}
-                                value={values.password}
-                                name="newPassword"
+                                value={values.password || ''}
+                                name="password"
                                 onBlur={handleBlur}
                                 onChange={(e) => {
                                   handleChange(e);
@@ -438,8 +436,8 @@ export default function AddOrEditUser() {
                             <Stack spacing={1}>
                               <InputLabel htmlFor="roleIds">{t('pages.roles')}</InputLabel>
                               <SelectRole
-                                defaultValues={values?.roleIds}
-                                fieldName={'roleIds'}
+                                defaultValues={values?.roleIds || []}
+                                id={'roleIds'}
                                 setFieldValue={setFieldValue}
                                 error={Boolean(touched.roleIds && errors.roleIds)}
                               />
@@ -524,7 +522,14 @@ export default function AddOrEditUser() {
                           <Grid item>
                             {operation == 'edit' && (
                               <AnimateButton>
-                                <Button size="large" variant="contained" color="error" startIcon={<DeleteIcon />}>
+                                <Button
+                                  size="large"
+                                  variant="contained"
+                                  color="error"
+                                  startIcon={<DeleteIcon />}
+                                  on
+                                  onClick={() => setOpenDelete(true)}
+                                >
                                   {t(buttonName + 'delete')}
                                 </Button>
                               </AnimateButton>
@@ -540,6 +545,7 @@ export default function AddOrEditUser() {
           </form>
         )}
       </Formik>
+      {operation == 'edit' && <DeleteUser open={openDelete} setOpen={setOpenDelete} userId={id} />}
     </>
   );
 }

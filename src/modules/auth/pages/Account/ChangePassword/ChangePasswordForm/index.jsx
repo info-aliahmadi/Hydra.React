@@ -84,8 +84,7 @@ const ChangePasswordForm = () => {
                 setNotify({
                   open: true,
                   type: 'error',
-                  description: error.response.data?.errors ? error.response.data?.errors[0]?.description : error.message,
-                  title: error.response.data?.errors ? error.response.data?.errors[0]?.code : null
+                  description: error
                 });
               });
             setStatus({ success: true });

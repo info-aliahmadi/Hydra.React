@@ -102,12 +102,12 @@
     }
   },
   "validation": {
-    "required-userName": "Userame is required",
+    "required-userName": "Username is required",
     "valid-email": "Must be a valid email",
     "required-email": "Email is required",
-    "required-old-password": "Required Old Password",
-    "required-password": "Required Password",
-    "required-new-password": "Required New Password",
+    "required-old-password": "Old Password is Required",
+    "required-password": "Password is Required",
+    "required-new-password": "New Password is Required",
     "role": {
       "required-role-name": "Role name Is Required",
       "maxlength-role-normalizedname": "Max Length is 255 Characters"

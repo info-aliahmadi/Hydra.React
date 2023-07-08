@@ -10,13 +10,16 @@ function Notify({ notify, setNotify }) {
   `;
   const [open, setOpen] = useState();
   const [t] = useTranslation();
-
   let description = notify.type == 'error' ? t('notification.error-description') : t('notification.success-description');
   if (notify.type === 'error' && notify.description) {
     if (notify.description?.response?.data?.message) {
       description = notify.description?.response?.data?.message;
     } else {
-      description = notify.description;
+      if (notify.description?.message) {
+        description = notify.description?.message;
+      } else {
+        description = notify.description;
+      }
     }
   }
 

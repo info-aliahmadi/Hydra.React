@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 import RoleService from 'modules/auth/services/Security/RoleService';
 import { useTranslation } from 'react-i18next';
 
-export default function SelectRole({ defaultValues, fieldName, setFieldValue, error, disabled }) {
+export default function SelectRole({ defaultValues, id, setFieldValue, error, disabled }) {
   const [t] = useTranslation();
   const [loading, setLoading] = useState(true);
   const [options, setOptions] = useState([]);
@@ -25,19 +25,21 @@ export default function SelectRole({ defaultValues, fieldName, setFieldValue, er
   return (
     <Autocomplete
       disabled={disabled}
-      key={loading + defaultValues}
-      id="roles"
+      key={loading + defaultValues + error}
       multiple
       size="small"
       getOptionLabel={(option) => option?.name}
       options={options}
       loading={loading}
-      onChange={(e, newValue) => {
+      error={error}
+      id={id}
+      name={id}
+      onChange={(e, newValue) =>
         setFieldValue(
-          fieldName,
+          id,
           newValue.map(({ id }) => id)
-        );
-      }}
+        )
+      }
       defaultValue={options.filter((x) => defaultValues?.find((c) => c === x.id)) ?? []}
       renderInput={(params) => (
         <TextField

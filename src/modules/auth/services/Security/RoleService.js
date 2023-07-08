@@ -14,7 +14,7 @@ export default class RoleService {
           resolve(response.data);
         })
         .catch((error) => {
-          reject(error.Errors);
+          reject(error);
         });
     });
   };
@@ -26,7 +26,7 @@ export default class RoleService {
           resolve(response.data);
         })
         .catch((error) => {
-          reject(error.Errors);
+          reject(error);
         });
     });
   };
@@ -38,7 +38,7 @@ export default class RoleService {
           resolve(response.data.data);
         })
         .catch((error) => {
-          reject(error.Errors);
+          reject(error);
         });
     });
   };
@@ -50,7 +50,7 @@ export default class RoleService {
           resolve(response.data);
         })
         .catch((error) => {
-          reject(error.Errors);
+          reject(error);
         });
     });
   };
@@ -62,7 +62,7 @@ export default class RoleService {
           resolve(response.data.data);
         })
         .catch((error) => {
-          reject(error.Errors);
+          reject(error);
         });
     });
   };
@@ -76,7 +76,7 @@ export default class RoleService {
           resolve(response.data);
         })
         .catch((error) => {
-          reject(error.Errors);
+          reject(error);
         });
     });
   };

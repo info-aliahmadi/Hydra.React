@@ -26,6 +26,7 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
 import PermissionService from 'modules/auth/services/Security/PermissionService';
+import setServerErrors from 'utils/setServerErrors';
 
 const AddOrEditPermission = ({ permissionId, isNew, open, setOpen, refetch }) => {
   const [t] = useTranslation();
@@ -47,32 +48,35 @@ const AddOrEditPermission = ({ permissionId, isNew, open, setOpen, refetch }) =>
     if (isNew == false && permissionId > 0) loadPermission();
   }, [permissionId]);
 
-  const handleSubmit = (permission) => {
-    debugger;
+  const handleSubmit = (permission, setErrors) => {
     if (isNew == true) {
       permissionService
         .addPermission(permission)
         .then(() => {
+          setPermission({});
           onClose();
           setNotify({ open: true });
           refetch();
         })
         .catch((error) => {
-          setNotify({ open: true, type: 'error', description: error.message });
+          setNotify({ open: true, type: 'error', description: error });
+          setServerErrors(error, setErrors);
         });
     } else {
       permissionService
         .updatePermission(permission)
         .then(() => {
+          setPermission({});
           onClose();
           setNotify({ open: true });
           refetch();
         })
         .catch((error) => {
-          setNotify({ open: true, type: 'error', description: error.message });
+          // debugger;
+          setNotify({ open: true, type: 'error', description: error });
+          setServerErrors(error, setErrors);
         });
     }
-    setPermission({});
   };
   const CloseDialog = () => (
     <IconButton
@@ -108,9 +112,9 @@ const AddOrEditPermission = ({ permissionId, isNew, open, setOpen, refetch }) =>
           })}
           onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
             try {
-              setStatus({ success: true });
-              setSubmitting(true);
-              handleSubmit(values);
+              // setStatus({ success: true });
+              // setSubmitting(true);
+              handleSubmit(values, setErrors);
             } catch (err) {
               console.error(err);
               setStatus({ success: false });
@@ -119,7 +123,7 @@ const AddOrEditPermission = ({ permissionId, isNew, open, setOpen, refetch }) =>
             }
           }}
         >
-          {({ errors, handleBlur, handleChange, setFieldValue, handleSubmit, isSubmitting, touched, values }) => (
+          {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
             <form noValidate onSubmit={handleSubmit}>
               <DialogTitle>
                 {t('dialog.' + (isNew == true ? 'add' : 'edit') + '.title', { item: 'Permission' })}
@@ -133,7 +137,7 @@ const AddOrEditPermission = ({ permissionId, isNew, open, setOpen, refetch }) =>
                       <OutlinedInput
                         id="name"
                         type="text"
-                        value={values.name}
+                        value={values.name || ''}
                         name="name"
                         onBlur={handleBlur}
                         onChange={handleChange}
@@ -156,7 +160,7 @@ const AddOrEditPermission = ({ permissionId, isNew, open, setOpen, refetch }) =>
                         error={Boolean(touched.normalizedName && errors.normalizedName)}
                         id="normalizedName"
                         type="text"
-                        value={values.normalizedName}
+                        value={values.normalizedName || ''}
                         name="normalizedName"
                         onBlur={handleBlur}
                         onChange={handleChange}

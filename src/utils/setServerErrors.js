@@ -8,9 +8,9 @@ export default function setServerErrors(response, setErrors) {
       let errors = errorData.errors;
       let errorsLength = errors.length;
       for (let i = 0; i < errorsLength; i++) {
-        let key = errors['property'];
-        let description = errors['description'];
-        errorsObject[key] = description;
+        let key = errors[i].property;
+        let description = errors[i].description;
+        errorsObject[camelCase(key)] = description;
       }
     } else {
       var keys = _.keys(errorData);

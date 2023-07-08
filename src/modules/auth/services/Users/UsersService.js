@@ -14,7 +14,7 @@ export default class UsersService {
           resolve(response.data);
         })
         .catch((error) => {
-          reject(error.Errors);
+          reject(error);
         });
     });
   };
@@ -26,7 +26,7 @@ export default class UsersService {
           resolve(response.data.data);
         })
         .catch((error) => {
-          reject(error.Errors);
+          reject(error);
         });
     });
   };
@@ -38,7 +38,7 @@ export default class UsersService {
           resolve(response.data);
         })
         .catch((error) => {
-          reject(error.Errors);
+          reject(error);
         });
     });
   };
@@ -50,7 +50,7 @@ export default class UsersService {
           resolve(response.data.data);
         })
         .catch((error) => {
-          reject(error.Errors);
+          reject(error);
         });
     });
   };
@@ -63,7 +63,7 @@ export default class UsersService {
           resolve(response.data);
         })
         .catch((error) => {
-          reject(error.Errors);
+          reject(error);
         });
     });
   };
