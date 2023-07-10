@@ -20,9 +20,9 @@ const ChangePassword = Loadable(lazy(() => import('modules/auth/pages/Account/Ch
 
 const ChangeLanguage = Loadable(lazy(() => import('modules/auth/pages/Settings/Language/ChangeLanguage')));
 
-const RoleList = Loadable(lazy(() => import('modules/auth/pages/Security/Role/RoleList')));
+const RoleList = Loadable(lazy(() => import('modules/auth/pages/Role/RoleList')));
 
-const PermissionList = Loadable(lazy(() => import('modules/auth/pages/Security/Permission/PermissionList')));
+const PermissionList = Loadable(lazy(() => import('modules/auth/pages/Permission/PermissionList')));
 
 const UsersList = Loadable(lazy(() => import('modules/auth/pages/Users/UsersList')));
 

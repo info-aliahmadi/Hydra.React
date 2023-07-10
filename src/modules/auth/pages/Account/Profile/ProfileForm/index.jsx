@@ -6,6 +6,7 @@ import {
   Avatar,
   Button,
   ButtonBase,
+  ButtonGroup,
   FormHelperText,
   Grid,
   InputLabel,
@@ -21,10 +22,13 @@ import { Formik } from 'formik';
 
 // project import
 import AnimateButton from 'components/@extended/AnimateButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Edit from '@mui/icons-material/Edit';
+import Save from '@mui/icons-material/Save';
 
 // assets
 import { useTranslation } from 'react-i18next';
-import AccountService from 'modules/auth/services/Account/AccountService';
+import AccountService from 'modules/auth/services/AccountService';
 import AuthenticationService from 'modules/auth/services/Authentication/AuthenticationService';
 import CONFIG from 'config';
 import Anonymous from 'assets/images/users/anonymous.png';
@@ -69,6 +73,23 @@ const ProfileForm = () => {
         setNotify({ open: true, type: 'error', description: error.message });
       });
   };
+  const changeAvatar = (e, setFieldValue) => {
+    if (e?.target?.files) {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(e.target.files[0]);
+      fileReader.onload = () => {
+        if (fileReader.readyState === 2) {
+          setFieldValue('avatarFile', fileReader.result);
+          setAvatarPreview(fileReader.result);
+        }
+      };
+    }
+  };
+  const deleteAvatar = (setFieldValue) => {
+    setFieldValue('avatarFile', '');
+    setFieldValue('avatar', '');
+    setAvatarPreview();
+  };
   return (
     <>
       <Notify notify={notify} setNotify={setNotify}></Notify>
@@ -109,50 +130,35 @@ const ProfileForm = () => {
             <Grid container spacing={3} direction="column">
               <Grid container item spacing={0} direction="row" justifyContent="flex-end" alignItems="flex-start">
                 <Grid item xs={12} md={2}>
-                  <Tooltip title={t('tooltips.edit-avatar')}>
-                    <Stack>
+                  <Stack justifyContent="center" alignItems="center">
+                    <Tooltip title={t('tooltips.edit-avatar')} placement="top">
                       <ButtonBase variant="contained" component="label">
-                        <input
-                          type="file"
-                          hidden
-                          accept="image/*"
-                          name="avatarFile"
-                          onChange={(e) => {
-                            const fileReader = new FileReader();
-                            fileReader.readAsDataURL(e.target.files[0]);
-                            fileReader.onload = () => {
-                              if (fileReader.readyState === 2) {
-                                setFieldValue('avatarFile', fileReader.result);
-                                setAvatarPreview(fileReader.result);
-                              }
-                            };
-                          }}
-                        />
-                        <div
-                          style={{
-                            position: 'relative'
-                          }}
-                        >
-                          <Avatar
-                            alt="profile user"
-                            src={avatarPreview ? avatarPreview : values.avatar ? CONFIG.AVATAR_BASEPATH + values.avatar : Anonymous}
-                            sx={{ width: 85, height: 85 }}
-                          ></Avatar>{' '}
-                          <span
-                            style={{
-                              background: 'rgb(0 0 0 / 40%)',
-                              position: 'absolute',
-                              width: '100%',
-                              textAlign: 'center',
-                              bottom: '30px'
-                            }}
-                          >
-                            {t('buttons.edit')}
-                          </span>
-                        </div>
+                        <input type="file" hidden accept="image/*" name="avatarFile" onChange={(e) => changeAvatar(e, setFieldValue)} />
+                        <Avatar
+                          alt="profile user"
+                          src={avatarPreview ? avatarPreview : values.avatar ? CONFIG.AVATAR_BASEPATH + values.avatar : Anonymous}
+                          sx={{ width: 85, height: 85 }}
+                        ></Avatar>
                       </ButtonBase>
-                    </Stack>
-                  </Tooltip>
+                    </Tooltip>
+                    <ButtonGroup variant="outlined" color="secondary" size="small" aria-label="outlined button group">
+                      {(avatarPreview || values.avatar) && (
+                        <Tooltip title={t('tooltips.delete-avatar')}>
+                          <Button onClick={() => deleteAvatar(setFieldValue)}>
+                            <DeleteIcon />
+                          </Button>
+                        </Tooltip>
+                      )}
+                      <Tooltip title={t('tooltips.edit-avatar')}>
+                        <Button>
+                          <ButtonBase variant="contained" component="label">
+                            <input type="file" hidden accept="image/*" name="avatarFile" onChange={(e) => changeAvatar(e, setFieldValue)} />
+                            <Edit />
+                          </ButtonBase>
+                        </Button>
+                      </Tooltip>
+                    </ButtonGroup>
+                  </Stack>
                 </Grid>
               </Grid>
               <Grid container item spacing={3} justifyContent="center">
@@ -256,6 +262,7 @@ const ProfileForm = () => {
                       type="submit"
                       variant="contained"
                       color="primary"
+                      startIcon={<Save />}
                     >
                       {t(buttonName + 'save')}
                     </Button>

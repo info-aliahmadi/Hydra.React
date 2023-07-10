@@ -8,11 +8,11 @@ import CloseIcon from '@mui/icons-material/Close';
 // assets
 import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
-import UsersService from 'modules/auth/services/UsersService';
+import PermissionRoleService from 'modules/auth/services/PermissionRoleService';
 
-const DeleteUser = ({ userId, open, setOpen }) => {
+const DeletePermissionRole = ({ row, roleId, permissionRow, open, setOpen, data, setData, refetch }) => {
   const [t] = useTranslation();
-  let userService = new UsersService();
+  let permissionService = new PermissionRoleService();
   const [notify, setNotify] = useState({ open: false });
 
   const onClose = () => {
@@ -20,14 +20,16 @@ const DeleteUser = ({ userId, open, setOpen }) => {
   };
 
   const handleSubmit = () => {
-    userService
-      .deleteUser(userId)
+    let permissionId = permissionRow.original.id;
+    permissionService
+      .deletePermissionRole(permissionId, roleId)
       .then(() => {
-        onClose();
         setNotify({ open: true });
-        setTimeout(function () {
-          window.location.replace('/usersList');
-        }, 4000);
+        data.splice(permissionRow.index, 1);
+        setData([...data]);
+        row.original.permissions = [...data];
+        refetch();
+        onClose();
       })
       .catch((error) => {
         setNotify({ open: true, type: 'error', description: error.message });
@@ -53,7 +55,7 @@ const DeleteUser = ({ userId, open, setOpen }) => {
       <Notify notify={notify} setNotify={setNotify}></Notify>
       <Dialog open={open} onClose={onClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         <DialogTitle id="alert-dialog-title">
-          <Typography variant="h3"> {t('buttons.user.delete')}</Typography>
+          <Typography variant="h3"> {t('buttons.permission.delete')}</Typography>
           <CloseDialog />
         </DialogTitle>
         <DialogContent>
@@ -73,4 +75,4 @@ const DeleteUser = ({ userId, open, setOpen }) => {
   );
 };
 
-export default DeleteUser;
+export default DeletePermissionRole;

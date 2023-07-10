@@ -54,8 +54,11 @@ function MaterialTable({
   enableDensityToggle,
   enableFullScreenToggle,
   enableGlobalFilterModes,
-
   enableColumnFilterModes,
+  enableExpanding,
+  enableExpandAll,
+  getSubRows,
+
   manualFiltering,
   manualPagination,
   manualSorting,
@@ -118,6 +121,9 @@ function MaterialTable({
     'notEmpty'
   ];
   function setFilterMode() {
+    if (enableGlobalFilterModes == false) {
+      return;
+    }
     numbersFields.forEach((element) => {
       element.columnFilterModeOptions = numberFilterMode;
     });
@@ -169,6 +175,9 @@ function MaterialTable({
     });
   }
   function GetDefaultFilterFunc() {
+    if (enableColumnFilters == false) {
+      return '';
+    }
     let numbersDefaultFilters = numbersFields.map((x) => x.accessorKey);
     let defaulFilters = {};
     for (let i = 0; i < numbersDefaultFilters.length; i++) {
@@ -234,6 +243,7 @@ function MaterialTable({
       }
       try {
         const response = await dataApi(JSON.stringify(searchParams));
+        debugger;
         setData(response.data);
       } catch (error) {
         setIsError(true);
@@ -305,7 +315,7 @@ function MaterialTable({
     <>
       <MaterialReactTable
         columns={columns}
-        data={dataApi ? data?.items ?? [] : data} //data is undefined on first render
+        data={dataApi ? data?.items ?? data ?? [] : data} //data is undefined on first render
         initialState={{ showColumnFilters: false }}
         enableTopToolbar={(enableTopToolbar && true) ?? true}
         enableColumnActions={(enableColumnActions && true) ?? true}
@@ -320,6 +330,8 @@ function MaterialTable({
         enableFullScreenToggle={(enableFullScreenToggle && true) ?? true}
         enableGlobalFilterModes={(enableGlobalFilterModes && true) ?? true}
         enableColumnFilterModes={(enableColumnFilterModes && true) ?? true}
+        enableExpanding={(enableExpanding && true) ?? false}
+        enableExpandAll={(enableExpandAll && true) ?? false}
         manualFiltering={(manualFiltering && true) ?? true}
         showSkeletons
         manualPagination={(manualPagination && true) ?? true}
@@ -333,6 +345,7 @@ function MaterialTable({
             : undefined
         }
         positionToolbarAlertBanner="center"
+        getSubRows={getSubRows && getSubRows}
         onColumnFiltersChange={setColumnFilters}
         onColumnFilterFnsChange={setColumnFilterFns}
         onGlobalFilterChange={setGlobalFilter}

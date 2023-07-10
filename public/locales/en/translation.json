@@ -21,7 +21,11 @@
     "users": "Users",
     "roles": "Roles",
     "permissions": "Permissions",
-    "access": "Access"
+    "contents": "Contents",
+    "article": "Articles",
+    "topic": "Topics",
+    "menus": "Menus",
+    "slideshow": "Slideshow"
   },
   "pages": {
     "edit-profile": "Edit Profile",
@@ -120,7 +124,8 @@
   "tooltips": {
     "switch-to-darkmode": "Switch to Dark Theme",
     "switch-to-lightmode": "Switch to Light Theme",
-    "edit-avatar": "Edit Avatar"
+    "edit-avatar": "Change Avatar",
+    "delete-avatar": "Delete Avatar"
   },
   "notification": {
     "success": "Success!",

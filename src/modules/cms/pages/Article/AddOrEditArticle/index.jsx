@@ -40,24 +40,24 @@ import AnimateButton from 'components/@extended/AnimateButton';
 // assets
 import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
-import UsersService from 'modules/auth/services/UsersService';
+import ArticlesService from 'modules/cms/services/ArticlesService';
 import { useNavigate, useParams } from 'react-router-dom';
 import Anonymous from 'assets/images/users/anonymous.png';
 import CONFIG from 'config';
 import MainCard from 'components/MainCard';
 import languageList from 'Localization/languageList';
-import DeleteUser from '../DeleteUser';
+import DeleteArticle from '../DeleteArticle';
 import setServerErrors from 'utils/setServerErrors';
-import SelectRole from '../../Role/SelectRole';
+import SelectTopic from '../../Topic/SelectTopic';
 
-export default function AddOrEditUser() {
+export default function AddOrEditArticle() {
   const [t] = useTranslation();
   const params = useParams();
   const operation = params.operation;
   const id = params.id;
-  let userService = new UsersService();
-  const [fieldsName, validation, buttonName] = ['fields.user.', 'validation.user.', 'buttons.user.'];
-  const [user, setUser] = useState();
+  let articleService = new ArticlesService();
+  const [fieldsName, validation, buttonName] = ['fields.article.', 'validation.article.', 'buttons.article.'];
+  const [article, setArticle] = useState();
   const [notify, setNotify] = useState({ open: false });
   const [avatarPreview, setAvatarPreview] = useState();
   const [showPassword, setShowPassword] = useState(false);
@@ -65,21 +65,21 @@ export default function AddOrEditUser() {
   const [openDelete, setOpenDelete] = useState(false);
   const navigate = useNavigate();
 
-  const loadUser = () => {
-    userService.getUserById(id).then((result) => {
-      setUser(result);
+  const loadArticle = () => {
+    articleService.getArticleById(id).then((result) => {
+      setArticle(result);
     });
   };
   useEffect(() => {
-    if (operation == 'edit' && id > 0) loadUser();
+    if (operation == 'edit' && id > 0) loadArticle();
   }, [operation, id]);
 
   const onClose = () => {};
 
-  const handleSubmit = (user, resetForm, setErrors) => {
+  const handleSubmit = (article, resetForm, setErrors) => {
     if (operation == 'add') {
-      userService
-        .addUser(user)
+      articleService
+        .addArticle(article)
         .then(() => {
           resetForm();
           setAvatarPreview();
@@ -90,10 +90,10 @@ export default function AddOrEditUser() {
           setNotify({ open: true, type: 'error', description: error });
         });
     } else {
-      userService
-        .updateUser(user)
+      articleService
+        .updateArticle(article)
         .then((result) => {
-          setUser(result);
+          setArticle(result);
           setNotify({ open: true });
         })
         .catch((error) => {
@@ -136,25 +136,25 @@ export default function AddOrEditUser() {
 
       <Formik
         initialValues={{
-          id: user?.id,
-          name: user?.name,
-          userName: user?.userName,
-          phoneNumber: user?.phoneNumber,
-          email: user?.email,
-          avatar: user?.avatar,
-          avatarFile: user?.avatarFile,
-          emailConfirmed: user?.emailConfirmed,
-          phoneNumberConfirmed: user?.phoneNumberConfirmed,
-          lockoutEnabled: user?.lockoutEnabled,
-          lockoutEnd: user?.lockoutEnd,
-          accessFailedCount: user?.accessFailedCount,
-          defaultLanguage: user?.defaultLanguage,
-          password: user?.password,
-          roleIds: user?.roleIds
+          id: article?.id,
+          name: article?.name,
+          articleName: article?.articleName,
+          phoneNumber: article?.phoneNumber,
+          email: article?.email,
+          avatar: article?.avatar,
+          avatarFile: article?.avatarFile,
+          emailConfirmed: article?.emailConfirmed,
+          phoneNumberConfirmed: article?.phoneNumberConfirmed,
+          lockoutEnabled: article?.lockoutEnabled,
+          lockoutEnd: article?.lockoutEnd,
+          accessFailedCount: article?.accessFailedCount,
+          defaultLanguage: article?.defaultLanguage,
+          password: article?.password,
+          roleIds: article?.roleIds
         }}
         enableReinitialize={true}
         validationSchema={Yup.object().shape({
-          userName: Yup.string().max(255).required(t('validation.required-userName')),
+          articleName: Yup.string().max(255).required(t('validation.required-articleName')),
           email: Yup.string().email(t('validation.valid-email')).max(255).required(t('validation.required-email')),
           roleIds: Yup.array().min(1, t('validation.role.required-role-name')).required(t('validation.role.required-role-name')),
           password:
@@ -173,20 +173,20 @@ export default function AddOrEditUser() {
       >
         {({ errors, handleBlur, handleChange, setFieldValue, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit}>
-            <Grid container justifyContent="center" direction="row" alignItems="flex-start">
+            <Grid container justifyArticle="center" direction="row" alignItems="flex-start">
               <Grid container spacing={3} item xs={12} sm={12} md={10} lg={10} xl={7} direction="column">
                 <Grid item>
-                  <Typography variant="h5">{t('pages.cards.user-' + operation)}</Typography>
+                  <Typography variant="h5">{t('pages.cards.article-' + operation)}</Typography>
                 </Grid>
                 <Grid item>
                   <MainCard>
                     <Grid container spacing={3} direction="column">
                       <Grid item xs={12} md={12}>
-                        <Divider textAlign="left">{t('pages.cards.user-profile')}</Divider>
+                        <Divider textAlign="left">{t('pages.cards.article-profile')}</Divider>
                       </Grid>
-                      <Grid container item spacing={0} direction="row" justifyContent="flex-end" alignItems="flex-start">
+                      <Grid container item spacing={0} direction="row" justifyArticle="flex-end" alignItems="flex-start">
                         <Grid item xs={12} md={2}>
-                          <Stack justifyContent="center" alignItems="center">
+                          <Stack justifyArticle="center" alignItems="center">
                             <Tooltip title={t('tooltips.edit-avatar')} placement="top">
                               <ButtonBase variant="contained" component="label">
                                 <input
@@ -197,7 +197,7 @@ export default function AddOrEditUser() {
                                   onChange={(e) => changeAvatar(e, setFieldValue)}
                                 />
                                 <Avatar
-                                  alt="profile user"
+                                  alt="profile article"
                                   src={avatarPreview ? avatarPreview : values.avatar ? CONFIG.AVATAR_BASEPATH + values.avatar : Anonymous}
                                   sx={{ width: 85, height: 85 }}
                                 ></Avatar>
@@ -253,22 +253,22 @@ export default function AddOrEditUser() {
                         </Grid>
                         <Grid item xs={12} md={6} lg={6} xl={4}>
                           <Stack spacing={1}>
-                            <InputLabel htmlFor="userName">{t(fieldsName + 'userName')}</InputLabel>
+                            <InputLabel htmlFor="articleName">{t(fieldsName + 'articleName')}</InputLabel>
                             <OutlinedInput
                               fullWidth
-                              error={Boolean(touched.userName && errors.userName)}
-                              id="userName"
+                              error={Boolean(touched.articleName && errors.articleName)}
+                              id="articleName"
                               type="lastname"
-                              value={values.userName || ''}
-                              name="userName"
+                              value={values.articleName || ''}
+                              name="articleName"
                               onBlur={handleBlur}
                               onChange={handleChange}
-                              placeholder={t(fieldsName + 'userName')}
+                              placeholder={t(fieldsName + 'articleName')}
                               inputProps={{}}
                             />
-                            {touched.userName && errors.userName && (
+                            {touched.articleName && errors.articleName && (
                               <FormHelperText error id="helper-text-lastname">
-                                {errors.userName}
+                                {errors.articleName}
                               </FormHelperText>
                             )}
                           </Stack>
@@ -382,8 +382,8 @@ export default function AddOrEditUser() {
                         </Grid>
                         <Grid item xs={12} md={12} lg={12}>
                           <Divider textAlign="left">
-                            {t('pages.cards.user-security')}
-                            {/* <Chip label={t('pages.cards.user-security')} /> */}
+                            {t('pages.cards.article-security')}
+                            {/* <Chip label={t('pages.cards.article-security')} /> */}
                           </Divider>
                         </Grid>
                         <Grid container item xs={12} md={12} lg={6} xl={6} spacing={1}>
@@ -441,7 +441,7 @@ export default function AddOrEditUser() {
                           <Grid item xs={12} md={6} lg={12} xl={12}>
                             <Stack spacing={1}>
                               <InputLabel htmlFor="roleIds">{t('pages.roles')}</InputLabel>
-                              <SelectRole
+                              <SelectTopic
                                 defaultValues={values?.roleIds || []}
                                 id={'roleIds'}
                                 setFieldValue={setFieldValue}
@@ -457,7 +457,7 @@ export default function AddOrEditUser() {
                         </Grid>
                         {operation == 'edit' && (
                           <Grid container item xs={12} md={12} lg={6} xl={6}>
-                            <MainCard title={'User Try to Login'}>
+                            <MainCard title={'Article Try to Login'}>
                               <Grid container xs={12} md={12} lg={12} xl={12} spacing={3}>
                                 <Grid item xs={12} md={6} lg={6} xl={4}>
                                   <Stack spacing={1}>
@@ -493,7 +493,7 @@ export default function AddOrEditUser() {
                             </MainCard>
                           </Grid>
                         )}
-                        <Grid container item spacing={3} direction="row" justifyContent="space-between" alignItems="center">
+                        <Grid container item spacing={3} direction="row" justifyArticle="space-between" alignItems="center">
                           <Grid item>
                             <Stack direction="row" spacing={2}>
                               {' '}
@@ -501,7 +501,7 @@ export default function AddOrEditUser() {
                                 <Button
                                   size="large"
                                   onClick={() => {
-                                    navigate('/usersList');
+                                    navigate('/articlesList');
                                   }}
                                   variant="outlined"
                                   color="secondary"
@@ -551,7 +551,7 @@ export default function AddOrEditUser() {
           </form>
         )}
       </Formik>
-      {operation == 'edit' && <DeleteUser open={openDelete} setOpen={setOpenDelete} userId={id} />}
+      {operation == 'edit' && <DeleteArticle open={openDelete} setOpen={setOpenDelete} articleId={id} />}
     </>
   );
 }

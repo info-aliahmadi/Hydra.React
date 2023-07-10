@@ -27,8 +27,9 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
-import AccountService from 'modules/auth/services/Account/AccountService';
+import AccountService from 'modules/auth/services/AccountService';
 import setServerErrors from 'utils/setServerErrors';
+import { Save } from '@mui/icons-material';
 
 // ============================|| FIREBASE - REGISTER ||============================ //
 
@@ -184,7 +185,15 @@ const ChangePasswordForm = () => {
             </Grid>
             <Grid container item xs={12} justifyContent="center">
               <AnimateButton>
-                <Button disableElevation disabled={isSubmitting} size="large" type="submit" variant="contained" color="primary">
+                <Button
+                  disableElevation
+                  disabled={isSubmitting}
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  startIcon={<Save />}
+                >
                   {t('buttons.change-password')}
                 </Button>
               </AnimateButton>
