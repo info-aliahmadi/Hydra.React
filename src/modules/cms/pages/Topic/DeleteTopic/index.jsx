@@ -9,6 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
 import TopicService from 'modules/cms/services/TopicService';
+import setServerErrors from 'utils/setServerErrors';
 
 const DeleteTopic = ({ row, open, setOpen, refetch }) => {
   const [t] = useTranslation();
@@ -20,7 +21,7 @@ const DeleteTopic = ({ row, open, setOpen, refetch }) => {
   };
 
   const handleSubmit = () => {
-    let topicId = row.getValue('id');
+    let topicId = row.original.id;
     topicService
       .deleteTopic(topicId)
       .then(() => {
@@ -29,7 +30,7 @@ const DeleteTopic = ({ row, open, setOpen, refetch }) => {
         refetch();
       })
       .catch((error) => {
-        setNotify({ open: true, type: 'error', description: error.message });
+        setNotify({ open: true, type: 'error', description: error });
       });
   };
   const CloseDialog = () => (

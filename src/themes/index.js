@@ -42,7 +42,7 @@ export default function ThemeCustomization({ children }) {
 
   useEffect(() => {
     document.dir = direction;
-    direction === 'rtl' ? setFonts(`iran`) : setFonts(`'Public Sans', sans-serif`);
+    direction === 'rtl' ? setFonts(`Iran Sans`) : setFonts(`'Public Sans', sans-serif`);
   }, [direction]);
 
   function changeDirection(dir) {

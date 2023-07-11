@@ -9,8 +9,8 @@ const CONFIG = {
   PRESET_COLOR: 'default',
   THEME_DIRECTION: 'ltr',
   API_BASEPATH: process.env.NODE_ENV === 'production' ? 'https://website.com' : 'https://localhost:7134', // application api basepath
-  AVATAR_BASEPATH: 'https://localhost:7134/avatar/',
-  THUMBNAIL_BASEPATH: 'https://localhost:7134/thumbnail/',
+  AVATAR_BASEPATH: 'https://localhost:7134/images/avatar/',
+  THUMBNAIL_BASEPATH: 'https://localhost:7134/images/thumbnail/',
   LOGIN_API_PATH: 'https://localhost:7134/Auth/Login',
   REFRESH_TOKEN_API_PATH: 'https://localhost:7134/Auth/RefreshToken',
   LOGOUT_API_PATH: 'https://localhost:7134/Auth/SignOut',
@@ -24,7 +24,9 @@ const CONFIG = {
   LANGUAGE_STORAGE_NAME: 'i18nextLng',
   DEFAULT_LANGUAGE: 'en',
   DATE_STYLE: 'short', // "full" | "long" | "medium" | "short",
-  TIME_STYLE: 'short' // "full" | "long" | "medium" | "short"
+  TIME_STYLE: 'short', // "full" | "long" | "medium" | "short"
+  LTR_FONTS_EDITOR: ['"Public Sans"', 'Arial', 'tohoma', 'Courier New,Courier'],
+  RTL_FONTS_EDITOR: ['Iran Sans', 'Arial', 'tohoma', 'Courier New,Courier']
 };
 
 export default CONFIG;

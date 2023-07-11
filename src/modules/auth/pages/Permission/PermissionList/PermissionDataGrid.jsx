@@ -97,7 +97,7 @@ function PermissionDataGrid() {
   );
   return (
     <>
-      <MainCard title={t('pages.cards.permissions-list')} codeHighlight>
+      <MainCard title={t('pages.cards.permissions-list')}>
         <TableCard>
           <MaterialTable
             refetch={refetch}

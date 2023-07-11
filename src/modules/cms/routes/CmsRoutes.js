@@ -7,9 +7,9 @@ const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons'
 
 const TopicsList = Loadable(lazy(() => import('modules/cms/pages/Topic/TopicsList')));
 
-const ContentsList = Loadable(lazy(() => import('modules/cms/pages/Article/ArticlesList')));
+const ArticlesList = Loadable(lazy(() => import('modules/cms/pages/Article/ArticlesList')));
 
-const AddOrEditContent = Loadable(lazy(() => import('modules/cms/pages/Article/AddOrEditArticle')));
+const AddOrEditArticle = Loadable(lazy(() => import('modules/cms/pages/Article/AddOrEditArticle')));
 
 
 // ==============================|| MAIN ROUTING ||============================== //
@@ -21,16 +21,16 @@ const CmsRoutes = [
     permission: 'AUTH_GET.PERMISSION.LIST',
     element: <TopicsList />
   },{
-    key: 'users-list',
-    path: 'userslist',
+    key: 'articleslist',
+    path: 'ArticlesList',
     permission: 'AUTH_GET.PERMISSION.LIST',
-    element: <ContentsList />
+    element: <ArticlesList />
   },
   {
-    key: 'addOrEditUser',
-    path: 'User/:operation/:id',
+    key: 'addOrEditArticle',
+    path: 'Article/:operation/:id',
     permission: 'AUTH_GET.PERMISSION.LIST',
-    element: <AddOrEditContent />
+    element: <AddOrEditArticle />
   },
   {
     key: 'color',

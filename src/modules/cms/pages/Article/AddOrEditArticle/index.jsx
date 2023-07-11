@@ -23,13 +23,7 @@ import {
   Chip,
   ButtonGroup
 } from '@mui/material';
-import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
-
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Edit from '@mui/icons-material/Edit';
-import Save from '@mui/icons-material/Save';
-import ArrowBack from '@mui/icons-material/ArrowBack';
+import { ArrowBack, Save, Delete, Send } from '@mui/icons-material';
 import { strengthColor, strengthIndicator } from 'utils/password-strength';
 // third party
 import * as Yup from 'yup';
@@ -49,9 +43,16 @@ import languageList from 'Localization/languageList';
 import DeleteArticle from '../DeleteArticle';
 import setServerErrors from 'utils/setServerErrors';
 import SelectTopic from '../../Topic/SelectTopic';
+import { DatePicker, DateTimePicker } from '@mui/x-date-pickers';
+
+import SunEditor, { buttonList } from 'suneditor-react';
+import 'assets/css/suneditor.min.css';
+import { setTokenBearer } from 'utils/axiosHeaders';
 
 export default function AddOrEditArticle() {
-  const [t] = useTranslation();
+  const [t, i18n] = useTranslation();
+  debugger;
+  let isRtl = i18n.dir() == 'rtl' ? true : false;
   const params = useParams();
   const operation = params.operation;
   const id = params.id;
@@ -59,9 +60,8 @@ export default function AddOrEditArticle() {
   const [fieldsName, validation, buttonName] = ['fields.article.', 'validation.article.', 'buttons.article.'];
   const [article, setArticle] = useState();
   const [notify, setNotify] = useState({ open: false });
-  const [avatarPreview, setAvatarPreview] = useState();
-  const [showPassword, setShowPassword] = useState(false);
-  const [passwordLevel, setPasswordLevel] = useState();
+  const [smallThumbPreview, setSmallThumbPreview] = useState();
+  const [largeThumbPreview, setLargeThumbPreview] = useState();
   const [openDelete, setOpenDelete] = useState(false);
   const navigate = useNavigate();
 
@@ -73,8 +73,6 @@ export default function AddOrEditArticle() {
   useEffect(() => {
     if (operation == 'edit' && id > 0) loadArticle();
   }, [operation, id]);
-
-  const onClose = () => {};
 
   const handleSubmit = (article, resetForm, setErrors) => {
     if (operation == 'add') {
@@ -102,29 +100,7 @@ export default function AddOrEditArticle() {
         });
     }
   };
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
-  };
 
-  const changePassword = (value) => {
-    const temp = strengthIndicator(value);
-    setPasswordLevel(strengthColor(temp));
-  };
-  const changeAvatar = (e, setFieldValue) => {
-    if (e?.target?.files) {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(e.target.files[0]);
-      fileReader.onload = () => {
-        if (fileReader.readyState === 2) {
-          setFieldValue('avatarFile', fileReader.result);
-          setAvatarPreview(fileReader.result);
-        }
-      };
-    }
-  };
   const deleteAvatar = (setFieldValue) => {
     setFieldValue('avatarFile', '');
     setFieldValue('avatar', '');
@@ -137,28 +113,29 @@ export default function AddOrEditArticle() {
       <Formik
         initialValues={{
           id: article?.id,
-          name: article?.name,
-          articleName: article?.articleName,
-          phoneNumber: article?.phoneNumber,
-          email: article?.email,
-          avatar: article?.avatar,
-          avatarFile: article?.avatarFile,
-          emailConfirmed: article?.emailConfirmed,
-          phoneNumberConfirmed: article?.phoneNumberConfirmed,
-          lockoutEnabled: article?.lockoutEnabled,
-          lockoutEnd: article?.lockoutEnd,
-          accessFailedCount: article?.accessFailedCount,
-          defaultLanguage: article?.defaultLanguage,
-          password: article?.password,
-          roleIds: article?.roleIds
+          subject: article?.subject,
+          body: article?.body,
+          smallThumbnail: article?.smallThumbnail,
+          largeThumbnail: article?.largeThumbnail,
+          tags: article?.tags,
+          registerDate: article?.registerDate,
+          publishDate: article?.publishDate,
+          writer: article?.writer,
+          editor: article?.editor,
+          editDate: article?.editDate,
+          isDraft: article?.isDraft,
+          topicsIds: article?.topicsIds
         }}
         enableReinitialize={true}
         validationSchema={Yup.object().shape({
-          articleName: Yup.string().max(255).required(t('validation.required-articleName')),
-          email: Yup.string().email(t('validation.valid-email')).max(255).required(t('validation.required-email')),
-          roleIds: Yup.array().min(1, t('validation.role.required-role-name')).required(t('validation.role.required-role-name')),
-          password:
-            operation == 'add' ? Yup.string().max(255).required(t('validation.required-password')) : Yup.string().nullable().optional()
+          subject: Yup.string()
+            .max(400)
+            .required(t(validation + 'requiredSubject')),
+          body: Yup.string().required(t(validation + 'requiredBody')),
+          publishDate: Yup.string().required(t(validation + 'requiredPublishDate')),
+          TopicsIds: Yup.array()
+            .min(1, t(validation + 'requiredTopics'))
+            .required(t(validation + 'requiredTopics'))
         })}
         onSubmit={(values, { setErrors, setStatus, setSubmitting, resetForm }) => {
           try {
@@ -173,20 +150,207 @@ export default function AddOrEditArticle() {
       >
         {({ errors, handleBlur, handleChange, setFieldValue, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit}>
-            <Grid container justifyArticle="center" direction="row" alignItems="flex-start">
-              <Grid container spacing={3} item xs={12} sm={12} md={10} lg={10} xl={7} direction="column">
+            <Grid container justifyContent="center" direction="row" alignItems="flex-start">
+              <Grid container item spacing={3} xs={12} sm={12} md={10} lg={10} xl={9} direction="column">
                 <Grid item>
                   <Typography variant="h5">{t('pages.cards.article-' + operation)}</Typography>
                 </Grid>
                 <Grid item>
                   <MainCard>
-                    <Grid container spacing={3} direction="column">
-                      <Grid item xs={12} md={12}>
-                        <Divider textAlign="left">{t('pages.cards.article-profile')}</Divider>
+                    <Grid container item spacing={3} direction="row" justifyContent="flex-start" alignItems="flex-start">
+                      <Grid item xs={12} md={12} lg={12} xl={12}>
+                        <Stack spacing={1}>
+                          <InputLabel htmlFor="subject">{t(fieldsName + 'subject')}</InputLabel>
+                          <OutlinedInput
+                            id="subject"
+                            type="subject"
+                            value={values.subject || ''}
+                            name="subject"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            placeholder={t(fieldsName + 'subject')}
+                            fullWidth
+                            error={Boolean(touched.subject && errors.subject)}
+                          />
+                          {touched.subject && errors.subject && (
+                            <FormHelperText error id="helper-text-subject">
+                              {errors.subject}
+                            </FormHelperText>
+                          )}
+                        </Stack>
                       </Grid>
-                      <Grid container item spacing={0} direction="row" justifyArticle="flex-end" alignItems="flex-start">
-                        <Grid item xs={12} md={2}>
-                          <Stack justifyArticle="center" alignItems="center">
+                      <Grid item xs={12} md={12} lg={12} xl={12}>
+                        <Stack spacing={1}>
+                          <InputLabel htmlFor="name">{t(fieldsName + 'body')}</InputLabel>
+                          <SunEditor
+                            id="body"
+                            name="body"
+                            setDefaultStyle={
+                              isRtl
+                                ? 'font-family :Iran Sans, sans-serif; font-size: 14px'
+                                : 'font-family :"Public Sans", sans-serif; font-size: 14px'
+                            }
+                            defaultValue={values.body || ''}
+                            setAllPlugins={true}
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            error={Boolean(touched.body && errors.body)}
+                            setOptions={{
+                              rtl: isRtl,
+                              font: isRtl ? CONFIG.RTL_FONTS_EDITOR : CONFIG.LTR_FONTS_EDITOR,
+                              height: 400,
+                              imageGalleryUrl: 'https://localhost:7134/cms/GetDriveFiles',
+                              imageGalleryHeader: {
+                                Authorization: setTokenBearer()
+                              },
+                              minHeight: 200,
+                              templates: [
+                                {
+                                  name: 'Template-1',
+                                  html: '<p>HTML source1</p>'
+                                },
+                                {
+                                  name: 'Template-2',
+                                  html: '<p>HTML source2</p>'
+                                }
+                              ],
+                              buttonList: [
+                                // Default
+                                ['undo', 'redo'],
+                                ['font', 'fontSize', 'formatBlock'],
+                                ['paragraphStyle', 'blockquote'],
+                                ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
+                                ['fontColor', 'hiliteColor', 'textStyle'],
+                                ['removeFormat'],
+                                ['outdent', 'indent'],
+                                ['align', 'horizontalRule', 'list', 'lineHeight'],
+                                ['table', 'link', 'image', 'video', 'audio'],
+                                ['imageGallery'],
+                                ['fullScreen', 'showBlocks', 'codeView'],
+                                ['preview', 'print', 'template'],
+                                ['-left', '#fix', 'dir_ltr', 'dir_rtl'],
+                                // (min-width:992px)
+                                [
+                                  '%992',
+                                  [
+                                    ['undo', 'redo'],
+                                    [
+                                      ':p-More Paragraph-default.more_paragraph',
+                                      'font',
+                                      'fontSize',
+                                      'formatBlock',
+                                      'paragraphStyle',
+                                      'blockquote'
+                                    ],
+                                    ['bold', 'underline', 'italic', 'strike'],
+                                    [':t-More Text-default.more_text', 'subscript', 'superscript', 'fontColor', 'hiliteColor', 'textStyle'],
+                                    ['removeFormat'],
+                                    ['outdent', 'indent'],
+                                    ['align', 'horizontalRule', 'list', 'lineHeight'],
+                                    ['-right', 'dir'],
+                                    [
+                                      '-right',
+                                      ':i-More Misc-default.more_vertical',
+                                      'fullScreen',
+                                      'showBlocks',
+                                      'codeView',
+                                      'preview',
+                                      'print',
+                                      'template'
+                                    ],
+                                    ['-right', ':r-More Rich-default.more_plus', 'table', 'link', 'image', 'video', 'audio', 'imageGallery']
+                                  ]
+                                ],
+                                // (min-width:768px)
+                                [
+                                  '%768',
+                                  [
+                                    ['undo', 'redo'],
+                                    [
+                                      ':p-More Paragraph-default.more_paragraph',
+                                      'font',
+                                      'fontSize',
+                                      'formatBlock',
+                                      'paragraphStyle',
+                                      'blockquote'
+                                    ],
+                                    [
+                                      ':t-More Text-default.more_text',
+                                      'bold',
+                                      'underline',
+                                      'italic',
+                                      'strike',
+                                      'subscript',
+                                      'superscript',
+                                      'fontColor',
+                                      'hiliteColor',
+                                      'textStyle',
+                                      'removeFormat'
+                                    ],
+                                    [
+                                      ':e-More Line-default.more_horizontal',
+                                      'outdent',
+                                      'indent',
+                                      'align',
+                                      'horizontalRule',
+                                      'list',
+                                      'lineHeight'
+                                    ],
+                                    [':r-More Rich-default.more_plus', 'table', 'link', 'image', 'video', 'audio', 'imageGallery'],
+                                    ['-right', 'dir'],
+                                    [
+                                      '-right',
+                                      ':i-More Misc-default.more_vertical',
+                                      'fullScreen',
+                                      'showBlocks',
+                                      'codeView',
+                                      'preview',
+                                      'print',
+                                      'template'
+                                    ]
+                                  ]
+                                ]
+                              ]
+                              //buttonList: buttonList.formatting // Or Array of button list, eg. [['font', 'align'], ['image']]
+                              // plugins: [font] set plugins, all plugins are set by default
+                              // Other option
+                            }}
+                            placeholder={t(fieldsName + 'body')}
+                          />
+
+                          {touched.body && errors.body && (
+                            <FormHelperText error id="helper-text-body">
+                              {errors.body}
+                            </FormHelperText>
+                          )}
+                        </Stack>
+                      </Grid>
+                      <Grid item xs={12} md={6} lg={6} xl={4}>
+                        <Stack spacing={1}>
+                          <InputLabel htmlFor="publishDate">{t(fieldsName + 'publishDate')}</InputLabel>
+                          <DateTimePicker
+                            name="publishDate"
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            placeholder={t(fieldsName + 'publishDate')}
+                            // value={values.publishDate || ''}
+                            clearable
+                            slotProps={{
+                              actionBar: {
+                                actions: ['clear', 'today']
+                              }
+                            }}
+                            error={Boolean(touched.publishDate && errors.publishDate)}
+                          />
+                          {touched.publishDate && errors.publishDate && (
+                            <FormHelperText error id="helper-text-publishDate">
+                              {errors.publishDate}
+                            </FormHelperText>
+                          )}
+                        </Stack>
+                      </Grid>
+                      {/*  <Grid item xs={12} md={2}>
+                     <Stack justifyArticle="center" alignItems="center">
                             <Tooltip title={t('tooltips.edit-avatar')} placement="top">
                               <ButtonBase variant="contained" component="label">
                                 <input
@@ -207,7 +371,7 @@ export default function AddOrEditArticle() {
                               {(avatarPreview || values.avatar) && (
                                 <Tooltip title={t('tooltips.delete-avatar')}>
                                   <Button onClick={() => deleteAvatar(setFieldValue)}>
-                                    <DeleteIcon />
+                                    <Delete />
                                   </Button>
                                 </Tooltip>
                               )}
@@ -227,320 +391,126 @@ export default function AddOrEditArticle() {
                               </Tooltip>
                             </ButtonGroup>
                           </Stack>
+                        </Grid> */}
+                      {operation == 'edit' && (
+                        <Grid item xs={12} md={6} lg={6} xl={4}>
+                          <Stack spacing={1}>
+                            <InputLabel htmlFor="registerDate">{t(fieldsName + 'registerDate')}</InputLabel>
+                            <OutlinedInput
+                              id="registerDate"
+                              type="text"
+                              value={
+                                values.registerDate
+                                  ? new Intl.DateTimeFormat(i18n.language, {
+                                      dateStyle: 'long',
+                                      timeStyle: [CONFIG.TIME_STYLE],
+                                      hour12: false
+                                    }).format(moment(values.registerDate))
+                                  : ''
+                              }
+                              fullWidth
+                              disabled
+                            />
+                          </Stack>
+                          <Stack spacing={1}>
+                            <InputLabel htmlFor="registerDate">{t(fieldsName + 'editDate')}</InputLabel>
+                            <OutlinedInput
+                              id="editDate"
+                              type="text"
+                              value={
+                                values.editDate
+                                  ? new Intl.DateTimeFormat(i18n.language, {
+                                      dateStyle: 'long',
+                                      timeStyle: [CONFIG.TIME_STYLE],
+                                      hour12: false
+                                    }).format(moment(values.editDate))
+                                  : ''
+                              }
+                              fullWidth
+                              disabled
+                            />
+                          </Stack>
+                        </Grid>
+                      )}
+                      <Grid container spacing={3} item>
+                        <Grid item xs={12} md={6} lg={6} xl={4}>
+                          <Stack spacing={1}>
+                            <InputLabel htmlFor="roleIds">{t(fieldsName + 'topicsIds')}</InputLabel>
+                            <SelectTopic
+                              defaultValues={values?.roleIds || []}
+                              id={'roleIds'}
+                              setFieldValue={setFieldValue}
+                              error={Boolean(touched.roleIds && errors.roleIds)}
+                            />
+                            {touched.roleIds && errors.roleIds && (
+                              <FormHelperText error id="helper-roleIds">
+                                {errors.roleIds}
+                              </FormHelperText>
+                            )}
+                          </Stack>
                         </Grid>
                       </Grid>
-                      <Grid container item spacing={3}>
-                        <Grid item xs={12} md={6} lg={6} xl={4}>
-                          <Stack spacing={1}>
-                            <InputLabel htmlFor="name">{t(fieldsName + 'name')}</InputLabel>
-                            <OutlinedInput
-                              id="name"
-                              type="text"
-                              value={values.name || ''}
-                              name="name"
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                              placeholder={t(fieldsName + 'name')}
-                              fullWidth
-                              error={Boolean(touched.name && errors.name)}
-                            />
-                            {touched.name && errors.name && (
-                              <FormHelperText error id="helper-text-name">
-                                {errors.name}
-                              </FormHelperText>
-                            )}
-                          </Stack>
-                        </Grid>
-                        <Grid item xs={12} md={6} lg={6} xl={4}>
-                          <Stack spacing={1}>
-                            <InputLabel htmlFor="articleName">{t(fieldsName + 'articleName')}</InputLabel>
-                            <OutlinedInput
-                              fullWidth
-                              error={Boolean(touched.articleName && errors.articleName)}
-                              id="articleName"
-                              type="lastname"
-                              value={values.articleName || ''}
-                              name="articleName"
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                              placeholder={t(fieldsName + 'articleName')}
-                              inputProps={{}}
-                            />
-                            {touched.articleName && errors.articleName && (
-                              <FormHelperText error id="helper-text-lastname">
-                                {errors.articleName}
-                              </FormHelperText>
-                            )}
-                          </Stack>
-                        </Grid>
-                        <Grid item xs={12} md={6} lg={6} xl={4}>
-                          <Stack spacing={1}>
-                            <InputLabel htmlFor="email">{t(fieldsName + 'email')}</InputLabel>
-                            <OutlinedInput
-                              fullWidth
-                              error={Boolean(touched.email && errors.email)}
-                              id="email"
-                              type="email"
-                              value={values.email || ''}
-                              name="email"
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                              placeholder={t(fieldsName + 'email')}
-                              inputProps={{}}
-                            />
-                            {touched.email && errors.email && (
-                              <FormHelperText error id="helper-text-email">
-                                {errors.email}
-                              </FormHelperText>
-                            )}
-                          </Stack>
-                        </Grid>
-                        <Grid item xs={12} md={6} lg={6} xl={4}>
-                          <Stack spacing={1}>
-                            <InputLabel htmlFor="phoneNumber">{t(fieldsName + 'phoneNumber')}</InputLabel>
-                            <OutlinedInput
-                              fullWidth
-                              error={Boolean(touched.phoneNumber && errors.phoneNumber)}
-                              id="phoneNumber"
-                              type="lastname"
-                              value={values.phoneNumber || ''}
-                              name="phoneNumber"
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                              placeholder={t(fieldsName + 'phoneNumber')}
-                              inputProps={{}}
-                            />
-                            {touched.phoneNumber && errors.phoneNumber && (
-                              <FormHelperText error id="helper-text-phoneNumber">
-                                {errors.phoneNumber}
-                              </FormHelperText>
-                            )}
-                          </Stack>
-                        </Grid>
-                        {operation == 'edit' && (
-                          <Grid item xs={12} md={6} lg={6} xl={4}>
-                            <Stack spacing={1}>
-                              <InputLabel htmlFor="emailConfirmed">{t(fieldsName + 'emailConfirmed')}</InputLabel>
-                              <FormControlLabel
-                                disabled
-                                control={
-                                  <Checkbox
-                                    id="emailConfirmed"
-                                    checked={values.emailConfirmed ? true : false}
-                                    title={values.emailConfirmed ? 'Yes' : 'No'}
-                                    color="default"
-                                    disabled
-                                  />
-                                }
-                                label={t(fieldsName + 'emailConfirmed')}
-                              />
-                            </Stack>
-                          </Grid>
-                        )}
-                        {operation == 'edit' && (
-                          <Grid item xs={12} md={6} lg={6} xl={4}>
-                            <Stack spacing={1}>
-                              <InputLabel htmlFor="phoneNumberConfirmed">{t(fieldsName + 'phoneNumberConfirmed')}</InputLabel>
-                              <FormControlLabel
-                                disabled
-                                control={
-                                  <Checkbox
-                                    id="phoneNumberConfirmed"
-                                    checked={values.phoneNumberConfirmed ? true : false}
-                                    title={values.phoneNumberConfirmed ? 'Yes' : 'No'}
-                                    color="default"
-                                    disabled
-                                  />
-                                }
-                                label={t(fieldsName + 'phoneNumberConfirmed')}
-                              />
-                            </Stack>
-                          </Grid>
-                        )}
-                        <Grid item xs={12} md={6} lg={6} xl={4}>
-                          <Stack spacing={1}>
-                            <InputLabel id="defaultLanguage">{t(fieldsName + 'defaultLanguage')}</InputLabel>
-                            <Select
-                              key={values.defaultLanguage}
-                              labelId="defaultLanguage"
-                              id="defaultLanguage"
-                              value={values.defaultLanguage || ''}
-                              onBlur={handleBlur}
-                              // onChange={handleChange}
-                              error={Boolean(touched.defaultLanguage && errors.defaultLanguage)}
-                              label="Default Language"
-                              onChange={(e) => setFieldValue('defaultLanguage', e.target.value)}
-                            >
-                              {languageList.map((language) => (
-                                <MenuItem key={'page' + language.key} value={language.key}>
-                                  <img src={language.icon} alt={language.name} style={{ width: '20px', margin: '0px 5px' }} />{' '}
-                                  {language.name}
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </Stack>
-                        </Grid>
-                        <Grid item xs={12} md={12} lg={12}>
-                          <Divider textAlign="left">
-                            {t('pages.cards.article-security')}
-                            {/* <Chip label={t('pages.cards.article-security')} /> */}
-                          </Divider>
-                        </Grid>
-                        <Grid container item xs={12} md={12} lg={6} xl={6} spacing={1}>
-                          <Grid item xs={12} md={6} lg={12} xl={12}>
-                            <Stack spacing={1}>
-                              <InputLabel htmlFor="newPassword">{t(fieldsName + 'password')}</InputLabel>
-                              <OutlinedInput
-                                autocomplete="off"
-                                fullWidth
-                                error={Boolean(touched.password && errors.password)}
-                                id="newPassword"
-                                type={showPassword ? 'text' : 'password'}
-                                value={values.password || ''}
-                                name="password"
-                                onBlur={handleBlur}
-                                onChange={(e) => {
-                                  handleChange(e);
-                                  changePassword(e.target.value);
+
+                      <Grid container item spacing={3} direction="row" justifyContent="space-between" alignItems="center">
+                        <Grid item>
+                          <Stack direction="row" spacing={2}>
+                            {' '}
+                            <AnimateButton>
+                              <Button
+                                size="large"
+                                onClick={() => {
+                                  navigate('/articlesList');
                                 }}
-                                endAdornment={
-                                  <InputAdornment position="end">
-                                    <IconButton
-                                      aria-label="toggle password visibility"
-                                      onClick={handleClickShowPassword}
-                                      onMouseDown={handleMouseDownPassword}
-                                      edge="end"
-                                      size="large"
-                                    >
-                                      {showPassword ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-                                    </IconButton>
-                                  </InputAdornment>
-                                }
-                                placeholder="******"
-                                inputProps={{}}
-                              />
-                              {touched.password && errors.password && (
-                                <FormHelperText error id="helper-text-password">
-                                  {errors.password}
-                                </FormHelperText>
-                              )}
-                            </Stack>
-                            <FormControl sx={{ mt: 2 }}>
-                              <Grid container spacing={0} alignItems="center">
-                                <Grid item>
-                                  <Box sx={{ bgcolor: passwordLevel?.color, width: 85, height: 8, borderRadius: '7px' }} />
-                                </Grid>
-                                <Grid item>
-                                  <Typography variant="subtitle1" fontSize="0.75rem">
-                                    {passwordLevel?.label}
-                                  </Typography>
-                                </Grid>
-                              </Grid>
-                            </FormControl>
-                          </Grid>
-                          <Grid item xs={12} md={6} lg={12} xl={12}>
-                            <Stack spacing={1}>
-                              <InputLabel htmlFor="roleIds">{t('pages.roles')}</InputLabel>
-                              <SelectTopic
-                                defaultValues={values?.roleIds || []}
-                                id={'roleIds'}
-                                setFieldValue={setFieldValue}
-                                error={Boolean(touched.roleIds && errors.roleIds)}
-                              />
-                              {touched.roleIds && errors.roleIds && (
-                                <FormHelperText error id="helper-roleIds">
-                                  {errors.roleIds}
-                                </FormHelperText>
-                              )}
-                            </Stack>
-                          </Grid>
+                                variant="outlined"
+                                color="secondary"
+                                startIcon={<ArrowBack />}
+                              >
+                                {t('buttons.cancel')}
+                              </Button>
+                            </AnimateButton>
+                            <AnimateButton>
+                              <Button
+                                disa
+                                disabled={isSubmitting}
+                                size="large"
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                startIcon={<Send />}
+                              >
+                                {operation == 'edit' ? t(buttonName + 'save') : t(buttonName + 'publish')}
+                              </Button>
+                            </AnimateButton>
+                            <AnimateButton>
+                              <Button
+                                disa
+                                disabled={isSubmitting}
+                                size="large"
+                                type="submit"
+                                variant="contained"
+                                color="warning"
+                                startIcon={<Save />}
+                              >
+                                {t(buttonName + 'draft')}
+                              </Button>
+                            </AnimateButton>
+                          </Stack>
                         </Grid>
-                        {operation == 'edit' && (
-                          <Grid container item xs={12} md={12} lg={6} xl={6}>
-                            <MainCard title={'Article Try to Login'}>
-                              <Grid container xs={12} md={12} lg={12} xl={12} spacing={3}>
-                                <Grid item xs={12} md={6} lg={6} xl={4}>
-                                  <Stack spacing={1}>
-                                    <InputLabel htmlFor="lockoutEnabled">{t(fieldsName + 'lockoutEnabled')}</InputLabel>
-                                    <FormControlLabel
-                                      disabled
-                                      control={
-                                        <Checkbox
-                                          id="lockoutEnabled"
-                                          checked={values.lockoutEnabled ? true : false}
-                                          title={values.lockoutEnabled ? 'Yes' : 'No'}
-                                          color="default"
-                                          disabled
-                                        />
-                                      }
-                                      label={t(fieldsName + 'lockoutEnabled')}
-                                    />
-                                  </Stack>
-                                </Grid>
-                                <Grid item xs={12} md={6} lg={6} xl={4}>
-                                  <Stack spacing={1}>
-                                    <InputLabel htmlFor="lockoutEnd">{t(fieldsName + 'lockoutEnd')}</InputLabel>
-                                    <OutlinedInput id="lockoutEnd" type="text" value={values.lockoutEnd} fullWidth disabled />
-                                  </Stack>
-                                </Grid>
-                                <Grid item xs={12} md={6} lg={6} xl={4}>
-                                  <Stack spacing={1}>
-                                    <InputLabel htmlFor="accessFailedCount">{t(fieldsName + 'accessFailedCount')}</InputLabel>
-                                    <OutlinedInput id="accessFailedCount" type="text" value={values.accessFailedCount} fullWidth disabled />
-                                  </Stack>
-                                </Grid>
-                              </Grid>
-                            </MainCard>
-                          </Grid>
-                        )}
-                        <Grid container item spacing={3} direction="row" justifyArticle="space-between" alignItems="center">
-                          <Grid item>
-                            <Stack direction="row" spacing={2}>
-                              {' '}
-                              <AnimateButton>
-                                <Button
-                                  size="large"
-                                  onClick={() => {
-                                    navigate('/articlesList');
-                                  }}
-                                  variant="outlined"
-                                  color="secondary"
-                                  startIcon={<ArrowBack />}
-                                >
-                                  {t('buttons.cancel')}
-                                </Button>
-                              </AnimateButton>
-                              <AnimateButton>
-                                <Button
-                                  disa
-                                  disabled={isSubmitting}
-                                  size="large"
-                                  type="submit"
-                                  variant="contained"
-                                  color="primary"
-                                  startIcon={<Save />}
-                                >
-                                  {operation == 'edit' ? t(buttonName + 'save') : t(buttonName + 'add')}
-                                </Button>
-                              </AnimateButton>
-                            </Stack>
-                          </Grid>
-                          <Grid item>
-                            {operation == 'edit' && (
-                              <AnimateButton>
-                                <Button
-                                  size="large"
-                                  variant="contained"
-                                  color="error"
-                                  startIcon={<DeleteIcon />}
-                                  on
-                                  onClick={() => setOpenDelete(true)}
-                                >
-                                  {t(buttonName + 'delete')}
-                                </Button>
-                              </AnimateButton>
-                            )}
-                          </Grid>
+                        <Grid item>
+                          {operation == 'edit' && (
+                            <AnimateButton>
+                              <Button
+                                size="large"
+                                variant="contained"
+                                color="error"
+                                startIcon={<Delete />}
+                                on
+                                onClick={() => setOpenDelete(true)}
+                              >
+                                {t(buttonName + 'delete')}
+                              </Button>
+                            </AnimateButton>
+                          )}
                         </Grid>
                       </Grid>
                     </Grid>

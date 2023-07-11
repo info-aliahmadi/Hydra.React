@@ -1,26 +1,20 @@
-// material-ui
 import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
 
-// project import
 import MainCard from 'components/MainCard';
 import TableCard from 'components/TableCard';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MaterialTable from 'components/MaterialTable/MaterialTable';
 import TopicService from 'modules/cms/services/TopicService';
-import { Delete } from '@mui/icons-material';
-import { Edit } from '@mui/icons-material';
+import { Edit, Topic, Add, Delete } from '@mui/icons-material';
 import AddOrEditTopic from '../AddOrEditTopic';
 import DeleteTopic from '../DeleteTopic';
 
-import AddIcon from '@mui/icons-material/Add';
-// ===============================|| COLOR BOX ||=============================== //
 
 function TopicDataGrid() {
   const [t] = useTranslation();
   const service = new TopicService();
   const [isNew, setIsNew] = useState(true);
-  const [rowId, setRowId] = useState(0);
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [row, setRow] = useState({});
@@ -39,15 +33,14 @@ function TopicDataGrid() {
     []
   );
 
-  const handleNewRow = () => {
+  const handleNewRow = (row) => {
     setIsNew(true);
-    setRowId(0);
+    setRow(row);
     setOpen(true);
   };
   const handleEditRow = (row) => {
-    let topicId = row.original.id;
     setIsNew(false);
-    setRowId(topicId);
+    setRow(row);
     setOpen(true);
   };
   const handleDeleteRow = (row) => {
@@ -63,8 +56,8 @@ function TopicDataGrid() {
   }, []);
   const AddRow = useCallback(
     () => (
-      <Button color="primary" onClick={handleNewRow} variant="contained" startIcon={<AddIcon />}>
-        {t('buttons.topic.add')}
+      <Button color="primary" onClick={() => handleNewRow(null)} variant="contained" startIcon={<Topic />}>
+        {t('buttons.topic.addMainTopic')}
       </Button>
     ),
     []
@@ -72,14 +65,19 @@ function TopicDataGrid() {
   const DeleteOrEdit = useCallback(
     ({ row }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <Tooltip arrow placement="top-start" title="Delete">
+        <Tooltip arrow placement="top-start" title={t('buttons.topic.delete')}>
           <IconButton color="error" onClick={() => handleDeleteRow(row)}>
             <Delete />
           </IconButton>
         </Tooltip>
-        <Tooltip arrow placement="top-start" title="Edit">
+        <Tooltip arrow placement="top-start" title={t('buttons.topic.edit')}>
           <IconButton onClick={() => handleEditRow(row)}>
             <Edit />
+          </IconButton>
+        </Tooltip>
+        <Tooltip arrow placement="top-start" title={t('buttons.topic.addSubTopic')}>
+          <IconButton onClick={() => handleNewRow(row)}>
+            <Add />
           </IconButton>
         </Tooltip>
       </Box>
@@ -88,7 +86,7 @@ function TopicDataGrid() {
   );
   return (
     <>
-      <MainCard title={t('pages.cards.topics-list')} codeHighlight>
+      <MainCard title={t('pages.cards.topics-list')}>
         <TableCard>
           <MaterialTable
             refetch={refetch}
@@ -110,7 +108,7 @@ function TopicDataGrid() {
           />
         </TableCard>
       </MainCard>
-      <AddOrEditTopic isNew={isNew} topicId={rowId} open={open} setOpen={setOpen} refetch={handleRefetch} />
+      <AddOrEditTopic isNew={isNew} row={row} open={open} setOpen={setOpen} refetch={handleRefetch} />
       <DeleteTopic row={row} open={openDelete} setOpen={setOpenDelete} refetch={handleRefetch} />
     </>
   );

@@ -35,15 +35,18 @@
     "users": "Users",
     "roles": "Roles",
     "permissions": "Permissions",
-    "access": "Access",
+    "topics": "Topics",
+    "articles": "Articles",
     "cards": {
       "users-list": "Users List",
-      "user-add": "Add User",
+      "user-add": "Add New User",
       "user-edit": "Edit User",
       "user-profile": "Profile",
       "user-security": "Security",
       "roles-list": "Roles List",
-      "permissions-list": "Permissions List"
+      "permissions-list": "Permissions List",
+      "articles-list": "Articles List",
+      "article-add": "Add New Article"
     }
   },
   "fields": {
@@ -64,6 +67,10 @@
       "name": "Name",
       "normalizedname": "Normalized Name"
     },
+    "topic": {
+      "title": "Title",
+      "parent": "Parent Topic"
+    },
     "user": {
       "name": "Name",
       "userName": "Username",
@@ -77,6 +84,20 @@
       "accessFailedCount": "Access Failed Count",
       "defaultLanguage": "Default Language",
       "password": "Password"
+    },
+    "article": {
+      "subject": "Subject",
+      "body": "Body",
+      "smallThumbnail": "Small Thumbnail",
+      "largeThumbnail": "Large Thumbnail",
+      "tags": "Tags",
+      "registerDate": "Register Date",
+      "publishDate": "Publish Date",
+      "writer": "Writer",
+      "editor": "Editor",
+      "editDate": "Edit Date",
+      "isDraft": "Save as Draft",
+      "topicsIds": "Topics"
     }
   },
   "buttons": {
@@ -89,7 +110,7 @@
     "change-password": "Change Password",
     "user": {
       "save": "Save",
-      "add": "Add New User",
+      "add": "New User",
       "edit": "Edit User",
       "delete": "Delete User"
     },
@@ -99,10 +120,25 @@
       "delete": "Delete Role"
     },
     "permission": {
-      "add": "Add New Permission",
+      "add": "New Permission",
       "edit": "Edit Permission",
       "delete": "Delete Permission",
       "add-permission-to-role": "Add Permission"
+    },
+    "topic": {
+      "add": "New Topic",
+      "addMainTopic": "Add Main Topic",
+      "addSubTopic": "Add Sub Topic",
+      "edit": "Edit Topic Name",
+      "delete": "Delete Topic"
+    },
+    "article": {
+      "save": "Save",
+      "draft": "Save as Draft",
+      "add": "New Article",
+      "publish": "Publish",
+      "edit": "Edit Article",
+      "delete": "Delete Article"
     }
   },
   "validation": {
@@ -119,6 +155,15 @@
     "permission": {
       "required-permission-name": "Permission name Is Required",
       "maxlength-permission-normalizedname": "Max Length is 255 Characters"
+    },
+    "topic": {
+      "requiredTopicTitle": "Topic Title Is Required"
+    },
+    "article": {
+      "requiredSubject": "Subject Is Required",
+      "requiredBody": "Body Is Required",
+      "requiredPublishDate": "Publish Date Is Required",
+      "requiredTopics": "Select Topics Is Required"
     }
   },
   "tooltips": {
@@ -143,6 +188,10 @@
     "delete": {
       "title": "Delete {{item}}",
       "description": "Are You Sure to Delete This Item Permanently?"
+    },
+    "topic": {
+      "addMain": "Add Main Topic",
+      "addSub": "Add Sub Topic in {{parentTitle}}"
     }
   }
 }

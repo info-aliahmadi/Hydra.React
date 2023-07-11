@@ -63,7 +63,7 @@ const ComponentColor = () => (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={6} md={4}>
         <Authorize permission="admin">
-          <MainCard title="Primary Color" codeHighlight>
+          <MainCard title="Primary Color">
             <Stack>
               <ColorBox bgcolor="primary.lighter" data={{ label: 'Blue-1', color: '#e6f7ff' }} title="primary.lighter" dark />
               <ColorBox bgcolor="primary.100" data={{ label: 'Blue-2', color: '#bae7ff' }} title="primary[100]" dark />

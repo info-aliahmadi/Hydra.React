@@ -5,9 +5,10 @@ import {
   BarcodeOutlined,
   BgColorsOutlined,
   FontSizeOutlined,
-  LoadingOutlined
+  LoadingOutlined,
+  LoginOutlined,
+  ProfileOutlined
 } from '@ant-design/icons';
-
 // icons
 const icons = {
   FontSizeOutlined,
@@ -15,7 +16,9 @@ const icons = {
   BarcodeOutlined,
   AntDesignOutlined,
   LoadingOutlined,
-  AppstoreAddOutlined
+  AppstoreAddOutlined,
+  LoginOutlined,
+  ProfileOutlined
 };
 
 // ==============================|| MENU ITEMS - UTILITIES ||============================== //
@@ -57,6 +60,24 @@ const utilities = {
       url: '/icons/ant',
       icon: icons.AntDesignOutlined,
       breadcrumbs: false,
+      permission: 'AUTH_GET.PERMISSION.LIST'
+    },
+    {
+      id: 'login',
+      title: 'Login',
+      type: 'item',
+      url: '/login',
+      icon: icons.LoginOutlined,
+      target: true,
+      permission: 'AUTH_GET.PERMISSION.LIST'
+    },
+    {
+      id: 'register',
+      title: 'Register',
+      type: 'item',
+      url: '/register',
+      icon: icons.ProfileOutlined,
+      target: true,
       permission: 'AUTH_GET.PERMISSION.LIST'
     }
   ]

@@ -99,7 +99,7 @@ function RoleDataGrid() {
   );
   return (
     <>
-      <MainCard title={t('pages.cards.roles-list')} codeHighlight>
+      <MainCard title={t('pages.cards.roles-list')}>
         <TableCard>
           <MaterialTable
             refetch={refetch}

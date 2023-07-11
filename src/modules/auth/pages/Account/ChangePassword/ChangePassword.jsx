@@ -16,7 +16,7 @@ function ChangePassword() {
             <Typography variant="h5">{t('pages.change-password')}</Typography>
           </Grid>
           <Grid item>
-            <MainCard codeHighlight>
+            <MainCard>
               <ChangePasswordForm />
             </MainCard>
           </Grid>

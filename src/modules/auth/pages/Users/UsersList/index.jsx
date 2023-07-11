@@ -2,7 +2,7 @@
 import { Grid, Typography } from '@mui/material';
 
 // project import
-import MainCard from 'components/MainCard';
+import Group from '@mui/icons-material/Group';
 import UserDataGrid from './UsersDataGrid';
 import { useTranslation } from 'react-i18next';
 // ===============================|| COLOR BOX ||=============================== //

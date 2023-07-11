@@ -18,7 +18,7 @@ function ChangeLanguage() {
             <Typography variant="h5">{t('pages.language')}</Typography>
           </Grid>
           <Grid item>
-            <MainCard codeHighlight>
+            <MainCard>
               <ChangeLanguageForm />
             </MainCard>
           </Grid>

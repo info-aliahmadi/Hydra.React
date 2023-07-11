@@ -22,13 +22,12 @@ import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MaterialTable from 'components/MaterialTable/MaterialTable';
 import UsersService from 'modules/auth/services/UsersService';
-import { AccountCircle, Send } from '@mui/icons-material';
+import { AccountCircle, Send, PersonAdd, PeopleAlt } from '@mui/icons-material';
 import Anonymous from 'assets/images/users/anonymous.png';
 import CONFIG from 'config';
 import { Stack } from '@mui/system';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
-import AddIcon from '@mui/icons-material/Add';
 import SelectRole from '../../Role/SelectRole';
 // ===============================|| COLOR BOX ||=============================== //
 
@@ -117,7 +116,7 @@ function UsersDataGrid() {
         onClick={() => {
           navigate('/user/add/0');
         }}
-        startIcon={<AddIcon />}
+        startIcon={<PersonAdd />}
       >
         {t(buttonName + 'add')}
       </Button>

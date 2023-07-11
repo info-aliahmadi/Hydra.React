@@ -11,3 +11,7 @@ export function setAuthenticationHeader(token, contentType) {
   axios.defaults.headers.common['accept'] = '*/*';
   axios.defaults.headers.post['Content-Type'] = contentType;
 }
+export function setTokenBearer() {
+  var jwt = new AuthenticationService().getJwt();
+  return 'Bearer ' + jwt;
+}

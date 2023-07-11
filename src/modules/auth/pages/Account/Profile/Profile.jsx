@@ -18,7 +18,7 @@ function Profile() {
             <Typography variant="h5">{t('pages.edit-profile')}</Typography>
           </Grid>
           <Grid item>
-            <MainCard codeHighlight>
+            <MainCard>
               <ProfileForm />
             </MainCard>
           </Grid>

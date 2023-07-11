@@ -243,7 +243,6 @@ function MaterialTable({
       }
       try {
         const response = await dataApi(JSON.stringify(searchParams));
-        debugger;
         setData(response.data);
       } catch (error) {
         setIsError(true);

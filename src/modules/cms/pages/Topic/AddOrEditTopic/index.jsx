@@ -27,7 +27,7 @@ import Notify from 'components/@extended/Notify';
 import TopicService from 'modules/cms/services/TopicService';
 import setServerErrors from 'utils/setServerErrors';
 
-const AddOrEditTopic = ({ topicId, isNew, open, setOpen, refetch }) => {
+const AddOrEditTopic = ({ row, isNew, open, setOpen, refetch }) => {
   const [t] = useTranslation();
   let topicService = new TopicService();
   const [fieldsName, validation, buttonName] = ['fields.topic.', 'validation.topic.', 'buttons.topic.'];
@@ -35,7 +35,7 @@ const AddOrEditTopic = ({ topicId, isNew, open, setOpen, refetch }) => {
   const [notify, setNotify] = useState({ open: false });
 
   const loadTopic = () => {
-    topicService.getTopicById(topicId).then((result) => {
+    topicService.getTopicById(row?.original?.id).then((result) => {
       setTopic(result);
     });
   };
@@ -44,12 +44,12 @@ const AddOrEditTopic = ({ topicId, isNew, open, setOpen, refetch }) => {
     setTopic({});
   };
   useEffect(() => {
-    if (isNew == false && topicId > 0) {
+    if (isNew == false && row?.original?.id > 0) {
       loadTopic();
     } else {
       setTopic({});
     }
-  }, [topicId, isNew, open]);
+  }, [row, isNew, open]);
 
   const handleSubmit = (topic, setErrors) => {
     if (isNew == true) {
@@ -75,7 +75,6 @@ const AddOrEditTopic = ({ topicId, isNew, open, setOpen, refetch }) => {
           refetch();
         })
         .catch((error) => {
-          // debugger;
           setNotify({ open: true, type: 'error', description: error });
           setServerErrors(error, setErrors);
         });
@@ -103,21 +102,19 @@ const AddOrEditTopic = ({ topicId, isNew, open, setOpen, refetch }) => {
         <Formik
           initialValues={{
             id: topic?.id,
-            title: topic?.title
+            title: topic?.title,
+            parentId: row?.original?.id > 0 && isNew == true ? row?.original?.id : topic?.parentId
           }}
           enableReinitialize={true}
           validationSchema={Yup.object().shape({
             title: Yup.string()
               .max(255)
-              .required(t(validation + 'required-topic-name'))
+              .required(t(validation + 'requiredTopicTitle'))
           })}
           onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
             try {
-              // setStatus({ success: true });
-              // setSubmitting(true);
               handleSubmit(values, setErrors);
             } catch (err) {
-              console.error(err);
               setStatus({ success: false });
               setErrors({ submit: err.message });
               setSubmitting(false);
@@ -127,7 +124,11 @@ const AddOrEditTopic = ({ topicId, isNew, open, setOpen, refetch }) => {
           {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
             <form noValidate onSubmit={handleSubmit}>
               <DialogTitle>
-                {t('dialog.' + (isNew == true ? 'add' : 'edit') + '.title', { item: 'Topic' })}
+                {isNew == true
+                  ? row
+                    ? t('dialog.topic.addSub', { parentTitle: '"' + row?.original?.title + '"' })
+                    : t('dialog.topic.addMain', { item: 'Topic' })
+                  : t('dialog.edit.title', { item: 'Topic' })}
                 <CloseDialog />
               </DialogTitle>
               <DialogContent>
