@@ -203,6 +203,12 @@ export default function AddOrEditArticle() {
                               imageGalleryHeader: {
                                 Authorization: setTokenBearer()
                               },
+                              imageUploadHeader: {
+                                Authorization: setTokenBearer(),
+                                'Content-Type': 'multipart/form-data',
+                                accept: '*/*'
+                              },
+                              imageUploadUrl: 'https://localhost:7134/Cms/AddFileToDrive',
                               minHeight: 200,
                               templates: [
                                 {
