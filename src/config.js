@@ -9,8 +9,8 @@ const CONFIG = {
   PRESET_COLOR: 'default',
   THEME_DIRECTION: 'ltr',
   API_BASEPATH: process.env.NODE_ENV === 'production' ? 'https://website.com' : 'https://localhost:7134', // application api basepath
-  AVATAR_BASEPATH: 'https://localhost:7134/images/avatar/',
-  THUMBNAIL_BASEPATH: 'https://localhost:7134/images/thumbnail/',
+  AVATAR_BASEPATH: 'https://localhost:7134/avatar/',
+  DRIVE_BASEPATH: 'https://localhost:7134/Drive/',
   LOGIN_API_PATH: 'https://localhost:7134/Auth/Login',
   REFRESH_TOKEN_API_PATH: 'https://localhost:7134/Auth/RefreshToken',
   LOGOUT_API_PATH: 'https://localhost:7134/Auth/SignOut',

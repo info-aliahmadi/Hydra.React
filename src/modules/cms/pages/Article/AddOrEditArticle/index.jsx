@@ -48,6 +48,7 @@ import { DatePicker, DateTimePicker } from '@mui/x-date-pickers';
 import SunEditor, { buttonList } from 'suneditor-react';
 import 'assets/css/suneditor.min.css';
 import { setTokenBearer } from 'utils/axiosHeaders';
+import FileUploadService from 'modules/cms/services/FileUploadService';
 
 export default function AddOrEditArticle() {
   const [t, i18n] = useTranslation();
@@ -106,6 +107,21 @@ export default function AddOrEditArticle() {
     setFieldValue('avatar', '');
     setAvatarPreview();
   };
+
+  const uploadImage = async (img, uploadHandler) => {
+    debugger;
+    var fileUploadService = new FileUploadService();
+    if (img?.dataset && img?.src.startsWith('data:image')) {
+      const fileData = {
+        fileName: img?.dataset?.fileName,
+        fileLength: img?.dataset?.fileSize,
+        base64File: img?.src
+      };
+      fileUploadService.UploadBase64File(fileData).then((result) => {
+        img.src = CONFIG.DRIVE_BASEPATH + result.data.fileName;
+      });
+    }
+  };
   return (
     <>
       <Notify notify={notify} setNotify={setNotify}></Notify>
@@ -151,7 +167,7 @@ export default function AddOrEditArticle() {
         {({ errors, handleBlur, handleChange, setFieldValue, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit}>
             <Grid container justifyContent="center" direction="row" alignItems="flex-start">
-              <Grid container item spacing={3} xs={12} sm={12} md={10} lg={10} xl={9} direction="column">
+              <Grid container item spacing={3} xs={12} sm={12} md={12} lg={12} xl={12} direction="column">
                 <Grid item>
                   <Typography variant="h5">{t('pages.cards.article-' + operation)}</Typography>
                 </Grid>
@@ -192,23 +208,24 @@ export default function AddOrEditArticle() {
                             }
                             defaultValue={values.body || ''}
                             setAllPlugins={true}
-                            onBlur={handleBlur}
+                            // onBlur={handleBlur}
                             onChange={handleChange}
                             error={Boolean(touched.body && errors.body)}
+                            onImageUpload={uploadImage}
                             setOptions={{
                               rtl: isRtl,
                               font: isRtl ? CONFIG.RTL_FONTS_EDITOR : CONFIG.LTR_FONTS_EDITOR,
                               height: 400,
-                              imageGalleryUrl: 'https://localhost:7134/cms/GetDriveFiles',
+                              imageGalleryUrl: 'https://localhost:7134/FileStorage/GetGalleyFiles',
                               imageGalleryHeader: {
                                 Authorization: setTokenBearer()
                               },
-                              imageUploadHeader: {
-                                Authorization: setTokenBearer(),
-                                'Content-Type': 'multipart/form-data',
-                                accept: '*/*'
-                              },
-                              imageUploadUrl: 'https://localhost:7134/Cms/AddFileToDrive',
+                              // imageUploadUrl: 'https://localhost:7134/FileStorage/UploadFile',
+                              // imageUploadHeader: {
+                              //   Authorization: setTokenBearer(),
+                              //   'Content-Type': 'multipart/form-data',
+                              //   accept: '*/*'
+                              // },
                               minHeight: 200,
                               templates: [
                                 {
@@ -441,16 +458,16 @@ export default function AddOrEditArticle() {
                       <Grid container spacing={3} item>
                         <Grid item xs={12} md={6} lg={6} xl={4}>
                           <Stack spacing={1}>
-                            <InputLabel htmlFor="roleIds">{t(fieldsName + 'topicsIds')}</InputLabel>
+                            <InputLabel htmlFor="topicsIds">{t(fieldsName + 'topicsIds')}</InputLabel>
                             <SelectTopic
-                              defaultValues={values?.roleIds || []}
+                              defaultValues={values?.topicsIds || []}
                               id={'roleIds'}
                               setFieldValue={setFieldValue}
-                              error={Boolean(touched.roleIds && errors.roleIds)}
+                              error={Boolean(touched.topicsIds && errors.topicsIds)}
                             />
-                            {touched.roleIds && errors.roleIds && (
+                            {touched.topicsIds && errors.topicsIds && (
                               <FormHelperText error id="helper-roleIds">
-                                {errors.roleIds}
+                                {errors.topicsIds}
                               </FormHelperText>
                             )}
                           </Stack>
