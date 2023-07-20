@@ -52,7 +52,6 @@ import FileUploadService from 'modules/cms/services/FileUploadService';
 
 export default function AddOrEditArticle() {
   const [t, i18n] = useTranslation();
-  debugger;
   let isRtl = i18n.dir() == 'rtl' ? true : false;
   const params = useParams();
   const operation = params.operation;
@@ -461,8 +460,8 @@ export default function AddOrEditArticle() {
                             <InputLabel htmlFor="topicsIds">{t(fieldsName + 'topicsIds')}</InputLabel>
                             <SelectTopic
                               defaultValues={values?.topicsIds || []}
-                              id={'roleIds'}
-                              setFieldValue={setFieldValue}
+                              id={'topicsIds'}
+                              onChange={handleChange}
                               error={Boolean(touched.topicsIds && errors.topicsIds)}
                             />
                             {touched.topicsIds && errors.topicsIds && (
@@ -493,7 +492,6 @@ export default function AddOrEditArticle() {
                             </AnimateButton>
                             <AnimateButton>
                               <Button
-                                disa
                                 disabled={isSubmitting}
                                 size="large"
                                 type="submit"
@@ -506,7 +504,6 @@ export default function AddOrEditArticle() {
                             </AnimateButton>
                             <AnimateButton>
                               <Button
-                                disa
                                 disabled={isSubmitting}
                                 size="large"
                                 type="submit"

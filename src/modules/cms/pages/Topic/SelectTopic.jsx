@@ -1,15 +1,15 @@
 import * as React from 'react';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import CircularProgress from '@mui/material/CircularProgress';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import TopicsService from 'modules/cms/services/TopicService';
+import { Chip, MenuItem, OutlinedInput, Select } from '@mui/material';
+import { Box } from '@mui/system';
 
-export default function SelectTopic({ defaultValues, id, setFieldValue, error, disabled }) {
+export default function SelectTopic({ defaultValues, id, error, disabled }) {
   const [t] = useTranslation();
   const [loading, setLoading] = useState(true);
   const [options, setOptions] = useState([]);
+  const [values, setValues] = useState([]);
   const topicService = new TopicsService();
 
   const loadTopics = () => {
@@ -22,41 +22,50 @@ export default function SelectTopic({ defaultValues, id, setFieldValue, error, d
     loadTopics();
   }, []);
 
-  return (
-    <Autocomplete
-      disabled={disabled}
-      key={loading + defaultValues + error}
-      multiple
-      size="small"
-      getOptionLabel={(option) => option?.title}
-      options={options}
-      loading={loading}
-      error={error}
-      id={id}
-      name={id}
-      onChange={(e, newValue) =>
-        setFieldValue(
-          id,
-          newValue.map(({ id }) => id)
-        )
+  const Items = ({ items, space }) => {
+    return items.map((item) => {
+      if (item.childs.length > 0) {
+        return (
+          <>
+            <MenuItem key={item.id} value={item.id}>
+              <span key={item.id}> {space}</span> {item.title}
+            </MenuItem>
+            <Items items={item.childs} space={<span>{space}&nbsp;&nbsp;</span>} key={'key' + item.id} />
+          </>
+        );
+      } else {
+        return (
+          <MenuItem key={item.id} value={item.id}>
+            <span key={item.id}> {space}</span>
+            {item.title}
+          </MenuItem>
+        );
       }
-      defaultValue={options.filter((x) => defaultValues?.find((c) => c === x.id)) ?? []}
-      renderInput={(params) => (
-        <TextField
-          {...params}
-          error={error}
-          placeholder={t('pages.topics')}
-          InputProps={{
-            ...params.InputProps,
-            endAdornment: (
-              <React.Fragment>
-                {loading ? <CircularProgress color="inherit" size={20} /> : null}
-                {params.InputProps.endAdornment}
-              </React.Fragment>
-            )
-          }}
-        />
+    });
+  };
+  const handleChange = (event) => {
+    debugger;
+
+    setValues();
+  };
+  return (
+    <Select
+      id={id}
+      key={id + loading}
+      multiple
+      value={values || ''}
+      label="Age"
+      onChange={handleChange}
+      input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
+      renderValue={(selected) => (
+        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+          {selected.map((value) => (
+            <Chip key={value} label={value} />
+          ))}
+        </Box>
       )}
-    />
+    >
+      <Items items={options} space={<span></span>} key={'item.id'}></Items>
+    </Select>
   );
 }
