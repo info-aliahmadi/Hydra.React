@@ -14,7 +14,7 @@ export default function SelectTopic({ defaultValues, id, error, disabled }) {
   const topicService = new TopicsService();
 
   const loadTopics = () => {
-    topicService.getTopicList().then((result) => {
+    topicService.getTopicListForSelect().then((result) => {
       setOptions(result.data);
       setLoading(false);
     });
@@ -87,7 +87,7 @@ export default function SelectTopic({ defaultValues, id, error, disabled }) {
         return (
           // <React.Fragment key={item.id}>
           <MenuItem key={item.id} value={item.id} style={getStyles(item.id, values, theme)}>
-            {item.title}
+            <span style={{ 'white-space': 'pre-wrap' }}>{item.title}</span>
           </MenuItem>
           // </React.Fragment>
         );

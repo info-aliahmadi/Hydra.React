@@ -9,7 +9,19 @@ export default class TopicsService {
   getTopicList = async () => {
     return new Promise((resolve, reject) => {
       axios
-        .get(CONFIG.API_BASEPATH + '/cms/GetTopicList')
+        .get(CONFIG.API_BASEPATH + '/cms/GetTopicsHierarchy')
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+  getTopicListForSelect = async () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(CONFIG.API_BASEPATH + '/cms/GetTopicListForSelect')
         .then((response) => {
           resolve(response.data);
         })
