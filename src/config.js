@@ -10,7 +10,7 @@ const CONFIG = {
   THEME_DIRECTION: 'ltr',
   API_BASEPATH: process.env.NODE_ENV === 'production' ? 'https://website.com' : 'https://localhost:7134', // application api basepath
   AVATAR_BASEPATH: 'https://localhost:7134/avatar/',
-  DRIVE_BASEPATH: 'https://localhost:7134/Drive/',
+  UPLOAD_BASEPATH: 'https://localhost:7134/',
   LOGIN_API_PATH: 'https://localhost:7134/Auth/Login',
   REFRESH_TOKEN_API_PATH: 'https://localhost:7134/Auth/RefreshToken',
   LOGOUT_API_PATH: 'https://localhost:7134/Auth/SignOut',

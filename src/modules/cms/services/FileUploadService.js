@@ -23,7 +23,7 @@ export default class FileUploadService {
       axios
         .get(CONFIG.API_BASEPATH + '/FileStorage/GetFileInfo', { params: { fileId: fileId } })
         .then((response) => {
-          resolve(response.data.data);
+          resolve(response.data);
         })
         .catch((error) => {
           reject(error);
@@ -35,17 +35,21 @@ export default class FileUploadService {
       axios
         .get(CONFIG.API_BASEPATH + '/FileStorage/GetFileInfoByName', { params: { fileName: fileName } })
         .then((response) => {
-          resolve(response.data.data);
+          resolve(response.data);
         })
         .catch((error) => {
           reject(error);
         });
     });
   };
-  uploadFile = async (file) => {
+  uploadFile = async (file, uploadAction) => {
     return new Promise((resolve, reject) => {
       axios
-        .post(CONFIG.API_BASEPATH + '/FileStorage/UploadFile', file)
+        .post(CONFIG.API_BASEPATH + '/FileStorage/UploadFile', file, {
+          headers: {
+            UploadAction: uploadAction
+          }
+        })
         .then((response) => {
           resolve(response.data);
         })
@@ -54,10 +58,14 @@ export default class FileUploadService {
         });
     });
   };
-  UploadBase64File = async (file) => {
+  UploadBase64File = async (file, uploadAction) => {
     return new Promise((resolve, reject) => {
       axios
-        .post(CONFIG.API_BASEPATH + '/FileStorage/UploadBase64File', file)
+        .post(CONFIG.API_BASEPATH + '/FileStorage/UploadBase64File', file, {
+          headers: {
+            UploadAction: uploadAction
+          }
+        })
         .then((response) => {
           resolve(response.data);
         })
@@ -66,12 +74,16 @@ export default class FileUploadService {
         });
     });
   };
-  uploadLargeFile = async (file) => {
+  uploadLargeFile = async (file, uploadAction) => {
     return new Promise((resolve, reject) => {
       axios
-        .post(CONFIG.API_BASEPATH + '/FileStorage/UploadLargeFile', file)
+        .post(CONFIG.API_BASEPATH + '/FileStorage/UploadLargeFile', file, {
+          headers: {
+            UploadAction: uploadAction
+          }
+        })
         .then((response) => {
-          resolve(response.data.data);
+          resolve(response.data);
         })
         .catch((error) => {
           reject(error);

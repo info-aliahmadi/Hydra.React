@@ -88,8 +88,8 @@
     "article": {
       "subject": "Subject",
       "body": "Body",
-      "smallThumbnail": "Small Thumbnail",
-      "largeThumbnail": "Large Thumbnail",
+      "imagePreview": "Image Preview",
+      "imagePreviewUrl": "Image Preview Url",
       "tags": "Tags",
       "registerDate": "Register Date",
       "publishDate": "Publish Date",
@@ -164,6 +164,15 @@
       "requiredBody": "Body Is Required",
       "requiredPublishDate": "Publish Date Is Required",
       "requiredTopics": "Select Topics Is Required"
+    },
+    "fileUpload": {
+      "labelFileTypeNotAllowed": "File Type Not Allowed",
+      "fileValidateTypeLabelExpectedTypes": "Expects {allButLastType} or {lastType}",
+      "labelMaxFileSizeExceeded": "File is too large",
+      "labelMaxFileSize": "Maximum file size is {filesize}",
+      "labelMinFileSizeExceeded": "File is too Small",
+      "labelMinFileSize": "Minimum file size is {filesize}",
+      "imagePreviewDescription": "Drag & Drop your files or <span class='filepond--label-action'>Browse</span>"
     }
   },
   "tooltips": {

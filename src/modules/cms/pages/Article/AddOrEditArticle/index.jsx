@@ -1,30 +1,8 @@
 import { useEffect, useState } from 'react';
 
 // material-ui
-import {
-  Box,
-  Avatar,
-  FormControl,
-  Button,
-  ButtonBase,
-  Checkbox,
-  FormControlLabel,
-  Divider,
-  FormHelperText,
-  InputAdornment,
-  Grid,
-  InputLabel,
-  OutlinedInput,
-  Stack,
-  Tooltip,
-  Typography,
-  Select,
-  MenuItem,
-  Chip,
-  ButtonGroup
-} from '@mui/material';
+import { Button, FormHelperText, Grid, InputLabel, OutlinedInput, Stack, Typography } from '@mui/material';
 import { ArrowBack, Save, Delete, Send } from '@mui/icons-material';
-import { strengthColor, strengthIndicator } from 'utils/password-strength';
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -36,19 +14,18 @@ import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
 import ArticlesService from 'modules/cms/services/ArticlesService';
 import { useNavigate, useParams } from 'react-router-dom';
-import Anonymous from 'assets/images/users/anonymous.png';
 import CONFIG from 'config';
 import MainCard from 'components/MainCard';
-import languageList from 'Localization/languageList';
 import DeleteArticle from '../DeleteArticle';
 import setServerErrors from 'utils/setServerErrors';
 import SelectTopic from '../../Topic/SelectTopic';
-import { DatePicker, DateTimePicker } from '@mui/x-date-pickers';
+import { DateTimePicker } from '@mui/x-date-pickers';
 
-import SunEditor, { buttonList } from 'suneditor-react';
+import SunEditor from 'suneditor-react';
 import 'assets/css/suneditor.min.css';
 import { setTokenBearer } from 'utils/axiosHeaders';
 import FileUploadService from 'modules/cms/services/FileUploadService';
+import ImageUpload from 'components/FileUpload/ImageUpload';
 
 export default function AddOrEditArticle() {
   const [t, i18n] = useTranslation();
@@ -56,14 +33,15 @@ export default function AddOrEditArticle() {
   const params = useParams();
   const operation = params.operation;
   const id = params.id;
+
   let articleService = new ArticlesService();
   const [fieldsName, validation, buttonName] = ['fields.article.', 'validation.article.', 'buttons.article.'];
   const [article, setArticle] = useState();
   const [notify, setNotify] = useState({ open: false });
-  const [smallThumbPreview, setSmallThumbPreview] = useState();
-  const [largeThumbPreview, setLargeThumbPreview] = useState();
+  const [files, setFiles] = useState([]);
   const [openDelete, setOpenDelete] = useState(false);
   const navigate = useNavigate();
+  var fileUploadService = new FileUploadService();
 
   const loadArticle = () => {
     articleService.getArticleById(id).then((result) => {
@@ -101,23 +79,15 @@ export default function AddOrEditArticle() {
     }
   };
 
-  const deleteAvatar = (setFieldValue) => {
-    setFieldValue('avatarFile', '');
-    setFieldValue('avatar', '');
-    setAvatarPreview();
-  };
-
   const uploadImage = async (img, uploadHandler) => {
-    debugger;
-    var fileUploadService = new FileUploadService();
     if (img?.dataset && img?.src.startsWith('data:image')) {
       const fileData = {
         fileName: img?.dataset?.fileName,
         fileLength: img?.dataset?.fileSize,
         base64File: img?.src
       };
-      fileUploadService.UploadBase64File(fileData).then((result) => {
-        img.src = CONFIG.DRIVE_BASEPATH + result.data.fileName;
+      fileUploadService.UploadBase64File(fileData, 'Rename').then((result) => {
+        img.src = CONFIG.UPLOAD_BASEPATH + result.data.directory + result.data.fileName;
       });
     }
   };
@@ -130,8 +100,6 @@ export default function AddOrEditArticle() {
           id: article?.id,
           subject: article?.subject,
           body: article?.body,
-          smallThumbnail: article?.smallThumbnail,
-          largeThumbnail: article?.largeThumbnail,
           tags: article?.tags,
           registerDate: article?.registerDate,
           publishDate: article?.publishDate,
@@ -139,6 +107,8 @@ export default function AddOrEditArticle() {
           editor: article?.editor,
           editDate: article?.editDate,
           isDraft: article?.isDraft,
+          imagePreviewId: article?.imagePreviewId,
+          imagePreviewUrl: article?.imagePreviewUrl,
           topicsIds: article?.topicsIds
         }}
         enableReinitialize={true}
@@ -217,7 +187,8 @@ export default function AddOrEditArticle() {
                               height: 400,
                               imageGalleryUrl: 'https://localhost:7134/FileStorage/GetGalleyFiles',
                               imageGalleryHeader: {
-                                Authorization: setTokenBearer()
+                                Authorization: setTokenBearer(),
+                                UploadAction: 'Rename'
                               },
                               // imageUploadUrl: 'https://localhost:7134/FileStorage/UploadFile',
                               // imageUploadHeader: {
@@ -371,49 +342,22 @@ export default function AddOrEditArticle() {
                           )}
                         </Stack>
                       </Grid>
-                      {/*  <Grid item xs={12} md={2}>
-                     <Stack justifyArticle="center" alignItems="center">
-                            <Tooltip title={t('tooltips.edit-avatar')} placement="top">
-                              <ButtonBase variant="contained" component="label">
-                                <input
-                                  type="file"
-                                  hidden
-                                  accept="image/*"
-                                  name="avatarFile"
-                                  onChange={(e) => changeAvatar(e, setFieldValue)}
-                                />
-                                <Avatar
-                                  alt="profile article"
-                                  src={avatarPreview ? avatarPreview : values.avatar ? CONFIG.AVATAR_BASEPATH + values.avatar : Anonymous}
-                                  sx={{ width: 85, height: 85 }}
-                                ></Avatar>
-                              </ButtonBase>
-                            </Tooltip>
-                            <ButtonGroup variant="outlined" color="secondary" size="small" aria-label="outlined button group">
-                              {(avatarPreview || values.avatar) && (
-                                <Tooltip title={t('tooltips.delete-avatar')}>
-                                  <Button onClick={() => deleteAvatar(setFieldValue)}>
-                                    <Delete />
-                                  </Button>
-                                </Tooltip>
-                              )}
-                              <Tooltip title={t('tooltips.edit-avatar')}>
-                                <Button>
-                                  <ButtonBase variant="contained" component="label">
-                                    <input
-                                      type="file"
-                                      hidden
-                                      accept="image/*"
-                                      name="avatarFile"
-                                      onChange={(e) => changeAvatar(e, setFieldValue)}
-                                    />
-                                    <Edit />
-                                  </ButtonBase>
-                                </Button>
-                              </Tooltip>
-                            </ButtonGroup>
-                          </Stack>
-                        </Grid> */}
+                      <Grid item xs={12} md={6} lg={6} xl={4}>
+                        <Stack spacing={1}>
+                          <InputLabel htmlFor="topicsIds">{t(fieldsName + 'topicsIds')}</InputLabel>
+                          <SelectTopic
+                            defaultValues={values?.topicsIds || []}
+                            id={'topicsIds'}
+                            onChange={handleChange}
+                            error={Boolean(touched.topicsIds && errors.topicsIds)}
+                          />
+                          {touched.topicsIds && errors.topicsIds && (
+                            <FormHelperText error id="helper-roleIds">
+                              {errors.topicsIds}
+                            </FormHelperText>
+                          )}
+                        </Stack>
+                      </Grid>
                       {operation == 'edit' && (
                         <Grid item xs={12} md={6} lg={6} xl={4}>
                           <Stack spacing={1}>
@@ -454,21 +398,23 @@ export default function AddOrEditArticle() {
                           </Stack>
                         </Grid>
                       )}
+
                       <Grid container spacing={3} item>
                         <Grid item xs={12} md={6} lg={6} xl={4}>
                           <Stack spacing={1}>
-                            <InputLabel htmlFor="topicsIds">{t(fieldsName + 'topicsIds')}</InputLabel>
-                            <SelectTopic
-                              defaultValues={values?.topicsIds || []}
-                              id={'topicsIds'}
+                            <InputLabel htmlFor="imagePreview">{t(fieldsName + 'imagePreview')}</InputLabel>
+                            <ImageUpload id="imagePreviewId" onChange={handleChange} value={94} />
+                            <OutlinedInput
+                              id="imagePreviewUrl"
+                              type="text"
+                              value={values.imagePreviewUrl || ''}
+                              name="imagePreviewUrl"
+                              onBlur={handleBlur}
                               onChange={handleChange}
-                              error={Boolean(touched.topicsIds && errors.topicsIds)}
+                              placeholder={t(fieldsName + 'imagePreviewUrl')}
+                              fullWidth
+                              error={Boolean(touched.title && errors.title)}
                             />
-                            {touched.topicsIds && errors.topicsIds && (
-                              <FormHelperText error id="helper-roleIds">
-                                {errors.topicsIds}
-                              </FormHelperText>
-                            )}
                           </Stack>
                         </Grid>
                       </Grid>
