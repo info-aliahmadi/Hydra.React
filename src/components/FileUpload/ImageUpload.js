@@ -24,7 +24,6 @@ import { useTranslation } from 'react-i18next';
 import { setTokenBearer } from 'utils/axiosHeaders';
 import CONFIG from 'config';
 import FileUploadService from 'modules/cms/services/FileUploadService';
-import axios from 'axios';
 
 const ImageUpload = (props) => {
   const [files, setFiles] = useState([]);
@@ -33,85 +32,55 @@ const ImageUpload = (props) => {
   const uploadUrl = CONFIG.API_BASEPATH + '/FileStorage/UploadFile';
 
   var fileUploadService = new FileUploadService();
-  async function fetchBlob(url) {
-    const response = await fetch(url);
 
-    // Here is the significant part
-    // reading the stream as a blob instead of json
-    return response.blob();
+  function downloadFunction(item) {
+    // create a temporary hyperlink to force the browser to download the file
+    const a = document.createElement('a');
+    let url;
+    if (item.source > 0) {
+      window.open(item.file.url);
+      return;
+      // url = item.file.url;
+    } else {
+      url = window.URL.createObjectURL(item.file);
+    }
+    document.body.appendChild(a);
+    a.style.display = 'none';
+    a.href = url;
+    a.download = item.file.name;
+    a.click();
+    window.URL.revokeObjectURL(url);
+    a.remove();
   }
+
   const loadImage = async (fileId) => {
     fileUploadService.getFileInfoById(fileId).then((fileInfo) => {
-      let imageUrl = '/' + fileInfo.directory + fileInfo.fileName;
-      let image = CONFIG.UPLOAD_BASEPATH + fileInfo.directory + fileInfo.fileName;
-
-      axios.defaults.headers.post['Content-Type'] = 'application/octet-stream';
-      axios
-        .get(imageUrl, {
-          responseType: 'blob'
-        })
-        .then((response) => {
-          debugger;
-          let metadata = {
-            name: fileInfo.fileName,
-            type: 'image/jpeg',
-            size: fileInfo.size
-          };
-          let file = new File([response.data], fileInfo.fileName, metadata);
-
-          setFiles([
-            {
-              // the server file reference
-              source: fileInfo.id,
-              // set type to local to indicate an already uploaded file
-              options: {
-                type: 'local',
-                // optional stub file information
-                file: file,
-                // pass poster property
-                metadata: {
-                  poster: image
-                }
-              }
+      let imageUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory + fileInfo.fileName;
+      debugger;
+      setFiles([
+        {
+          // the server file reference
+          source: fileInfo.id,
+          // set type to local to indicate an already uploaded file
+          options: {
+            type: 'local',
+            // optional stub file information
+            file: {
+              name: fileInfo.fileName,
+              type: 'image/jpeg',
+              size: fileInfo.size,
+              url: imageUrl
+            },
+            // pass poster property
+            metadata: {
+              poster: imageUrl
             }
-          ]);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-      // debugger;
-      //   axios.get(imageUrl, { responseType: 'blob', contentType: 'application/octet-stream' }).then((response) => {
-      //     debugger;
-      //     let data = response.blob();
-      //     let metadata = {
-      //       name: fileInfo.fileName,
-      //       type: 'image/jpeg',
-      //       size: fileInfo.size
-      //     };
-      //     let file = new File([response.data], fileInfo.fileName, metadata);
-
-      //     setFiles([
-      //       {
-      //         // the server file reference
-      //         source: fileInfo.id,
-      //         // set type to local to indicate an already uploaded file
-      //         options: {
-      //           type: 'local',
-      //           // optional stub file information
-      //           file: file,
-      //           // pass poster property
-      //           metadata: {
-      //             poster: imageUrl
-      //           }
-      //         }
-      //       }
-      //     ]);
-      //     resolve(response.data);
-      //   });
+          }
+        }
+      ]);
     });
   };
   const uploadImage = async (file) => {
-    debugger;
     setFiles(file);
   };
   useEffect(() => {
@@ -123,6 +92,7 @@ const ImageUpload = (props) => {
       id={props.id ? props.id : 'fileId'}
       allowImagePreview={true}
       allowDownloadByUrl={true}
+      downloadFunction={downloadFunction}
       allowFilePoster={true}
       allowFileTypeValidation={true}
       acceptedFileTypes={['image/png', 'image/jpeg']}
@@ -150,8 +120,6 @@ const ImageUpload = (props) => {
       onprocessfile={(error, file) => {
         let response = JSON.parse(file.serverId);
         let fileInfo = response.data;
-
-        let imageUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory + fileInfo.fileName;
         props.onChange('imagePreviewId', fileInfo.id);
       }}
     />
