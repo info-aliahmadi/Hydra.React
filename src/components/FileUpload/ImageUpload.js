@@ -56,7 +56,6 @@ const ImageUpload = (props) => {
   const loadImage = async (fileId) => {
     fileUploadService.getFileInfoById(fileId).then((fileInfo) => {
       let imageUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory + fileInfo.fileName;
-      debugger;
       setFiles([
         {
           // the server file reference
@@ -80,7 +79,14 @@ const ImageUpload = (props) => {
       ]);
     });
   };
-  const uploadImage = async (file) => {
+  const onupdatefiles = async (file) => {
+    let e = {
+      target: {
+        name: props.id,
+        value: file[0]?.serverId || ''
+      }
+    };
+    props.onChange(e);
     setFiles(file);
   };
   useEffect(() => {
@@ -112,7 +118,7 @@ const ImageUpload = (props) => {
       name="file" /* sets the file input name, it's filepond by default */
       labelIdle={t('validation.fileUpload.imagePreviewDescription')}
       files={files}
-      onupdatefiles={uploadImage}
+      onupdatefiles={onupdatefiles}
       server={{
         url: uploadUrl,
         headers: { Authorization: setTokenBearer(), UploadAction: 'Rename' }
@@ -120,7 +126,13 @@ const ImageUpload = (props) => {
       onprocessfile={(error, file) => {
         let response = JSON.parse(file.serverId);
         let fileInfo = response.data;
-        props.onChange('imagePreviewId', fileInfo.id);
+        let e = {
+          target: {
+            name: props.id,
+            value: fileInfo.id
+          }
+        };
+        props.onChange(e);
       }}
     />
   );

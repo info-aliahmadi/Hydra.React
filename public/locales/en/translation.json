@@ -36,6 +36,7 @@
     "roles": "Roles",
     "permissions": "Permissions",
     "topics": "Topics",
+    "tags": "Tags",
     "articles": "Articles",
     "cards": {
       "users-list": "Users List",
@@ -45,6 +46,8 @@
       "user-security": "Security",
       "roles-list": "Roles List",
       "permissions-list": "Permissions List",
+      "topics-list": "Topics List",
+      "tags-list": "Tags List",
       "articles-list": "Articles List",
       "article-add": "Add New Article"
     }
@@ -70,6 +73,9 @@
     "topic": {
       "title": "Title",
       "parent": "Parent Topic"
+    },
+    "tag": {
+      "title": "Tag Title"
     },
     "user": {
       "name": "Name",
@@ -97,7 +103,8 @@
       "editor": "Editor",
       "editDate": "Edit Date",
       "isDraft": "Save as Draft",
-      "topicsIds": "Topics"
+      "topicsIds": "Topics",
+      "tagsIds": "Tags"
     }
   },
   "buttons": {
@@ -132,6 +139,11 @@
       "edit": "Edit Topic Name",
       "delete": "Delete Topic"
     },
+    "tag": {
+      "add": "New Tag",
+      "edit": "Edit Tag Name",
+      "delete": "Delete Tag"
+    },
     "article": {
       "save": "Save",
       "draft": "Save as Draft",
@@ -158,6 +170,9 @@
     },
     "topic": {
       "requiredTopicTitle": "Topic Title Is Required"
+    },
+    "tag": {
+      "requiredTagTitle": "Tag Title Is Required"
     },
     "article": {
       "requiredSubject": "Subject Is Required",

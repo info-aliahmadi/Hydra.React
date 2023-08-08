@@ -7,20 +7,28 @@ const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons'
 
 const TopicsList = Loadable(lazy(() => import('modules/cms/pages/Topic/TopicsList')));
 
+const TagsList = Loadable(lazy(() => import('modules/cms/pages/Tags/TagsList')));
+
 const ArticlesList = Loadable(lazy(() => import('modules/cms/pages/Article/ArticlesList')));
 
 const AddOrEditArticle = Loadable(lazy(() => import('modules/cms/pages/Article/AddOrEditArticle')));
-
 
 // ==============================|| MAIN ROUTING ||============================== //
 
 const CmsRoutes = [
   {
+    key: 'tagsList',
+    path: 'tagsList',
+    permission: 'AUTH_GET.PERMISSION.LIST',
+    element: <TagsList />
+  },
+  {
     key: 'topicsList',
     path: 'topicsList',
     permission: 'AUTH_GET.PERMISSION.LIST',
     element: <TopicsList />
-  },{
+  },
+  {
     key: 'articleslist',
     path: 'ArticlesList',
     permission: 'AUTH_GET.PERMISSION.LIST',
