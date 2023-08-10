@@ -25,7 +25,7 @@ import { setTokenBearer } from 'utils/axiosHeaders';
 import CONFIG from 'config';
 import FileUploadService from 'modules/cms/services/FileUploadService';
 
-const ImageUpload = (props) => {
+const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize }) => {
   const [files, setFiles] = useState([]);
   const [t, i18n] = useTranslation();
 
@@ -80,22 +80,20 @@ const ImageUpload = (props) => {
     });
   };
   const onupdatefiles = async (file) => {
-    let e = {
-      target: {
-        name: props.id,
-        value: file[0]?.serverId || ''
-      }
-    };
-    props.onChange(e);
+    setFieldValue(id, file[0]?.serverId || '');
     setFiles(file);
   };
   useEffect(() => {
-    if (props.value > 0) loadImage(props.value);
-  }, [props.value]);
+    if (value > 0) {
+      loadImage(value);
+    } else {
+      setFiles([]);
+    }
+  }, [value]);
 
   return (
     <FilePond
-      id={props.id ? props.id : 'fileId'}
+      id={id ? id : 'fileId'}
       allowImagePreview={true}
       allowDownloadByUrl={true}
       downloadFunction={downloadFunction}
@@ -105,8 +103,8 @@ const ImageUpload = (props) => {
       labelFileTypeNotAllowed={t('validation.fileUpload.labelFileTypeNotAllowed')}
       fileValidateTypeLabelExpectedTypes={t('validation.fileUpload.fileValidateTypeLabelExpectedTypes')}
       allowFileSizeValidation={true}
-      minFileSize={props.minFileSize ? props.minFileSize : '5KB'}
-      maxFileSize={props.maxFileSize ? props.maxFileSize : '200MB'}
+      minFileSize={minFileSize ? minFileSize : '5KB'}
+      maxFileSize={maxFileSize ? maxFileSize : '200MB'}
       labelMaxFileSizeExceeded={t('validation.fileUpload.labelMaxFileSizeExceeded')}
       labelMaxFileSize={t('validation.fileUpload.labelMaxFileSize')}
       labelMinFileSizeExceeded={t('validation.fileUpload.labelMinFileSizeExceeded')}
@@ -126,13 +124,8 @@ const ImageUpload = (props) => {
       onprocessfile={(error, file) => {
         let response = JSON.parse(file.serverId);
         let fileInfo = response.data;
-        let e = {
-          target: {
-            name: props.id,
-            value: fileInfo.id
-          }
-        };
-        props.onChange(e);
+
+        setFieldValue(id, fileInfo.id);
       }}
     />
   );

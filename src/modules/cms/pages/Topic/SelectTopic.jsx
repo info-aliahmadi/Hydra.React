@@ -2,15 +2,15 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import TopicsService from 'modules/cms/services/TopicService';
-import { Chip, MenuItem, OutlinedInput, Select } from '@mui/material';
+import { Chip, FormControl, MenuItem, OutlinedInput, Select } from '@mui/material';
 import { Box, useTheme } from '@mui/system';
 
-export default function SelectTopic({ defaultValues, id, error, disabled }) {
+export default function SelectTopic({ defaultValues, id, name, setFieldValue, error, disabled }) {
   const [t] = useTranslation();
   const theme = useTheme();
   const [loading, setLoading] = useState(true);
   const [options, setOptions] = useState([]);
-  const [values, setValues] = useState([]);
+  const [values, setValues] = useState();
   const topicService = new TopicsService();
 
   const loadTopics = () => {
@@ -22,6 +22,11 @@ export default function SelectTopic({ defaultValues, id, error, disabled }) {
   useEffect(() => {
     loadTopics();
   }, []);
+
+  useEffect(() => {
+    setValues(defaultValues);
+  }, [JSON.stringify(defaultValues)]);
+
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
   const MenuProps = {
@@ -37,62 +42,42 @@ export default function SelectTopic({ defaultValues, id, error, disabled }) {
       fontWeight: values.indexOf(name) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium
     };
   }
-  const Items = ({ items, space }) => {
-    return items.map((item) => {
-      if (item.childs.length > 0) {
-        return (
-          // <React.Fragment key={item.id}>
-          <MenuItem key={item.id} value={item.id}>
-            <span key={item.id}> {space}</span> {item.title}
-          </MenuItem>
-        );
-      } else {
-        return (
-          <MenuItem key={item.id} value={item.id}>
-            <span key={item.id}> {space}</span>
-            {item.title}
-          </MenuItem>
-        );
-      }
-    });
-  };
+
   const handleChange = (event) => {
-    debugger;
-    setValues(event.target.value);
-  };
-  const handleDelete = (event) => {
+    setFieldValue(id, event.target.value);
     setValues(event.target.value);
   };
 
   return (
-    <Select
-      id={id}
-      key={id + loading}
-      multiple
-      value={values || ''}
-      label={''}
-      onChange={handleChange}
-      MenuProps={MenuProps}
-      input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
-      renderValue={(selected) => (
-        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-          {selected.map((value) => {
-            let title = options.find((x) => x.id == value).title;
-            return <Chip key={title} label={title} />;
-          })}
-        </Box>
-      )}
-    >
-      {options.map((item) => {
-        return (
-          // <React.Fragment key={item.id}>
-          <MenuItem key={item.id} value={item.id} style={getStyles(item.id, values, theme)}>
-            <span style={{ 'white-space': 'pre-wrap' }}>{item.title}</span>
-          </MenuItem>
-          // </React.Fragment>
-        );
-      })}
-      {/* <Items items={options} space={<span></span>} key={'options'}></Items> */}
-    </Select>
+    <FormControl error={error} disabled={disabled}>
+      <Select
+        id={id}
+        name={name}
+        // key={id + loading + defaultValues}
+        multiple
+        value={values || ''}
+        label={''}
+        onChange={handleChange}
+        MenuProps={MenuProps}
+        input={<OutlinedInput label="Topic" />}
+        defaultValue={options.filter((x) => defaultValues?.find((c) => c === x.id)) ?? []}
+        renderValue={(selected) => (
+          <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+            {selected.map((value) => {
+              let title = options.find((x) => x.id == value).title;
+              return <Chip key={title} label={title} />;
+            })}
+          </Box>
+        )}
+      >
+        {options.map((item) => {
+          return (
+            <MenuItem key={item.id} value={item.id} style={getStyles(item.id, values, theme)}>
+              <span style={{ 'white-space': 'pre-wrap' }}>{item.title}</span>
+            </MenuItem>
+          );
+        })}
+      </Select>
+    </FormControl>
   );
 }

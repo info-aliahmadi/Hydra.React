@@ -6,19 +6,14 @@ import FileUploadService from 'modules/cms/services/FileUploadService';
 import SunEditor from 'suneditor-react';
 import 'assets/css/suneditor.min.css';
 
-const Editor = (props) => {
+const Editor = ({ id, name, setFieldValue, error, defaultValue, height, minHeight, placeholder }) => {
   const [t, i18n] = useTranslation();
   let isRtl = i18n.dir() == 'rtl' ? true : false;
   var fileUploadService = new FileUploadService();
 
   function setChange(contents, core) {
-    let e = {
-      target: {
-        name: props.id,
-        value: contents || ''
-      }
-    };
-    props.onChange(e);
+    debugger;
+    setFieldValue(id, contents);
   }
   const uploadImage = async (img, uploadHandler) => {
     if (img?.dataset && img?.src.startsWith('data:image')) {
@@ -32,23 +27,24 @@ const Editor = (props) => {
       });
     }
   };
+
   return (
     <SunEditor
-      id={props.id || 'editor'}
-      name={props.name || 'editor'}
+      id={id || 'editor'}
+      name={name || 'editor'}
+      setContents={defaultValue || ''}
       setDefaultStyle={
         isRtl ? 'font-family :Iran Sans, sans-serif; font-size: 14px' : 'font-family :"Public Sans", sans-serif; font-size: 14px'
       }
-      defaultValue={props.value || ''}
+      // defaultValue={defaultValue || ''}
       setAllPlugins={true}
-      // onBlur={handleBlur}
       onChange={setChange}
-      error={props.error}
+      error={error}
       onImageUpload={uploadImage}
       setOptions={{
         rtl: isRtl,
         font: isRtl ? CONFIG.RTL_FONTS_EDITOR : CONFIG.LTR_FONTS_EDITOR,
-        height: props.height || 400,
+        height: height || 400,
         imageGalleryUrl: 'https://localhost:7134/FileStorage/GetGalleyFiles',
         imageGalleryHeader: {
           Authorization: setTokenBearer(),
@@ -60,7 +56,7 @@ const Editor = (props) => {
         //   'Content-Type': 'multipart/form-data',
         //   accept: '*/*'
         // },
-        minHeight: props.minHeight || 200,
+        minHeight: minHeight || 200,
         templates: [
           {
             name: 'Template-1',
@@ -132,7 +128,7 @@ const Editor = (props) => {
         // plugins: [font] set plugins, all plugins are set by default
         // Other option
       }}
-      placeholder={props.placeholder || ''}
+      placeholder={placeholder || ''}
     />
   );
 };

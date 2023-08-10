@@ -19,12 +19,12 @@ import MainCard from 'components/MainCard';
 import DeleteArticle from '../DeleteArticle';
 import setServerErrors from 'utils/setServerErrors';
 import SelectTopic from '../../Topic/SelectTopic';
-import { DateTimePicker } from '@mui/x-date-pickers';
 
-import FileUploadService from 'modules/cms/services/FileUploadService';
 import ImageUpload from 'components/FileUpload/ImageUpload';
 import Editor from 'components/Editor/Editor';
 import SelectTag from '../../Tags/SelectTag';
+import DateTimeInput from 'components/DateTime/DateTimeInput';
+import moment from 'moment';
 
 export default function AddOrEditArticle() {
   const [t, i18n] = useTranslation();
@@ -38,7 +38,6 @@ export default function AddOrEditArticle() {
   const [notify, setNotify] = useState({ open: false });
   const [openDelete, setOpenDelete] = useState(false);
   const navigate = useNavigate();
-  var fileUploadService = new FileUploadService();
 
   const loadArticle = () => {
     articleService.getArticleById(id).then((result) => {
@@ -55,7 +54,6 @@ export default function AddOrEditArticle() {
         .addArticle(article)
         .then(() => {
           resetForm();
-          setAvatarPreview();
           setNotify({ open: true });
         })
         .catch((error) => {
@@ -93,7 +91,6 @@ export default function AddOrEditArticle() {
           id: article?.id,
           subject: article?.subject,
           body: article?.body,
-          tags: article?.tags,
           registerDate: article?.registerDate,
           publishDate: article?.publishDate,
           writer: article?.writer,
@@ -103,23 +100,23 @@ export default function AddOrEditArticle() {
           imagePreviewId: article?.imagePreviewId,
           imagePreviewUrl: article?.imagePreviewUrl,
           topicsIds: article?.topicsIds,
-          tagsIds: article?.tagsIds
+          tags: article?.tags
         }}
         enableReinitialize={true}
-        // validationSchema={Yup.object().shape({
-        //   subject: Yup.string()
-        //     .max(400)
-        //     .required(t(validation + 'requiredSubject')),
-        //   body: Yup.string().required(t(validation + 'requiredBody')),
-        //   publishDate: Yup.string().required(t(validation + 'requiredPublishDate')),
-        //   TopicsIds: Yup.array()
-        //     .min(1, t(validation + 'requiredTopics'))
-        //     .required(t(validation + 'requiredTopics'))
-        // })}
+        validationSchema={Yup.object().shape({
+          subject: Yup.string()
+            .max(400)
+            .required(t(validation + 'requiredSubject')),
+          body: Yup.string().required(t(validation + 'requiredBody')),
+          publishDate: Yup.string().required(t(validation + 'requiredPublishDate')),
+          topicsIds: Yup.array()
+            .min(1, t(validation + 'requiredTopics'))
+            .required(t(validation + 'requiredTopics'))
+        })}
         onSubmit={(values, { setErrors, setStatus, setSubmitting, resetForm }) => {
           try {
-            alert(JSON.stringify(values));
-            // handleSubmit(values, resetForm, setErrors);
+            handleSubmit(values, resetForm, setErrors);
+            setSubmitting(false);
           } catch (err) {
             console.error(err);
             setStatus({ success: false });
@@ -166,9 +163,9 @@ export default function AddOrEditArticle() {
                             <Editor
                               id={'body'}
                               name={'body'}
-                              onChange={handleChange}
+                              defaultValue={values?.body || ''}
+                              setFieldValue={setFieldValue}
                               error={Boolean(touched.body && errors.body)}
-                              value={values.body || ''}
                             />
                             {touched.body && errors.body && (
                               <FormHelperText error id="helper-text-body">
@@ -182,7 +179,7 @@ export default function AddOrEditArticle() {
                         <Grid item xs={12} sm={12} md={6} lg={6} xl={12}>
                           <Stack spacing={1}>
                             <InputLabel htmlFor="imagePreview">{t(fieldsName + 'imagePreview')}</InputLabel>
-                            <ImageUpload id="imagePreviewId" onChange={handleChange} value={values?.imagePreviewId || ''} />
+                            <ImageUpload id="imagePreviewId" setFieldValue={setFieldValue} value={values?.imagePreviewId || ''} />
                             {(values?.imagePreviewId == null || values?.imagePreviewId == '') && (
                               <OutlinedInput
                                 id="imagePreviewUrl"
@@ -203,8 +200,9 @@ export default function AddOrEditArticle() {
                             <InputLabel htmlFor="topicsIds">{t(fieldsName + 'topicsIds')}</InputLabel>
                             <SelectTopic
                               defaultValues={values?.topicsIds || []}
-                              id={'topicsIds'}
-                              onChange={handleChange}
+                              id="topicsIds"
+                              name="topicsIds"
+                              setFieldValue={setFieldValue}
                               error={Boolean(touched.topicsIds && errors.topicsIds)}
                             />
                             {touched.topicsIds && errors.topicsIds && (
@@ -214,25 +212,25 @@ export default function AddOrEditArticle() {
                             )}
                           </Stack>
                         </Grid>
-                        <Grid item xs={12} sm={12} md={4} lg={12} xl={12}>
+                        <Grid item xs={12} sm={12} md={6} lg={6} xl={12}>
                           <Stack spacing={1}>
-                            <InputLabel htmlFor="tagsIds">
-                              {t(fieldsName + 'tagsIds')}
+                            <InputLabel htmlFor="tags">
+                              {t(fieldsName + 'tags')}
                               <Link href="/tagsList" target="_blank">
                                 {' '}
                                 (Manage Tags)
                               </Link>
                             </InputLabel>
                             <SelectTag
-                              defaultValues={values?.tagsIds || []}
-                              id={'tagsIds'}
-                              name={'tagsIds'}
-                              onChange={handleChange}
-                              error={Boolean(touched.tagsIds && errors.tagsIds)}
+                              defaultValues={values?.tags || []}
+                              id="tags"
+                              name="tags"
+                              setFieldValue={setFieldValue}
+                              error={Boolean(touched.tags && errors.tags)}
                             />
-                            {touched.tagsIds && errors.tagsIds && (
+                            {touched.tags && errors.tags && (
                               <FormHelperText error id="helper-tagIds">
-                                {errors.tagsIds}
+                                {errors.tags}
                               </FormHelperText>
                             )}
                           </Stack>
@@ -242,18 +240,12 @@ export default function AddOrEditArticle() {
                         <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
                           <Stack spacing={1}>
                             <InputLabel htmlFor="publishDate">{t(fieldsName + 'publishDate')}</InputLabel>
-                            <DateTimePicker
+                            <DateTimeInput
+                              id="publishDate"
                               name="publishDate"
-                              onBlur={handleBlur}
-                              onChange={handleChange}
+                              setFieldValue={setFieldValue}
                               placeholder={t(fieldsName + 'publishDate')}
-                              // value={values.publishDate || ''}
-                              clearable
-                              slotProps={{
-                                actionBar: {
-                                  actions: ['clear', 'today']
-                                }
-                              }}
+                              defaultValue={values?.publishDate || ''}
                               error={Boolean(touched.publishDate && errors.publishDate)}
                             />
                             {touched.publishDate && errors.publishDate && (
