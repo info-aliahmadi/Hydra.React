@@ -74,14 +74,6 @@ export default function AddOrEditArticle() {
     }
   };
 
-  function setChnage(contents, core) {
-    debugger;
-    alert(core.getContents());
-    alert(contents);
-
-    console.log('onChange', contents);
-  }
-
   return (
     <>
       <Notify notify={notify} setNotify={setNotify}></Notify>
@@ -97,8 +89,8 @@ export default function AddOrEditArticle() {
           editor: article?.editor,
           editDate: article?.editDate,
           isDraft: article?.isDraft,
-          imagePreviewId: article?.imagePreviewId,
-          imagePreviewUrl: article?.imagePreviewUrl,
+          previewImageId: article?.previewImageId,
+          previewImageUrl: article?.previewImageUrl,
           topicsIds: article?.topicsIds,
           tags: article?.tags
         }}
@@ -135,7 +127,7 @@ export default function AddOrEditArticle() {
                 <Grid item>
                   <MainCard>
                     <Grid container item spacing={3} direction="row" justifyContent="flex-start" alignItems="flex-start">
-                      <Grid container item spacing={3} xs={12} sm={12} md={12} lg={12} xl={8}>
+                      <Grid container item spacing={3} xs={12} sm={12} md={12} lg={12} xl={8} display={''}>
                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                           <Stack spacing={1}>
                             <InputLabel htmlFor="subject">{t(fieldsName + 'subject')}</InputLabel>
@@ -175,69 +167,98 @@ export default function AddOrEditArticle() {
                           </Stack>
                         </Grid>
                       </Grid>
-                      <Grid container item spacing={3} xs={12} sm={12} md={12} lg={12} xl={4}>
+                      <Grid
+                        container
+                        item
+                        spacing={3}
+                        xs={12}
+                        sm={12}
+                        md={12}
+                        lg={12}
+                        xl={4}
+                        justifyContent="flex-start"
+                        alignItems="flex-start"
+                      >
                         <Grid item xs={12} sm={12} md={6} lg={6} xl={12}>
                           <Stack spacing={1}>
                             <InputLabel htmlFor="imagePreview">{t(fieldsName + 'imagePreview')}</InputLabel>
-                            <ImageUpload id="imagePreviewId" setFieldValue={setFieldValue} value={values?.imagePreviewId || ''} />
-                            {(values?.imagePreviewId == null || values?.imagePreviewId == '') && (
+                            <ImageUpload
+                              id="previewImageId"
+                              setFieldValue={setFieldValue}
+                              value={values?.previewImageId || ''}
+                              filePosterMaxHeight={400}
+                            />
+                            {(values?.previewImageId == null || values?.previewImageId == '') && (
                               <OutlinedInput
-                                id="imagePreviewUrl"
+                                id="previewImageUrl"
                                 type="text"
-                                value={values.imagePreviewUrl || ''}
-                                name="imagePreviewUrl"
+                                value={values.previewImageUrl || ''}
+                                name="previewImageUrl"
                                 onBlur={handleBlur}
                                 onChange={handleChange}
-                                placeholder={t(fieldsName + 'imagePreviewUrl')}
+                                placeholder={t(fieldsName + 'previewImageUrl')}
                                 fullWidth
-                                error={Boolean(touched.imagePreviewUrl && errors.imagePreviewUrl)}
+                                error={Boolean(touched.previewImageUrl && errors.previewImageUrl)}
                               />
                             )}
                           </Stack>
                         </Grid>
-                        <Grid item xs={12} sm={12} md={6} lg={6} xl={12}>
-                          <Stack spacing={1}>
-                            <InputLabel htmlFor="topicsIds">{t(fieldsName + 'topicsIds')}</InputLabel>
-                            <SelectTopic
-                              defaultValues={values?.topicsIds || []}
-                              id="topicsIds"
-                              name="topicsIds"
-                              setFieldValue={setFieldValue}
-                              error={Boolean(touched.topicsIds && errors.topicsIds)}
-                            />
-                            {touched.topicsIds && errors.topicsIds && (
-                              <FormHelperText error id="helper-roleIds">
-                                {errors.topicsIds}
-                              </FormHelperText>
-                            )}
-                          </Stack>
-                        </Grid>
-                        <Grid item xs={12} sm={12} md={6} lg={6} xl={12}>
-                          <Stack spacing={1}>
-                            <InputLabel htmlFor="tags">
-                              {t(fieldsName + 'tags')}
-                              <Link href="/tagsList" target="_blank">
-                                {' '}
-                                (Manage Tags)
-                              </Link>
-                            </InputLabel>
-                            <SelectTag
-                              defaultValues={values?.tags || []}
-                              id="tags"
-                              name="tags"
-                              setFieldValue={setFieldValue}
-                              error={Boolean(touched.tags && errors.tags)}
-                            />
-                            {touched.tags && errors.tags && (
-                              <FormHelperText error id="helper-tagIds">
-                                {errors.tags}
-                              </FormHelperText>
-                            )}
-                          </Stack>
+                        <Grid
+                          container
+                          item
+                          spacing={3}
+                          xs={12}
+                          sm={12}
+                          md={6}
+                          lg={6}
+                          xl={12}
+                          justifyContent="flex-start"
+                          alignItems="flex-start"
+                        >
+                          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                            <Stack spacing={1}>
+                              <InputLabel htmlFor="topicsIds">{t(fieldsName + 'topicsIds')}</InputLabel>
+                              <SelectTopic
+                                defaultValues={values?.topicsIds || []}
+                                id="topicsIds"
+                                name="topicsIds"
+                                setFieldValue={setFieldValue}
+                                error={Boolean(touched.topicsIds && errors.topicsIds)}
+                              />
+                              {touched.topicsIds && errors.topicsIds && (
+                                <FormHelperText error id="helper-roleIds">
+                                  {errors.topicsIds}
+                                </FormHelperText>
+                              )}
+                            </Stack>
+                          </Grid>
+                          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                            <Stack spacing={1}>
+                              <InputLabel htmlFor="tags">
+                                {t(fieldsName + 'tags')}
+                                <Link href="/tagsList" target="_blank">
+                                  {' '}
+                                  (Manage Tags)
+                                </Link>
+                              </InputLabel>
+                              <SelectTag
+                                defaultValues={values?.tags || []}
+                                id="tags"
+                                name="tags"
+                                setFieldValue={setFieldValue}
+                                error={Boolean(touched.tags && errors.tags)}
+                              />
+                              {touched.tags && errors.tags && (
+                                <FormHelperText error id="helper-tagIds">
+                                  {errors.tags}
+                                </FormHelperText>
+                              )}
+                            </Stack>
+                          </Grid>
                         </Grid>
                       </Grid>
-                      <Grid container item xs={12} sm={12} md={12} lg={12} xl={12}>
-                        <Grid item xs={12} sm={12} md={4} lg={4} xl={4}>
+                      <Grid container spacing={3} item xs={12} sm={12} md={12} lg={12} xl={12}>
+                        <Grid item xs={12} sm={12} md={6} lg={6} xl={4}>
                           <Stack spacing={1}>
                             <InputLabel htmlFor="publishDate">{t(fieldsName + 'publishDate')}</InputLabel>
                             <DateTimeInput
@@ -320,6 +341,7 @@ export default function AddOrEditArticle() {
                                 type="submit"
                                 variant="contained"
                                 color="primary"
+                                onClick={() => setFieldValue('isDraft', false)}
                                 startIcon={<Send />}
                               >
                                 {operation == 'edit' ? t(buttonName + 'save') : t(buttonName + 'publish')}
@@ -332,6 +354,7 @@ export default function AddOrEditArticle() {
                                 type="submit"
                                 variant="contained"
                                 color="warning"
+                                onClick={() => setFieldValue('isDraft', true)}
                                 startIcon={<Save />}
                               >
                                 {t(buttonName + 'draft')}

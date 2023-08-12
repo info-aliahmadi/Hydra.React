@@ -25,7 +25,7 @@ import { setTokenBearer } from 'utils/axiosHeaders';
 import CONFIG from 'config';
 import FileUploadService from 'modules/cms/services/FileUploadService';
 
-const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize }) => {
+const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize, disabled, filePosterMaxHeight }) => {
   const [files, setFiles] = useState([]);
   const [t, i18n] = useTranslation();
 
@@ -80,7 +80,7 @@ const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize 
     });
   };
   const onupdatefiles = async (file) => {
-    setFieldValue(id, file[0]?.serverId || '');
+    // setFieldValue(id, file[0]?.serverId || '');
     setFiles(file);
   };
   useEffect(() => {
@@ -93,8 +93,10 @@ const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize 
 
   return (
     <FilePond
+      disabled={disabled}
       id={id ? id : 'fileId'}
       allowImagePreview={true}
+      filePosterMaxHeight={filePosterMaxHeight ?? 'auto'}
       allowDownloadByUrl={true}
       downloadFunction={downloadFunction}
       allowFilePoster={true}

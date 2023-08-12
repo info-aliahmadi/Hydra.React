@@ -5,6 +5,7 @@ import {
   Button,
   CardMedia,
   Checkbox,
+  Chip,
   FormControlLabel,
   Grid,
   IconButton,
@@ -29,6 +30,8 @@ import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import SelectTopic from '../../Topic/SelectTopic';
+import ImageUpload from 'components/FileUpload/ImageUpload';
+import SelectTag from '../../Tags/SelectTag';
 // ===============================|| COLOR BOX ||=============================== //
 
 function ArticlesDataGrid() {
@@ -40,23 +43,23 @@ function ArticlesDataGrid() {
 
   const columns = useMemo(
     () => [
-      {
-        accessorKey: 'smallThumbnail',
-        header: t(fieldsName + 'smallThumbnail'),
-        enableClickToCopy: true,
-        type: 'string',
-        Cell: ({ renderedCellValue, row }) => (
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem'
-            }}
-          >
-            <CardMedia component="img" height="50" image={THUMBNAIL_BASEPATH + renderedCellValue} alt="Small Thumbnail Preview" />
-          </Box>
-        )
-      },
+      // {
+      //   accessorKey: 'PreviewImageId',
+      //   header: t(fieldsName + 'PreviewImageId'),
+      //   enableClickToCopy: true,
+      //   type: 'string',
+      //   Cell: ({ renderedCellValue, row }) => (
+      //     <Box
+      //       sx={{
+      //         display: 'flex',
+      //         alignItems: 'center',
+      //         gap: '1rem'
+      //       }}
+      //     >
+      //       <CardMedia component="img" height="50" image={THUMBNAIL_BASEPATH + renderedCellValue} alt="Small Thumbnail Preview" />
+      //     </Box>
+      //   )
+      // },
       {
         accessorKey: 'subject',
         header: t(fieldsName + 'subject'),
@@ -83,10 +86,38 @@ function ArticlesDataGrid() {
         )
       },
       {
+        accessorKey: 'editor',
+        header: t(fieldsName + 'editor'),
+        enableClickToCopy: true,
+        type: 'string',
+        enableResizing: true,
+        Cell: ({ renderedCellValue, row }) => (
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '1rem'
+            }}
+          >
+            {renderedCellValue?.name}
+          </Box>
+        )
+      },
+      {
         accessorKey: 'isDraft',
-        header: t(fieldsName + 'status'),
+        header: t(fieldsName + 'isDraft'),
         type: 'boolean',
-        enableResizing: true
+        enableResizing: true,
+        Cell: ({ renderedCellValue, row }) => (
+          <Chip
+            variant="combined"
+            color={renderedCellValue == true ? 'warning' : 'primary'}
+            // icon={<>{renderedCellValue == true ? 'Published' : 'Draft'}</>}
+            label={renderedCellValue == true ? t(fieldsName + 'draft') : t(fieldsName + 'published')}
+            // sx={{ ml: 1.25, pl: 1 }}
+            size="small"
+          />
+        )
       },
       {
         accessorKey: 'publishDate',
@@ -124,7 +155,11 @@ function ArticlesDataGrid() {
           </IconButton>
         </Tooltip>
         <Tooltip arrow placement="top-start" title="Edit">
-          <IconButton onClick={() => handleEditRow(row)}>
+          <IconButton
+            onClick={() => {
+              navigate('/article/edit/' + row.original.id);
+            }}
+          >
             <Edit />
           </IconButton>
         </Tooltip>
@@ -134,65 +169,95 @@ function ArticlesDataGrid() {
   );
   const ArticleDetail = ({ row }) => {
     return (
-      <Grid container spacing={3} direction="row">
-        <Grid container item spacing={3} xd={12} sm={6} md={3} lg={3} direction="row" justifyArticle="center" alignItems="center">
+      <Grid container spacing={3} direction="row" justifyArticle="flex-start" alignItems="flex-start">
+        <Grid container item spacing={3} xs={12} sm={6} md={3} lg={3} xd={3} direction="row" justifyArticle="center" alignItems="center">
           <Grid item xs={12} md={12}>
             <Stack>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '1rem'
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  height="100"
-                  image={THUMBNAIL_BASEPATH + row.original.smallThumbnail}
-                  alt="Small Thumbnail Preview"
-                />
-              </Box>
+              {row.original.previewImageId && <ImageUpload value={row.original.previewImageId} disabled={true} filePosterMaxHeight={300} />}
+              {row.original.previewImageUrl && (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem'
+                  }}
+                >
+                  <CardMedia component="img" height="100" image={row.original.imagePreviewUrl} alt="Preview" />
+                </Box>
+              )}
             </Stack>
           </Grid>
         </Grid>
-        <Grid container item spacing={3} xd={12} sm={6} md={6} lg={6}>
-          <Grid item xs={12} md={3}>
+        <Grid
+          container
+          item
+          spacing={3}
+          xs={12}
+          sm={6}
+          md={6}
+          lg={6}
+          xd={6}
+          direction="row"
+          justifyArticle="flex-start"
+          alignItems="flex-start"
+        >
+          <Grid item xs={12} md={12}>
             <Stack spacing={1}>
               <InputLabel htmlFor="subject">{t(fieldsName + 'subject')}</InputLabel>
-              <OutlinedInput id="subject" type="text" value={row.original.subject} fullWidth disabled />
+              <OutlinedInput
+                id="subject"
+                type="text"
+                value={row.original.subject}
+                fullWidth
+                disabled
+                endAdornment={
+                  <Chip
+                    variant="combined"
+                    color={row.original.isDraft == true ? 'warning' : 'primary'}
+                    label={row.original.isDraft == true ? t(fieldsName + 'draft') : t(fieldsName + 'published')}
+                    size="small"
+                  />
+                }
+              />
             </Stack>
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={12}>
             <Stack spacing={1}>
               <InputLabel htmlFor="body">{t(fieldsName + 'body')}</InputLabel>
-              <OutlinedInput id="body" type="text" value={row.original.body} fullWidth disabled />
+              <div className="MuiOutlinedvid-notchedOutline" dangerouslySetInnerHTML={{ __html: row.original.body }} />
             </Stack>
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={4}>
             <Stack spacing={1}>
               <InputLabel htmlFor="writer">{t(fieldsName + 'writer')}</InputLabel>
               <OutlinedInput id="writer" type="text" value={row.original.writer.name} fullWidth disabled />
             </Stack>
           </Grid>
-          <Grid item xs={12} md={3}>
+          {row.original.editor?.name && (
+            <Grid item xs={12} md={4}>
+              <Stack spacing={1}>
+                <InputLabel htmlFor="editor">{t(fieldsName + 'editor')}</InputLabel>
+                <OutlinedInput id="editor" type="text" value={row.original.editor?.name} fullWidth disabled />
+              </Stack>
+            </Grid>
+          )}
+          <Grid item xs={12} md={4}>
             <Stack spacing={1}>
-              <InputLabel htmlFor="isDraft">{t(fieldsName + 'isDraft')}</InputLabel>
-              <FormControlLabel
+              <InputLabel htmlFor="registerDate">{t(fieldsName + 'registerDate')}</InputLabel>
+              <OutlinedInput
+                id="registerDate"
+                type="text"
+                value={new Intl.DateTimeFormat(i18n.language, {
+                  dateStyle: 'long',
+                  timeStyle: [CONFIG.TIME_STYLE],
+                  hour12: false
+                }).format(moment(row.original.registerDate))}
+                fullWidth
                 disabled
-                control={
-                  <Checkbox
-                    id="isDraft"
-                    checked={row.original.isDraft ? true : false}
-                    title={row.original.isDraft ? 'Yes' : 'No'}
-                    color="default"
-                    disabled
-                  />
-                }
-                label={t(fieldsName + 'emailConfirmed')}
               />
             </Stack>
           </Grid>
-          <Grid item xs={12} md={3}>
+          <Grid item xs={12} md={4}>
             <Stack spacing={1}>
               <InputLabel htmlFor="publishDate">{t(fieldsName + 'publishDate')}</InputLabel>
               <OutlinedInput
@@ -208,10 +273,34 @@ function ArticlesDataGrid() {
               />
             </Stack>
           </Grid>
+          {row.original.editDate && (
+            <Grid item xs={12} md={4}>
+              <Stack spacing={1}>
+                <InputLabel htmlFor="editDate">{t(fieldsName + 'editDate')}</InputLabel>
+                <OutlinedInput
+                  id="editDate"
+                  type="text"
+                  value={new Intl.DateTimeFormat(i18n.language, {
+                    dateStyle: 'long',
+                    timeStyle: [CONFIG.TIME_STYLE],
+                    hour12: false
+                  }).format(moment(row.original.editDate))}
+                  fullWidth
+                  disabled
+                />
+              </Stack>
+            </Grid>
+          )}
           <Grid item xs={12} md={4}>
             <Stack spacing={1}>
-              <InputLabel htmlFor="topicsIds">{t('pages.topicsIds')}</InputLabel>
+              <InputLabel htmlFor="topicsIds">{t(fieldsName + 'topicsIds')}</InputLabel>
               <SelectTopic disabled defaultValues={row.original.topicsIds} />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Stack spacing={1}>
+              <InputLabel htmlFor="tags">{t(fieldsName + 'tags')}</InputLabel>
+              <SelectTag defaultValues={row.original.tags || []} disabled={true} />
             </Stack>
           </Grid>
         </Grid>

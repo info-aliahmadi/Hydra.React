@@ -2,5 +2,10 @@
   border-color: #a61d24;
 }
 .select-error fieldset {
-    border-color: #a61d24;
-  }
+  border-color: #a61d24;
+}
+.MuiOutlinedvid-notchedOutline {
+  border: solid 1px #72727245;
+  border-radius: 5px;
+  padding: 0 8px;
+}

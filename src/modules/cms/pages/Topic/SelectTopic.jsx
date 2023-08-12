@@ -64,7 +64,7 @@ export default function SelectTopic({ defaultValues, id, name, setFieldValue, er
         renderValue={(selected) => (
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
             {selected.map((value) => {
-              let title = options.find((x) => x.id == value).title;
+              let title = options.find((x) => x.id == value)?.title;
               return <Chip key={title} label={title} />;
             })}
           </Box>

@@ -12,7 +12,6 @@ const Editor = ({ id, name, setFieldValue, error, defaultValue, height, minHeigh
   var fileUploadService = new FileUploadService();
 
   function setChange(contents, core) {
-    debugger;
     setFieldValue(id, contents);
   }
   const uploadImage = async (img, uploadHandler) => {

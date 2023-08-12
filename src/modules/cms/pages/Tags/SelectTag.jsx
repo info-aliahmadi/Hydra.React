@@ -5,7 +5,12 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import TagsService from 'modules/cms/services/TagsService';
-import { Chip, FormControl } from '@mui/material';
+import { Checkbox, Chip, FormControl } from '@mui/material';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+
+const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 export default function SelectTag({ defaultValues, id, name, setFieldValue, error, disabled }) {
   const [t] = useTranslation();
@@ -36,7 +41,8 @@ export default function SelectTag({ defaultValues, id, name, setFieldValue, erro
         disabled={disabled}
         multiple
         freeSolo
-        size="small"
+        disableCloseOnSelect
+        // size="small"
         value={values || ''}
         getOptionLabel={(option) => option}
         options={options.map((option) => option.title)}
@@ -44,16 +50,24 @@ export default function SelectTag({ defaultValues, id, name, setFieldValue, erro
         defaultValue={options.filter((x) => defaultValues?.find((c) => c === x.title)) ?? []}
         onChange={(e, newValue) => {
           setFieldValue(id, newValue);
+          setValues(newValue);
         }}
         renderTags={(value, getTagProps) => {
           return value.map((option, index) => {
             return <Chip key={'tg-' + index} label={option} {...getTagProps({ index })} />;
           });
         }}
+        // renderOption={(props, option, { selected }) => (
+        //   <li {...props}>
+        //     <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
+        //     {option}
+        //   </li>
+        // )}
         renderInput={(params) => (
           <TextField
             {...params}
             error={error}
+            size="small"
             placeholder={t('pages.tags')}
             InputProps={{
               ...params.InputProps,

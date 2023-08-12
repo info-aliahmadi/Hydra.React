@@ -102,7 +102,9 @@
       "writer": "Writer",
       "editor": "Editor",
       "editDate": "Edit Date",
-      "isDraft": "Save as Draft",
+      "isDraft": "Is Draft",
+      "draft": "Draft",
+      "published": "Published",
       "topicsIds": "Topics",
       "tagsIds": "Tags"
     }

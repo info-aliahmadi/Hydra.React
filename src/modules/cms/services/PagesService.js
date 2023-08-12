@@ -2,7 +2,7 @@ import axios from 'axios';
 import { setDefaultHeader } from 'utils/axiosHeaders';
 import CONFIG from 'config.js';
 
-export default class ArticlesService {
+export default class PagesService {
   constructor() {
     setDefaultHeader();
   }
@@ -47,7 +47,7 @@ export default class ArticlesService {
       axios
         .post(CONFIG.API_BASEPATH + '/cms/updateArticle', article)
         .then((response) => {
-          resolve(response.data);
+          resolve(response.data.data);
         })
         .catch((error) => {
           reject(error);
