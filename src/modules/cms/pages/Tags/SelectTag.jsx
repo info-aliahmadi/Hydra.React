@@ -5,18 +5,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import TagsService from 'modules/cms/services/TagsService';
-import { Checkbox, Chip, FormControl } from '@mui/material';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-const checkedIcon = <CheckBoxIcon fontSize="small" />;
+import { Chip, FormControl } from '@mui/material';
 
 export default function SelectTag({ defaultValues, id, name, setFieldValue, error, disabled }) {
   const [t] = useTranslation();
   const [loading, setLoading] = useState(true);
   const [options, setOptions] = useState([]);
-  const [values, setValues] = useState();
+  const [values, setValues] = useState(defaultValues);
   const tagService = new TagsService();
 
   const loadTags = () => {
@@ -42,7 +37,7 @@ export default function SelectTag({ defaultValues, id, name, setFieldValue, erro
         multiple
         freeSolo
         disableCloseOnSelect
-        // size="small"
+        size="small"
         value={values || ''}
         getOptionLabel={(option) => option}
         options={options.map((option) => option.title)}
@@ -57,12 +52,6 @@ export default function SelectTag({ defaultValues, id, name, setFieldValue, erro
             return <Chip key={'tg-' + index} label={option} {...getTagProps({ index })} />;
           });
         }}
-        // renderOption={(props, option, { selected }) => (
-        //   <li {...props}>
-        //     <Checkbox icon={icon} checkedIcon={checkedIcon} style={{ marginRight: 8 }} checked={selected} />
-        //     {option}
-        //   </li>
-        // )}
         renderInput={(params) => (
           <TextField
             {...params}

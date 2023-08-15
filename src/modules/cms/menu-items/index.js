@@ -1,8 +1,9 @@
 // assets
-import { Article, Menu, Slideshow, Topic } from '@mui/icons-material';
+import { Article, Menu, Slideshow, Description, Topic } from '@mui/icons-material';
 // icons
 const icons = {
   Article,
+  Description,
   Menu,
   Slideshow,
   Topic
@@ -22,6 +23,15 @@ const pages = {
       type: 'item',
       url: '/ArticlesList',
       icon: icons.Article,
+      breadcrumbs: false,
+      permission: 'AUTH_GET.PERMISSION.LIST'
+    },
+    {
+      id: 'page',
+      title: 'Pages',
+      type: 'item',
+      url: '/PagesList',
+      icon: icons.Description,
       breadcrumbs: false,
       permission: 'AUTH_GET.PERMISSION.LIST'
     },

@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
 import ArticlesService from 'modules/cms/services/ArticlesService';
 
-const DeleteArticle = ({ articleId, open, setOpen }) => {
+const DeleteArticle = ({ row, open, setOpen, refetch }) => {
   const [t] = useTranslation();
   let articleService = new ArticlesService();
   const [notify, setNotify] = useState({ open: false });
@@ -20,17 +20,16 @@ const DeleteArticle = ({ articleId, open, setOpen }) => {
   };
 
   const handleSubmit = () => {
+    let articleId = row.original.id;
     articleService
       .deleteArticle(articleId)
       .then(() => {
         onClose();
         setNotify({ open: true });
-        setTimeout(function () {
-          window.location.replace('/articlesList');
-        }, 4000);
+        refetch();
       })
       .catch((error) => {
-        setNotify({ open: true, type: 'error', description: error.message });
+        setNotify({ open: true, type: 'error', description: error });
       });
   };
   const CloseDialog = () => (
@@ -53,12 +52,16 @@ const DeleteArticle = ({ articleId, open, setOpen }) => {
       <Notify notify={notify} setNotify={setNotify}></Notify>
       <Dialog open={open} onClose={onClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         <DialogTitle id="alert-dialog-title">
-          <Typography variant="h3"> {t('buttons.article.delete')}</Typography>
+          <Typography variant="caption" fontSize={17} fontWeight={600}>
+            {t('buttons.article.delete')}
+          </Typography>
           <CloseDialog />
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <Typography variant="h4"> {t('dialog.delete.description')}</Typography>
+            <Typography variant="caption" fontSize={15}>
+              {t('dialog.delete.moveToTrash')}
+            </Typography>
           </DialogContentText>
           {/* <Typography variant="h3">{t('alert.delete.item')}</Typography> */}
         </DialogContent>

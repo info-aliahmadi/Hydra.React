@@ -23,6 +23,7 @@
     "permissions": "Permissions",
     "contents": "Contents",
     "article": "Articles",
+    "page": "Pages",
     "topic": "Topics",
     "menus": "Menus",
     "slideshow": "Slideshow"
@@ -38,6 +39,9 @@
     "topics": "Topics",
     "tags": "Tags",
     "articles": "Articles",
+    "articlesTrash": "Articles Trash",
+    "pages": "Pages",
+    "menu": "Menu",
     "cards": {
       "users-list": "Users List",
       "user-add": "Add New User",
@@ -47,9 +51,15 @@
       "roles-list": "Roles List",
       "permissions-list": "Permissions List",
       "topics-list": "Topics List",
+      "menu": "Menu",
       "tags-list": "Tags List",
       "articles-list": "Articles List",
-      "article-add": "Add New Article"
+      "articlesTrash-list": "Articles Trash List",
+      "article-add": "Add New Article",
+      "article-edit": "Edit Article",
+      "pages-list": "Pages List",
+      "page-add": "Add New Page",
+      "page-edit": "Edit Page"
     }
   },
   "fields": {
@@ -94,19 +104,41 @@
     "article": {
       "subject": "Subject",
       "body": "Body",
-      "imagePreview": "Image Preview",
-      "imagePreviewUrl": "Image Preview Url",
+      "previewImageId": "Image Preview",
+      "previewImageUrl": "Image Preview Url",
       "tags": "Tags",
       "registerDate": "Register Date",
       "publishDate": "Publish Date",
       "writer": "Writer",
+      "writedBy": "Writed By",
       "editor": "Editor",
+      "editedBy": "Edited By",
       "editDate": "Edit Date",
       "isDraft": "Is Draft",
       "draft": "Draft",
+      "isPinned": "Pinned",
       "published": "Published",
       "topicsIds": "Topics",
       "tagsIds": "Tags"
+    },
+    "page": {
+      "pageTitle": "Page Title",
+      "subject": "Subject",
+      "body": "Body",
+      "tags": "Tags",
+      "registerDate": "Register Date",
+      "writer": "Writer",
+      "writedBy": "Writed By",
+      "editor": "Editor",
+      "editedBy": "Edited By",
+      "editDate": "Edit Date"
+    },
+    "menu": {
+      "title": "Title",
+      "url": "Url Address",
+      "imagePreviewId": "Image Icon",
+      "order": "Order",
+      "parent": "Parent Topic"
     }
   },
   "buttons": {
@@ -115,7 +147,10 @@
     "cancel": "Cancel",
     "edit": "Edit",
     "delete": "Delete",
+    "remove": "Remove",
     "detail": "Detail",
+    "restore": "Restore",
+    "pin": "Pin",
     "change-password": "Change Password",
     "user": {
       "save": "Save",
@@ -141,6 +176,13 @@
       "edit": "Edit Topic Name",
       "delete": "Delete Topic"
     },
+    "menu": {
+      "add": "New Menu",
+      "addMainMenu": "Add Main Menu",
+      "addSubMenu": "Add Sub Menu",
+      "edit": "Edit Menu",
+      "delete": "Delete Menu"
+    },
     "tag": {
       "add": "New Tag",
       "edit": "Edit Tag Name",
@@ -153,6 +195,12 @@
       "publish": "Publish",
       "edit": "Edit Article",
       "delete": "Delete Article"
+    },
+    "page": {
+      "save": "Save",
+      "add": "New Page",
+      "edit": "Edit Page",
+      "delete": "Delete Page"
     }
   },
   "validation": {
@@ -182,6 +230,11 @@
       "requiredPublishDate": "Publish Date Is Required",
       "requiredTopics": "Select Topics Is Required"
     },
+    "page": {
+      "requiredPageTitle": "Page Title Is Required",
+      "requiredSubject": "Subject Is Required",
+      "requiredBody": "Body Is Required"
+    },
     "fileUpload": {
       "labelFileTypeNotAllowed": "File Type Not Allowed",
       "fileValidateTypeLabelExpectedTypes": "Expects {allButLastType} or {lastType}",
@@ -190,6 +243,10 @@
       "labelMinFileSizeExceeded": "File is too Small",
       "labelMinFileSize": "Minimum file size is {filesize}",
       "imagePreviewDescription": "Drag & Drop your files or <span class='filepond--label-action'>Browse</span>"
+    },
+    "menu": {
+      "requiredMenuTitle": "Title Is Required",
+      "requiredMenuUrl": "Url Address Is Required"
     }
   },
   "tooltips": {
@@ -213,11 +270,16 @@
     },
     "delete": {
       "title": "Delete {{item}}",
-      "description": "Are You Sure to Delete This Item Permanently?"
+      "description": "Are You Sure to Delete This Item Permanently?",
+      "moveToTrash" : "Are You Sure to Move This Item To Trash?"
     },
     "topic": {
       "addMain": "Add Main Topic",
       "addSub": "Add Sub Topic in {{parentTitle}}"
+    },
+    "menu": {
+      "addMain": "Add Main Menu",
+      "addSub": "Add Sub Menu in {{parentTitle}}"
     }
   }
 }

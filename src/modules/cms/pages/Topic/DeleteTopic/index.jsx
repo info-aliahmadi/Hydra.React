@@ -53,12 +53,16 @@ const DeleteTopic = ({ row, open, setOpen, refetch }) => {
       <Notify notify={notify} setNotify={setNotify}></Notify>
       <Dialog open={open} onClose={onClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         <DialogTitle id="alert-dialog-title">
-          <Typography variant="h3"> {t('buttons.topic.delete')}</Typography>
+          <Typography variant="caption" fontSize={17} fontWeight={600}>
+            {t('buttons.topic.delete')}
+          </Typography>
           <CloseDialog />
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            <Typography variant="h4"> {t('dialog.delete.description')}</Typography>
+            <Typography variant="caption" fontSize={15}>
+              {t('dialog.delete.description')}
+            </Typography>
           </DialogContentText>
           {/* <Typography variant="h3">{t('alert.delete.item')}</Typography> */}
         </DialogContent>

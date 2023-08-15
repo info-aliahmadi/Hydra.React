@@ -9,3 +9,9 @@
   border-radius: 5px;
   padding: 0 8px;
 }
+.select-topic fieldset {
+  top: 0;
+}
+.select-topic fieldset legend {
+  display: none;
+}

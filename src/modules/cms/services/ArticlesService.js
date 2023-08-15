@@ -18,6 +18,18 @@ export default class ArticlesService {
         });
     });
   };
+  getArticleTrashList = async (searchParams) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(CONFIG.API_BASEPATH + '/cms/GetArticleTrashList', searchParams)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
   getArticleById = async (articleId) => {
     return new Promise((resolve, reject) => {
       axios
@@ -47,6 +59,18 @@ export default class ArticlesService {
       axios
         .post(CONFIG.API_BASEPATH + '/cms/updateArticle', article)
         .then((response) => {
+          resolve(response.data.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+  pinArticle = async (articleId) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(CONFIG.API_BASEPATH + '/cms/PinArticle', { params: { articleId: articleId } })
+        .then((response) => {
           resolve(response.data);
         })
         .catch((error) => {
@@ -57,9 +81,32 @@ export default class ArticlesService {
   deleteArticle = async (articleId) => {
     return new Promise((resolve, reject) => {
       axios
-        .get(CONFIG.API_BASEPATH + '/cms/deleteArticle', { params: { articleId: articleId } })
+        .get(CONFIG.API_BASEPATH + '/cms/DeleteArticle', { params: { articleId: articleId } })
         .then((response) => {
-          debugger;
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+  restoreArticle = async (articleId) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(CONFIG.API_BASEPATH + '/cms/RestoreArticle', { params: { articleId: articleId } })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+  removeArticle = async (articleId) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(CONFIG.API_BASEPATH + '/cms/RemoveArticle', { params: { articleId: articleId } })
+        .then((response) => {
           resolve(response.data);
         })
         .catch((error) => {

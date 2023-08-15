@@ -533,7 +533,6 @@ export default function AddOrEditUser() {
                                   variant="contained"
                                   color="error"
                                   startIcon={<DeleteIcon />}
-                                  on
                                   onClick={() => setOpenDelete(true)}
                                 >
                                   {t(buttonName + 'delete')}

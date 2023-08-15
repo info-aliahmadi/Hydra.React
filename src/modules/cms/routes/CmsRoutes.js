@@ -11,7 +11,15 @@ const TagsList = Loadable(lazy(() => import('modules/cms/pages/Tags/TagsList')))
 
 const ArticlesList = Loadable(lazy(() => import('modules/cms/pages/Article/ArticlesList')));
 
+const ArticlesTrashList = Loadable(lazy(() => import('modules/cms/pages/Article/ArticlesTrashList')));
+
 const AddOrEditArticle = Loadable(lazy(() => import('modules/cms/pages/Article/AddOrEditArticle')));
+
+const PagesList = Loadable(lazy(() => import('modules/cms/pages/Page/PagesList')));
+
+const AddOrEditPage = Loadable(lazy(() => import('modules/cms/pages/Page/AddOrEditPage')));
+
+const MenusList = Loadable(lazy(() => import('modules/cms/pages/Menu/MenusList')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -35,10 +43,34 @@ const CmsRoutes = [
     element: <ArticlesList />
   },
   {
+    key: 'articlesTrashlist',
+    path: 'ArticlesTrashList',
+    permission: 'AUTH_GET.PERMISSION.LIST',
+    element: <ArticlesTrashList />
+  },
+  {
     key: 'addOrEditArticle',
     path: 'Article/:operation/:id',
     permission: 'AUTH_GET.PERMISSION.LIST',
     element: <AddOrEditArticle />
+  },
+  {
+    key: 'pageslist',
+    path: 'PagesList',
+    permission: 'AUTH_GET.PERMISSION.LIST',
+    element: <PagesList />
+  },
+  {
+    key: 'addOrEditPage',
+    path: 'Page/:operation/:id',
+    permission: 'AUTH_GET.PERMISSION.LIST',
+    element: <AddOrEditPage />
+  },
+  {
+    key: 'MenusList',
+    path: 'MenusList',
+    permission: 'AUTH_GET.PERMISSION.LIST',
+    element: <MenusList />
   },
   {
     key: 'color',

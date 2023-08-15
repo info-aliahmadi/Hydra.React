@@ -2,21 +2,21 @@
 import { Grid, Typography } from '@mui/material';
 
 // project import
-import TopicDataGrid from './TopicDataGrid';
+import MenuDataGrid from './MenuDataGrid';
 import { useTranslation } from 'react-i18next';
 // ===============================|| COLOR BOX ||=============================== //
 
-function TopicList() {
+function MenuList() {
   const [t] = useTranslation();
   return (
     <>
       <Grid container justifyContent="center" direction="row" alignItems="flex-start">
         <Grid container spacing={3} item xs={12} sm={12} md={10} lg={10} xl={7} direction="column">
           <Grid item>
-            <Typography variant="h5">{t('pages.topics')}</Typography>
+            <Typography variant="h5">{t('pages.menu')}</Typography>
           </Grid>
           <Grid item>
-            <TopicDataGrid />
+            <MenuDataGrid />
           </Grid>
         </Grid>
       </Grid>
@@ -24,4 +24,4 @@ function TopicList() {
   );
 }
 
-export default TopicList;
+export default MenuList;

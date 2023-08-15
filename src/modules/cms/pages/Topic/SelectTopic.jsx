@@ -53,26 +53,28 @@ export default function SelectTopic({ defaultValues, id, name, setFieldValue, er
       <Select
         id={id}
         name={name}
+        className="select-topic"
         // key={id + loading + defaultValues}
         multiple
         value={values || ''}
         label={''}
+        size="small"
         onChange={handleChange}
         MenuProps={MenuProps}
-        input={<OutlinedInput label="Topic" />}
+        input={<OutlinedInput label={t('pages.topics')} />}
         defaultValue={options.filter((x) => defaultValues?.find((c) => c === x.id)) ?? []}
         renderValue={(selected) => (
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
-            {selected.map((value) => {
+            {selected.map((value, index) => {
               let title = options.find((x) => x.id == value)?.title;
-              return <Chip key={title} label={title} />;
+              return <Chip key={'chip-' + name + index} label={title} />;
             })}
           </Box>
         )}
       >
         {options.map((item) => {
           return (
-            <MenuItem key={item.id} value={item.id} style={getStyles(item.id, values, theme)}>
+            <MenuItem key={'menu-' + name + item.id} value={item.id} style={getStyles(item.id, values, theme)}>
               <span style={{ 'white-space': 'pre-wrap' }}>{item.title}</span>
             </MenuItem>
           );

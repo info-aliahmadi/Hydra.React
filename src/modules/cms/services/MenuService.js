@@ -2,14 +2,14 @@ import axios from 'axios';
 import { setDefaultHeader } from 'utils/axiosHeaders';
 import CONFIG from 'config.js';
 
-export default class PagesService {
+export default class MenusService {
   constructor() {
     setDefaultHeader();
   }
-  getPageList = async (searchParams) => {
+  getMenuList = async () => {
     return new Promise((resolve, reject) => {
       axios
-        .post(CONFIG.API_BASEPATH + '/cms/GetPageList', searchParams)
+        .get(CONFIG.API_BASEPATH + '/cms/GetMenusHierarchy')
         .then((response) => {
           resolve(response.data);
         })
@@ -18,10 +18,10 @@ export default class PagesService {
         });
     });
   };
-  getPageById = async (pageId) => {
+  getMenuById = async (menuId) => {
     return new Promise((resolve, reject) => {
       axios
-        .get(CONFIG.API_BASEPATH + '/cms/getPageById', { params: { pageId: pageId } })
+        .get(CONFIG.API_BASEPATH + '/cms/getMenuById', { params: { menuId: menuId } })
         .then((response) => {
           resolve(response.data.data);
         })
@@ -30,10 +30,10 @@ export default class PagesService {
         });
     });
   };
-  addPage = async (page) => {
+  addMenu = async (menu) => {
     return new Promise((resolve, reject) => {
       axios
-        .post(CONFIG.API_BASEPATH + '/cms/addPage', page)
+        .post(CONFIG.API_BASEPATH + '/cms/addMenu', menu)
         .then((response) => {
           resolve(response.data);
         })
@@ -42,10 +42,10 @@ export default class PagesService {
         });
     });
   };
-  updatePage = async (page) => {
+  updateMenu = async (menu) => {
     return new Promise((resolve, reject) => {
       axios
-        .post(CONFIG.API_BASEPATH + '/cms/updatePage', page)
+        .post(CONFIG.API_BASEPATH + '/cms/updateMenu', menu)
         .then((response) => {
           resolve(response.data.data);
         })
@@ -54,10 +54,10 @@ export default class PagesService {
         });
     });
   };
-  deletePage = async (pageId) => {
+  deleteMenu = async (menuId) => {
     return new Promise((resolve, reject) => {
       axios
-        .get(CONFIG.API_BASEPATH + '/cms/deletePage', { params: { pageId: pageId } })
+        .get(CONFIG.API_BASEPATH + '/cms/deleteMenu', { params: { menuId: menuId } })
         .then((response) => {
           debugger;
           resolve(response.data);

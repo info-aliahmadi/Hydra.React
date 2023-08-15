@@ -10,7 +10,7 @@ function ArticlesList() {
   const [t] = useTranslation();
   return (
     <>
-      <Grid container justifyArticle="center" direction="row" alignItems="flex-start">
+      <Grid container justifyContent="center" direction="row" alignItems="flex-start">
         <Grid container spacing={3} item xs={12} sm={12} md={12} lg={12} direction="column">
           <Grid item>
             <Typography variant="h5">{t('pages.articles')}</Typography>

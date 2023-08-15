@@ -1,5 +1,5 @@
 // material-ui
-import { Avatar, Box, Button, CardMedia, Chip, Grid, IconButton, InputLabel, OutlinedInput, Tooltip } from '@mui/material';
+import { Avatar, Box,  CardMedia, Chip, Grid, IconButton, InputLabel, OutlinedInput, Tooltip } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
@@ -8,31 +8,26 @@ import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MaterialTable from 'components/MaterialTable/MaterialTable';
 import ArticlesService from 'modules/cms/services/ArticlesService';
-import { Delete, Edit, RestoreFromTrash, PostAddOutlined, PushPin, EventNote } from '@mui/icons-material';
+import { DeleteSweep, RestorePage, EventNote } from '@mui/icons-material';
 import CONFIG from 'config';
 import { Stack } from '@mui/system';
 import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
 import SelectTopic from '../../Topic/SelectTopic';
 import ImageUpload from 'components/FileUpload/ImageUpload';
 import SelectTag from '../../Tags/SelectTag';
-import DeleteArticle from '../DeleteArticle';
-import Notify from 'components/@extended/Notify';
+import RemoveArticle from '../RemoveArticle';
 // ===============================|| COLOR BOX ||=============================== //
 
-function ArticlesDataGrid() {
+function ArticlesTashDataGrid() {
   const [t, i18n] = useTranslation();
 
   const [openDelete, setOpenDelete] = useState(false);
   const [row, setRow] = useState({});
   const [refetch, setRefetch] = useState();
-  const [notify, setNotify] = useState({ open: false });
 
-  const articlesService = new ArticlesService();
+  const articleService = new ArticlesService();
 
-  const navigate = useNavigate();
-
-  const [fieldsName, buttonName] = ['fields.article.', 'buttons.article.'];
+  const [fieldsName] = ['fields.article.'];
 
   const columns = useMemo(
     () => [
@@ -80,21 +75,10 @@ function ArticlesDataGrid() {
         )
       },
       {
-        accessorKey: 'publishDate',
-        header: t(fieldsName + 'publishDate'),
-        type: 'dateTime'
-      },
-      {
-        accessorKey: 'registerDate',
-        header: t(fieldsName + 'registerDate'),
-        type: 'dateTime'
-      },
-      {
         accessorKey: 'isDraft',
         header: t(fieldsName + 'isDraft'),
         type: 'boolean',
         enableResizing: true,
-        maxSize: 100,
         Cell: ({ renderedCellValue, row }) => (
           <Chip
             variant="combined"
@@ -105,6 +89,16 @@ function ArticlesDataGrid() {
             size="small"
           />
         )
+      },
+      {
+        accessorKey: 'publishDate',
+        header: t(fieldsName + 'publishDate'),
+        type: 'dateTime'
+      },
+      {
+        accessorKey: 'registerDate',
+        header: t(fieldsName + 'registerDate'),
+        type: 'dateTime'
       }
     ],
     []
@@ -113,13 +107,11 @@ function ArticlesDataGrid() {
     setRow(row);
     setOpenDelete(true);
   };
-  const handleRefetch = () => {
-    setRefetch(Date.now());
-  };
 
-  const handlePinRow = (articleId) => {
-    articlesService
-      .pinArticle(articleId)
+  const handleRestoreRow = (row) => {
+    let articleId = row.original.id;
+    articleService
+      .restoreArticle(articleId)
       .then(() => {
         handleRefetch();
       })
@@ -127,44 +119,26 @@ function ArticlesDataGrid() {
         setNotify({ open: true, type: 'error', description: error });
       });
   };
+
+  const handleRefetch = () => {
+    setRefetch(Date.now());
+  };
+
   const handleArticleList = useCallback(async (filters) => {
-    return await articlesService.getArticleList(filters);
+    return await articleService.getArticleTrashList(filters);
   }, []);
-  const AddRow = useCallback(
-    () => (
-      <Button
-        color="primary"
-        variant="contained"
-        onClick={() => {
-          navigate('/article/add/0');
-        }}
-        startIcon={<PostAddOutlined />}
-      >
-        {t(buttonName + 'add')}
-      </Button>
-    ),
-    []
-  );
-  const DeleteOrEdit = useCallback(
+
+  const RemoveOrRestore = useCallback(
     ({ row }) => (
-      <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'nowrap' }}>
-        <Tooltip arrow placement="top-start" title={t('buttons.delete')}>
+      <Box sx={{ display: 'flex', gap: '1rem' }}>
+        <Tooltip arrow placement="top-start" title={t('buttons.remove')}>
           <IconButton color="error" onClick={() => handleDeleteRow(row)}>
-            <Delete />
+            <DeleteSweep />
           </IconButton>
         </Tooltip>
-        <Tooltip arrow placement="top-start" title={t('buttons.edit')}>
-          <IconButton
-            onClick={() => {
-              navigate('/article/edit/' + row.original.id);
-            }}
-          >
-            <Edit />
-          </IconButton>
-        </Tooltip>
-        <Tooltip arrow placement="top-start" title={t('buttons.pin')}>
-          <IconButton onClick={() => handlePinRow(row.original.id)} color={row.original.isPinned ? 'warning' : 'secondary'}>
-            <PushPin />
+        <Tooltip arrow placement="top-start" title={t('buttons.restore')}>
+          <IconButton onClick={() => handleRestoreRow(row)} color="success">
+            <RestorePage />
           </IconButton>
         </Tooltip>
       </Box>
@@ -311,53 +285,24 @@ function ArticlesDataGrid() {
       </Grid>
     );
   };
-  const ArticleHeader = ({ title }) => {
-    return (
-      <Grid container item direction="row" justifyContent="space-between" alignItems="center">
-        <Grid item>{title}</Grid>
-        <Grid item>
-          <Chip
-            href="/ArticlesTrashList"
-            clickable
-            component="a"
-            target="_blank"
-            icon={<RestoreFromTrash />}
-            title={t('pages.articlesTrash')}
-            label={'Trash'}
-            variant="outlined"
-            size="medium"
-            color="error"
-            sx={{ borderRadius: '16px' }}
-          />
-        </Grid>
-      </Grid>
-    );
-  };
+
   return (
     <>
-      <Notify notify={notify} setNotify={setNotify}></Notify>
-      <MainCard title={<ArticleHeader title={t('pages.cards.articles-list')} />}>
+      <MainCard title={t('pages.cards.articlesTrash-list')}>
         <TableCard>
           <MaterialTable
             refetch={refetch}
             columns={columns}
             dataApi={handleArticleList}
-            enableRowActions={true}
-            renderRowActions={DeleteOrEdit}
-            renderTopToolbarCustomActions={AddRow}
+            enableRowActions
+            renderRowActions={RemoveOrRestore}
             renderDetailPanel={({ row }) => <ArticleDetail row={row} />}
-            displayColumnDefOptions={{
-              'mrt-row-actions': {
-                //header: 'Change Account Settings', //change header text
-                size: 80 //make actions column wider
-              }
-            }}
           />
         </TableCard>
       </MainCard>
-      <DeleteArticle row={row} open={openDelete} setOpen={setOpenDelete} refetch={handleRefetch} />
+      <RemoveArticle row={row} open={openDelete} setOpen={setOpenDelete} refetch={handleRefetch} />
     </>
   );
 }
 
-export default ArticlesDataGrid;
+export default ArticlesTashDataGrid;

@@ -58,14 +58,15 @@ function MaterialTable({
   enableExpanding,
   enableExpandAll,
   getSubRows,
-
+  enableRowOrdering,
   manualFiltering,
   manualPagination,
   manualSorting,
-
+  muiTableBodyRowDragHandleProps,
   enablePinning,
   enableRowActions,
   renderRowActions,
+  displayColumnDefOptions,
   renderTopToolbarCustomActions,
   renderRowActionMenuItems,
   renderDetailPanel
@@ -352,6 +353,7 @@ function MaterialTable({
         onSortingChange={setSorting}
         enableRowActions={enableRowActions ? true : false}
         renderRowActions={renderRowActions && renderRowActions}
+        displayColumnDefOptions={displayColumnDefOptions && displayColumnDefOptions}
         renderTopToolbarCustomActions={
           renderTopToolbarCustomActions
             ? renderTopToolbarCustomActions
@@ -363,6 +365,8 @@ function MaterialTable({
         }
         renderRowActionMenuItems={renderRowActionMenuItems && renderRowActionMenuItems}
         renderDetailPanel={renderDetailPanel && renderDetailPanel}
+        muiTableBodyRowDragHandleProps={muiTableBodyRowDragHandleProps && muiTableBodyRowDragHandleProps}
+        enableRowOrdering={(enableRowOrdering && true) ?? false}
         rowCount={dataApi ? data?.totalItems ?? 0 : data?.length}
         state={{
           columnFilters,

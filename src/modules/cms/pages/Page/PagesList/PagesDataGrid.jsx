@@ -1,5 +1,5 @@
 // material-ui
-import { Avatar, Box, Button, CardMedia, Chip, Grid, IconButton, InputLabel, OutlinedInput, Tooltip } from '@mui/material';
+import { Avatar, Box, Button, CardMedia, Chip, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Tooltip } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
@@ -7,20 +7,18 @@ import TableCard from 'components/TableCard';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MaterialTable from 'components/MaterialTable/MaterialTable';
-import ArticlesService from 'modules/cms/services/ArticlesService';
-import { Delete, Edit, RestoreFromTrash, PostAddOutlined, PushPin, EventNote } from '@mui/icons-material';
+import PagesService from 'modules/cms/services/PagesService';
+import { Delete, Edit, Description, EventNote } from '@mui/icons-material';
 import CONFIG from 'config';
 import { Stack } from '@mui/system';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
-import SelectTopic from '../../Topic/SelectTopic';
-import ImageUpload from 'components/FileUpload/ImageUpload';
 import SelectTag from '../../Tags/SelectTag';
-import DeleteArticle from '../DeleteArticle';
+import DeletePage from '../DeletePage';
 import Notify from 'components/@extended/Notify';
 // ===============================|| COLOR BOX ||=============================== //
 
-function ArticlesDataGrid() {
+function PagesDataGrid() {
   const [t, i18n] = useTranslation();
 
   const [openDelete, setOpenDelete] = useState(false);
@@ -28,14 +26,21 @@ function ArticlesDataGrid() {
   const [refetch, setRefetch] = useState();
   const [notify, setNotify] = useState({ open: false });
 
-  const articlesService = new ArticlesService();
+  const pagesService = new PagesService();
 
   const navigate = useNavigate();
 
-  const [fieldsName, buttonName] = ['fields.article.', 'buttons.article.'];
+  const [fieldsName, buttonName] = ['fields.page.', 'buttons.page.'];
 
   const columns = useMemo(
     () => [
+      {
+        accessorKey: 'pageTitle',
+        header: t(fieldsName + 'pageTitle'),
+        enableClickToCopy: true,
+        type: 'string',
+        enableResizing: true
+      },
       {
         accessorKey: 'subject',
         header: t(fieldsName + 'subject'),
@@ -80,31 +85,9 @@ function ArticlesDataGrid() {
         )
       },
       {
-        accessorKey: 'publishDate',
-        header: t(fieldsName + 'publishDate'),
-        type: 'dateTime'
-      },
-      {
         accessorKey: 'registerDate',
         header: t(fieldsName + 'registerDate'),
         type: 'dateTime'
-      },
-      {
-        accessorKey: 'isDraft',
-        header: t(fieldsName + 'isDraft'),
-        type: 'boolean',
-        enableResizing: true,
-        maxSize: 100,
-        Cell: ({ renderedCellValue, row }) => (
-          <Chip
-            variant="combined"
-            color={renderedCellValue == true ? 'warning' : 'primary'}
-            // icon={<>{renderedCellValue == true ? 'Published' : 'Draft'}</>}
-            label={renderedCellValue == true ? t(fieldsName + 'draft') : t(fieldsName + 'published')}
-            // sx={{ ml: 1.25, pl: 1 }}
-            size="small"
-          />
-        )
       }
     ],
     []
@@ -117,9 +100,9 @@ function ArticlesDataGrid() {
     setRefetch(Date.now());
   };
 
-  const handlePinRow = (articleId) => {
-    articlesService
-      .pinArticle(articleId)
+  const handlePinRow = (pageId) => {
+    pagesService
+      .pinPage(pageId)
       .then(() => {
         handleRefetch();
       })
@@ -127,8 +110,8 @@ function ArticlesDataGrid() {
         setNotify({ open: true, type: 'error', description: error });
       });
   };
-  const handleArticleList = useCallback(async (filters) => {
-    return await articlesService.getArticleList(filters);
+  const handlePageList = useCallback(async (filters) => {
+    return await pagesService.getPageList(filters);
   }, []);
   const AddRow = useCallback(
     () => (
@@ -136,9 +119,9 @@ function ArticlesDataGrid() {
         color="primary"
         variant="contained"
         onClick={() => {
-          navigate('/article/add/0');
+          navigate('/page/add/0');
         }}
-        startIcon={<PostAddOutlined />}
+        startIcon={<Description />}
       >
         {t(buttonName + 'add')}
       </Button>
@@ -156,42 +139,19 @@ function ArticlesDataGrid() {
         <Tooltip arrow placement="top-start" title={t('buttons.edit')}>
           <IconButton
             onClick={() => {
-              navigate('/article/edit/' + row.original.id);
+              navigate('/page/edit/' + row.original.id);
             }}
           >
             <Edit />
-          </IconButton>
-        </Tooltip>
-        <Tooltip arrow placement="top-start" title={t('buttons.pin')}>
-          <IconButton onClick={() => handlePinRow(row.original.id)} color={row.original.isPinned ? 'warning' : 'secondary'}>
-            <PushPin />
           </IconButton>
         </Tooltip>
       </Box>
     ),
     []
   );
-  const ArticleDetail = ({ row }) => {
+  const PageDetail = ({ row }) => {
     return (
-      <Grid container spacing={3} direction="row" justifyContent="flex-start" alignItems="flex-start">
-        <Grid container item spacing={3} xs={12} sm={6} md={3} lg={3} xd={3} direction="row" justifyContent="center" alignItems="center">
-          <Grid item xs={12} md={12}>
-            <Stack>
-              {row.original.previewImageId && <ImageUpload value={row.original.previewImageId} disabled={true} filePosterMaxHeight={300} />}
-              {row.original.previewImageUrl && (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '1rem'
-                  }}
-                >
-                  <CardMedia component="img" height="100" image={row.original.imagePreviewUrl} alt="Preview" />
-                </Box>
-              )}
-            </Stack>
-          </Grid>
-        </Grid>
+      <Grid container spacing={3} direction="row" justifyContent="center" alignItems="flex-start">
         <Grid
           container
           item
@@ -207,22 +167,21 @@ function ArticlesDataGrid() {
         >
           <Grid item xs={12} md={12}>
             <Stack spacing={1}>
-              <InputLabel htmlFor="subject">{t(fieldsName + 'subject')}</InputLabel>
+              <InputLabel htmlFor="pageTitle">{t(fieldsName + 'pageTitle')}</InputLabel>
               <OutlinedInput
-                id="subject"
+                id="pageTitle"
                 type="text"
-                value={row.original.subject}
+                value={row.original.pageTitle}
                 fullWidth
                 disabled
-                endAdornment={
-                  <Chip
-                    variant="combined"
-                    color={row.original.isDraft == true ? 'warning' : 'primary'}
-                    label={row.original.isDraft == true ? t(fieldsName + 'draft') : t(fieldsName + 'published')}
-                    size="small"
-                  />
-                }
+                startAdornment={<InputAdornment position="start">{CONFIG.FRONT_PATH + '/Page/'}</InputAdornment>}
               />
+            </Stack>
+          </Grid>
+          <Grid item xs={12} md={12}>
+            <Stack spacing={1}>
+              <InputLabel htmlFor="subject">{t(fieldsName + 'subject')}</InputLabel>
+              <OutlinedInput id="subject" type="text" value={row.original.subject} fullWidth disabled />
             </Stack>
           </Grid>
           <Grid item xs={12} md={12}>
@@ -279,29 +238,7 @@ function ArticlesDataGrid() {
               </Grid>
             </Stack>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Stack spacing={1}>
-              <InputLabel htmlFor="publishDate">{t(fieldsName + 'publishDate')}</InputLabel>
-              <OutlinedInput
-                id="publishDate"
-                type="text"
-                value={new Intl.DateTimeFormat(i18n.language, {
-                  dateStyle: 'long',
-                  timeStyle: [CONFIG.TIME_STYLE],
-                  hour12: false
-                }).format(moment(row.original.publishDate))}
-                fullWidth
-                disabled
-              />
-            </Stack>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Stack spacing={1}>
-              <InputLabel htmlFor="topicsIds">{t(fieldsName + 'topicsIds')}</InputLabel>
-              <SelectTopic disabled defaultValues={row.original.topicsIds} />
-            </Stack>
-          </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={12}>
             <Stack spacing={1}>
               <InputLabel htmlFor="tags">{t(fieldsName + 'tags')}</InputLabel>
               <SelectTag defaultValues={row.original.tags || []} disabled={true} />
@@ -311,53 +248,26 @@ function ArticlesDataGrid() {
       </Grid>
     );
   };
-  const ArticleHeader = ({ title }) => {
-    return (
-      <Grid container item direction="row" justifyContent="space-between" alignItems="center">
-        <Grid item>{title}</Grid>
-        <Grid item>
-          <Chip
-            href="/ArticlesTrashList"
-            clickable
-            component="a"
-            target="_blank"
-            icon={<RestoreFromTrash />}
-            title={t('pages.articlesTrash')}
-            label={'Trash'}
-            variant="outlined"
-            size="medium"
-            color="error"
-            sx={{ borderRadius: '16px' }}
-          />
-        </Grid>
-      </Grid>
-    );
-  };
+
   return (
     <>
       <Notify notify={notify} setNotify={setNotify}></Notify>
-      <MainCard title={<ArticleHeader title={t('pages.cards.articles-list')} />}>
+      <MainCard title={t('pages.cards.pages-list')}>
         <TableCard>
           <MaterialTable
             refetch={refetch}
             columns={columns}
-            dataApi={handleArticleList}
+            dataApi={handlePageList}
             enableRowActions={true}
             renderRowActions={DeleteOrEdit}
             renderTopToolbarCustomActions={AddRow}
-            renderDetailPanel={({ row }) => <ArticleDetail row={row} />}
-            displayColumnDefOptions={{
-              'mrt-row-actions': {
-                //header: 'Change Account Settings', //change header text
-                size: 80 //make actions column wider
-              }
-            }}
+            renderDetailPanel={({ row }) => <PageDetail row={row} />}
           />
         </TableCard>
       </MainCard>
-      <DeleteArticle row={row} open={openDelete} setOpen={setOpenDelete} refetch={handleRefetch} />
+      <DeletePage row={row} open={openDelete} setOpen={setOpenDelete} refetch={handleRefetch} />
     </>
   );
 }
 
-export default ArticlesDataGrid;
+export default PagesDataGrid;

@@ -1,8 +1,20 @@
 import { useEffect, useState } from 'react';
 
 // material-ui
-import { Avatar, Button, Chip, FormHelperText, Grid, InputLabel, Link, OutlinedInput, Stack, Typography } from '@mui/material';
-import { ArrowBack, Save, Send, EventNote } from '@mui/icons-material';
+import {
+  Avatar,
+  Button,
+  Chip,
+  FormHelperText,
+  Grid,
+  InputAdornment,
+  InputLabel,
+  Link,
+  OutlinedInput,
+  Stack,
+  Typography
+} from '@mui/material';
+import { ArrowBack, Save, EventNote } from '@mui/icons-material';
 // third party
 import * as Yup from 'yup';
 import { Formik } from 'formik';
@@ -12,44 +24,41 @@ import AnimateButton from 'components/@extended/AnimateButton';
 // assets
 import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
-import ArticlesService from 'modules/cms/services/ArticlesService';
+import PagesService from 'modules/cms/services/PagesService';
 import { useNavigate, useParams } from 'react-router-dom';
 import CONFIG from 'config';
 import MainCard from 'components/MainCard';
 import setServerErrors from 'utils/setServerErrors';
-import SelectTopic from '../../Topic/SelectTopic';
 
-import ImageUpload from 'components/FileUpload/ImageUpload';
 import Editor from 'components/Editor/Editor';
 import SelectTag from '../../Tags/SelectTag';
-import DateTimeInput from 'components/DateTime/DateTimeInput';
 import moment from 'moment';
 
-export default function AddOrEditArticle() {
+export default function AddOrEditPage() {
   const [t, i18n] = useTranslation();
   const params = useParams();
   const operation = params.operation;
   const id = params.id;
 
-  let articleService = new ArticlesService();
-  const [fieldsName, validation, buttonName] = ['fields.article.', 'validation.article.', 'buttons.article.'];
-  const [article, setArticle] = useState();
+  let pageService = new PagesService();
+  const [fieldsName, validation, buttonName] = ['fields.page.', 'validation.page.', 'buttons.page.'];
+  const [page, setPage] = useState();
   const [notify, setNotify] = useState({ open: false });
   const navigate = useNavigate();
 
-  const loadArticle = () => {
-    articleService.getArticleById(id).then((result) => {
-      setArticle(result);
+  const loadPage = () => {
+    pageService.getPageById(id).then((result) => {
+      setPage(result);
     });
   };
   useEffect(() => {
-    if (operation == 'edit' && id > 0) loadArticle();
+    if (operation == 'edit' && id > 0) loadPage();
   }, [operation, id]);
 
-  const handleSubmit = async (article, resetForm, setErrors, setSubmitting) => {
+  const handleSubmit = async (page, resetForm, setErrors, setSubmitting) => {
     if (operation == 'add') {
-      articleService
-        .addArticle(article)
+      pageService
+        .addPage(page)
         .then(() => {
           resetForm();
           setNotify({ open: true });
@@ -62,10 +71,10 @@ export default function AddOrEditArticle() {
           setSubmitting(false);
         });
     } else {
-      articleService
-        .updateArticle(article)
+      pageService
+        .updatePage(page)
         .then((result) => {
-          setArticle(result);
+          setPage(result);
           setNotify({ open: true });
         })
         .catch((error) => {
@@ -84,34 +93,28 @@ export default function AddOrEditArticle() {
 
       <Formik
         initialValues={{
-          id: article?.id,
-          subject: article?.subject,
-          body: article?.body,
-          registerDate: article?.registerDate,
-          publishDate: article?.publishDate,
-          writer: article?.writer,
-          editor: article?.editor,
-          editDate: article?.editDate,
-          isDraft: article?.isDraft,
-          previewImageId: article?.previewImageId,
-          previewImageUrl: article?.previewImageUrl,
-          topicsIds: article?.topicsIds,
-          tags: article?.tags
+          id: page?.id,
+          pageTitle: page?.pageTitle,
+          subject: page?.subject,
+          body: page?.body,
+          registerDate: page?.registerDate,
+          writer: page?.writer,
+          editor: page?.editor,
+          editDate: page?.editDate,
+          tags: page?.tags
         }}
         enableReinitialize={true}
         validationSchema={Yup.object().shape({
+          pageTitle: Yup.string()
+            .max(250)
+            .required(t(validation + 'requiredPageTitle')),
           subject: Yup.string()
             .max(250)
             .required(t(validation + 'requiredSubject')),
-          body: Yup.string().required(t(validation + 'requiredBody')),
-          publishDate: Yup.string().required(t(validation + 'requiredPublishDate')),
-          topicsIds: Yup.array()
-            .min(1, t(validation + 'requiredTopics'))
-            .required(t(validation + 'requiredTopics'))
+          body: Yup.string().required(t(validation + 'requiredBody'))
         })}
         onSubmit={(values, { setErrors, setStatus, setSubmitting, resetForm }) => {
           try {
-            setSubmitting(true);
             handleSubmit(values, resetForm, setErrors, setSubmitting);
           } catch (err) {
             console.error(err);
@@ -124,14 +127,36 @@ export default function AddOrEditArticle() {
         {({ errors, handleBlur, handleChange, setFieldValue, handleSubmit, isSubmitting, touched, values }) => (
           <form noValidate onSubmit={handleSubmit}>
             <Grid container justifyContent="center" direction="row" alignItems="flex-start">
-              <Grid container item spacing={3} xs={12} sm={12} md={12} lg={12} xl={12} direction="column">
+              <Grid container item spacing={3} xs={12} sm={12} md={12} lg={12} xl={7} direction="column">
                 <Grid item>
-                  <Typography variant="h5">{t('pages.cards.article-' + operation)}</Typography>
+                  <Typography variant="h5">{t('pages.cards.page-' + operation)}</Typography>
                 </Grid>
                 <Grid item>
                   <MainCard>
                     <Grid container item spacing={3} direction="row" justifyContent="flex-start" alignItems="flex-start">
-                      <Grid container item spacing={3} xs={12} sm={12} md={12} lg={12} xl={8} display={''}>
+                      <Grid container item spacing={3} xs={12} sm={12} md={12} lg={12} xl={12}>
+                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
+                          <Stack spacing={1}>
+                            <InputLabel htmlFor="pageTitle">{t(fieldsName + 'pageTitle')}</InputLabel>
+                            <OutlinedInput
+                              id="pageTitle"
+                              type="pageTitle"
+                              value={values.pageTitle || ''}
+                              name="pageTitle"
+                              onBlur={handleBlur}
+                              onChange={handleChange}
+                              placeholder={t(fieldsName + 'pageTitle')}
+                              fullWidth
+                              error={Boolean(touched.pageTitle && errors.pageTitle)}
+                              startAdornment={<InputAdornment position="start">{CONFIG.FRONT_PATH + '/Page/'}</InputAdornment>}
+                            />
+                            {touched.pageTitle && errors.pageTitle && (
+                              <FormHelperText error id="helper-text-subject">
+                                {errors.pageTitle}
+                              </FormHelperText>
+                            )}
+                          </Stack>
+                        </Grid>
                         <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                           <Stack spacing={1}>
                             <InputLabel htmlFor="subject">{t(fieldsName + 'subject')}</InputLabel>
@@ -220,117 +245,31 @@ export default function AddOrEditArticle() {
                             )}
                           </Stack>
                         </Grid>
-                      </Grid>
-                      <Grid
-                        container
-                        item
-                        spacing={3}
-                        xs={12}
-                        sm={12}
-                        md={12}
-                        lg={12}
-                        xl={4}
-                        justifyContent="flex-start"
-                        alignItems="flex-start"
-                      >
-                        <Grid item xs={12} sm={12} md={6} lg={6} xl={12}>
+                        <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
                           <Stack spacing={1}>
-                            <InputLabel htmlFor="previewImageId">{t(fieldsName + 'previewImageId')}</InputLabel>
-                            <ImageUpload
-                              id="previewImageId"
+                            <InputLabel htmlFor="tags">
+                              {t(fieldsName + 'tags')}
+                              <Link href="/tagsList" target="_blank">
+                                {' '}
+                                (Manage Tags)
+                              </Link>
+                            </InputLabel>
+                            <SelectTag
+                              defaultValues={values?.tags || []}
+                              id="tags"
+                              name="tags"
                               setFieldValue={setFieldValue}
-                              value={values?.previewImageId || ''}
-                              filePosterMaxHeight={400}
+                              error={Boolean(touched.tags && errors.tags)}
                             />
-                            {(values?.previewImageId == null || values?.previewImageId == '') && (
-                              <OutlinedInput
-                                id="previewImageUrl"
-                                type="text"
-                                value={values.previewImageUrl || ''}
-                                name="previewImageUrl"
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                placeholder={t(fieldsName + 'previewImageUrl')}
-                                fullWidth
-                                error={Boolean(touched.previewImageUrl && errors.previewImageUrl)}
-                              />
-                            )}
-                          </Stack>
-                        </Grid>
-                        <Grid
-                          container
-                          item
-                          spacing={3}
-                          xs={12}
-                          sm={12}
-                          md={6}
-                          lg={6}
-                          xl={12}
-                          justifyContent="flex-start"
-                          alignItems="flex-start"
-                        >
-                          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <Stack spacing={1}>
-                              <InputLabel htmlFor="topicsIds">{t(fieldsName + 'topicsIds')}</InputLabel>
-                              <SelectTopic
-                                defaultValues={values?.topicsIds || []}
-                                id="topicsIds"
-                                name="topicsIds"
-                                setFieldValue={setFieldValue}
-                                error={Boolean(touched.topicsIds && errors.topicsIds)}
-                              />
-                              {touched.topicsIds && errors.topicsIds && (
-                                <FormHelperText error id="helper-roleIds">
-                                  {errors.topicsIds}
-                                </FormHelperText>
-                              )}
-                            </Stack>
-                          </Grid>
-                          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
-                            <Stack spacing={1}>
-                              <InputLabel htmlFor="tags">
-                                {t(fieldsName + 'tags')}
-                                <Link href="/tagsList" target="_blank">
-                                  {' '}
-                                  (Manage Tags)
-                                </Link>
-                              </InputLabel>
-                              <SelectTag
-                                defaultValues={values?.tags || []}
-                                id="tags"
-                                name="tags"
-                                setFieldValue={setFieldValue}
-                                error={Boolean(touched.tags && errors.tags)}
-                              />
-                              {touched.tags && errors.tags && (
-                                <FormHelperText error id="helper-tagIds">
-                                  {errors.tags}
-                                </FormHelperText>
-                              )}
-                            </Stack>
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                      <Grid container spacing={3} item xs={12} sm={12} md={12} lg={12} xl={12}>
-                        <Grid item xs={12} sm={12} md={6} lg={6} xl={4}>
-                          <Stack spacing={1}>
-                            <InputLabel htmlFor="publishDate">{t(fieldsName + 'publishDate')}</InputLabel>
-                            <DateTimeInput
-                              id="publishDate"
-                              name="publishDate"
-                              setFieldValue={setFieldValue}
-                              placeholder={t(fieldsName + 'publishDate')}
-                              defaultValue={values?.publishDate || ''}
-                              error={Boolean(touched.publishDate && errors.publishDate)}
-                            />
-                            {touched.publishDate && errors.publishDate && (
-                              <FormHelperText error id="helper-text-publishDate">
-                                {errors.publishDate}
+                            {touched.tags && errors.tags && (
+                              <FormHelperText error id="helper-tagIds">
+                                {errors.tags}
                               </FormHelperText>
                             )}
                           </Stack>
                         </Grid>
                       </Grid>
+
                       <Grid container item spacing={3} direction="row" justifyContent="space-between" alignItems="center">
                         <Grid item>
                           <Stack direction="row" spacing={2}>
@@ -339,7 +278,7 @@ export default function AddOrEditArticle() {
                               <Button
                                 size="large"
                                 onClick={() => {
-                                  navigate('/articlesList');
+                                  navigate('/pagesList');
                                 }}
                                 variant="outlined"
                                 color="secondary"
@@ -355,23 +294,9 @@ export default function AddOrEditArticle() {
                                 type="submit"
                                 variant="contained"
                                 color="primary"
-                                onClick={() => setFieldValue('isDraft', false)}
-                                startIcon={<Send />}
-                              >
-                                {operation == 'edit' ? t(buttonName + 'save') : t(buttonName + 'publish')}
-                              </Button>
-                            </AnimateButton>
-                            <AnimateButton>
-                              <Button
-                                disabled={isSubmitting}
-                                size="large"
-                                type="submit"
-                                variant="contained"
-                                color="warning"
-                                onClick={() => setFieldValue('isDraft', true)}
                                 startIcon={<Save />}
                               >
-                                {t(buttonName + 'draft')}
+                                {operation == 'edit' ? t(buttonName + 'save') : t(buttonName + 'add')}
                               </Button>
                             </AnimateButton>
                           </Stack>
