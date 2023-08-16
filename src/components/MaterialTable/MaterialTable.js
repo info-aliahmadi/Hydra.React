@@ -58,6 +58,7 @@ function MaterialTable({
   enableExpanding,
   enableExpandAll,
   getSubRows,
+  autoResetPageIndex,
   enableRowOrdering,
   manualFiltering,
   manualPagination,
@@ -154,6 +155,7 @@ function MaterialTable({
     });
     dateFields.forEach((element) => {
       if (!element.Cell) {
+        debugger;
         element.Cell = ({ renderedCellValue }) =>
           renderedCellValue != null && (
             <span>{new Intl.DateTimeFormat(currentLanguage, { dateStyle: [CONFIG.DATE_STYLE] }).format(moment(renderedCellValue))}</span>
@@ -346,6 +348,7 @@ function MaterialTable({
         }
         positionToolbarAlertBanner="center"
         getSubRows={getSubRows && getSubRows}
+        autoResetPageIndex={(autoResetPageIndex && true) ?? false}
         onColumnFiltersChange={setColumnFilters}
         onColumnFilterFnsChange={setColumnFilterFns}
         onGlobalFilterChange={setGlobalFilter}
@@ -367,7 +370,7 @@ function MaterialTable({
         renderDetailPanel={renderDetailPanel && renderDetailPanel}
         muiTableBodyRowDragHandleProps={muiTableBodyRowDragHandleProps && muiTableBodyRowDragHandleProps}
         enableRowOrdering={(enableRowOrdering && true) ?? false}
-        rowCount={dataApi ? data?.totalItems ?? 0 : data?.length}
+        rowCount={dataApi ? data?.totalItems ?? 0 : data?.length ?? 0}
         state={{
           columnFilters,
           columnFilterFns,
