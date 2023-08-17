@@ -11,7 +11,7 @@ const DateTimeInput = ({ id, name, setFieldValue, defaultValue, placeholder, err
   const [value, setValue] = useState();
   useEffect(() => {
     if (defaultValue) {
-      setValue(moment(defaultValue));
+      setValue(moment(defaultValue + 'Z'));
     } else {
       setValue(null);
     }

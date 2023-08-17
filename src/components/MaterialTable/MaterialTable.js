@@ -75,6 +75,7 @@ function MaterialTable({
   const [t, i18n] = useTranslation();
   const [tableLocale, setTableLocale] = useState(null);
   let currentLanguage = i18n.language;
+  let timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   //data and fetching state
   const [data, setData] = useState(dataSet ? dataSet : []);
   const [isError, setIsError] = useState(false);
@@ -158,7 +159,11 @@ function MaterialTable({
         debugger;
         element.Cell = ({ renderedCellValue }) =>
           renderedCellValue != null && (
-            <span>{new Intl.DateTimeFormat(currentLanguage, { dateStyle: [CONFIG.DATE_STYLE] }).format(moment(renderedCellValue))}</span>
+            <span>
+              {new Intl.DateTimeFormat(currentLanguage, { dateStyle: [CONFIG.DATE_STYLE], timeZone: timeZone }).format(
+                moment(renderedCellValue + 'Z')
+              )}
+            </span>
           );
       }
     });
@@ -170,8 +175,9 @@ function MaterialTable({
               {new Intl.DateTimeFormat(currentLanguage, {
                 dateStyle: [CONFIG.DATE_STYLE],
                 timeStyle: [CONFIG.TIME_STYLE],
-                hour12: false
-              }).format(moment(renderedCellValue))}
+                hour12: false,
+                timeZone: timeZone
+              }).format(moment(renderedCellValue + 'Z'))}
             </span>
           );
       }

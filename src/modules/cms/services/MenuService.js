@@ -54,6 +54,18 @@ export default class MenusService {
         });
     });
   };
+  updateMenuOrders = async (menuList) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(CONFIG.API_BASEPATH + '/cms/updateMenuOrders', menuList)
+        .then((response) => {
+          resolve(response.data.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
   deleteMenu = async (menuId) => {
     return new Promise((resolve, reject) => {
       axios

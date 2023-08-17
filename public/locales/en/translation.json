@@ -181,7 +181,8 @@
       "addMainMenu": "Add Main Menu",
       "addSubMenu": "Add Sub Menu",
       "edit": "Edit Menu",
-      "delete": "Delete Menu"
+      "delete": "Delete Menu",
+      "saveOrder": "Save Order"
     },
     "tag": {
       "add": "New Tag",
@@ -271,7 +272,7 @@
     "delete": {
       "title": "Delete {{item}}",
       "description": "Are You Sure to Delete This Item Permanently?",
-      "moveToTrash" : "Are You Sure to Move This Item To Trash?"
+      "moveToTrash": "Are You Sure to Move This Item To Trash?"
     },
     "topic": {
       "addMain": "Add Main Topic",
