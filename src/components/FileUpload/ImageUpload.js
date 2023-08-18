@@ -55,7 +55,15 @@ const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize,
 
   const loadImage = async (fileId) => {
     fileUploadService.getFileInfoById(fileId).then((fileInfo) => {
-      let imageUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory + fileInfo.fileName;
+      let fileUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory + fileInfo.fileName;
+      let imagePosterUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory;
+      let isVideo = CONFIG.VIDEOS_EXTENSIONS.some((extension) => extension == fileInfo.extension);
+      if (isVideo) {
+        imagePosterUrl += fileInfo.thumbnail;
+      } else {
+        imagePosterUrl += fileInfo.fileName;
+      }
+
       setFiles([
         {
           // the server file reference
@@ -66,13 +74,13 @@ const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize,
             // optional stub file information
             file: {
               name: fileInfo.fileName,
-              type: 'image/jpeg',
+              type: isVideo ? 'video/*' : 'image/*',
               size: fileInfo.size,
-              url: imageUrl
+              url: fileUrl
             },
             // pass poster property
             metadata: {
-              poster: imageUrl
+              poster: imagePosterUrl
             }
           }
         }
@@ -80,7 +88,8 @@ const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize,
     });
   };
   const onupdatefiles = async (file) => {
-    // setFieldValue(id, file[0]?.serverId || '');
+    debugger;
+    setFieldValue(id, file[0]?.serverId || undefined);
     setFiles(file);
   };
   useEffect(() => {
@@ -101,7 +110,7 @@ const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize,
       downloadFunction={downloadFunction}
       allowFilePoster={true}
       allowFileTypeValidation={true}
-      acceptedFileTypes={['image/png', 'image/jpeg']}
+      acceptedFileTypes={['image/png', 'image/jpeg', 'video/*']}
       labelFileTypeNotAllowed={t('validation.fileUpload.labelFileTypeNotAllowed')}
       fileValidateTypeLabelExpectedTypes={t('validation.fileUpload.fileValidateTypeLabelExpectedTypes')}
       allowFileSizeValidation={true}

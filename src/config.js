@@ -11,6 +11,8 @@ const CONFIG = {
   API_BASEPATH: process.env.NODE_ENV === 'production' ? 'https://website.com' : 'https://localhost:7134', // application api basepath
   AVATAR_BASEPATH: 'https://localhost:7134/avatar/',
   UPLOAD_BASEPATH: 'https://localhost:7134/',
+  IMAGES_EXTENSIONS: ['.jpg', '.jpeg', '.tiff', '.tif', '.gif', '.bmp', '.png'],
+  VIDEOS_EXTENSIONS: ['.mp4', '.h264', '.wmv', '.wav', '.avi', '.flv', '.mov', '.mkv', '.webm', '.ogg'],
   LOGIN_API_PATH: 'https://localhost:7134/Auth/Login',
   REFRESH_TOKEN_API_PATH: 'https://localhost:7134/Auth/RefreshToken',
   LOGOUT_API_PATH: 'https://localhost:7134/Auth/SignOut',

@@ -21,6 +21,8 @@ const AddOrEditPage = Loadable(lazy(() => import('modules/cms/pages/Page/AddOrEd
 
 const MenusList = Loadable(lazy(() => import('modules/cms/pages/Menu/MenusList')));
 
+const SlideshowsList = Loadable(lazy(() => import('modules/cms/pages/Slideshow/SlideshowsList')));
+
 // ==============================|| MAIN ROUTING ||============================== //
 
 const CmsRoutes = [
@@ -71,6 +73,12 @@ const CmsRoutes = [
     path: 'MenusList',
     permission: 'AUTH_GET.PERMISSION.LIST',
     element: <MenusList />
+  },
+  {
+    key: 'SlideshowsList',
+    path: 'SlideshowsList',
+    permission: 'AUTH_GET.PERMISSION.LIST',
+    element: <SlideshowsList />
   },
   {
     key: 'color',

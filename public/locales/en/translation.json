@@ -42,6 +42,7 @@
     "articlesTrash": "Articles Trash",
     "pages": "Pages",
     "menu": "Menu",
+    "slideshow": "Slideshow",
     "cards": {
       "users-list": "Users List",
       "user-add": "Add New User",
@@ -52,6 +53,7 @@
       "permissions-list": "Permissions List",
       "topics-list": "Topics List",
       "menu": "Menu",
+      "slideshow": "Slideshow",
       "tags-list": "Tags List",
       "articles-list": "Articles List",
       "articlesTrash-list": "Articles Trash List",
@@ -139,6 +141,15 @@
       "imagePreviewId": "Image Icon",
       "order": "Order",
       "parent": "Parent Topic"
+    },
+    "slideshow": {
+      "header": "Header",
+      "description": "Description",
+      "previewImage": "Media Preview",
+      "previewImageUrl": "Media Url",
+      "order": "Order",
+      "createDate": "Created Date",
+      "user": "Created By"
     }
   },
   "buttons": {
@@ -183,6 +194,14 @@
       "edit": "Edit Menu",
       "delete": "Delete Menu",
       "saveOrder": "Save Order"
+    },
+    "slideshow": {
+      "add": "New Slide",
+      "edit": "Edit Slide",
+      "delete": "Delete Slide",
+      "saveOrder": "Save Order",
+      "visible": "Show The Slide",
+      "visibleOff": "Hide The Slide"
     },
     "tag": {
       "add": "New Tag",
@@ -248,6 +267,9 @@
     "menu": {
       "requiredMenuTitle": "Title Is Required",
       "requiredMenuUrl": "Url Address Is Required"
+    },
+    "slideshow": {
+      "requiredMenuHeader": "Header Is Required"
     }
   },
   "tooltips": {
@@ -281,6 +303,9 @@
     "menu": {
       "addMain": "Add Main Menu",
       "addSub": "Add Sub Menu in {{parentTitle}}"
+    },
+    "slideshow": {
+      "add": "Add Slide"
     }
   }
 }

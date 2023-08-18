@@ -24,41 +24,41 @@ import AnimateButton from 'components/@extended/AnimateButton';
 // assets
 import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
-import MenuService from 'modules/cms/services/MenuService';
+import SlideshowService from 'modules/cms/services/SlideshowsService';
 import setServerErrors from 'utils/setServerErrors';
 import ImageUpload from 'components/FileUpload/ImageUpload';
 
-const AddOrEditMenu = ({ row, isNew, open, setOpen, refetch }) => {
+const AddOrEditSlideshow = ({ row, isNew, open, setOpen, refetch }) => {
   const [t] = useTranslation();
-  let menuService = new MenuService();
-  const [fieldsName, validation, buttonName] = ['fields.menu.', 'validation.menu.', 'buttons.menu.'];
-  const [menu, setMenu] = useState();
+  let slideshowService = new SlideshowService();
+  const [fieldsName, validation, buttonName] = ['fields.slideshow.', 'validation.slideshow.', 'buttons.slideshow.'];
+  const [slideshow, setSlideshow] = useState();
   const [notify, setNotify] = useState({ open: false });
   const [orders, setOrders] = useState();
 
-  const loadMenu = () => {
-    menuService.getMenuById(row?.original?.id).then((result) => {
-      setMenu(result);
+  const loadSlideshow = () => {
+    slideshowService.getSlideshowById(row?.original?.id).then((result) => {
+      setSlideshow(result);
     });
   };
   const onClose = () => {
     setOpen(false);
-    setMenu({});
+    setSlideshow({});
   };
   useEffect(() => {
     if (isNew == false && row?.original?.id > 0) {
-      loadMenu();
+      loadSlideshow();
     } else {
-      setMenu({});
+      setSlideshow({});
     }
   }, [row, isNew, open]);
 
-  const handleSubmit = (menu, setErrors) => {
+  const handleSubmit = (slideshow, setErrors) => {
     if (isNew == true) {
-      menuService
-        .addMenu(menu)
+      slideshowService
+        .addSlideshow(slideshow)
         .then(() => {
-          setMenu({});
+          setSlideshow({});
           onClose();
           setNotify({ open: true });
           refetch();
@@ -68,10 +68,10 @@ const AddOrEditMenu = ({ row, isNew, open, setOpen, refetch }) => {
           setServerErrors(error, setErrors);
         });
     } else {
-      menuService
-        .updateMenu(menu)
+      slideshowService
+        .updateSlideshow(slideshow)
         .then(() => {
-          setMenu({});
+          setSlideshow({});
           onClose();
           setNotify({ open: true });
           refetch();
@@ -103,20 +103,17 @@ const AddOrEditMenu = ({ row, isNew, open, setOpen, refetch }) => {
       <Dialog open={open} fullWidth={true}>
         <Formik
           initialValues={{
-            id: menu?.id,
-            title: menu?.title,
-            url: menu?.url,
-            previewImageId: menu?.previewImageId,
-            parentId: row?.original?.id > 0 && isNew == true ? row?.original?.id : menu?.parentId
+            id: slideshow?.id,
+            header: slideshow?.header,
+            description: slideshow?.description,
+            previewImageId: slideshow?.previewImageId,
+            previewImageUrl: slideshow?.previewImageUrl
           }}
           enableReinitialize={true}
           validationSchema={Yup.object().shape({
-            title: Yup.string()
+            header: Yup.string()
               .max(255)
-              .required(t(validation + 'requiredMenuTitle')),
-            url: Yup.string()
-              .max(255)
-              .required(t(validation + 'requiredMenuUrl'))
+              .required(t(validation + 'requiredSlideshowheader'))
           })}
           onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
             try {
@@ -132,65 +129,78 @@ const AddOrEditMenu = ({ row, isNew, open, setOpen, refetch }) => {
             <form noValidate onSubmit={handleSubmit}>
               <DialogTitle>
                 {isNew == true
-                  ? row
-                    ? t('dialog.menu.addSub', { parentTitle: '"' + row?.original?.title + '"' })
-                    : t('dialog.menu.addMain', { item: 'Menu' })
-                  : t('dialog.edit.title', { item: 'Menu' })}
+                  ? t('dialog.slideshow.add', { parentTitle: '"' + row?.original?.title + '"' })
+                  : t('dialog.edit.title', { item: 'Slideshow' })}
                 <CloseDialog />
               </DialogTitle>
               <DialogContent>
                 <Grid container spacing={3} direction="column">
                   <Grid item>
                     <Stack spacing={1}>
-                      <InputLabel htmlFor="title">{t(fieldsName + 'title')}</InputLabel>
+                      <InputLabel htmlFor="header">{t(fieldsName + 'header')}</InputLabel>
                       <OutlinedInput
-                        id="title"
+                        id="header"
                         type="text"
-                        value={values.title || ''}
-                        name="title"
+                        value={values.header || ''}
+                        name="header"
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        placeholder={t(fieldsName + 'title')}
+                        placeholder={t(fieldsName + 'header')}
                         fullWidth
-                        error={Boolean(touched.title && errors.title)}
+                        error={Boolean(touched.header && errors.header)}
                       />
-                      {touched.title && errors.title && (
+                      {touched.header && errors.header && (
                         <FormHelperText error id="helper-text-title">
-                          {errors.title}
+                          {errors.header}
                         </FormHelperText>
                       )}
                     </Stack>
                   </Grid>
                   <Grid item>
                     <Stack spacing={1}>
-                      <InputLabel htmlFor="url">{t(fieldsName + 'url')}</InputLabel>
+                      <InputLabel htmlFor="description">{t(fieldsName + 'description')}</InputLabel>
                       <OutlinedInput
-                        id="url"
+                        id="description"
                         type="text"
-                        value={values.url || ''}
-                        name="url"
+                        value={values.description || ''}
+                        name="description"
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        placeholder={t(fieldsName + 'url')}
+                        placeholder={t(fieldsName + 'description')}
                         fullWidth
-                        error={Boolean(touched.url && errors.url)}
+                        multiline={true}
+                        error={Boolean(touched.description && errors.description)}
                       />
-                      {touched.url && errors.url && (
-                        <FormHelperText error id="helper-text-url">
-                          {errors.url}
+                      {touched.description && errors.description && (
+                        <FormHelperText error id="helper-text-title">
+                          {errors.description}
                         </FormHelperText>
                       )}
                     </Stack>
                   </Grid>
                   <Grid item>
                     <Stack spacing={1}>
-                      <InputLabel htmlFor="url">{t(fieldsName + 'url')}</InputLabel>
+                      <InputLabel htmlFor="previewImageId">{t(fieldsName + 'previewImage')}</InputLabel>
                       <ImageUpload
+                        key={'previewImageId' + values?.previewImageId || 'new'}
                         id="previewImageId"
                         setFieldValue={setFieldValue}
                         value={values?.previewImageId || ''}
                         filePosterMaxHeight={400}
                       />
+                      {(values?.previewImageId == null || values?.previewImageId == '') && (
+                        <OutlinedInput
+                          id="previewImageUrl"
+                          type="text"
+                          value={values.previewImageUrl || ''}
+                          name="previewImageUrl"
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          placeholder={t(fieldsName + 'previewImageUrl')}
+                          fullWidth
+                          error={Boolean(touched.previewImageUrl && errors.previewImageUrl)}
+                        />
+                      )}
                     </Stack>
                   </Grid>
                 </Grid>
@@ -222,4 +232,4 @@ const AddOrEditMenu = ({ row, isNew, open, setOpen, refetch }) => {
   );
 };
 
-export default AddOrEditMenu;
+export default AddOrEditSlideshow;
