@@ -13,6 +13,7 @@ import LinearProgress from './LinearProgress';
 import Link from './Link';
 import ListItemIcon from './ListItemIcon';
 import OutlinedInput from './OutlinedInput';
+import TextareaAutosize from './TextareaAutosize';
 import Tab from './Tab';
 import TableCell from './TableCell';
 import Tabs from './Tabs';
@@ -35,6 +36,7 @@ export default function ComponentsOverrides(theme) {
     Link(),
     ListItemIcon(),
     OutlinedInput(theme),
+    TextareaAutosize(theme),
     Tab(theme),
     TableCell(theme),
     Tabs(),

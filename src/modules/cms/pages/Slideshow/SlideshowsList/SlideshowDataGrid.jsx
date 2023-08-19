@@ -4,7 +4,7 @@ import MainCard from 'components/MainCard';
 import TableCard from 'components/TableCard';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import MaterialTable from 'components/MaterialTable/MaterialTable';
+import MaterialTable from 'modules/shared/MaterialTable/MaterialTable';
 import SlideshowService from 'modules/cms/services/SlideshowsService';
 import {
   Edit,
@@ -39,7 +39,7 @@ function SlideshowDataGrid() {
 
   const ImagePreviewRow = ({ renderedCellValue, row }) => {
     let src = renderedCellValue?.fileName
-      ? mediaExtensions.some((extension) => extension == renderedCellValue?.extension)
+      ? mediaExtensions.some((extension) => extension == _.toLower(renderedCellValue?.extension))
         ? CONFIG.UPLOAD_BASEPATH + renderedCellValue.directory + renderedCellValue?.thumbnail
         : row.original.previewImageUrl
         ? row.original.previewImageUrl

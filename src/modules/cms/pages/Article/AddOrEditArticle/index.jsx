@@ -19,10 +19,10 @@ import MainCard from 'components/MainCard';
 import setServerErrors from 'utils/setServerErrors';
 import SelectTopic from '../../Topic/SelectTopic';
 
-import ImageUpload from 'components/FileUpload/ImageUpload';
-import Editor from 'components/Editor/Editor';
+import ImageUpload from 'modules/shared/FileUpload/ImageUpload';
+import Editor from 'modules/shared/Editor/Editor';
 import SelectTag from '../../Tags/SelectTag';
-import DateTimeInput from 'components/DateTime/DateTimeInput';
+import DateTimeInput from 'modules/shared/DateTime/DateTimeInput';
 import moment from 'moment';
 
 export default function AddOrEditArticle() {

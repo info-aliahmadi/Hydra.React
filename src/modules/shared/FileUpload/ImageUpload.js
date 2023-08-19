@@ -23,15 +23,15 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { setTokenBearer } from 'utils/axiosHeaders';
 import CONFIG from 'config';
-import FileUploadService from 'modules/cms/services/FileUploadService';
+import FileStorageService from 'modules/fileStorage/services/FileStorageService';
 
-const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize, disabled, filePosterMaxHeight }) => {
+const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize, disabled, filePosterMaxHeight, allowMultiple }) => {
   const [files, setFiles] = useState([]);
   const [t, i18n] = useTranslation();
 
   const uploadUrl = CONFIG.API_BASEPATH + '/FileStorage/UploadFile';
 
-  var fileUploadService = new FileUploadService();
+  var fileUploadService = new FileStorageService();
 
   function downloadFunction(item) {
     // create a temporary hyperlink to force the browser to download the file
@@ -89,7 +89,7 @@ const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize,
   };
   const onupdatefiles = async (file) => {
     debugger;
-    setFieldValue(id, file[0]?.serverId || undefined);
+    if (setFieldValue) setFieldValue(id, file[0]?.serverId || undefined);
     setFiles(file);
   };
   useEffect(() => {
@@ -99,7 +99,30 @@ const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize,
       setFiles([]);
     }
   }, [value]);
-
+  const getError = async (errorCode) => {
+    switch (errorCode) {
+      case 500:
+        return 'Operation Failed';
+      case 501:
+        return 'Invalid Validation';
+      case 404:
+        return 'Not Found';
+      case 401:
+        return 'Is Not Authorized';
+      case 502:
+        return 'File Type Is Not Allowed';
+      case 503:
+        return 'It"s Duplicate';
+      case 504:
+        return 'Exception Throwed';
+      case 505:
+        return 'File Is Too Large';
+      case 506:
+        return 'File Is Too Small';
+      default:
+        return 'Error During Upload';
+    }
+  };
   return (
     <FilePond
       disabled={disabled}
@@ -122,7 +145,7 @@ const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize,
       labelMinFileSize={t('validation.fileUpload.labelMinFileSize')}
       allowReplace={true}
       instantUpload={true}
-      allowMultiple={false}
+      allowMultiple={(allowMultiple && true) ?? false}
       credits={false}
       name="file" /* sets the file input name, it's filepond by default */
       labelIdle={t('validation.fileUpload.imagePreviewDescription')}
@@ -135,8 +158,11 @@ const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize,
       onprocessfile={(error, file) => {
         let response = JSON.parse(file.serverId);
         let fileInfo = response.data;
-
-        setFieldValue(id, fileInfo.id);
+        if (setFieldValue) setFieldValue(id, fileInfo.id);
+      }}
+      labelFileProcessingError={(error) => {
+        debugger;
+        return getError(error.code);
       }}
     />
   );

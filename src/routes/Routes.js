@@ -4,18 +4,21 @@ import { Route } from 'react-router-dom';
 import MainLayout from 'layout/MainLayout';
 import MinimalLayout from 'layout/MinimalLayout';
 import Authorize from 'modules/auth/services/Authorization/Authorize';
-import AuthRoutes from 'modules/auth/routes/AuthRoutes';
-import CmsRoutes from 'modules/cms/routes/CmsRoutes';
 import Authenticate from 'modules/auth/services/Authentication/Authenticate';
 
-let collectedRoutes = [...AuthRoutes, ...CmsRoutes];
+import AuthRoutes from 'modules/auth/routes/AuthRoutes';
+import CmsRoutes from 'modules/cms/routes/CmsRoutes';
+import FileStorageRoutes from 'modules/fileStorage/routes/FileStorageRoutes';
+import Loader from 'components/Loader';
+
+let collectedRoutes = [...AuthRoutes, ...CmsRoutes, ...FileStorageRoutes];
 export const PrivateRoutes = (
   <Route
     key="MainLayoutKey"
     path="/"
     element={
       <Authenticate>
-        <Suspense fallback="...is loading">
+        <Suspense fallback={<Loader />}>
           <MainLayout />
         </Suspense>
       </Authenticate>

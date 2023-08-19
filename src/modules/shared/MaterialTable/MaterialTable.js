@@ -9,6 +9,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 import CONFIG from 'config';
 import { DatePicker } from '@mui/x-date-pickers';
 import moment from 'moment-jalaali';
+import { DateTimeViewer, DateViewer } from 'utils/DateViewer';
 
 // ===============================|| COLOR BOX ||=============================== //
 const dateFilter = ({ header, rangeFilterIndex }) => {
@@ -158,28 +159,13 @@ function MaterialTable({
       if (!element.Cell) {
         debugger;
         element.Cell = ({ renderedCellValue }) =>
-          renderedCellValue != null && (
-            <span>
-              {new Intl.DateTimeFormat(currentLanguage, { dateStyle: [CONFIG.DATE_STYLE], timeZone: timeZone }).format(
-                moment(renderedCellValue + 'Z')
-              )}
-            </span>
-          );
+          renderedCellValue != null && <span>{DateViewer(currentLanguage, renderedCellValue)}</span>;
       }
     });
     dateTimeFields.forEach((element) => {
       if (!element.Cell) {
         element.Cell = ({ renderedCellValue }) =>
-          renderedCellValue != null && (
-            <span>
-              {new Intl.DateTimeFormat(currentLanguage, {
-                dateStyle: [CONFIG.DATE_STYLE],
-                timeStyle: [CONFIG.TIME_STYLE],
-                hour12: false,
-                timeZone: timeZone
-              }).format(moment(renderedCellValue + 'Z'))}
-            </span>
-          );
+          renderedCellValue != null && <span>{DateTimeViewer(currentLanguage, renderedCellValue)}</span>;
       }
     });
   }

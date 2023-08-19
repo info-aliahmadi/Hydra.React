@@ -5,6 +5,8 @@ const Color = Loadable(lazy(() => import('pages/components-overview/Color')));
 const Shadow = Loadable(lazy(() => import('pages/components-overview/Shadow')));
 const AntIcons = Loadable(lazy(() => import('pages/components-overview/AntIcons')));
 
+const SiteSetting = Loadable(lazy(() => import('modules/cms/pages/Settings/SiteSetting/SiteSetting')));
+
 const TopicsList = Loadable(lazy(() => import('modules/cms/pages/Topic/TopicsList')));
 
 const TagsList = Loadable(lazy(() => import('modules/cms/pages/Tags/TagsList')));
@@ -26,6 +28,12 @@ const SlideshowsList = Loadable(lazy(() => import('modules/cms/pages/Slideshow/S
 // ==============================|| MAIN ROUTING ||============================== //
 
 const CmsRoutes = [
+  {
+    key: 'siteSetting',
+    path: 'siteSetting',
+    permission: 'AUTH_GET.PERMISSION.LIST',
+    element: <SiteSetting />
+  },
   {
     key: 'tagsList',
     path: 'tagsList',

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { setDefaultHeader } from 'utils/axiosHeaders';
 import CONFIG from 'config.js';
 
-export default class FileUploadService {
+export default class FileStorageService {
   constructor() {
     setDefaultHeader();
   }
@@ -10,6 +10,31 @@ export default class FileUploadService {
     return new Promise((resolve, reject) => {
       axios
         .get(CONFIG.API_BASEPATH + '/FileStorage/GetFilesList')
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+
+  getDirectoriesList = async () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(CONFIG.API_BASEPATH + '/FileStorage/GetDirectories')
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+  getFilesListByDirectory = async (directory) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(CONFIG.API_BASEPATH + '/FileStorage/GetFilesByDirectory', { params: { directoryName: directory } })
         .then((response) => {
           resolve(response.data);
         })
@@ -93,9 +118,8 @@ export default class FileUploadService {
   deleteFile = async (fileId) => {
     return new Promise((resolve, reject) => {
       axios
-        .get(CONFIG.API_BASEPATH + '/FileUpload/DeleteFile', { params: { fileId: fileId } })
+        .get(CONFIG.API_BASEPATH + '/FileStorage/DeleteFile', { params: { fileId: fileId } })
         .then((response) => {
-          debugger;
           resolve(response.data);
         })
         .catch((error) => {

@@ -4,7 +4,7 @@ import { useState } from 'react';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-
+import { AccountBox, Password, Logout } from '@mui/icons-material';
 // assets
 import { EditOutlined, ProfileOutlined, LogoutOutlined, UserOutlined, WalletOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +24,7 @@ const ProfileTab = ({ handleLogout }) => {
     <List component="nav" sx={{ p: 0, '& .MuiListItemIcon-root': { minWidth: 32, color: theme.palette.grey[500] } }}>
       <ListItemButton selected={selectedIndex === 0} onClick={(event) => handleListItemClick(event, 0)} href="/profile">
         <ListItemIcon>
-          <EditOutlined />
+          <AccountBox fontSize="small" />
         </ListItemIcon>
         <ListItemText primary={t('pages.edit-profile')} />
       </ListItemButton>
@@ -43,13 +43,13 @@ const ProfileTab = ({ handleLogout }) => {
       </ListItemButton> */}
       <ListItemButton selected={selectedIndex === 4} onClick={(event) => handleListItemClick(event, 1)} href="/changepassword">
         <ListItemIcon>
-          <WalletOutlined />
+          <Password fontSize="small" />
         </ListItemIcon>
         <ListItemText primary={t('pages.change-password')} />
       </ListItemButton>
       <ListItemButton selected={selectedIndex === 2} onClick={handleLogout}>
         <ListItemIcon>
-          <LogoutOutlined />
+          <Logout fontSize="small" />
         </ListItemIcon>
         <ListItemText primary="Logout" />
       </ListItemButton>

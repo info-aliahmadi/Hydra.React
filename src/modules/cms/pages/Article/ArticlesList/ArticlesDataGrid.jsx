@@ -6,7 +6,7 @@ import MainCard from 'components/MainCard';
 import TableCard from 'components/TableCard';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import MaterialTable from 'components/MaterialTable/MaterialTable';
+import MaterialTable from 'modules/shared/MaterialTable/MaterialTable';
 import ArticlesService from 'modules/cms/services/ArticlesService';
 import { Delete, Edit, RestoreFromTrash, PostAddOutlined, PushPin, EventNote } from '@mui/icons-material';
 import CONFIG from 'config';
@@ -14,7 +14,7 @@ import { Stack } from '@mui/system';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 import SelectTopic from '../../Topic/SelectTopic';
-import ImageUpload from 'components/FileUpload/ImageUpload';
+import ImageUpload from 'modules/shared/FileUpload/ImageUpload';
 import SelectTag from '../../Tags/SelectTag';
 import DeleteArticle from '../DeleteArticle';
 import Notify from 'components/@extended/Notify';
@@ -49,7 +49,7 @@ function ArticlesDataGrid() {
         enableClickToCopy: true,
         type: 'string',
         enableResizing: true,
-        Cell: ({ renderedCellValue, row }) => (
+        Cell: ({ renderedCellValue }) => (
           <Box
             sx={{
               display: 'flex',
@@ -67,7 +67,7 @@ function ArticlesDataGrid() {
         enableClickToCopy: true,
         type: 'string',
         enableResizing: true,
-        Cell: ({ renderedCellValue, row }) => (
+        Cell: ({ renderedCellValue }) => (
           <Box
             sx={{
               display: 'flex',
@@ -95,7 +95,7 @@ function ArticlesDataGrid() {
         type: 'boolean',
         enableResizing: true,
         maxSize: 100,
-        Cell: ({ renderedCellValue, row }) => (
+        Cell: ({ renderedCellValue }) => (
           <Chip
             variant="combined"
             color={renderedCellValue == true ? 'warning' : 'primary'}
@@ -323,7 +323,7 @@ function ArticlesDataGrid() {
             target="_blank"
             icon={<RestoreFromTrash />}
             title={t('pages.articlesTrash')}
-            label={'Trash'}
+            label={t(buttonName + 'trash')}
             variant="outlined"
             size="medium"
             color="error"

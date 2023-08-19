@@ -3,9 +3,9 @@ import { useState } from 'react';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Settings, Language, ManageAccounts, History } from '@mui/icons-material';
 
 // assets
-import { QuestionCircleOutlined, UserOutlined, UnorderedListOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 
 // ==============================|| HEADER PROFILE - SETTING TAB ||============================== //
@@ -23,15 +23,21 @@ const SettingTab = () => {
     <List component="nav" sx={{ p: 0, '& .MuiListItemIcon-root': { minWidth: 32, color: theme.palette.grey[500] } }}>
       <ListItemButton selected={selectedIndex === 0} onClick={(event) => handleListItemClick(event, 0)} href="/changelanguage">
         <ListItemIcon>
-          <QuestionCircleOutlined />
+          <Language fontSize="small" />
         </ListItemIcon>
         <ListItemText primary={t('pages.language')} />
       </ListItemButton>
       <ListItemButton selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1)} href="/accountsetting">
         <ListItemIcon>
-          <UserOutlined />
+          <ManageAccounts fontSize="small" />
         </ListItemIcon>
-        <ListItemText primary={t('pages.account-settings')} />
+        <ListItemText primary={t('pages.accountSettings')} />
+      </ListItemButton>
+      <ListItemButton selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1)} href="/sitesetting">
+        <ListItemIcon>
+          <Settings fontSize="small" />
+        </ListItemIcon>
+        <ListItemText primary={t('pages.siteSettings')} />
       </ListItemButton>
       {/* <ListItemButton selected={selectedIndex === 2} onClick={(event) => handleListItemClick(event, 2)}>
         <ListItemIcon>
@@ -47,7 +53,7 @@ const SettingTab = () => {
       </ListItemButton> */}
       <ListItemButton selected={selectedIndex === 4} onClick={(event) => handleListItemClick(event, 4)}>
         <ListItemIcon>
-          <UnorderedListOutlined />
+          <History />
         </ListItemIcon>
         <ListItemText primary={t('pages.history')} />
       </ListItemButton>

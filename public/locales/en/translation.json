@@ -26,13 +26,15 @@
     "page": "Pages",
     "topic": "Topics",
     "menus": "Menus",
-    "slideshow": "Slideshow"
+    "slideshow": "Slideshow",
+    "fileStorage": "Storage"
   },
   "pages": {
     "edit-profile": "Edit Profile",
     "change-password": "Change Password",
     "language": "Language",
-    "account-settings": "Account Settings",
+    "accountSettings": "Account Settings",
+    "siteSettings": "Site Settings",
     "users": "Users",
     "roles": "Roles",
     "permissions": "Permissions",
@@ -43,6 +45,8 @@
     "pages": "Pages",
     "menu": "Menu",
     "slideshow": "Slideshow",
+    "fileStorage": "Storage",
+    "filesList": "Files List",
     "cards": {
       "users-list": "Users List",
       "user-add": "Add New User",
@@ -61,7 +65,10 @@
       "article-edit": "Edit Article",
       "pages-list": "Pages List",
       "page-add": "Add New Page",
-      "page-edit": "Edit Page"
+      "page-edit": "Edit Page",
+      "filesDirectory": "Directories",
+      "files": "Files",
+      "fileStorage": "File Storage"
     }
   },
   "fields": {
@@ -70,7 +77,7 @@
     "lastname": "LastName",
     "email": "Email",
     "userName": "Username",
-    "phone-number": "Phone Number",
+    "phoneNumber": "Phone Number",
     "old-password": "Old Password",
     "confirm-password": "Confirm Password",
     "new-password": "New Password",
@@ -81,6 +88,14 @@
     "permission": {
       "name": "Name",
       "normalizedname": "Normalized Name"
+    },
+    "siteSetting": {
+      "siteTitle": "Site Title",
+      "siteDescription": "Site Description",
+      "siteKeywords": "Site Keywords(SEO)",
+      "headerHtml": "Header Html",
+      "footerHtml": "Footer Html",
+      "numberOfPostsPerList": "Number Of Posts Per List"
     },
     "topic": {
       "title": "Title",
@@ -94,8 +109,8 @@
       "userName": "Username",
       "email": "Email",
       "emailConfirmed": "Email Confirmed",
-      "phoneNumber": "PhoneNumber",
-      "phoneNumberConfirmed": "PhoneNumber Confirmed",
+      "phoneNumber": "Phone Number",
+      "phoneNumberConfirmed": "Phone Number Confirmed",
       "registerDate": "Register Date",
       "lockoutEnabled": "Lockout Enabled",
       "lockoutEnd": "Lockout End",
@@ -150,6 +165,10 @@
       "order": "Order",
       "createDate": "Created Date",
       "user": "Created By"
+    },
+    "fileStorage": {
+      "files": "Files",
+      "file": "File"
     }
   },
   "buttons": {
@@ -162,6 +181,9 @@
     "detail": "Detail",
     "restore": "Restore",
     "pin": "Pin",
+    "copyLink": "Click to Copy Link Url",
+    "copyLinkDone": "Copied!",
+    "download": "Download",
     "change-password": "Change Password",
     "user": {
       "save": "Save",
@@ -214,13 +236,22 @@
       "add": "New Article",
       "publish": "Publish",
       "edit": "Edit Article",
-      "delete": "Delete Article"
+      "delete": "Delete Article",
+      "trash": "Trash"
     },
     "page": {
       "save": "Save",
       "add": "New Page",
       "edit": "Edit Page",
       "delete": "Delete Page"
+    },
+    "fileStorage": {
+      "upload": "Upload",
+      "uploadFiles": "Upload Files",
+      "uploadedInfo": "Uploaded By {{user}} On {{date}}",
+      "edit": "Edit File",
+      "download": "Download",
+      "delete": "Delete File"
     }
   },
   "validation": {
@@ -237,6 +268,9 @@
     "permission": {
       "required-permission-name": "Permission name Is Required",
       "maxlength-permission-normalizedname": "Max Length is 255 Characters"
+    },
+    "siteSetting": {
+      "requiredSiteTitle": "Site Title Is Required"
     },
     "topic": {
       "requiredTopicTitle": "Topic Title Is Required"

@@ -2,14 +2,14 @@
 import { useTranslation } from 'react-i18next';
 import { setTokenBearer } from 'utils/axiosHeaders';
 import CONFIG from 'config';
-import FileUploadService from 'modules/cms/services/FileUploadService';
+import FileStorageService from 'modules/fileStorage/services/FileStorageService';
 import SunEditor from 'suneditor-react';
 import 'assets/css/suneditor.min.css';
 
 const Editor = ({ id, name, setFieldValue, error, defaultValue, height, minHeight, placeholder }) => {
   const [t, i18n] = useTranslation();
   let isRtl = i18n.dir() == 'rtl' ? true : false;
-  var fileUploadService = new FileUploadService();
+  var fileUploadService = new FileStorageService();
 
   function setChange(contents, core) {
     setFieldValue(id, contents);

@@ -18,6 +18,7 @@ import { AuthorizationProvider } from 'modules/auth/services/Authorization/Autho
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import { store } from 'store';
+import Loader from 'components/Loader';
 
 // ==============================|| MAIN - REACT DOM RENDER  ||============================== //
 
@@ -26,11 +27,11 @@ const root = createRoot(container); // createRoot(container!) if you use TypeScr
 root.render(
   // <StrictMode>
   <ReduxProvider store={store}>
-    <Suspense fallback="...is loading">
+    <Suspense fallback={<Loader />}>
       <AuthenticationProvider>
-        <Suspense fallback="...is loading">
+        <Suspense fallback={<Loader />}>
           <AuthorizationProvider>
-            <Suspense fallback="...is loading">
+            <Suspense fallback={<Loader />}>
               <BrowserRouter basename="/">
                 <App />
               </BrowserRouter>

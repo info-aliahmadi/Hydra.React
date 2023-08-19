@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthorizationContext } from './AuthorizationProvider';
 import AccessDenied from 'pages/extra-pages/AccessDenied';
+import Loader from 'components/Loader';
 
 function Authorize(props) {
   var [isAuthorizedResult, setIsAuthorizedResult] = useState();
@@ -24,7 +25,7 @@ function Authorize(props) {
   } else {
     return (
       <>
-        <div>Loading...</div>
+        <Loader />
       </>
     );
   }

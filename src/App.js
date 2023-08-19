@@ -6,11 +6,12 @@ import ThemeCustomization from 'themes';
 import ScrollTop from 'components/ScrollTop';
 import { Routes } from 'react-router-dom';
 import { PrivateRoutes, PublicRoutes } from 'routes/Routes';
+import Loader from 'components/Loader';
 // ==============================|| APP - THEME, ROUTER, LOCAL  ||============================== //
 
 const App = () => {
   return (
-    <Suspense fallback="...is loading">
+    <Suspense fallback={<Loader />}>
       <ThemeCustomization>
         <ScrollTop>
           <Routes>

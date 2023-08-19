@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import AuthenticationService from './AuthenticationService';
+import Loader from 'components/Loader';
 
 function Authenticate(props) {
   var [isAuthenticatedResult, setIsAuthenticatedResult] = useState();
@@ -21,7 +22,7 @@ function Authenticate(props) {
   } else {
     return (
       <>
-        <div>Loading...</div>
+        <Loader />
       </>
     );
   }

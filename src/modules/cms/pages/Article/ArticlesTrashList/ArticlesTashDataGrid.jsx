@@ -6,14 +6,14 @@ import MainCard from 'components/MainCard';
 import TableCard from 'components/TableCard';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import MaterialTable from 'components/MaterialTable/MaterialTable';
+import MaterialTable from 'modules/shared/MaterialTable/MaterialTable';
 import ArticlesService from 'modules/cms/services/ArticlesService';
 import { DeleteSweep, RestorePage, EventNote } from '@mui/icons-material';
 import CONFIG from 'config';
 import { Stack } from '@mui/system';
 import moment from 'moment';
 import SelectTopic from '../../Topic/SelectTopic';
-import ImageUpload from 'components/FileUpload/ImageUpload';
+import ImageUpload from 'modules/shared/FileUpload/ImageUpload';
 import SelectTag from '../../Tags/SelectTag';
 import RemoveArticle from '../RemoveArticle';
 // ===============================|| COLOR BOX ||=============================== //
