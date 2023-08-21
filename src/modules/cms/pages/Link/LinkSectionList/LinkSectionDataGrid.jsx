@@ -7,37 +7,39 @@ import TableCard from 'components/TableCard';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MaterialTable from 'modules/shared/MaterialTable/MaterialTable';
-import RoleService from 'modules/auth/services/RoleService';
+import LinkSectionService from 'modules/cms/services/LinkSectionService';
 import { Delete } from '@mui/icons-material';
 import { Edit } from '@mui/icons-material';
-import AddOrEditRole from '../AddOrEditRole';
-import DeleteRole from '../DeleteRole';
-import PermissionRoleDataGrid from '../../PermissionRole/PermissionRoleList/PermissionRoleDataGrid';
+import AddOrEditLinkSection from '../AddOrEditLinkSection';
+import DeleteLinkSection from '../DeleteLinkSection';
+import PermissionLinkSectionDataGrid from '../../PermissionLinkSection/PermissionLinkSectionList/PermissionLinkSectionDataGrid';
 
 import AddIcon from '@mui/icons-material/Add';
+import LinkDataGrid from './LinkDataGrid';
 // ===============================|| COLOR BOX ||=============================== //
 
-function RoleDataGrid() {
+function LinkSectionDataGrid() {
   const [t] = useTranslation();
-  const service = new RoleService();
+  const service = new LinkSectionService();
   const [isNew, setIsNew] = useState(true);
   const [rowId, setRowId] = useState(0);
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [row, setRow] = useState({});
   const [refetch, setRefetch] = useState();
+
+
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'name',
-        header: t('fields.role.name'),
+        accessorKey: 'key',
+        header: t('fields.linkSection.key'),
         enableClickToCopy: true,
         type: 'string'
-        // filterVariant: 'text' | 'select' | 'multi-select' | 'range' | 'range-slider' | 'checkbox',
       },
       {
-        accessorKey: 'normalizedName',
-        header: t('fields.role.normalizedName'),
+        accessorKey: 'title',
+        header: t('fields.linkSection.title'),
         type: 'string'
       }
     ],
@@ -50,9 +52,9 @@ function RoleDataGrid() {
     setOpen(true);
   };
   const handleEditRow = (row) => {
-    let roleId = row.original.id;
+    let linkSectionId = row.original.id;
     setIsNew(false);
-    setRowId(roleId);
+    setRowId(linkSectionId);
     setOpen(true);
   };
   const handleDeleteRow = (row) => {
@@ -63,13 +65,13 @@ function RoleDataGrid() {
     setRefetch(Date.now());
   };
 
-  const handleRoleList = useCallback(async (x) => {
-    return await service.getRoleList(x);
+  const handleLinkSectionList = useCallback(async (x) => {
+    return await service.getLinkSectionList(x);
   }, []);
   const AddRow = useCallback(
     () => (
       <Button color="primary" onClick={handleNewRow} variant="contained" startIcon={<AddIcon />}>
-        {t('buttons.role.add')}
+        {t('buttons.linkSection.add')}
       </Button>
     ),
     []
@@ -94,23 +96,23 @@ function RoleDataGrid() {
   );
   return (
     <>
-      <MainCard title={t('pages.cards.roles-list')}>
+      <MainCard title={t('pages.cards.linkSections-list')}>
         <TableCard>
           <MaterialTable
             refetch={refetch}
             columns={columns}
-            dataApi={handleRoleList}
+            dataApi={handleLinkSectionList}
             enableRowActions
             renderRowActions={DeleteOrEdit}
             renderTopToolbarCustomActions={AddRow}
-            renderDetailPanel={({ row }) => <PermissionRoleDataGrid row={row} />}
+            renderDetailPanel={({ row }) => <LinkDataGrid row={row} />}
           />
         </TableCard>
       </MainCard>
-      <AddOrEditRole isNew={isNew} roleId={rowId} open={open} setOpen={setOpen} refetch={handleRefetch} />
-      <DeleteRole row={row} open={openDelete} setOpen={setOpenDelete} refetch={handleRefetch} />
+      <AddOrEditLinkSection isNew={isNew} linkSectionId={rowId} open={open} setOpen={setOpen} refetch={handleRefetch} />
+      <DeleteLinkSection row={row} open={openDelete} setOpen={setOpenDelete} refetch={handleRefetch} />
     </>
   );
 }
 
-export default RoleDataGrid;
+export default LinkSectionDataGrid;

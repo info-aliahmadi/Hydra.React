@@ -14,7 +14,8 @@ import {
   Link,
   Slide,
   Tooltip,
-  Typography
+  Typography,
+  useTheme
 } from '@mui/material';
 
 // project import
@@ -38,6 +39,7 @@ import FileUpload from 'modules/shared/FileUpload/FileUpload';
 
 function FilesList() {
   const [t, i18n] = useTranslation();
+  const theme = useTheme();
   const params = useParams();
   const directory = params.directory;
 
@@ -108,6 +110,29 @@ function FilesList() {
   };
 
   const FileViewer = ({ extention }) => {
+    extention = _.lowerCase(extention);
+    let themeMode = theme.palette.mode;
+    let bgColor = themeMode == 'light' ? 'secondary.main' : 'secondary.light';
+    debugger;
+    switch (extention) {
+      case 'pdf':
+        bgColor = themeMode == 'light' ? 'error.dark' : 'error.light';
+        break;
+      case 'doc':
+      case 'docx':
+        bgColor = themeMode == 'light' ? 'primary.dark' : 'primary.light';
+        break;
+      case 'xls':
+      case 'xlsx':
+      case 'csv':
+        bgColor = themeMode == 'light' ? 'success.dark' : 'success.light';
+        break;
+      case 'zip':
+      case 'rar':
+        bgColor = themeMode == 'light' ? 'warning.main' : 'warning.light';
+        break;
+    }
+
     return (
       <Box
         sx={{
@@ -115,9 +140,8 @@ function FilesList() {
           height: 194,
           p: 2,
           textAlign: 'center',
-          backgroundColor: 'primary.dark',
+          backgroundColor: bgColor,
           '&:hover': {
-            backgroundColor: 'primary.main',
             opacity: [0.9, 0.8, 0.7]
           }
         }}
@@ -156,12 +180,7 @@ function FilesList() {
                     <CardMedia component={() => <FileViewer extention={file.extension} />} height="194" alt={file.alt} />
                   )}
                   <CardHeader sx={{ padding: '10px' }} title={_.truncate(file.fileName)} subheader={fileSizeViewer(file.size, true)} />
-                  {/* <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas
-                along with the mussels, if you like.
-              </Typography>
-            </CardContent> */}
+
                   <CardActions disableSpacing>
                     <Grid container justifyContent="space-between">
                       <Grid item>

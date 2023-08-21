@@ -8,11 +8,11 @@ import CloseIcon from '@mui/icons-material/Close';
 // assets
 import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
-import RoleService from 'modules/auth/services/RoleService';
+import LinkSectionService from 'modules/cms/services/LinkSectionService';
 
-const DeleteRole = ({ row, open, setOpen, refetch }) => {
+const DeleteLinkSection = ({ row, open, setOpen, refetch }) => {
   const [t] = useTranslation();
-  let roleService = new RoleService();
+  let linkSectionService = new LinkSectionService();
   const [notify, setNotify] = useState({ open: false });
 
   const onClose = () => {
@@ -20,16 +20,16 @@ const DeleteRole = ({ row, open, setOpen, refetch }) => {
   };
 
   const handleSubmit = () => {
-    let roleId = row.original.id;
-    roleService
-      .deleteRole(roleId)
+    let linkSectionId = row.original.id;
+    linkSectionService
+      .deleteLinkSection(linkSectionId)
       .then(() => {
         onClose();
         setNotify({ open: true });
         refetch();
       })
       .catch((error) => {
-        setNotify({ open: true, type: 'error', description: error.message });
+        setNotify({ open: true, type: 'error', description: error });
       });
   };
   const CloseDialog = () => (
@@ -53,7 +53,7 @@ const DeleteRole = ({ row, open, setOpen, refetch }) => {
       <Dialog open={open} onClose={onClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         <DialogTitle id="alert-dialog-title">
           <Typography variant="caption" fontSize={17} fontWeight={600}>
-            {t('buttons.role.delete')}
+            {t('buttons.linkSection.delete')}
           </Typography>
           <CloseDialog />
         </DialogTitle>
@@ -76,4 +76,4 @@ const DeleteRole = ({ row, open, setOpen, refetch }) => {
   );
 };
 
-export default DeleteRole;
+export default DeleteLinkSection;

@@ -24,40 +24,40 @@ import AnimateButton from 'components/@extended/AnimateButton';
 // assets
 import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
-import SlideshowService from 'modules/cms/services/SlideshowsService';
+import LinkService from 'modules/cms/services/LinkService';
 import setServerErrors from 'utils/setServerErrors';
 import ImageUpload from 'modules/shared/FileUpload/ImageUpload';
 
-const AddOrEditSlideshow = ({ row, isNew, open, setOpen, refetch }) => {
+const AddOrEditLink = ({ row, isNew, open, setOpen, refetch }) => {
   const [t] = useTranslation();
-  let slideshowService = new SlideshowService();
-  const [fieldsName, validation, buttonName] = ['fields.slideshow.', 'validation.slideshow.', 'buttons.slideshow.'];
-  const [slideshow, setSlideshow] = useState();
+  let linkService = new LinkService();
+  const [fieldsName, validation, buttonName] = ['fields.link.', 'validation.link.', 'buttons.link.'];
+  const [link, setLink] = useState();
   const [notify, setNotify] = useState({ open: false });
 
-  const loadSlideshow = () => {
-    slideshowService.getSlideshowById(row?.original?.id).then((result) => {
-      setSlideshow(result);
+  const loadLink = () => {
+    linkService.getLinkById(row?.original?.id).then((result) => {
+      setLink(result);
     });
   };
   const onClose = () => {
     setOpen(false);
-    setSlideshow({});
+    setLink({});
   };
   useEffect(() => {
     if (isNew == false && row?.original?.id > 0) {
-      loadSlideshow();
+      loadLink();
     } else {
-      setSlideshow({});
+      setLink({});
     }
   }, [row, isNew, open]);
 
-  const handleSubmit = (slideshow, setErrors) => {
+  const handleSubmit = (link, setErrors) => {
     if (isNew == true) {
-      slideshowService
-        .addSlideshow(slideshow)
+      linkService
+        .addLink(link)
         .then(() => {
-          setSlideshow({});
+          setLink({});
           onClose();
           setNotify({ open: true });
           refetch();
@@ -67,10 +67,10 @@ const AddOrEditSlideshow = ({ row, isNew, open, setOpen, refetch }) => {
           setServerErrors(error, setErrors);
         });
     } else {
-      slideshowService
-        .updateSlideshow(slideshow)
+      linkService
+        .updateLink(link)
         .then(() => {
-          setSlideshow({});
+          setLink({});
           onClose();
           setNotify({ open: true });
           refetch();
@@ -102,17 +102,20 @@ const AddOrEditSlideshow = ({ row, isNew, open, setOpen, refetch }) => {
       <Dialog open={open} fullWidth={true}>
         <Formik
           initialValues={{
-            id: slideshow?.id,
-            header: slideshow?.header,
-            description: slideshow?.description,
-            previewImageId: slideshow?.previewImageId,
-            previewImageUrl: slideshow?.previewImageUrl
+            id: link?.id,
+            title: link?.title,
+            url: link?.url,
+            previewImageId: link?.previewImageId,
+            parentId: row?.original?.id > 0 && isNew == true ? row?.original?.id : link?.parentId
           }}
           enableReinitialize={true}
           validationSchema={Yup.object().shape({
-            header: Yup.string()
+            title: Yup.string()
               .max(255)
-              .required(t(validation + 'requiredSlideshowheader'))
+              .required(t(validation + 'requiredLinkTitle')),
+            url: Yup.string()
+              .max(255)
+              .required(t(validation + 'requiredLinkUrl'))
           })}
           onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
             try {
@@ -128,78 +131,65 @@ const AddOrEditSlideshow = ({ row, isNew, open, setOpen, refetch }) => {
             <form noValidate onSubmit={handleSubmit}>
               <DialogTitle>
                 {isNew == true
-                  ? t('dialog.slideshow.add', { parentTitle: '"' + row?.original?.title + '"' })
-                  : t('dialog.edit.title', { item: 'Slideshow' })}
+                  ? row
+                    ? t('dialog.link.addSub', { parentTitle: '"' + row?.original?.title + '"' })
+                    : t('dialog.link.addMain', { item: 'Link' })
+                  : t('dialog.edit.title', { item: 'Link' })}
                 <CloseDialog />
               </DialogTitle>
               <DialogContent>
                 <Grid container spacing={3} direction="column">
                   <Grid item>
                     <Stack spacing={1}>
-                      <InputLabel htmlFor="header">{t(fieldsName + 'header')}</InputLabel>
+                      <InputLabel htmlFor="title">{t(fieldsName + 'title')}</InputLabel>
                       <OutlinedInput
-                        id="header"
+                        id="title"
                         type="text"
-                        value={values.header || ''}
-                        name="header"
+                        value={values.title || ''}
+                        name="title"
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        placeholder={t(fieldsName + 'header')}
+                        placeholder={t(fieldsName + 'title')}
                         fullWidth
-                        error={Boolean(touched.header && errors.header)}
+                        error={Boolean(touched.title && errors.title)}
                       />
-                      {touched.header && errors.header && (
+                      {touched.title && errors.title && (
                         <FormHelperText error id="helper-text-title">
-                          {errors.header}
+                          {errors.title}
                         </FormHelperText>
                       )}
                     </Stack>
                   </Grid>
                   <Grid item>
                     <Stack spacing={1}>
-                      <InputLabel htmlFor="description">{t(fieldsName + 'description')}</InputLabel>
+                      <InputLabel htmlFor="url">{t(fieldsName + 'url')}</InputLabel>
                       <OutlinedInput
-                        id="description"
+                        id="url"
                         type="text"
-                        value={values.description || ''}
-                        name="description"
+                        value={values.url || ''}
+                        name="url"
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        placeholder={t(fieldsName + 'description')}
+                        placeholder={t(fieldsName + 'url')}
                         fullWidth
-                        multiline={true}
-                        error={Boolean(touched.description && errors.description)}
+                        error={Boolean(touched.url && errors.url)}
                       />
-                      {touched.description && errors.description && (
-                        <FormHelperText error id="helper-text-title">
-                          {errors.description}
+                      {touched.url && errors.url && (
+                        <FormHelperText error id="helper-text-url">
+                          {errors.url}
                         </FormHelperText>
                       )}
                     </Stack>
                   </Grid>
                   <Grid item>
                     <Stack spacing={1}>
-                      <InputLabel htmlFor="previewImageId">{t(fieldsName + 'previewImage')}</InputLabel>
+                      <InputLabel htmlFor="url">{t(fieldsName + 'url')}</InputLabel>
                       <ImageUpload
-                        key={'previewImageId' + values?.previewImageId || 'new'}
                         id="previewImageId"
                         setFieldValue={setFieldValue}
                         value={values?.previewImageId || ''}
                         filePosterMaxHeight={400}
                       />
-                      {(values?.previewImageId == null || values?.previewImageId == '') && (
-                        <OutlinedInput
-                          id="previewImageUrl"
-                          type="text"
-                          value={values.previewImageUrl || ''}
-                          name="previewImageUrl"
-                          onBlur={handleBlur}
-                          onChange={handleChange}
-                          placeholder={t(fieldsName + 'previewImageUrl')}
-                          fullWidth
-                          error={Boolean(touched.previewImageUrl && errors.previewImageUrl)}
-                        />
-                      )}
                     </Stack>
                   </Grid>
                 </Grid>
@@ -231,4 +221,4 @@ const AddOrEditSlideshow = ({ row, isNew, open, setOpen, refetch }) => {
   );
 };
 
-export default AddOrEditSlideshow;
+export default AddOrEditLink;

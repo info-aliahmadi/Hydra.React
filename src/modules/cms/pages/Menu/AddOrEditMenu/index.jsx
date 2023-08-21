@@ -34,7 +34,6 @@ const AddOrEditMenu = ({ row, isNew, open, setOpen, refetch }) => {
   const [fieldsName, validation, buttonName] = ['fields.menu.', 'validation.menu.', 'buttons.menu.'];
   const [menu, setMenu] = useState();
   const [notify, setNotify] = useState({ open: false });
-  const [orders, setOrders] = useState();
 
   const loadMenu = () => {
     menuService.getMenuById(row?.original?.id).then((result) => {
