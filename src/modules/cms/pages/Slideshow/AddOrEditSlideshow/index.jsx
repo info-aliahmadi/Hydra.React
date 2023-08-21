@@ -127,9 +127,7 @@ const AddOrEditSlideshow = ({ row, isNew, open, setOpen, refetch }) => {
           {({ errors, handleBlur, handleChange, setFieldValue, handleSubmit, isSubmitting, touched, values }) => (
             <form noValidate onSubmit={handleSubmit}>
               <DialogTitle>
-                {isNew == true
-                  ? t('dialog.slideshow.add', { parentTitle: '"' + row?.original?.title + '"' })
-                  : t('dialog.edit.title', { item: 'Slideshow' })}
+                {isNew == true ? t('dialog.slideshow.add') : t('dialog.edit.title', { item: values.header })}
                 <CloseDialog />
               </DialogTitle>
               <DialogContent>

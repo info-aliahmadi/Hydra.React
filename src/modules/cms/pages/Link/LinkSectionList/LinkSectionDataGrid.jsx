@@ -4,15 +4,14 @@ import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
 // project import
 import MainCard from 'components/MainCard';
 import TableCard from 'components/TableCard';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MaterialTable from 'modules/shared/MaterialTable/MaterialTable';
 import LinkSectionService from 'modules/cms/services/LinkSectionService';
-import { Delete } from '@mui/icons-material';
+import { Delete, Visibility, VisibilityOff } from '@mui/icons-material';
 import { Edit } from '@mui/icons-material';
 import AddOrEditLinkSection from '../AddOrEditLinkSection';
 import DeleteLinkSection from '../DeleteLinkSection';
-import PermissionLinkSectionDataGrid from '../../PermissionLinkSection/PermissionLinkSectionList/PermissionLinkSectionDataGrid';
 
 import AddIcon from '@mui/icons-material/Add';
 import LinkDataGrid from './LinkDataGrid';
@@ -20,14 +19,13 @@ import LinkDataGrid from './LinkDataGrid';
 
 function LinkSectionDataGrid() {
   const [t] = useTranslation();
-  const service = new LinkSectionService();
+  const linkSectionService = new LinkSectionService();
   const [isNew, setIsNew] = useState(true);
-  const [rowId, setRowId] = useState(0);
+  const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   const [row, setRow] = useState({});
   const [refetch, setRefetch] = useState();
-
 
   const columns = useMemo(
     () => [
@@ -46,15 +44,25 @@ function LinkSectionDataGrid() {
     []
   );
 
+  useEffect(() => {
+    loadLinkSectionList();
+  }, []);
+
+  const loadLinkSectionList = () => {
+    linkSectionService.getLinkSectionList().then((result) => {
+      setData(() => result.data);
+      handleRefetch();
+    });
+  };
+
   const handleNewRow = () => {
     setIsNew(true);
-    setRowId(0);
+    setRow(null);
     setOpen(true);
   };
   const handleEditRow = (row) => {
-    let linkSectionId = row.original.id;
     setIsNew(false);
-    setRowId(linkSectionId);
+    setRow(row);
     setOpen(true);
   };
   const handleDeleteRow = (row) => {
@@ -65,9 +73,17 @@ function LinkSectionDataGrid() {
     setRefetch(Date.now());
   };
 
-  const handleLinkSectionList = useCallback(async (x) => {
-    return await service.getLinkSectionList(x);
-  }, []);
+  const handleVisibleRow = (linkSectionId) => {
+    linkSectionService
+      .visibleLinkSection(linkSectionId)
+      .then(() => {
+        loadLinkSectionList();
+      })
+      .catch((error) => {
+        setNotify({ open: true, type: 'error', description: error });
+      });
+  };
+
   const AddRow = useCallback(
     () => (
       <Button color="primary" onClick={handleNewRow} variant="contained" startIcon={<AddIcon />}>
@@ -80,14 +96,24 @@ function LinkSectionDataGrid() {
   const DeleteOrEdit = useCallback(
     ({ row }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <Tooltip arrow placement="top-start" title="Delete">
+        <Tooltip arrow placement="top-start" title={t('buttons.linkSection.delete')}>
           <IconButton color="error" onClick={() => handleDeleteRow(row)}>
             <Delete />
           </IconButton>
         </Tooltip>
-        <Tooltip arrow placement="top-start" title="Edit">
+        <Tooltip arrow placement="top-start" title={t('buttons.linkSection.edit')}>
           <IconButton onClick={() => handleEditRow(row)}>
             <Edit />
+          </IconButton>
+        </Tooltip>
+
+        <Tooltip
+          arrow
+          placement="right"
+          title={row.original.isVisible ? t('buttons.linkSection.visibleOff') : t('buttons.linkSection.visible')}
+        >
+          <IconButton onClick={() => handleVisibleRow(row.original.id)} color={row.original.isVisible ? 'secondary' : 'warning'}>
+            {row.original.isVisible ? <Visibility /> : <VisibilityOff />}
           </IconButton>
         </Tooltip>
       </Box>
@@ -96,21 +122,30 @@ function LinkSectionDataGrid() {
   );
   return (
     <>
-      <MainCard title={t('pages.cards.linkSections-list')}>
+      <MainCard title={t('pages.cards.linkSection-list')}>
         <TableCard>
           <MaterialTable
+            dataSet={data}
             refetch={refetch}
             columns={columns}
-            dataApi={handleLinkSectionList}
+            enablePagination={false}
+            enableColumnOrdering={false}
+            enableColumnFilters={false}
+            enableColumnResizing={false}
+            enableBottomToolbar={false}
+            enableSorting={false}
+            enableGlobalFilterModes={false}
+            enableColumnFilterModes={false}
+            autoResetPageIndex={false}
             enableRowActions
             renderRowActions={DeleteOrEdit}
             renderTopToolbarCustomActions={AddRow}
-            renderDetailPanel={({ row }) => <LinkDataGrid row={row} />}
+            renderDetailPanel={({ row }) => <LinkDataGrid linkSection={row} />}
           />
         </TableCard>
       </MainCard>
-      <AddOrEditLinkSection isNew={isNew} linkSectionId={rowId} open={open} setOpen={setOpen} refetch={handleRefetch} />
-      <DeleteLinkSection row={row} open={openDelete} setOpen={setOpenDelete} refetch={handleRefetch} />
+      <AddOrEditLinkSection isNew={isNew} row={row} open={open} setOpen={setOpen} refetch={loadLinkSectionList} />
+      <DeleteLinkSection row={row} open={openDelete} setOpen={setOpenDelete} refetch={loadLinkSectionList} />
     </>
   );
 }

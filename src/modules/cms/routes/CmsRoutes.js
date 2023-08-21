@@ -25,6 +25,8 @@ const MenusList = Loadable(lazy(() => import('modules/cms/pages/Menu/MenusList')
 
 const SlideshowsList = Loadable(lazy(() => import('modules/cms/pages/Slideshow/SlideshowsList')));
 
+const LinkSectionList = Loadable(lazy(() => import('modules/cms/pages/Link/LinkSectionList')));
+
 // ==============================|| MAIN ROUTING ||============================== //
 
 const CmsRoutes = [
@@ -87,6 +89,12 @@ const CmsRoutes = [
     path: 'SlideshowsList',
     permission: 'AUTH_GET.PERMISSION.LIST',
     element: <SlideshowsList />
+  },
+  {
+    key: 'linksList',
+    path: 'linksList',
+    permission: 'AUTH_GET.PERMISSION.LIST',
+    element: <LinkSectionList />
   },
   {
     key: 'color',

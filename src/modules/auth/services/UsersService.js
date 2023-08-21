@@ -59,7 +59,6 @@ export default class UsersService {
       axios
         .get(CONFIG.API_BASEPATH + '/auth/deleteUser', { params: { userId: userId } })
         .then((response) => {
-          debugger;
           resolve(response.data);
         })
         .catch((error) => {

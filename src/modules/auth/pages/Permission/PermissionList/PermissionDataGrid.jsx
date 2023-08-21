@@ -81,12 +81,12 @@ function PermissionDataGrid() {
   const DeleteOrEdit = useCallback(
     ({ row }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <Tooltip arrow placement="top-start" title="Delete">
+        <Tooltip arrow placement="top-start" title={t('buttons.permission.delete')}>
           <IconButton color="error" onClick={() => handleDeleteRow(row)}>
             <Delete />
           </IconButton>
         </Tooltip>
-        <Tooltip arrow placement="top-start" title="Edit">
+        <Tooltip arrow placement="top-start" title={t('buttons.permission.edit')}>
           <IconButton onClick={() => handleEditRow(row)}>
             <Edit />
           </IconButton>

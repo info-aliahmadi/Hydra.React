@@ -88,7 +88,6 @@ const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize,
     });
   };
   const onupdatefiles = async (file) => {
-    debugger;
     if (setFieldValue) setFieldValue(id, file[0]?.serverId || undefined);
     setFiles(file);
   };
@@ -161,7 +160,6 @@ const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize,
         if (setFieldValue) setFieldValue(id, fileInfo.id);
       }}
       labelFileProcessingError={(error) => {
-        debugger;
         return getError(error.code);
       }}
     />

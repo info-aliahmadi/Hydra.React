@@ -59,7 +59,6 @@ export default class PagesService {
       axios
         .get(CONFIG.API_BASEPATH + '/cms/deletePage', { params: { pageId: pageId } })
         .then((response) => {
-          debugger;
           resolve(response.data);
         })
         .catch((error) => {

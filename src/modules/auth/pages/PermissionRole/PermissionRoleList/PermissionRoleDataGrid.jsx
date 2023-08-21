@@ -72,7 +72,7 @@ function PermissionRoleDataGrid({ row }) {
   const DeleteHandle = useCallback(
     ({ row }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <Tooltip arrow placement="top-start" title="Delete">
+        <Tooltip arrow placement="top-start" title={t('buttons.permission.delete')}>
           <IconButton color="error" onClick={() => handleDeleteRow(row)}>
             <Delete />
           </IconButton>

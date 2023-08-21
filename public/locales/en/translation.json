@@ -27,6 +27,7 @@
     "topic": "Topics",
     "menus": "Menus",
     "slideshow": "Slideshow",
+    "links": "Links",
     "fileStorage": "Storage"
   },
   "pages": {
@@ -45,6 +46,7 @@
     "pages": "Pages",
     "menu": "Menu",
     "slideshow": "Slideshow",
+    "linkSection": "Links",
     "fileStorage": "Storage",
     "filesList": "Files List",
     "cards": {
@@ -56,8 +58,6 @@
       "roles-list": "Roles List",
       "permissions-list": "Permissions List",
       "topics-list": "Topics List",
-      "menu": "Menu",
-      "slideshow": "Slideshow",
       "tags-list": "Tags List",
       "articles-list": "Articles List",
       "articlesTrash-list": "Articles Trash List",
@@ -66,6 +66,14 @@
       "pages-list": "Pages List",
       "page-add": "Add New Page",
       "page-edit": "Edit Page",
+      "menu": "Menu",
+      "slideshow": "Slideshow",
+      "linkSection-list": "Link Section List",
+      "linkSection-add": "Add New Section",
+      "linkSection-edit": "Edit Link Section",
+      "links-list": "Links List",
+      "link-add": "Add New Link",
+      "link-edit": "Edit Link Link",
       "filesDirectory": "Directories",
       "files": "Files",
       "fileStorage": "File Storage"
@@ -166,6 +174,18 @@
       "createDate": "Created Date",
       "user": "Created By"
     },
+    "linkSection": {
+      "key": "Key",
+      "title": "Title"
+    },
+    "link": {
+      "title": "Title",
+      "url": "Url",
+      "description": "Description",
+      "imagePreview": "Image Preview",
+      "imagePreviewId": "Image Preview",
+      "userName": "Created By"
+    },
     "fileStorage": {
       "files": "Files",
       "file": "File"
@@ -209,22 +229,6 @@
       "edit": "Edit Topic Name",
       "delete": "Delete Topic"
     },
-    "menu": {
-      "add": "New Menu",
-      "addMainMenu": "Add Main Menu",
-      "addSubMenu": "Add Sub Menu",
-      "edit": "Edit Menu",
-      "delete": "Delete Menu",
-      "saveOrder": "Save Order"
-    },
-    "slideshow": {
-      "add": "New Slide",
-      "edit": "Edit Slide",
-      "delete": "Delete Slide",
-      "saveOrder": "Save Order",
-      "visible": "Show The Slide",
-      "visibleOff": "Hide The Slide"
-    },
     "tag": {
       "add": "New Tag",
       "edit": "Edit Tag Name",
@@ -244,6 +248,35 @@
       "add": "New Page",
       "edit": "Edit Page",
       "delete": "Delete Page"
+    },
+    "menu": {
+      "add": "New Menu",
+      "addMainMenu": "Add Main Menu",
+      "addSubMenu": "Add Sub Menu",
+      "edit": "Edit Menu",
+      "delete": "Delete Menu",
+      "saveOrder": "Save Order"
+    },
+    "slideshow": {
+      "add": "New Slide",
+      "edit": "Edit Slide",
+      "delete": "Delete Slide",
+      "saveOrder": "Save Order",
+      "visible": "Show The Slide",
+      "visibleOff": "Hide The Slide"
+    },
+    "linkSection": {
+      "add": "New Section",
+      "edit": "Edit Section",
+      "delete": "Delete Section",
+      "visible": "Show The Section",
+      "visibleOff": "Hide The Section"
+    },
+    "link": {
+      "add": "New Link",
+      "edit": "Edit Link",
+      "delete": "Delete Link",
+      "saveOrder": "Save Order"
     },
     "fileStorage": {
       "upload": "Upload",
@@ -304,6 +337,14 @@
     },
     "slideshow": {
       "requiredMenuHeader": "Header Is Required"
+    },
+    "linkSection": {
+      "requiredKey": "Key Is Required",
+      "requiredTitle": "Title Is Required"
+    },
+    "link": {
+      "requiredTitle": "Title Is Required",
+      "requiredUrl": "Url Is Required"
     }
   },
   "tooltips": {
@@ -334,12 +375,21 @@
       "addMain": "Add Main Topic",
       "addSub": "Add Sub Topic in {{parentTitle}}"
     },
+    "tag": {
+      "addMain": "Add New Tag"
+    },
     "menu": {
       "addMain": "Add Main Menu",
       "addSub": "Add Sub Menu in {{parentTitle}}"
     },
     "slideshow": {
-      "add": "Add Slide"
+      "add": "Add New Slide"
+    },
+    "linkSection": {
+      "add": "Add New Section"
+    },
+    "link": {
+      "add": "Add New Link"
     }
   }
 }

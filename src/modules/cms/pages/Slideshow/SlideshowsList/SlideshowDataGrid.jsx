@@ -113,7 +113,7 @@ function SlideshowDataGrid() {
     []
   );
   useEffect(() => {
-    handSlideshowList();
+    loadSlideshowList();
   }, []);
 
   const handleNewRow = (row) => {
@@ -142,12 +142,11 @@ function SlideshowDataGrid() {
   const handleDeleteRow = (row) => {
     setRow(row);
     setOpenDelete(true);
-    handSlideshowList();
   };
   const handleRefetch = () => {
     setRefetch(Date.now());
   };
-  const handSlideshowList = () => {
+  const loadSlideshowList = () => {
     slideshowService.getSlideshowList().then((result) => {
       setData(() => result.data);
       handleRefetch();
@@ -158,21 +157,21 @@ function SlideshowDataGrid() {
     slideshowService
       .visibleSlideshow(slideId)
       .then(() => {
-        handSlideshowList();
+        loadSlideshowList();
       })
       .catch((error) => {
         setNotify({ open: true, type: 'error', description: error });
       });
   };
-  const AddRow = useCallback(
+  const AddOrOrderRow = useCallback(
     (showSaveBtn, data) => (
       <Stack spacing={2} direction="row">
         <Button color="primary" onClick={() => handleNewRow(null)} variant="contained" startIcon={<Slideshow />}>
-          {t('buttons.slideshow.add')}
+          {t('buttons.link.add')}
         </Button>
         {showSaveBtn && (
           <Button color="info" onClick={() => handleSaveOrder(data)} variant="contained" startIcon={<Save />}>
-            {t('buttons.slideshow.saveOrder')}
+            {t('buttons.link.saveOrder')}
           </Button>
         )}
       </Stack>
@@ -194,7 +193,7 @@ function SlideshowDataGrid() {
         </Tooltip>
         <Tooltip
           arrow
-          placement="top-start"
+          placement="right"
           title={row.original.isVisible ? t('buttons.slideshow.visibleOff') : t('buttons.slideshow.visible')}
         >
           <IconButton onClick={() => handleVisibleRow(row.original.id)} color={row.original.isVisible ? 'secondary' : 'warning'}>
@@ -226,7 +225,7 @@ function SlideshowDataGrid() {
             enableColumnFilterModes={false}
             enableRowActions
             renderRowActions={DeleteOrEdit}
-            renderTopToolbarCustomActions={() => AddRow(showSaveBtn, data)}
+            renderTopToolbarCustomActions={() => AddOrOrderRow(showSaveBtn, data)}
             enableRowOrdering={true}
             autoResetPageIndex={false}
             muiTableBodyRowDragHandleProps={({ table }) => ({
@@ -243,8 +242,8 @@ function SlideshowDataGrid() {
           />
         </TableCard>
       </MainCard>
-      <AddOrEditSlideshow isNew={isNew} row={row} open={open} setOpen={setOpen} refetch={handSlideshowList} />
-      <DeleteSlideshow row={row} open={openDelete} setOpen={setOpenDelete} refetch={handSlideshowList} />
+      <AddOrEditSlideshow isNew={isNew} row={row} open={open} setOpen={setOpen} refetch={loadSlideshowList} />
+      <DeleteSlideshow row={row} open={openDelete} setOpen={setOpenDelete} refetch={loadSlideshowList} />
     </>
   );
 }

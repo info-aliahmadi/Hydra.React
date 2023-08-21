@@ -28,7 +28,7 @@ import LinkService from 'modules/cms/services/LinkService';
 import setServerErrors from 'utils/setServerErrors';
 import ImageUpload from 'modules/shared/FileUpload/ImageUpload';
 
-const AddOrEditLink = ({ row, isNew, open, setOpen, refetch }) => {
+const AddOrEditLink = ({ row, linkSection, data, setData, isNew, open, setOpen, refetch }) => {
   const [t] = useTranslation();
   let linkService = new LinkService();
   const [fieldsName, validation, buttonName] = ['fields.link.', 'validation.link.', 'buttons.link.'];
@@ -42,7 +42,7 @@ const AddOrEditLink = ({ row, isNew, open, setOpen, refetch }) => {
   };
   const onClose = () => {
     setOpen(false);
-    setLink({});
+    setLink(undefined);
   };
   useEffect(() => {
     if (isNew == false && row?.original?.id > 0) {
@@ -52,12 +52,16 @@ const AddOrEditLink = ({ row, isNew, open, setOpen, refetch }) => {
     }
   }, [row, isNew, open]);
 
-  const handleSubmit = (link, setErrors) => {
+  const handleSubmit = (link, setErrors, setSubmitting) => {
+    setSubmitting(true);
     if (isNew == true) {
       linkService
         .addLink(link)
-        .then(() => {
+        .then((result) => {
           setLink({});
+          data.push(result.data);
+          setData([...data]);
+          linkSection.original.links = [...data];
           onClose();
           setNotify({ open: true });
           refetch();
@@ -65,12 +69,23 @@ const AddOrEditLink = ({ row, isNew, open, setOpen, refetch }) => {
         .catch((error) => {
           setNotify({ open: true, type: 'error', description: error });
           setServerErrors(error, setErrors);
+        })
+        .finally((x) => {
+          setSubmitting(false);
         });
     } else {
       linkService
         .updateLink(link)
-        .then(() => {
+        .then((result) => {
           setLink({});
+          let index = data.findIndex((x) => x.id == link.id);
+          data[index].title = link.title;
+          data[index].url = link.url;
+          data[index].description = link.description;
+          data[index].imagePreviewId = link.imagePreviewId;
+          data[index].imagePreview = result.imagePreview;
+          setData([...data]);
+          linkSection.original.links = [...data];
           onClose();
           setNotify({ open: true });
           refetch();
@@ -78,6 +93,9 @@ const AddOrEditLink = ({ row, isNew, open, setOpen, refetch }) => {
         .catch((error) => {
           setNotify({ open: true, type: 'error', description: error });
           setServerErrors(error, setErrors);
+        })
+        .finally((x) => {
+          setSubmitting(false);
         });
     }
   };
@@ -105,21 +123,22 @@ const AddOrEditLink = ({ row, isNew, open, setOpen, refetch }) => {
             id: link?.id,
             title: link?.title,
             url: link?.url,
-            previewImageId: link?.previewImageId,
-            parentId: row?.original?.id > 0 && isNew == true ? row?.original?.id : link?.parentId
+            description: link?.description,
+            imagePreviewId: link?.imagePreviewId,
+            linkSectionId: linkSection.original.id
           }}
           enableReinitialize={true}
           validationSchema={Yup.object().shape({
             title: Yup.string()
               .max(255)
-              .required(t(validation + 'requiredLinkTitle')),
+              .required(t(validation + 'requiredTitle')),
             url: Yup.string()
               .max(255)
-              .required(t(validation + 'requiredLinkUrl'))
+              .required(t(validation + 'requiredUrl'))
           })}
           onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
             try {
-              handleSubmit(values, setErrors);
+              handleSubmit(values, setErrors, setSubmitting);
             } catch (err) {
               setStatus({ success: false });
               setErrors({ submit: err.message });
@@ -130,11 +149,7 @@ const AddOrEditLink = ({ row, isNew, open, setOpen, refetch }) => {
           {({ errors, handleBlur, handleChange, setFieldValue, handleSubmit, isSubmitting, touched, values }) => (
             <form noValidate onSubmit={handleSubmit}>
               <DialogTitle>
-                {isNew == true
-                  ? row
-                    ? t('dialog.link.addSub', { parentTitle: '"' + row?.original?.title + '"' })
-                    : t('dialog.link.addMain', { item: 'Link' })
-                  : t('dialog.edit.title', { item: 'Link' })}
+                {isNew == true ? t('dialog.link.add') : t('dialog.edit.title', { item: values.title })}
                 <CloseDialog />
               </DialogTitle>
               <DialogContent>
@@ -183,11 +198,33 @@ const AddOrEditLink = ({ row, isNew, open, setOpen, refetch }) => {
                   </Grid>
                   <Grid item>
                     <Stack spacing={1}>
-                      <InputLabel htmlFor="url">{t(fieldsName + 'url')}</InputLabel>
+                      <InputLabel htmlFor="description">{t(fieldsName + 'description')}</InputLabel>
+                      <OutlinedInput
+                        id="description"
+                        type="text"
+                        value={values.description || ''}
+                        name="description"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
+                        placeholder={t(fieldsName + 'description')}
+                        fullWidth
+                        multiline={true}
+                        error={Boolean(touched.description && errors.description)}
+                      />
+                      {touched.description && errors.description && (
+                        <FormHelperText error id="helper-text-title">
+                          {errors.description}
+                        </FormHelperText>
+                      )}
+                    </Stack>
+                  </Grid>
+                  <Grid item>
+                    <Stack spacing={1}>
+                      <InputLabel htmlFor="imagePreviewId">{t(fieldsName + 'imagePreviewId')}</InputLabel>
                       <ImageUpload
-                        id="previewImageId"
+                        id="imagePreviewId"
                         setFieldValue={setFieldValue}
-                        value={values?.previewImageId || ''}
+                        value={values?.imagePreviewId || ''}
                         filePosterMaxHeight={400}
                       />
                     </Stack>

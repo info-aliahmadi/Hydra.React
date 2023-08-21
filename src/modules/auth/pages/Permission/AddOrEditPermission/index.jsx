@@ -75,7 +75,6 @@ const AddOrEditPermission = ({ permissionId, isNew, open, setOpen, refetch }) =>
           refetch();
         })
         .catch((error) => {
-          // debugger;
           setNotify({ open: true, type: 'error', description: error });
           setServerErrors(error, setErrors);
         });

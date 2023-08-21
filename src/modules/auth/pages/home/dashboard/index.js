@@ -36,7 +36,6 @@ import avatar3 from 'assets/images/users/avatar-3.png';
 import avatar4 from 'assets/images/users/avatar-4.png';
 import { useTranslation } from 'react-i18next';
 import LocalizationService from 'Localization/LocalizationService';
-import ChildComponent from './ChildComponent';
 
 // avatar style
 const avatarSX = {

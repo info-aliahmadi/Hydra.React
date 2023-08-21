@@ -72,7 +72,6 @@ export default class LinkService {
       axios
         .get(CONFIG.API_BASEPATH + '/cms/deleteLink', { params: { linkId: linkId } })
         .then((response) => {
-          debugger;
           resolve(response.data);
         })
         .catch((error) => {

@@ -72,7 +72,7 @@ const ChangePasswordForm = () => {
           oldPassword: Yup.string().max(255).required(t('validation.required-old-password')),
           newPassword: Yup.string().max(255).required(t('validation.required-new-password'))
         })}
-        onSubmit={async (values, { errors, setErrors, setStatus, setSubmitting }) => {
+        onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
             accountService
               .changePassword(values)
@@ -80,7 +80,6 @@ const ChangePasswordForm = () => {
                 setNotify({ open: true });
               })
               .catch((error) => {
-                debugger;
                 setServerErrors(error, setErrors);
                 setNotify({
                   open: true,

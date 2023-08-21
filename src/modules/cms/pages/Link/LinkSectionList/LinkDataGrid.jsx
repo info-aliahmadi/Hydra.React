@@ -1,34 +1,38 @@
 // material-ui
-import { Avatar, Box, Button, FormHelperText, Grid, IconButton, Tooltip } from '@mui/material';
+import { Avatar, Box, Button, Grid, IconButton, Stack, Tooltip } from '@mui/material';
 
 // project import
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MaterialTable from 'modules/shared/MaterialTable/MaterialTable';
-import { Delete, ImageNotSupported } from '@mui/icons-material';
+import { Delete, Edit, ImageNotSupported, Save } from '@mui/icons-material';
+import LinkIcon from '@mui/icons-material/Link';
+
 import DeleteLink from '../DeleteLink';
-import LinkAutoComplete from '../../Link/LinkAutoComplete';
 import LinkService from 'modules/cms/services/LinkService';
 import Notify from 'components/@extended/Notify';
+import AddOrEditLink from '../AddOrEditLink';
+import CONFIG from 'config';
+let mediaExtensions = CONFIG.IMAGES_EXTENSIONS.concat(CONFIG.VIDEOS_EXTENSIONS);
 // ===============================|| COLOR BOX ||=============================== //
 const ImagePreviewRow = ({ renderedCellValue, row }) => {
+  debugger;
   let src = renderedCellValue?.fileName
     ? mediaExtensions.some((extension) => extension == _.toLower(renderedCellValue?.extension))
       ? CONFIG.UPLOAD_BASEPATH + renderedCellValue.directory + renderedCellValue?.thumbnail
-      : row.original.previewImageUrl
-      ? row.original.previewImageUrl
-      : null
-    : null;
+      : undefined
+    : undefined;
 
   return (
     <Box
+      key={'prev-' + row}
       sx={{
         display: 'flex',
         alignItems: 'center',
         gap: '1rem'
       }}
     >
-      {src != null ? (
+      {src != undefined ? (
         <img alt="ImagePreview" src={src} height={'80px'} />
       ) : (
         <Avatar variant="rounded">
@@ -38,22 +42,24 @@ const ImagePreviewRow = ({ renderedCellValue, row }) => {
     </Box>
   );
 };
-function LinkDataGrid({ row }) {
+function LinkDataGrid({ linkSection }) {
   const [t] = useTranslation();
-  const [data, setData] = useState(() => row.original.links);
-  const [linkId, setLinkId] = useState();
+  const [data, setData] = useState(() => linkSection.original.links);
   const [openDelete, setOpenDelete] = useState(false);
   const [notify, setNotify] = useState(false);
   const [refetch, setRefetch] = useState();
-  const [linkRow, setLinkRow] = useState();
+  const [isNew, setIsNew] = useState();
+  const [row, setRow] = useState();
+  const [open, setOpen] = useState(false);
+  const [showSaveOrderBtn, setShowSaveOrderBtn] = useState(false);
 
-  let roleId = row.original.id;
+  let linkService = new LinkService();
 
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'previewImage',
-        header: t('fields.link.previewImage'),
+        accessorKey: 'imagePreview',
+        header: t('fields.link.imagePreview'),
         type: 'string',
         Cell: ({ renderedCellValue, row }) => <ImagePreviewRow renderedCellValue={renderedCellValue} row={row} />
       },
@@ -66,12 +72,12 @@ function LinkDataGrid({ row }) {
       },
       {
         accessorKey: 'url',
-        header: t('fields.link.Url'),
+        header: t('fields.link.url'),
         type: 'string'
       },
       {
         accessorKey: 'description',
-        header: t('fields.link.Description'),
+        header: t('fields.link.description'),
         type: 'string'
       },
       {
@@ -82,41 +88,63 @@ function LinkDataGrid({ row }) {
     ],
     []
   );
+  const handleNewRow = (row) => {
+    setIsNew(true);
+    setRow(row);
+    setOpen(true);
+  };
+  const handleEditRow = (row) => {
+    setIsNew(false);
+    setRow(row);
+    setOpen(true);
+  };
 
-  const handleNewRow = () => {
-    if (!(linkId > 0)) {
-      setLinkId(0);
-      return;
-    }
-    let linkService = new LinkService();
+  const handleDeleteRow = (row) => {
+    setRow(row);
+    setOpenDelete(true);
+  };
+  const handleSaveOrder = (data) => {
     linkService
-      .addLink(linkId, linkSectionId)
-      .then((link) => {
-        data.push(link?.data);
-        setData([...data]);
-        row.original.links = [...data];
-        handleRefetch();
-        setLinkId(null);
+      .updateLinkOrders(data)
+      .then((result) => {
         setNotify({ open: true });
+        setShowSaveOrderBtn(false);
+        handleRefetch();
       })
       .catch((error) => {
         setNotify({ open: true, type: 'error', description: error });
       });
   };
-  const handleDeleteRow = (row) => {
-    setLinkRow(row);
-    setOpenDelete(true);
-  };
   const handleRefetch = () => {
     setRefetch(Date.now());
   };
 
-  const DeleteHandle = useCallback(
+  const AddOrOrderRow = useCallback(
+    (showSaveBtn, data) => (
+      <Stack spacing={2} direction="row">
+        <Button color="primary" onClick={() => handleNewRow(null)} variant="contained" startIcon={<LinkIcon />}>
+          {t('buttons.link.add')}
+        </Button>
+        {showSaveBtn && (
+          <Button color="info" onClick={() => handleSaveOrder(data)} variant="contained" startIcon={<Save />}>
+            {t('buttons.link.saveOrder')}
+          </Button>
+        )}
+      </Stack>
+    ),
+    []
+  );
+  const DeleteOrEdit = useCallback(
     ({ row }) => (
       <Box sx={{ display: 'flex', gap: '1rem' }}>
-        <Tooltip arrow placement="top-start" title="Delete">
+        <Tooltip arrow placement="top-start" title={t('buttons.link.delete')}>
           <IconButton color="error" onClick={() => handleDeleteRow(row)}>
             <Delete />
+          </IconButton>
+        </Tooltip>
+        <Tooltip arrow placement="top-start" title={t('buttons.link.edit')}>
+          <IconButton onClick={() => handleEditRow(row)}>
+            <Edit />
           </IconButton>
         </Tooltip>
       </Box>
@@ -132,12 +160,10 @@ function LinkDataGrid({ row }) {
             refetch={refetch}
             columns={columns}
             dataSet={data}
-            enableColumnActions={false}
-            enableTopToolbar={false}
-            enableColumnFilters={false}
             enablePagination={false}
             enableSorting={false}
             enableBottomToolbar={false}
+            enableColumnFilters={false}
             enableColumnFilterModes={false}
             enableColumnOrdering={false}
             enablePinning={false}
@@ -145,16 +171,38 @@ function LinkDataGrid({ row }) {
             enableFullScreenToggle={false}
             enableGlobalFilterModes={false}
             enableRowActions
-            renderRowActions={DeleteHandle}
+            renderRowActions={DeleteOrEdit}
+            renderTopToolbarCustomActions={() => AddOrOrderRow(showSaveOrderBtn, data)}
+            enableRowOrdering={true}
+            autoResetPageIndex={false}
+            muiTableBodyRowDragHandleProps={({ table }) => ({
+              onDragEnd: () => {
+                const { draggingRow, hoveredRow } = table.getState();
+                if (hoveredRow && draggingRow) {
+                  data.splice(hoveredRow.index, 0, data.splice(draggingRow.index, 1)[0]);
+                  setData([...data]);
+                  linkSection.original.links = [...data];
+                  handleRefetch();
+                  setShowSaveOrderBtn(true);
+                }
+              }
+            })}
           />
         </Grid>
       </Grid>
-
-      <AddOrEditLink isNew={isNew} linkSectionId={rowId} open={open} setOpen={setOpen} refetch={handleRefetch} />
+      <AddOrEditLink
+        row={row}
+        isNew={isNew}
+        linkSection={linkSection}
+        open={open}
+        setOpen={setOpen}
+        data={data}
+        setData={setData}
+        refetch={handleRefetch}
+      />
       <DeleteLink
         row={row}
-        linkRow={linkRow}
-        roleId={roleId}
+        linkSection={linkSection}
         open={openDelete}
         setOpen={setOpenDelete}
         data={data}

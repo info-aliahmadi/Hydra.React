@@ -133,8 +133,8 @@ const AddOrEditMenu = ({ row, isNew, open, setOpen, refetch }) => {
                 {isNew == true
                   ? row
                     ? t('dialog.menu.addSub', { parentTitle: '"' + row?.original?.title + '"' })
-                    : t('dialog.menu.addMain', { item: 'Menu' })
-                  : t('dialog.edit.title', { item: 'Menu' })}
+                    : t('dialog.menu.addMain')
+                  : t('dialog.edit.title', { item: values.title })}
                 <CloseDialog />
               </DialogTitle>
               <DialogContent>
@@ -183,7 +183,7 @@ const AddOrEditMenu = ({ row, isNew, open, setOpen, refetch }) => {
                   </Grid>
                   <Grid item>
                     <Stack spacing={1}>
-                      <InputLabel htmlFor="url">{t(fieldsName + 'url')}</InputLabel>
+                      <InputLabel htmlFor="previewImageId">{t(fieldsName + 'previewImageId')}</InputLabel>
                       <ImageUpload
                         id="previewImageId"
                         setFieldValue={setFieldValue}

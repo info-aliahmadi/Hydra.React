@@ -1,12 +1,13 @@
 // assets
-import { Article, Menu, Slideshow, Description, Topic } from '@mui/icons-material';
+import { Article, Menu, Slideshow, Description, Topic, Link } from '@mui/icons-material';
 // icons
 const icons = {
   Article,
   Description,
   Menu,
   Slideshow,
-  Topic
+  Topic,
+  Link
 };
 
 // ==============================|| MENU ITEMS - EXTRA PAGES ||============================== //
@@ -59,6 +60,15 @@ const pages = {
       type: 'item',
       url: '/SlideshowsList',
       icon: icons.Slideshow,
+      breadcrumbs: false,
+      permission: 'AUTH_GET.PERMISSION.LIST'
+    },
+    {
+      id: 'links',
+      title: 'Links',
+      type: 'item',
+      url: '/LinksList',
+      icon: icons.Link,
       breadcrumbs: false,
       permission: 'AUTH_GET.PERMISSION.LIST'
     }

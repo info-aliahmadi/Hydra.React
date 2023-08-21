@@ -71,7 +71,6 @@ export default class MenusService {
       axios
         .get(CONFIG.API_BASEPATH + '/cms/deleteMenu', { params: { menuId: menuId } })
         .then((response) => {
-          debugger;
           resolve(response.data);
         })
         .catch((error) => {

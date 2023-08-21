@@ -67,12 +67,10 @@ export default class PermissionService {
     });
   };
   deletePermission = async (permissionId) => {
-    debugger;
     return new Promise((resolve, reject) => {
       axios
         .get(CONFIG.API_BASEPATH + '/auth/deletePermission', { params: { permissionId: permissionId } })
         .then((response) => {
-          debugger;
           resolve(response.data);
         })
         .catch((error) => {

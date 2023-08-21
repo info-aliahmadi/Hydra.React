@@ -71,7 +71,6 @@ export default class TopicsService {
       axios
         .get(CONFIG.API_BASEPATH + '/cms/deleteTopic', { params: { topicId: topicId } })
         .then((response) => {
-          debugger;
           resolve(response.data);
         })
         .catch((error) => {

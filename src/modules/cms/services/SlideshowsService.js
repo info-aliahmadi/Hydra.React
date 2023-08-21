@@ -54,7 +54,7 @@ export default class SlideshowsService {
         });
     });
   };
-  
+
   updateSlideshowOrders = async (slideshowList) => {
     return new Promise((resolve, reject) => {
       axios
@@ -72,7 +72,6 @@ export default class SlideshowsService {
       axios
         .get(CONFIG.API_BASEPATH + '/cms/VisibleSlideshow', { params: { slideshowId: slideshowId } })
         .then((response) => {
-          debugger;
           resolve(response.data);
         })
         .catch((error) => {
@@ -85,7 +84,6 @@ export default class SlideshowsService {
       axios
         .get(CONFIG.API_BASEPATH + '/cms/deleteSlideshow', { params: { slideshowId: slideshowId } })
         .then((response) => {
-          debugger;
           resolve(response.data);
         })
         .catch((error) => {

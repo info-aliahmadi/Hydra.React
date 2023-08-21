@@ -107,10 +107,10 @@ const AddOrEditLinkSection = ({ row, isNew, open, setOpen, refetch }) => {
           }}
           enableReinitialize={true}
           validationSchema={Yup.object().shape({
-            title: Yup.string()
+            key: Yup.string()
               .max(255)
               .required(t(validation + 'requiredKey')),
-            url: Yup.string()
+            title: Yup.string()
               .max(255)
               .required(t(validation + 'requiredTitle'))
           })}
@@ -127,7 +127,7 @@ const AddOrEditLinkSection = ({ row, isNew, open, setOpen, refetch }) => {
           {({ errors, handleBlur, handleChange, setFieldValue, handleSubmit, isSubmitting, touched, values }) => (
             <form noValidate onSubmit={handleSubmit}>
               <DialogTitle>
-                {isNew == true ? t('dialog.linkSection.addMain') : t('dialog.linkSection.editMain')}
+                {isNew == true ? t('dialog.linkSection.add') : t('dialog.edit.title', { item: values.key })}
                 <CloseDialog />
               </DialogTitle>
               <DialogContent>

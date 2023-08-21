@@ -1,17 +1,13 @@
-// material-ui
-
-// project import
 import { MaterialReactTable } from 'material-react-table';
 import { useEffect, useState, memo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Checkbox, IconButton, Tooltip } from '@mui/material';
+import { Checkbox, IconButton } from '@mui/material';
 import RefreshIcon from '@mui/icons-material/Refresh';
-import CONFIG from 'config';
 import { DatePicker } from '@mui/x-date-pickers';
 import moment from 'moment-jalaali';
 import { DateTimeViewer, DateViewer } from 'utils/DateViewer';
 
-// ===============================|| COLOR BOX ||=============================== //
+
 const dateFilter = ({ header, rangeFilterIndex }) => {
   let filterFn = header.column.getFilterFn().name;
   let doubleActive = filterFn == 'between' || filterFn == 'betweenInclusive';
@@ -157,7 +153,6 @@ function MaterialTable({
     });
     dateFields.forEach((element) => {
       if (!element.Cell) {
-        debugger;
         element.Cell = ({ renderedCellValue }) =>
           renderedCellValue != null && <span>{DateViewer(currentLanguage, renderedCellValue)}</span>;
       }
@@ -353,9 +348,9 @@ function MaterialTable({
           renderTopToolbarCustomActions
             ? renderTopToolbarCustomActions
             : () => (
-                <Button color="primary" onClick={() => handleRefresh()} variant="contained">
-                  Refresh
-                </Button>
+                <IconButton onClick={() => handleRefresh()}>
+                  <RefreshIcon />
+                </IconButton>
               )
         }
         renderRowActionMenuItems={renderRowActionMenuItems && renderRowActionMenuItems}

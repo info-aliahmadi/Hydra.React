@@ -1,6 +1,5 @@
 // material-ui
 import {
-  Avatar,
   Box,
   Breadcrumbs,
   Card,
@@ -113,7 +112,6 @@ function FilesList() {
     extention = _.lowerCase(extention);
     let themeMode = theme.palette.mode;
     let bgColor = themeMode == 'light' ? 'secondary.main' : 'secondary.light';
-    debugger;
     switch (extention) {
       case 'pdf':
         bgColor = themeMode == 'light' ? 'error.dark' : 'error.light';

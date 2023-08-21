@@ -123,11 +123,7 @@ const AddOrEditTag = ({ row, isNew, open, setOpen, refetch }) => {
           {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
             <form noValidate onSubmit={handleSubmit}>
               <DialogTitle>
-                {isNew == true
-                  ? row
-                    ? t('dialog.tag.addSub', { parentTitle: '"' + row?.original?.title + '"' })
-                    : t('dialog.tag.addMain', { item: 'Tag' })
-                  : t('dialog.edit.title', { item: 'Tag' })}
+                {isNew == true ? t('dialog.tag.add') : t('dialog.edit.title', { item: values.title })}
                 <CloseDialog />
               </DialogTitle>
               <DialogContent>
