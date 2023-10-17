@@ -9,10 +9,12 @@ import Authenticate from 'modules/auth/services/Authentication/Authenticate';
 import AuthRoutes from 'modules/auth/routes/AuthRoutes';
 import CmsRoutes from 'modules/cms/routes/CmsRoutes';
 import FileStorageRoutes from 'modules/fileStorage/routes/FileStorageRoutes';
+
+import PublicRoutes from './PublicRoutes';
 import Loader from 'components/Loader';
 
 let collectedRoutes = [...AuthRoutes, ...CmsRoutes, ...FileStorageRoutes];
-export const PrivateRoutes = (
+export const PrivateRoutesCaller = (
   <Route
     key="MainLayoutKey"
     path="/"
@@ -36,13 +38,17 @@ export const PrivateRoutes = (
   </Route>
 );
 
-// collect private routes without permission attribute
-export const PublicRoutes = (
-  <Route key="MinimalLayoutKey" path="/" element={<MinimalLayout />}>
-    {collectedRoutes
-      .filter((x) => !x.permission)
-      .map((route) => {
-        return route.element && <Route key={route.key} path={route.path} element={route.element} />;
-      })}
-  </Route>
+// collect Public routes without permission attribute
+export const PublicRoutesCaller = (
+  <>
+    {PublicRoutes.map((route) => {
+      return route.layout ? (
+        <Route key={route.key + 'LayoutKey'} path="/" element={route.layout}>
+          {route.element && <Route key={route.key} path={route.path} element={route.element} />};
+        </Route>
+      ) : (
+        <Route key={route.key} path={route.path} element={route.element} />
+      );
+    })}
+  </>
 );

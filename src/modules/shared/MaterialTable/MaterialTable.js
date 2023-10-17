@@ -7,7 +7,6 @@ import { DatePicker } from '@mui/x-date-pickers';
 import moment from 'moment-jalaali';
 import { DateTimeViewer, DateViewer } from 'utils/DateViewer';
 
-
 const dateFilter = ({ header, rangeFilterIndex }) => {
   let filterFn = header.column.getFilterFn().name;
   let doubleActive = filterFn == 'between' || filterFn == 'betweenInclusive';

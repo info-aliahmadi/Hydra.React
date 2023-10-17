@@ -1,9 +1,6 @@
 import Loadable from 'components/Loadable';
 import { lazy } from 'react';
 
-const AuthLogin = Loadable(lazy(() => import('modules/auth/pages/authentication/Login')));
-
-const AuthRegister = Loadable(lazy(() => import('modules/auth/pages/authentication/Register')));
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('modules/auth/pages/home/dashboard')));
@@ -31,16 +28,7 @@ const AddOrEditUser = Loadable(lazy(() => import('modules/auth/pages/Users/AddOr
 // ==============================|| MAIN ROUTING ||============================== //
 
 const AuthRoutes = [
-  {
-    key: 'loginkey',
-    path: 'login',
-    element: <AuthLogin />
-  },
-  {
-    key: 'registerkey',
-    path: 'register',
-    element: <AuthRegister />
-  },
+
   {
     key: 'dashboard',
     path: '/dashboard',

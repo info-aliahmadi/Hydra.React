@@ -1,5 +1,5 @@
 // material-ui
-import { Box, Button, IconButton, Tooltip, Typography } from '@mui/material';
+import { Box, Button, IconButton, Tooltip } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';

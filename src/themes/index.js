@@ -26,7 +26,7 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { AdapterDateFnsJalali } from '@mui/x-date-pickers/AdapterDateFnsJalali';
 // ==============================|| DEFAULT THEME - MAIN  ||============================== //
 
-export default function ThemeCustomization({ children }) {
+export default function DashboardThemeCustomization({ children }) {
   const themeModeStorage = new LocalStorageService(CONFIG.THEME_MODE_STORAGE_NAME);
   const themeMode = themeModeStorage.getItem();
 
@@ -120,6 +120,6 @@ export default function ThemeCustomization({ children }) {
   );
 }
 
-ThemeCustomization.propTypes = {
+DashboardThemeCustomization.propTypes = {
   children: PropTypes.node
 };
