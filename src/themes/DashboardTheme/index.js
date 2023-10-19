@@ -27,13 +27,13 @@ import { AdapterDateFnsJalali } from '@mui/x-date-pickers/AdapterDateFnsJalali';
 // ==============================|| DEFAULT THEME - MAIN  ||============================== //
 
 export default function DashboardThemeCustomization({ children }) {
-  const themeModeStorage = new LocalStorageService(CONFIG.THEME_MODE_STORAGE_NAME);
+  const themeModeStorage = new LocalStorageService(CONFIG.DASHBOARD_THEME_MODE_STORAGE_NAME);
   const themeMode = themeModeStorage.getItem();
 
-  const [mode, setMode] = useState(themeMode ? themeMode : CONFIG.DEFAULT_THEME_MODE);
+  const [mode, setMode] = useState(themeMode ? themeMode : CONFIG.DASHBOARD_DEFAULT_THEME_MODE);
 
   const [direction, setDirection] = useState(i18n.dir());
-  const initFonts = i18n.dir() == 'rtl' ? `iran` : `'Public Sans', sans-serif`;
+  const initFonts = i18n.dir() == 'rtl' ? `iran` : CONFIG.DASHBOARD_FONT_FAMILY;
   const [fonts, setFonts] = useState(initFonts);
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function DashboardThemeCustomization({ children }) {
 
   useEffect(() => {
     document.dir = direction;
-    direction === 'rtl' ? setFonts(`Iran Sans`) : setFonts(`'Public Sans', sans-serif`);
+    direction === 'rtl' ? setFonts(`Iran Sans`) : setFonts(CONFIG.DASHBOARD_FONT_FAMILY);
   }, [direction]);
 
   function changeDirection(dir) {

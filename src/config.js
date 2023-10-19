@@ -1,13 +1,12 @@
 // ==============================|| THEME CONFIG  ||============================== //
 const CONFIG = {
-  DEFAULT_PATH: '/dashboard',
-  FONT_FAMILY: `'Public Sans', sans-serif`,
+  DEFAULT_PATH: '/',
   MINIDRAWER: true,
   CONTAINER: true,
-  DEFAULT_THEME_MODE: 'light',
-  THEME_MODE_STORAGE_NAME: 'HydraThemeMode',
+  DASHBOARD_FONT_FAMILY: `'Public Sans', sans-serif`,
+  DASHBOARD_DEFAULT_THEME_MODE: 'light',
+  DASHBOARD_THEME_MODE_STORAGE_NAME: 'HydraThemeMode',
   PRESET_COLOR: 'default',
-  THEME_DIRECTION: 'ltr',
   API_BASEPATH: process.env.NODE_ENV === 'production' ? 'https://website.com' : 'https://localhost:7134', // application api basepath
   AVATAR_BASEPATH: 'https://localhost:7134/avatar/',
   UPLOAD_BASEPATH: 'https://localhost:7134/',

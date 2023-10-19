@@ -14,7 +14,7 @@ import Breadcrumbs from 'components/@extended/Breadcrumbs';
 
 // types
 import { openDrawer } from 'store/reducers/menu';
-import DashboardThemeCustomization from 'themes';
+import DashboardThemeCustomization from 'themes/DashboardTheme';
 
 // ==============================|| MAIN LAYOUT ||============================== //
 

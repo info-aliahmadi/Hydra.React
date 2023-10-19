@@ -6,7 +6,7 @@ import { Grid, Stack, Typography } from '@mui/material';
 // project import
 import FirebaseRegister from './auth-forms/AuthRegister';
 import AuthWrapper from './AuthWrapper';
-import DashboardThemeCustomization from 'themes';
+import DashboardThemeCustomization from 'themes/DashboardTheme';
 
 // ================================|| REGISTER ||================================ //
 
