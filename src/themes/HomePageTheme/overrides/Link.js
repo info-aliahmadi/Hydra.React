@@ -4,7 +4,8 @@ export default function Link() {
   return {
     MuiLink: {
       defaultProps: {
-        underline: 'hover'
+        underline: 'none',
+        color: '#2C302E'
       }
     }
   };

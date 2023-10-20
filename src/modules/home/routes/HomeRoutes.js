@@ -1,20 +1,22 @@
 import Loadable from 'components/Loadable';
+import HomeLayout from 'layout/HomeLayout';
 import { lazy } from 'react';
 
 const AuthLogin = Loadable(lazy(() => import('modules/auth/pages/authentication/Login')));
 
 const AuthRegister = Loadable(lazy(() => import('modules/auth/pages/authentication/Register')));
 
-const Home = Loadable(lazy(() => import('pages/Home/index')));
+const Home = Loadable(lazy(() => import('modules/home/pages/Home')));
 
 const MinimalLayout = Loadable(lazy(() => import('layout/MinimalLayout')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
-const PublicRoutes = [
+const HomeRoutes = [
   {
     key: 'homePage',
     path: '/',
+    layout: <HomeLayout />,
     element: <Home />
   },
   {
@@ -31,4 +33,4 @@ const PublicRoutes = [
   }
 ];
 
-export default PublicRoutes;
+export default HomeRoutes;

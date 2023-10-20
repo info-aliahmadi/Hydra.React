@@ -16,7 +16,10 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 // ==============================|| DEFAULT THEME - MAIN  ||============================== //
 
 export default function HomePageThemeCustomization({ children }) {
-  const [fonts] = `'Gloock', Poppins`;
+  const fonts = {
+    header: 'Gloock',
+    body: 'Poppins'
+  };
 
   const theme = Palette();
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -65,6 +68,6 @@ export default function HomePageThemeCustomization({ children }) {
   );
 }
 
-DashboardThemeCustomization.propTypes = {
+HomePageThemeCustomization.propTypes = {
   children: PropTypes.node
 };

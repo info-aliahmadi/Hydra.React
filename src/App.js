@@ -12,14 +12,12 @@ import Loader from 'components/Loader';
 const App = () => {
   return (
     <Suspense fallback={<Loader />}>
-      {/* <ThemeCustomization> */}
       <ScrollTop>
         <Routes>
           {PublicRoutesCaller}
           {PrivateRoutesCaller}
         </Routes>
       </ScrollTop>
-      {/* </ThemeCustomization> */}
     </Suspense>
   );
 };

@@ -33,7 +33,7 @@ export default function DashboardThemeCustomization({ children }) {
   const [mode, setMode] = useState(themeMode ? themeMode : CONFIG.DASHBOARD_DEFAULT_THEME_MODE);
 
   const [direction, setDirection] = useState(i18n.dir());
-  const initFonts = i18n.dir() == 'rtl' ? `iran` : CONFIG.DASHBOARD_FONT_FAMILY;
+  const initFonts = i18n.dir() == 'rtl' ? `Iran Sans` : CONFIG.DASHBOARD_FONT_FAMILY;
   const [fonts, setFonts] = useState(initFonts);
 
   useEffect(() => {

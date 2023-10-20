@@ -2,15 +2,14 @@ import React, { Suspense } from 'react'; //const DashboardDefault = React.lazy((
 
 import { Route } from 'react-router-dom';
 import MainLayout from 'layout/MainLayout';
-import MinimalLayout from 'layout/MinimalLayout';
 import Authorize from 'modules/auth/services/Authorization/Authorize';
 import Authenticate from 'modules/auth/services/Authentication/Authenticate';
 
 import AuthRoutes from 'modules/auth/routes/AuthRoutes';
 import CmsRoutes from 'modules/cms/routes/CmsRoutes';
 import FileStorageRoutes from 'modules/fileStorage/routes/FileStorageRoutes';
+import HomeRoutes from 'modules/home/routes/HomeRoutes';
 
-import PublicRoutes from './PublicRoutes';
 import Loader from 'components/Loader';
 
 let collectedRoutes = [...AuthRoutes, ...CmsRoutes, ...FileStorageRoutes];
@@ -41,7 +40,7 @@ export const PrivateRoutesCaller = (
 // collect Public routes without permission attribute
 export const PublicRoutesCaller = (
   <>
-    {PublicRoutes.map((route) => {
+    {HomeRoutes.map((route) => {
       return route.layout ? (
         <Route key={route.key + 'LayoutKey'} path="/" element={route.layout}>
           {route.element && <Route key={route.key} path={route.path} element={route.element} />};

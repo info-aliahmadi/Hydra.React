@@ -35,7 +35,7 @@ const Palette = () => {
 
   return createTheme({
     palette: {
-      mode: mode,
+      mode: 'light',
       ...{
         // palette values for light mode
         common: {
