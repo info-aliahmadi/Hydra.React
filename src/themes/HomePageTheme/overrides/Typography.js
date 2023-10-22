@@ -1,9 +1,43 @@
 // ==============================|| OVERRIDES - TYPOGRAPHY ||============================== //
 
-export default function Typography() {
+export default function Typography(theme) {
   return {
     MuiTypography: {
       styleOverrides: {
+        header: {
+          [theme.breakpoints.up('xs')]: {
+            fontSize: '2.1rem'
+          },
+          [theme.breakpoints.up('sm')]: {
+            fontSize: '2.4rem'
+          },
+          [theme.breakpoints.up('md')]: {
+            fontSize: '3.4rem'
+          },
+          [theme.breakpoints.up('lg')]: {
+            fontSize: '4.0rem'
+          },
+          [theme.breakpoints.up('xl')]: {
+            fontSize: '4.8rem'
+          }
+        },
+        h1: {
+          [theme.breakpoints.up('xs')]: {
+            fontSize: '2.1rem'
+          },
+          [theme.breakpoints.up('sm')]: {
+            fontSize: '2.4rem'
+          },
+          [theme.breakpoints.up('md')]: {
+            fontSize: '2.5rem'
+          },
+          [theme.breakpoints.up('lg')]: {
+            fontSize: '3.0rem'
+          },
+          [theme.breakpoints.up('xl')]: {
+            fontSize: '3.3rem'
+          }
+        },
         gutterBottom: {
           marginBottom: 12
         }

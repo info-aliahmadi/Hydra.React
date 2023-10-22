@@ -8,7 +8,7 @@ export default function HomeLayout() {
   return (
     <>
       <HomePageThemeCustomization>
-        <Navigation />;
+        <Navigation />
         <Outlet />
         <Footer />
       </HomePageThemeCustomization>

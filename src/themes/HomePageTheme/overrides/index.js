@@ -42,7 +42,7 @@ export default function ComponentsOverrides(theme) {
     Tab(theme),
     TableCell(theme),
     Tabs(),
-    Typography(),
+    Typography(theme),
     Tooltip(theme),
     DialogContent(theme)
   );

@@ -11,8 +11,7 @@ import Container from '@mui/material/Container';
 // import Menu from './Menu';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { Avatar, Button, Fab, Fade, IconButton, Link, Menu, MenuItem, Tooltip, Typography } from '@mui/material';
-import AdbIcon from '@mui/icons-material/Adb';
+import { Button, Fab, Fade, IconButton, Menu, MenuItem, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeService from 'modules/home/services/HomeService';
 import Logo from './Logo';
@@ -113,8 +112,9 @@ export default function Navigation(props) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <ElevationScroll {...props}>
-        <AppBar>
+      <div id="back-to-top-anchor"></div>
+      <ElevationScroll {...props} style={{ zIndex: 99999999 }}>
+        <AppBar style={{ zIndex: 99999999 }}>
           <Container maxWidth="xl">
             <Toolbar disableGutters>
               <Logo sx={{ order: 0, flexGrow: 1, mr: 1 }} />
@@ -177,24 +177,11 @@ export default function Navigation(props) {
           </Container>
         </AppBar>
       </ElevationScroll>
-      <Toolbar id="back-to-top-anchor" />
-      {/* <Container>
-        <Box sx={{ my: 2 }}>
-          {[...new Array(100)]
-            .map(
-              () => `Cras mattis consectetur purus sit amet fermentum.
-Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
-            )
-            .join('\n')}
-        </Box>
-      </Container> */}
       <ScrollTop {...props}>
         <Fab size="small" aria-label="scroll back to top">
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>
     </React.Fragment>
-  )
+  );
 }

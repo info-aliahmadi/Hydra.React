@@ -53,7 +53,7 @@ export default function Button(theme) {
             right: '-1px',
             position: 'absolute',
             zIndex: '-1',
-            backgroundImage: 'linear-gradient(to bottom, #8DD6ED 0%, #7F66D4 100%)'
+            backgroundImage: 'linear-gradient(to bottom, #8dd6ed7d 0%, #7f66d499 100%)'
           },
           '&.MuiButton-outlined:hover': {
             border: 'none'

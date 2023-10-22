@@ -6,16 +6,21 @@ const Typography = (fontFamily) => ({
   fontWeightRegular: 400,
   fontWeightMedium: 500,
   fontWeightBold: 600,
+  header: {
+    fontFamily: fontFamily.header,
+    fontWeight: 600,
+    lineHeight: 1.21
+  },
   h1: {
     fontFamily: fontFamily.header,
     fontWeight: 600,
-    fontSize: '2.375rem',
+    fontSize: '3.375rem',
     lineHeight: 1.21
   },
   h2: {
     fontFamily: fontFamily.header,
     fontWeight: 600,
-    fontSize: '1.875rem',
+    fontSize: '2.875rem',
     lineHeight: 1.27
   },
   h3: {
@@ -50,12 +55,12 @@ const Typography = (fontFamily) => ({
   },
   body1: {
     fontFamily: fontFamily.body,
-    fontSize: '0.875rem',
+    fontSize: '0.9rem',
     lineHeight: 1.57
   },
   body2: {
     fontFamily: fontFamily.body,
-    fontSize: '0.75rem',
+    fontSize: '1rem',
     lineHeight: 1.66
   },
   subtitle1: {
