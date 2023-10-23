@@ -26,25 +26,25 @@ const Typography = (fontFamily) => ({
   h3: {
     fontFamily: fontFamily.header,
     fontWeight: 600,
-    fontSize: '1.5rem',
+    fontSize: '2rem',
     lineHeight: 1.33
   },
   h4: {
     fontFamily: fontFamily.header,
     fontWeight: 600,
-    fontSize: '1.25rem',
+    fontSize: '1.75rem',
     lineHeight: 1.4
   },
   h5: {
     fontFamily: fontFamily.header,
     fontWeight: 600,
-    fontSize: '1rem',
+    fontSize: '1.4rem',
     lineHeight: 1.5
   },
   h6: {
     fontFamily: fontFamily.header,
     fontWeight: 400,
-    fontSize: '0.875rem',
+    fontSize: '1rem',
     lineHeight: 1.57
   },
   caption: {
