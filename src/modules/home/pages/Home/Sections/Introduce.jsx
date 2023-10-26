@@ -19,9 +19,9 @@ export default function Introduce() {
             sm={12}
             md={12}
             lg={5}
-            xd={5}
-            rowSpacing={{ xs: 5, sm: 5, md: 5, lg: 5, xd: 5 }}
-            p={{ xs: 3, sm: 10, md: 15, lg: 0, xd: 0 }}
+            xl={5}
+            rowSpacing={{ xs: 5, sm: 5, md: 5, lg: 5, xl: 5 }}
+            p={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
           >
             <Grid item>
               <Typography variant="h1" pt={2}>
@@ -32,15 +32,15 @@ export default function Introduce() {
                 combines creativity and technical expertise to deliver stunning and functional websites that drive results.
               </Typography>
             </Grid>
-            <Grid container item columnSpacing={{ xs: 2, sm: 2, md: 5, lg: 10, xd: 10 }}>
-              <Grid item xs={6} sm={6} md={6} lg={6} xd={6}>
+            <Grid container item columnSpacing={{ xs: 2, sm: 2, md: 5, lg: 10, xl: 10 }}>
+              <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                 <img alt="profile user" src={ExpertiseImage} height="150px" />
                 <Typography variant="h3">Expertise</Typography>
                 <Typography variant="body1" pt={2}>
                   With years of experience, we have mastered the art of creating visually appealing and user-friendly websites.
                 </Typography>
               </Grid>
-              <Grid item xs={6} sm={6} md={6} lg={6} xd={6}>
+              <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
                 <img alt="profile user" src={InnovationImage} height="150px" />
                 <Typography variant="h3">Innovation</Typography>
                 <Typography variant="body1" pt={2}>
@@ -49,7 +49,7 @@ export default function Introduce() {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xd={7} lg={7} md={12} sm={12}>
+          <Grid item xl={7} lg={7} md={12} sm={12}>
             <img alt="profile user" src={IntroduceImage} width="100%" />
           </Grid>
         </Grid>
