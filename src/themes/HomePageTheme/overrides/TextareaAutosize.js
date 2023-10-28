@@ -12,6 +12,12 @@ export default function TextareaAutosize(theme) {
         },
         notchedOutline: {},
         root: {
+          transition: 'box-shadow 1s',
+          border: '6px solid #94C4F1',
+          borderTopWidth: '5px',
+          boxShadow: '0px -1px 0px 0px #85BDE4',
+          borderRadius: '40px',
+
           'MuiTextareaAutosize-notchedOutline': {
             borderColor: theme.palette.grey[300]
           },

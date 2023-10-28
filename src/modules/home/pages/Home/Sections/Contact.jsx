@@ -1,10 +1,14 @@
-import { FormControl, Grid, InputLabel, OutlinedInput, Typography } from '@mui/material';
+import { CheckBox } from '@mui/icons-material';
+import { Button, Checkbox, FormControlLabel, Grid, InputLabel, OutlinedInput, TextareaAutosize, Typography } from '@mui/material';
 import { Box, Container, Stack } from '@mui/system';
-import InnovationImage from 'assets/images/innovation.png';
 import WaveContactImage from 'assets/images/wave-contact.svg';
+import SquareIcon from '@mui/icons-material/Square';
+import EmailIcon from '@mui/icons-material/Email';
 import 'react';
+import { useState } from 'react';
 
 export default function Contact() {
+  const [checked, setChecked] = useState(false);
   return (
     <Box style={{ background: '#A1D4F8' }}>
       <img alt="profile user" src={WaveContactImage} width="100%" />
@@ -31,17 +35,71 @@ export default function Contact() {
               <Typography variant="body2" pt={2}>
                 Have a question or need assistance? Contact us!
               </Typography>
-              <Typography variant="body2" pt={2}>
-                info@onwavedesign.com
+              <Typography variant="body2" pt={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                <EmailIcon sx={{ marginRight: '5px' }} /> info@onwavedesign.com
               </Typography>
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={12} md={7} lg={7} xl={7}>
+          <Grid item xs={12} sm={12} md={7} lg={7} xl={7} spacing={3}>
             <form noValidate autoComplete="off">
-              <Stack spacing={1}>
-                <InputLabel htmlFor="name">Name</InputLabel>
-                <OutlinedInput id="name" type="text" name="name" placeholder={'Name'} fullWidth />
-              </Stack>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <Stack spacing={1}>
+                    <InputLabel htmlFor="name">Name</InputLabel>
+                    <OutlinedInput id="name" name="name" type="text" placeholder={'Name'} fullWidth />
+                  </Stack>
+                </Grid>
+                <Grid item xs={12}>
+                  <Stack spacing={1}>
+                    <InputLabel htmlFor="email">Email</InputLabel>
+                    <OutlinedInput id="email" name="email" type="text" placeholder={'Email'} fullWidth />
+                  </Stack>
+                </Grid>
+                <Grid item xs={12}>
+                  <Stack spacing={1}>
+                    <InputLabel htmlFor="message">Message</InputLabel>
+                    <TextareaAutosize
+                      className="MuiTextareaAutosize-root"
+                      fullWidth
+                      id="Message"
+                      name="Message"
+                      type="text"
+                      placeholder="Message"
+                      multiline={true}
+                      minRows={6}
+                      inputProps={{}}
+                    />
+                  </Stack>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <Stack spacing={1}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          id="emailConfirmed"
+                          color="primary"
+                          required
+                          size="medium"
+                          onChange={(event) => setChecked(event.target.checked)}
+                          checked={checked}
+                          icon={<SquareIcon />}
+                          defaultChecked
+                          sx={{ '& .MuiSvgIcon-root': { fontSize: 28, color: '#e6f1fe', background: '#94c4f1', borderRadius: '3px' } }}
+                        />
+                      }
+                      label={'I accept the Terms'}
+                    />
+                  </Stack>
+                </Grid>
+                <Grid item xs={4} sm={4} md={3} lg={2} xl={2}>
+                  <Stack spacing={1}>
+                    <Button variant="contained" color="primary" size="large">
+                      Submit
+                    </Button>
+                  </Stack>
+                </Grid>
+              </Grid>
             </form>
           </Grid>
         </Grid>

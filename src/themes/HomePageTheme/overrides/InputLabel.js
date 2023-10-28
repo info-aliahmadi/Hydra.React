@@ -6,6 +6,7 @@ export default function InputLabel(theme) {
       styleOverrides: {
         root: {
           fontWeight: 600,
+          paddingLeft: '20px',
           color: theme.palette.grey[600]
         },
         outlined: {

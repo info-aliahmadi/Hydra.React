@@ -1,21 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // material-ui
-import {
-  Alert,
-  Avatar,
-  Button,
-  ButtonBase,
-  ButtonGroup,
-  FormHelperText,
-  Grid,
-  InputLabel,
-  OutlinedInput,
-  Snackbar,
-  Stack,
-  Tooltip,
-  TextareaAutosize
-} from '@mui/material';
+import { Button, FormHelperText, Grid, InputLabel, OutlinedInput, Stack, TextareaAutosize } from '@mui/material';
 
 // third party
 import * as Yup from 'yup';
@@ -23,16 +9,11 @@ import { Formik } from 'formik';
 
 // project import
 import AnimateButton from 'components/@extended/AnimateButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import Edit from '@mui/icons-material/Edit';
 import Save from '@mui/icons-material/Save';
 
 // assets
 import { useTranslation } from 'react-i18next';
 import SiteSettingsService from 'modules/cms/services/SiteSettingsService';
-import AuthenticationService from 'modules/auth/services/Authentication/AuthenticationService';
-import CONFIG from 'config';
-import Anonymous from 'assets/images/users/anonymous.png';
 import Notify from 'components/@extended/Notify';
 // ============================|| FIREBASE - REGISTER ||============================ //
 
