@@ -4,7 +4,7 @@ import 'react';
 export default function RequestButtons() {
   return (
     <>
-      <Button variant="outlined" color="primary" size="large">
+      <Button variant="contained" color="info" size="large">
         Consult
       </Button>
       <Button variant="contained" color="primary" size="large">

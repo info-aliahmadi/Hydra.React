@@ -9,12 +9,11 @@ import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 // import Menu from './Menu';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { Button, Fab, Fade, IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import HomeService from 'modules/home/services/HomeService';
+import { Fab, Fade } from '@mui/material';
+
 import Logo from './Logo';
+import RequestButtons from './RequestButtons';
+import MenuItems from './MenuItems';
 
 function ElevationScroll(props) {
   const { children, window } = props;
@@ -28,7 +27,8 @@ function ElevationScroll(props) {
   });
 
   return React.cloneElement(children, {
-    elevation: trigger ? 4 : 0
+    elevation: 0,
+    className: trigger ? 'elevation-appbar' : ''
   });
 }
 
@@ -81,34 +81,6 @@ ScrollTop.propTypes = {
 };
 
 export default function Navigation(props) {
-  let homeService = new HomeService();
-  const [menuItems, setMenuItems] = useState([]);
-  const loadMenu = () => {
-    homeService.getMenu().then((result) => {
-      setMenuItems(result);
-    });
-  };
-  useEffect(() => {
-    loadMenu();
-  }, []);
-  const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
-
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
-
   return (
     <React.Fragment>
       <CssBaseline />
@@ -118,67 +90,17 @@ export default function Navigation(props) {
           <Container maxWidth="xl">
             <Toolbar disableGutters>
               <Logo sx={{ order: 0, flexGrow: 1, mr: 1 }} />
-
-              <Box sx={{ order: 1, flexGrow: 0, display: { xs: 'flex', md: 'none' } }}>
-                <IconButton
-                  size="large"
-                  aria-label="account of current user"
-                  aria-controls="menu-appbar"
-                  aria-haspopup="true"
-                  onClick={handleOpenNavMenu}
-                  color="inherit"
-                >
-                  <MenuIcon />
-                </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={anchorElNav}
-                  anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left'
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left'
-                  }}
-                  open={Boolean(anchorElNav)}
-                  onClose={handleCloseNavMenu}
-                  sx={{
-                    display: { xs: 'block', md: 'none' }
-                  }}
-                >
-                  {menuItems.map((item) => (
-                    <MenuItem key={item.id} onClick={handleCloseNavMenu}>
-                      <Typography textAlign="center" href={item.url}>
-                        {item.title}
-                      </Typography>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </Box>
-              <Box sx={{ order: 1, flexGrow: 1, display: { xs: 'none', md: 'flex', alignItems: 'center', textAlign: 'center' } }}>
-                {menuItems.map((item) => (
-                  <Button variant="text" key={item.id} href={item.url} sx={{ m: 2, display: 'block' }}>
-                    {item.title}
-                  </Button>
-                ))}
-              </Box>
+              <MenuItems />
 
               <Box sx={{ order: 3, flexGrow: 0, display: 'flex' }}>
-                <Button variant="outlined" color="primary" size="large">
-                  Consult
-                </Button>
-                <Button variant="contained" color="primary" size="large">
-                  Request
-                </Button>
+                <RequestButtons />
               </Box>
             </Toolbar>
           </Container>
         </AppBar>
       </ElevationScroll>
       <ScrollTop {...props}>
-        <Fab size="small" aria-label="scroll back to top">
+        <Fab size="large" aria-label="scroll back to top" variant="contained" color="info">
           <KeyboardArrowUpIcon />
         </Fab>
       </ScrollTop>

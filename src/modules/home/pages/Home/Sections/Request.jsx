@@ -5,11 +5,11 @@ import 'react';
 
 export default function Request() {
   return (
-    <Box style={{ background: '#EAEEFD' }}>
+    <Box className="bg-white">
       <img alt="profile user" src={WaveRequestImage} width="100%" />
       <Container maxWidth="xl">
-        <Grid container>
-          <Grid item xs={12} sm={12} md={10} lg={10} xl={10}>
+        <Grid container alignItems="center" mt={{ xs: 0, sm: 0, md: 0, lg: 5, xl: 8 }} p={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}>
+          <Grid item xs={12} sm={12} md={12} lg={9} xl={9}>
             <Grid item>
               <Typography variant="h1" pt={2}>
                 Transforming your web development dreams
@@ -19,11 +19,11 @@ export default function Request() {
               </Typography>
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={12} md={2} lg={2} xl={2}>
+          <Grid item xs={12} sm={12} md={12} lg={3} xl={3}  pt={{ xs: 5, sm: 5, md: 5, lg: 0, xl: 0 }}>
             <Button variant="contained" color="primary" size="large">
               Request
             </Button>
-            <Button variant="outlined" color="primary" size="large">
+            <Button variant="contained" color="info" size="large">
               Consult
             </Button>
           </Grid>

@@ -9,7 +9,7 @@ export default function OutlinedInput(theme) {
       styleOverrides: {
         input: {
           // borderRadius: '40px',
-          padding: '16px 24px'
+          padding: '14px 24px'
         },
         notchedOutline: {
           border: 'none',

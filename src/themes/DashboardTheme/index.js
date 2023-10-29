@@ -24,6 +24,7 @@ import IranSans from './fonts/IranSans';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import { AdapterDateFnsJalali } from '@mui/x-date-pickers/AdapterDateFnsJalali';
+import 'assets/css/customStyle/dashboard.css';
 // ==============================|| DEFAULT THEME - MAIN  ||============================== //
 
 export default function DashboardThemeCustomization({ children }) {

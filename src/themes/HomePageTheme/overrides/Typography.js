@@ -6,10 +6,10 @@ export default function Typography(theme) {
       styleOverrides: {
         header: {
           [theme.breakpoints.up('xs')]: {
-            fontSize: '2.1rem'
+            fontSize: '2.4rem'
           },
           [theme.breakpoints.up('sm')]: {
-            fontSize: '2.4rem'
+            fontSize: '2.6rem'
           },
           [theme.breakpoints.up('md')]: {
             fontSize: '3.4rem'
@@ -70,6 +70,23 @@ export default function Typography(theme) {
           },
           [theme.breakpoints.up('xl')]: {
             fontSize: '2rem'
+          }
+        },
+        body3: {
+          [theme.breakpoints.up('xs')]: {
+            fontSize: '1rem'
+          },
+          [theme.breakpoints.up('sm')]: {
+            fontSize: '1rem'
+          },
+          [theme.breakpoints.up('md')]: {
+            fontSize: '1rem'
+          },
+          [theme.breakpoints.up('lg')]: {
+            fontSize: '1.2rem'
+          },
+          [theme.breakpoints.up('xl')]: {
+            fontSize: '1.3rem'
           }
         },
         gutterBottom: {

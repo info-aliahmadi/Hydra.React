@@ -21,6 +21,7 @@ import Tabs from './Tabs';
 import Typography from './Typography';
 import Tooltip from './Tooltip';
 import DialogContent from './DialogContent';
+import Fab from './Fab';
 
 // ==============================|| OVERRIDES - MAIN ||============================== //
 
@@ -28,6 +29,7 @@ export default function ComponentsOverrides(theme) {
   return merge(
     AppBar(theme),
     Button(theme),
+    Fab(theme),
     Badge(theme),
     CardContent(),
     Checkbox(theme),

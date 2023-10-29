@@ -65,6 +65,12 @@ const Typography = (fontFamily) => ({
     lineHeight: 1.66,
     textShadow: '1px 1px 0 #9bb2cb87'
   },
+  body3: {
+    fontFamily: fontFamily.body,
+    fontSize: '1rem',
+    lineHeight: 1.66,
+    textShadow: '1px 1px 0 #9bb2cb87'
+  },
   subtitle1: {
     fontFamily: fontFamily.header,
     fontSize: '0.875rem',
@@ -72,7 +78,7 @@ const Typography = (fontFamily) => ({
     lineHeight: 1.57
   },
   subtitle2: {
-    fontFamily: fontFamily.header,
+    fontFamily: fontFamily.body,
     fontSize: '0.75rem',
     fontWeight: 500,
     lineHeight: 1.66

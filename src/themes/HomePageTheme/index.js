@@ -13,6 +13,7 @@ import componentsOverride from './overrides';
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
+import 'assets/css/customStyle/homePage.css';
 // ==============================|| DEFAULT THEME - MAIN  ||============================== //
 
 export default function HomePageThemeCustomization({ children }) {

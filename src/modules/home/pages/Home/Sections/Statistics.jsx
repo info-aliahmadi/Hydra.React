@@ -5,7 +5,7 @@ import 'react';
 
 export default function Statistics() {
   return (
-    <Box style={{ background: '#A1D4F8' }}>
+    <Box className="bg-blue">
       <Container maxWidth="xl">
         <Grid container pt={{ xs: 3, sm: 5, md: 8, lg: 10, xl: 15 }} pb={{ xs: 10, sm: 10, md: 10, lg: 10, xl: 10 }}>
           <Grid

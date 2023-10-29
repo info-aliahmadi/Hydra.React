@@ -5,10 +5,11 @@ import Feature2Image from 'assets/images/Feature-2.png';
 import Feature3Image from 'assets/images/Feature-3.png';
 import WaveFeaturesImage from 'assets/images/wave-feature.svg';
 import 'react';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export default function Features() {
   return (
-    <Box style={{ background: '#A1D4F8' }}>
+    <Box  className="bg-blue">
       <img alt="profile user" src={WaveFeaturesImage} width="100%" />
       <Container maxWidth="xl">
         <Grid container>
@@ -65,10 +66,10 @@ export default function Features() {
           </Grid>
           <Grid item p={{ xs: 10, sm: 10, md: 10, lg: 12, xl: 12 }} pl={{ lg: 0, xl: 0 }}>
             <Box>
-              <Button variant="outlined" color="primary" size="large">
+              <Button variant="contained" color="info" size="large">
                 Learn More
               </Button>
-              <Button color="primary" variant="text" size="large">
+              <Button color="primary" variant="text" size="large" endIcon={<ArrowForwardIosIcon fontSize="small" />}>
                 Request
               </Button>
             </Box>

@@ -8,7 +8,7 @@ export default function HomeLayout() {
   return (
     <>
       <HomePageThemeCustomization>
-        <Navigation />
+        <Navigation sx={{ xIndex: 9999999999999, position: 'relative' }} />
         <Outlet />
         <Footer />
       </HomePageThemeCustomization>

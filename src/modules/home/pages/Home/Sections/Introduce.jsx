@@ -8,7 +8,7 @@ import 'react';
 
 export default function Introduce() {
   return (
-    <Box style={{ background: '#EAEEFD' }}>
+    <Box  className="bg-white">
       <img alt="profile user" src={WaveIntroduceImage} width="100%" />
       <Container maxWidth="xl">
         <Grid container>

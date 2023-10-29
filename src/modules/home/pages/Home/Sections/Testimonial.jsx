@@ -33,7 +33,7 @@ export default function Testimonial() {
   ];
 
   return (
-    <Box style={{ background: '#A1D4F8' }} p={{ xs: 1, sm: 4, md: 15, lg: 20, xl: 20 }} pb={{ xs: 15, sm: 10, md: 10, lg: 10, xl: 10 }}>
+    <Box className="bg-blue" p={{ xs: 1, sm: 4, md: 10, lg: 10, xl: 10 }} pb={{ xs: 15, sm: 8, md: 8, lg: 8, xl: 8 }}>
       <Container maxWidth="xl">
         <Grid xs={12} sm={12} md={12} lg={12} xl={12} style={{ position: 'relative' }}>
           <img src={WaveTestimonialImage} alt="" style={{ position: 'relative', left: 0, top: 0, width: '100%', height: '100%' }} />
@@ -50,7 +50,7 @@ export default function Testimonial() {
                   borderRadius: '30px',
                   border: '1px solid #A1D4F8',
                   background: 'linear-gradient(180deg, #CEEBFF, #A1D4F8)',
-                  boxShadow: '0px 10px 12px -10px rgb(0 0 0 / 33%), 0px 2px 0px 0px rgba(255, 255, 255, 0.20) inset'
+                  boxShadow: '0px 10px 15px -6px #3683bb4d, 0px 4px 0px 0px #ffffff33 inset'
                 }
               }}
             >
@@ -62,10 +62,10 @@ export default function Testimonial() {
                     container
                     justifyContent="center"
                     alignItems="center"
-                    pt={{ xs: 8, sm: 10, md: 12, lg: 15, xl: 20 }}
+                    pt={{ xs: 8, sm: 14, md: 12, lg: 17, xl: 24 }}
                     pb={{ xs: 5, sm: 5, md: 12, lg: 15, xl: 20 }}
-                    pl={{ xs: 3, sm: 10, md: 8, lg: 5, xl: 7 }}
-                    pr={{ xs: 3, sm: 10, md: 8, lg: 5, xl: 7 }}
+                    pl={{ xs: 3, sm: 7, md: 8, lg: 3, xl: 7 }}
+                    pr={{ xs: 3, sm: 7, md: 8, lg: 3, xl: 7 }}
                     sx={{
                       position: 'relative'
                       //top: '30%'
