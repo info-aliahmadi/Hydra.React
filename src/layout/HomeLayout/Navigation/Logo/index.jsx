@@ -4,7 +4,9 @@ import { Box } from '@mui/material';
 export default function Logo({ sx }) {
   return (
     <Box sx={sx}>
-      <img alt="profile user" src={logo} height="50" />
+      <a href="/">
+        <img alt="" src={logo} height="50" />
+      </a>
     </Box>
   );
 }

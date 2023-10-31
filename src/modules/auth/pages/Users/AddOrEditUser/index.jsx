@@ -197,7 +197,7 @@ export default function AddOrEditUser() {
                                   onChange={(e) => changeAvatar(e, setFieldValue)}
                                 />
                                 <Avatar
-                                  alt="profile user"
+                                  alt=""
                                   src={avatarPreview ? avatarPreview : values.avatar ? CONFIG.AVATAR_BASEPATH + values.avatar : Anonymous}
                                   sx={{ width: 85, height: 85 }}
                                 ></Avatar>

@@ -9,7 +9,7 @@ import 'react';
 export default function Introduce() {
   return (
     <Box  className="bg-white">
-      <img alt="profile user" src={WaveIntroduceImage} width="100%" />
+      <img alt="" src={WaveIntroduceImage} width="100%" />
       <Container maxWidth="xl">
         <Grid container>
           <Grid
@@ -34,14 +34,14 @@ export default function Introduce() {
             </Grid>
             <Grid container item columnSpacing={{ xs: 2, sm: 2, md: 5, lg: 10, xl: 10 }}>
               <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                <img alt="profile user" src={ExpertiseImage} height="150px" />
+                <img alt="" src={ExpertiseImage} height="150px" />
                 <Typography variant="h3">Expertise</Typography>
                 <Typography variant="body1" pt={2}>
                   With years of experience, we have mastered the art of creating visually appealing and user-friendly websites.
                 </Typography>
               </Grid>
               <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                <img alt="profile user" src={InnovationImage} height="150px" />
+                <img alt="" src={InnovationImage} height="150px" />
                 <Typography variant="h3">Innovation</Typography>
                 <Typography variant="body1" pt={2}>
                   We stay up-to-date with the latest trends and technologies to ensure your website stands out from the competition.
@@ -50,7 +50,7 @@ export default function Introduce() {
             </Grid>
           </Grid>
           <Grid item xl={7} lg={7} md={12} sm={12}>
-            <img alt="profile user" src={IntroduceImage} width="100%" />
+            <img alt="" src={IntroduceImage} width="100%" />
           </Grid>
         </Grid>
       </Container>

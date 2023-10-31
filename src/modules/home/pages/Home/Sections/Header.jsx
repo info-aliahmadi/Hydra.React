@@ -8,7 +8,7 @@ const Header = () => {
     <>
       <div className="header">
         <Box className="fullscreen-container">
-          <img alt="profile user" src={header} className="fullscreen-image" />
+          <img alt="" src={header} className="fullscreen-image" />
         </Box>
         <Container maxWidth="xl">
           <Box className="fullscreen-title">

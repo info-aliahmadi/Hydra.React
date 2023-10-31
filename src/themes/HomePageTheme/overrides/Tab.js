@@ -6,8 +6,18 @@ export default function Tab(theme) {
       styleOverrides: {
         root: {
           minHeight: 46,
-          color: theme.palette.text.primary
-        }
+          color: '#6db2f3',
+
+        },
+        labelIcon: {},
+        textColorInherit: {},
+        textColorPrimary: {
+          minWidth: '200px',
+          padding: '30px'
+        },
+        selected: {},
+        disabled: {},
+        fullWidth: {}
       }
     }
   };

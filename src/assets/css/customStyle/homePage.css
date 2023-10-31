@@ -3,7 +3,9 @@
   --white: #eaeefd;
   --black: #2c302e;
 }
-
+::selection {
+  background-color: #ef88f8ce;
+}
 .bg-blue {
   background-color: var(--blue);
 }
@@ -13,6 +15,13 @@
 .header {
   overflow: hidden;
   position: relative;
+}
+.fullscreen-container2 {
+  position: static;
+  top: 0;
+  left: 0;
+  height: 30vh;
+  width: 30vw;
 }
 /* Stretch Background Video */
 .fullscreen-container {
@@ -126,18 +135,23 @@
   padding: 6px 0;
 }
 .footer .footer-links a:link,
-.footer .footer-links a:visited {
+.footer .footer-links a:visited,
+.team.social-link svg path {
   display: flex;
   align-items: center;
   color: #c9cedd;
+  fill: #c9cedd;
   text-decoration: none;
 }
 .footer .footer-links a:hover,
-.footer .footer-links a:focus {
+.footer .footer-links a:focus,
+.footer .footer-links a:hover svg path {
   color: #adb2c2;
+  fill: #adb2c2;
 }
 
 .footer .footer-links.social-link {
+  margin-bottom: 24px;
   display: flex;
   align-items: center;
 }
@@ -163,4 +177,55 @@
 .footer .copyright .copyright-links a:visited {
   color: #c9cedd;
   padding: 0 10px;
+}
+
+.team.social-link a:link,
+.team.social-link a:visited,
+.team.social-link svg path {
+  display: flex;
+  align-items: center;
+  color: #2c302e;
+  fill: #2c302e;
+  text-decoration: none;
+  transition: fill 0.5, color 0.5;
+}
+.team.social-link a:hover,
+.team.social-link a:focus,
+.team.social-link a:hover svg path {
+  transition: fill 0.5, color 0.5;
+  display: flex;
+  align-items: center;
+  color: #424242;
+  fill: #424242;
+  text-decoration: none;
+}
+.team.social-link {
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+}
+.MuiTabs-indicator {
+  width: 6px;
+  background-color: #a1d4f8;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+.MuiTimeline-root .MuiSvgIcon-root {
+  fill: #2c302ec7;
+}
+.MuiTimeline-root .MuiTimelineDot-root {
+  background: linear-gradient(180deg, #ceebff, #a1d4f8);
+  box-shadow: 0px 10px 15px -6px #3683bb4d, 0px 4px 0px 0px #ffffff33 inset;
+  position: relative;
+  text-shadow: 1px 1px #9ccced;
+  background-color: #515754;
+  border-width: 0px;
+  padding: 20px;
+}
+.MuiTimeline-root .MuiTimelineConnector-root {
+  width: 3px;
+  background-color: #6cb6fe;
+}
+.MuiTimeline-root  .MuiTimelineItem-root {
+  /* min-height: 170px; */
 }

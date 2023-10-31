@@ -1,11 +1,13 @@
 import { Grid, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
-import StatisticsImage from 'assets/images/statistics.png';
+import StatisticsImage from 'assets/images/statistics2.png';
+import WaveAboutImage from 'assets/images/wave-about-3.svg';
 import 'react';
 
 export default function Statistics() {
   return (
-    <Box className="bg-blue">
+    <Box className="bg-white">
+      <img alt="" src={WaveAboutImage} width="100%" />
       <Container maxWidth="xl">
         <Grid container pt={{ xs: 3, sm: 5, md: 8, lg: 10, xl: 15 }} pb={{ xs: 10, sm: 10, md: 10, lg: 10, xl: 10 }}>
           <Grid

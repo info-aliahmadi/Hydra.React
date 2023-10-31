@@ -8,6 +8,10 @@ const AuthRegister = Loadable(lazy(() => import('modules/auth/pages/authenticati
 
 const Home = Loadable(lazy(() => import('modules/home/pages/Home')));
 
+const About = Loadable(lazy(() => import('modules/home/pages/About')));
+
+const Service = Loadable(lazy(() => import('modules/home/pages/Service')));
+
 const MinimalLayout = Loadable(lazy(() => import('layout/MinimalLayout')));
 
 // ==============================|| MAIN ROUTING ||============================== //
@@ -18,6 +22,18 @@ const HomeRoutes = [
     path: '/',
     layout: <HomeLayout />,
     element: <Home />
+  },
+  {
+    key: 'about',
+    path: '/about',
+    layout: <HomeLayout />,
+    element: <About />
+  },
+  {
+    key: 'service',
+    path: '/service',
+    layout: <HomeLayout />,
+    element: <Service />
   },
   {
     key: 'loginkey',

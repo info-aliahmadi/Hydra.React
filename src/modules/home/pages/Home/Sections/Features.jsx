@@ -10,7 +10,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 export default function Features() {
   return (
     <Box  className="bg-blue">
-      <img alt="profile user" src={WaveFeaturesImage} width="100%" />
+      <img alt="" src={WaveFeaturesImage} width="100%" />
       <Container maxWidth="xl">
         <Grid container>
           <Grid
@@ -43,21 +43,21 @@ export default function Features() {
           </Grid>
           <Grid container item rowSpacing={{ xs: 7, sm: 7, md: 5, lg: 7, xl: 7 }} xs={12} sm={12} md={12} lg={12} xl={12}>
             <Grid item xs={12} sm={12} md={4} lg={4} xl={4} textAlign={'center'}>
-              <img alt="profile user" src={Feature1Image} height="200px" />
+              <img alt="" src={Feature1Image} height="200px" />
               <Typography variant="h3">Portfolio</Typography>
               <Typography variant="body1" pt={2}>
                 We Create Unique and visually appealing custom portfolio.
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12} md={4} lg={4} xl={4} textAlign={'center'}>
-              <img alt="profile user" src={Feature2Image} height="200px" />
+              <img alt="" src={Feature2Image} height="200px" />
               <Typography variant="h3">E-Commerce</Typography>
               <Typography variant="body1" pt={2}>
                 We build online stores that drive sales and conversions.
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12} md={4} lg={4} xl={4} textAlign={'center'}>
-              <img alt="profile user" src={Feature3Image} height="200px" />
+              <img alt="" src={Feature3Image} height="200px" />
               <Typography variant="h3">Web Application</Typography>
               <Typography variant="body1" pt={2}>
                 We develop powerful web applications for your business needs.

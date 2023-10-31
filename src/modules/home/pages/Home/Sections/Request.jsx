@@ -6,7 +6,7 @@ import 'react';
 export default function Request() {
   return (
     <Box className="bg-white">
-      <img alt="profile user" src={WaveRequestImage} width="100%" />
+      <img alt="" src={WaveRequestImage} width="100%" />
       <Container maxWidth="xl">
         <Grid container alignItems="center" mt={{ xs: 0, sm: 0, md: 0, lg: 5, xl: 8 }} p={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}>
           <Grid item xs={12} sm={12} md={12} lg={9} xl={9}>

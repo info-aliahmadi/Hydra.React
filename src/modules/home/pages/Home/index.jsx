@@ -7,7 +7,7 @@ import Statistics from './Sections/Statistics';
 import Request from './Sections/Request';
 import Contact from './Sections/Contact';
 
-const Home = () => {
+export default function Home() {
   return (
     <>
       <Header />
@@ -19,5 +19,4 @@ const Home = () => {
       <Contact />
     </>
   );
-};
-export default Home;
+}

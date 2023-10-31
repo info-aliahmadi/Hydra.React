@@ -57,7 +57,7 @@ export default function Typography(theme) {
         },
         h3: {
           [theme.breakpoints.up('xs')]: {
-            fontSize: '1.0rem'
+            fontSize: '1.2rem'
           },
           [theme.breakpoints.up('sm')]: {
             fontSize: '1.3rem'

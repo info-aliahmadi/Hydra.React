@@ -12,7 +12,7 @@ import SocialLinks from './Links/SocialLinks';
 export default function Footer() {
   return (
     <Box className="footer">
-      <img alt="profile user" src={WaveFooterImage} width="100%" />
+      <img alt="" src={WaveFooterImage} width="100%" />
       <Container maxWidth="xl">
         <Grid
           container
@@ -23,7 +23,7 @@ export default function Footer() {
           <Grid container item xs={12} sm={12} md={6} lg={6} xl={6}>
             <Grid item >
               <Box sx={{ textAlign: 'center' }}>
-                <img alt="profile user" src={FooterLogoImage} />
+                <img alt="" src={FooterLogoImage} />
               </Box>
               <Box pt={4}>
                 <Newsletter />

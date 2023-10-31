@@ -11,7 +11,7 @@ export default function Contact() {
   const [checked, setChecked] = useState(false);
   return (
     <Box className="bg-blue">
-      <img alt="profile user" src={WaveContactImage} width="100%" />
+      <img alt="" src={WaveContactImage} width="100%" />
       <Container maxWidth="xl">
         <Grid container pt={{ xs: 3, sm: 5, md: 8, lg: 10, xl: 15 }} pb={{ xs: 10, sm: 10, md: 10, lg: 10, xl: 10 }}>
           <Grid

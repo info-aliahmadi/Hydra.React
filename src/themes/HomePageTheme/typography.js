@@ -56,13 +56,13 @@ const Typography = (fontFamily) => ({
   body1: {
     fontFamily: fontFamily.body,
     fontSize: '0.9rem',
-    lineHeight: 1.57,
+    lineHeight: 1.7,
     textShadow: '1px 1px 0 #9bb2cb87'
   },
   body2: {
     fontFamily: fontFamily.body,
     fontSize: '1rem',
-    lineHeight: 1.66,
+    lineHeight: 1.9,
     textShadow: '1px 1px 0 #9bb2cb87'
   },
   body3: {
@@ -79,8 +79,8 @@ const Typography = (fontFamily) => ({
   },
   subtitle2: {
     fontFamily: fontFamily.body,
-    fontSize: '0.75rem',
-    fontWeight: 500,
+    fontSize: '1.2rem',
+    fontWeight: 700,
     lineHeight: 1.66
   },
   overline: {
