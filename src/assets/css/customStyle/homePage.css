@@ -226,6 +226,42 @@
   width: 3px;
   background-color: #6cb6fe;
 }
-.MuiTimeline-root  .MuiTimelineItem-root {
+.MuiTimeline-root .MuiTimelineItem-root {
   /* min-height: 170px; */
+}
+.pricing-box {
+  border-radius: 30px;
+  border: 5px solid #92d6fc;
+  background: linear-gradient(2deg, #4873bb -11.85%, #bad4ff -11.84%, #fff 111.78%);
+  padding-bottom: 0px;
+  position: relative;
+  padding-top: 0;
+}
+.pricing-box .bg-wave {
+  width: 100%;
+  border-radius: 26px 24px 0 0;
+}
+.pricing-box .price-title {
+  /* width: 70%; */
+  padding-bottom: 80px;
+  border-bottom: 1px solid var(--black);
+}
+.pricing-box .feature {
+  display: flex;
+  align-items: center;
+}
+
+.pricing-box .feature svg {
+  margin: 10px;
+}
+.plan-box {
+  border-radius: 30px;
+  border: 5px solid #bed5ff;
+  background: linear-gradient(2deg, #4873bb -11.85%, #bad4ff -11.84%, #fff 111.78%);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 0;
+  align-self: stretch;
 }

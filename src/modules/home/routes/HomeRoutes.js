@@ -1,5 +1,7 @@
 import Loadable from 'components/Loadable';
-import HomeLayout from 'layout/HomeLayout';
+const HomeLayout = Loadable(lazy(() => import('layout/HomeLayout')));
+const MinimalLayout = Loadable(lazy(() => import('layout/MinimalLayout')));
+
 import { lazy } from 'react';
 
 const AuthLogin = Loadable(lazy(() => import('modules/auth/pages/authentication/Login')));
@@ -12,7 +14,7 @@ const About = Loadable(lazy(() => import('modules/home/pages/About')));
 
 const Service = Loadable(lazy(() => import('modules/home/pages/Service')));
 
-const MinimalLayout = Loadable(lazy(() => import('layout/MinimalLayout')));
+const Pricing = Loadable(lazy(() => import('modules/home/pages/Pricing')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -34,6 +36,12 @@ const HomeRoutes = [
     path: '/service',
     layout: <HomeLayout />,
     element: <Service />
+  },
+  {
+    key: 'pricing',
+    path: '/pricing',
+    layout: <HomeLayout />,
+    element: <Pricing />
   },
   {
     key: 'loginkey',

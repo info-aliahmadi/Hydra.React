@@ -21,10 +21,10 @@ export default function Header() {
             pt={{ xs: 3, sm: 10, md: 15, lg: 20, xl: 20 }}
           >
             <Typography variant="h1" pt={2} sx={{ display: 'block' }}>
-              Services
+              Pricing plan
             </Typography>
             <Typography variant="body2" pt={2}>
-              At OnWave Design, we specialize in designing
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </Typography>
           </Grid>
         </Grid>
