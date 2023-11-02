@@ -264,4 +264,39 @@
   align-items: center;
   flex: 1 0 0;
   align-self: stretch;
+  max-width: 350px;
+  margin: 15px auto;
+}
+.feature-table {
+  width: 100%;
+}
+.feature-table tr,
+.feature-table th {
+  border: none;
+}
+
+.feature-table tr:nth-child(even) {
+  background-color: #ffffff36;
+  border: none;
+}
+.faq {
+  width: 100%;
+}
+.faq .question {
+  border-top: 1px solid #2c302e73;
+  padding: 16px;
+}
+.faq .answer {
+  padding: 16px;
+}
+.category a:link,
+.category a:visited {
+  padding: 10px 25px;
+  margin: 5px;
+  transition: border-color 0.5;
+}
+
+.category a:hover,
+.category a:focus {
+  outline: 2px solid #2c302e94;
 }

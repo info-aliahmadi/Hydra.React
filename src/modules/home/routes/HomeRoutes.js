@@ -14,6 +14,10 @@ const About = Loadable(lazy(() => import('modules/home/pages/About')));
 
 const Service = Loadable(lazy(() => import('modules/home/pages/Service')));
 
+const Blog = Loadable(lazy(() => import('modules/home/pages/Blog')));
+
+const BlogPost = Loadable(lazy(() => import('modules/home/pages/BlogPost')));
+
 const Pricing = Loadable(lazy(() => import('modules/home/pages/Pricing')));
 
 // ==============================|| MAIN ROUTING ||============================== //
@@ -42,6 +46,18 @@ const HomeRoutes = [
     path: '/pricing',
     layout: <HomeLayout />,
     element: <Pricing />
+  },
+  {
+    key: 'blog',
+    path: '/blog',
+    layout: <HomeLayout />,
+    element: <Blog />
+  },
+  {
+    key: 'blogPost',
+    path: '/blogPost',
+    layout: <HomeLayout />,
+    element: <BlogPost />
   },
   {
     key: 'loginkey',
