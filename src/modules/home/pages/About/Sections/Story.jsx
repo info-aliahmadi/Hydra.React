@@ -6,7 +6,13 @@ import 'react';
 export default function Story() {
   return (
     <Box className="bg-white">
-      <img alt="" src={WaveAboutImage} width="100%" />
+        <Box
+        className="bg-wave"
+        sx={{
+          backgroundImage: `url(${WaveAboutImage})`
+        }}
+        height={{ xs: 300, sm: 300, md: 350, lg: 400, xl: 460 }}
+      ></Box>
       <Container maxWidth="xl">
         <Grid container>
           <Grid

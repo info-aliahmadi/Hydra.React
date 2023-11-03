@@ -11,20 +11,22 @@ export default function Contact() {
   const [checked, setChecked] = useState(false);
   return (
     <Box className="bg-blue">
-      <img alt="" src={WaveContactImage} width="100%" />
+      <Box
+        className="bg-wave"
+        sx={{
+          backgroundImage: `url(${WaveContactImage})`
+        }}
+        height={{ xs: 200, sm: 250, md: 300, lg: 360, xl: 400 }}
+      ></Box>
       <Container maxWidth="xl">
-        <Grid container pt={{ xs: 3, sm: 5, md: 8, lg: 10, xl: 15 }} pb={{ xs: 10, sm: 10, md: 10, lg: 10, xl: 10 }}>
-          <Grid
-            container
-            item
-            xs={12}
-            sm={12}
-            md={5}
-            lg={5}
-            xl={5}
-            rowSpacing={{ xs: 5, sm: 5, md: 5, lg: 5, xl: 5 }}
-            p={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
-          >
+        <Grid
+          container
+          pt={{ xs: 3, sm: 5, md: 8, lg: 10, xl: 15 }}
+          pb={{ xs: 10, sm: 10, md: 10, lg: 10, xl: 10 }}
+          pl={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
+          pr={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
+        >
+          <Grid container item xs={12} sm={12} md={5} lg={5} xl={5}>
             <Grid item>
               <Typography variant="h5" pt={2}>
                 Contact
@@ -40,7 +42,7 @@ export default function Contact() {
               </Typography>
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={12} md={7} lg={7} xl={7} spacing={3}>
+          <Grid item xs={12} sm={12} md={7} lg={7} xl={7} spacing={3} pt={{ xs: 10, sm: 10, md: 0, lg: 0, xl: 0 }}>
             <form noValidate autoComplete="off">
               <Grid container spacing={3}>
                 <Grid item xs={12}>

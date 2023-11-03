@@ -1,9 +1,9 @@
 import React from 'react';
-import Header from './Sections/Header';
 import Introduce from './Sections/Introduce';
 import Plans from './Sections/Plans';
 import FAQ from './Sections/FAQ';
 import CTA from './Sections/CTA';
+import Header from './Sections/Header';
 
 export default function Pricing() {
   return (
@@ -12,7 +12,7 @@ export default function Pricing() {
       <Introduce />
       <Plans />
       <FAQ />
-      <CTA  />
+      <CTA />
     </>
   );
 }

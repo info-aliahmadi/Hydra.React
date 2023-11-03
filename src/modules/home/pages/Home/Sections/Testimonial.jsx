@@ -35,7 +35,15 @@ export default function Testimonial({ showWave }) {
 
   return (
     <Box className="bg-blue">
-      {showWave && <img alt="" src={WaveServiceImage} width="100%" />}
+      {showWave && (
+        <Box
+          className="bg-wave"
+          sx={{
+            backgroundImage: `url(${WaveServiceImage})`
+          }}
+          height={{ xs: 250, sm: 280, md: 300, lg: 330, xl: 350 }}
+        ></Box>
+      )}
       <Box p={{ xs: 1, sm: 4, md: 10, lg: 10, xl: 10 }} pb={{ xs: 15, sm: 8, md: 8, lg: 8, xl: 8 }}>
         <Container maxWidth="xl">
           <Grid xs={12} sm={12} md={12} lg={12} xl={12} style={{ position: 'relative' }}>

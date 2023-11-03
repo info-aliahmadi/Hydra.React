@@ -14,15 +14,15 @@ export default function Introduce() {
         <Box className="pricing-box" pt={15} pb={15}>
           <img className="bg-wave" src={PricingBaxImage} alt="" />
           <Box mt={{ xs: -35, sm: -35, md: -25, lg: -30, xl: -35 }} p={{ xs: 7, sm: 7, md: 4, lg: 5, xl: 7 }}>
-            <Box className="price-title" textAlign="center">
+            <Box className="price-title" textAlign="center" pb={{ xs: 5, sm: 10, md: 4, lg: 10, xl: 10 }}>
               <Typography variant="h3">Basic plan</Typography>
               <Typography variant="h1" lineHeight={2}>
                 $19/mo
               </Typography>
               <Typography variant="body2">or $199 yearly</Typography>
             </Box>
-            <Box pt={3}>
-              <Typography variant="body2" lineHeight={5} fontWeight={700}>
+            <Box pt={{ xs: 2, sm: 2, md: 0, lg: 3, xl: 3 }}>
+              <Typography variant="body2" lineHeight={{ xs: 2, sm: 3, md: 2, lg: 5, xl: 5 }} fontWeight={700}>
                 Includes:
               </Typography>
               <Box>
@@ -61,9 +61,24 @@ export default function Introduce() {
   }
   return (
     <Box className="bg-white">
-      <img alt="" src={WaveAboutImage} width="100%" />
+      <Box
+        className="bg-wave"
+        sx={{
+          backgroundImage: `url(${WaveAboutImage})`
+        }}
+        height={{ xs: 300, sm: 350, md: 400, lg: 400, xl: 480 }}
+      ></Box>
       <Container maxWidth="xl">
-        <Grid container alignItems="center" alignContent="center" justifyContent="center" spacing={5}>
+        <Grid
+          container
+          alignItems="center"
+          alignContent="center"
+          justifyContent="center"
+          spacing={5}
+          pt={{ xs: 5, sm: 5, md: 5, lg: 8, xl: 10 }}
+          pl={{ xs: 5, sm: 5, md: 5, lg: 0, xl: 0 }}
+          pr={{ xs: 5, sm: 5, md: 5, lg: 0, xl: 0 }}
+        >
           <Grid item xs={8} sm={7} md={4} lg={4} xl={4}>
             <PriceItem />
           </Grid>

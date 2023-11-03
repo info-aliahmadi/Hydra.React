@@ -6,7 +6,13 @@ import 'react';
 export default function Request() {
   return (
     <Box className="bg-white">
-      <img alt="" src={WaveRequestImage} width="100%" />
+      <Box
+        className="bg-wave"
+        sx={{
+          backgroundImage: `url(${WaveRequestImage})`
+        }}
+        height={{ xs: 200, sm: 250, md: 300, lg: 360, xl: 380 }}
+      ></Box>
       <Container maxWidth="xl">
         <Grid container alignItems="center" mt={{ xs: 0, sm: 0, md: 0, lg: 5, xl: 8 }} p={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}>
           <Grid item xs={12} sm={12} md={12} lg={9} xl={9}>
@@ -19,7 +25,7 @@ export default function Request() {
               </Typography>
             </Grid>
           </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={3} xl={3}  pt={{ xs: 5, sm: 5, md: 5, lg: 0, xl: 0 }}>
+          <Grid item xs={12} sm={12} md={12} lg={3} xl={3} pt={{ xs: 5, sm: 5, md: 5, lg: 0, xl: 0 }}>
             <Button variant="contained" color="primary" size="large">
               Request
             </Button>

@@ -43,24 +43,47 @@ export default function ServiceTab() {
 
   return (
     <Box className="bg-white">
-      <img alt="" src={WaveAboutImage} width="100%" />
+      <Box
+        className="bg-wave"
+        sx={{
+          backgroundImage: `url(${WaveAboutImage})`
+        }}
+        height={{ xs: 250, sm: 280, md: 300, lg: 330, xl: 350 }}
+      ></Box>
       <Container maxWidth="xl">
-        <Grid container pt={{ xs: 3, sm: 5, md: 6, lg: 0, xl: 0 }} pb={{ xs: 10, sm: 10, md: 10, lg: 10, xl: 10 }}>
-          <Grid container alignItems="center" alignContent="center" justifyContent="center">
-            <Grid item xs={10} sm={10} md={10} lg={10} xl={10}>
-              <Stack alignItems="center" textAlign={'center'} pt={15} pb={15}>
-                <Typography variant="h5" pt={2}>
-                  Tagline
-                </Typography>
-                <Typography variant="h1" pt={2}>
-                  Medium length section heading goes here
-                </Typography>
-                <Typography variant="body2" pt={4}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus,
-                  mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.
-                </Typography>
-              </Stack>
-            </Grid>
+        <Grid
+          container
+          alignItems="center"
+          alignContent="center"
+          justifyContent="center"
+          pt={{ xs: 3, sm: 5, md: 6, lg: 0, xl: 0 }}
+          pb={{ xs: 10, sm: 10, md: 10, lg: 10, xl: 10 }}
+        >
+          <Grid
+            item
+            alignItems="center"
+            alignContent="center"
+            justifyContent="center"
+            xs={12}
+            sm={12}
+            md={12}
+            lg={12}
+            xl={12}
+            pl={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
+            pr={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
+          >
+            <Stack alignItems="center" textAlign={'center'} pt={15} pb={15}>
+              <Typography variant="h5" pt={2}>
+                Tagline
+              </Typography>
+              <Typography variant="h1" pt={2}>
+                Medium length section heading goes here
+              </Typography>
+              <Typography variant="body2" pt={4}>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus,
+                mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.
+              </Typography>
+            </Stack>
           </Grid>
           <Grid item xs={12} xl={12} lg={12} md={12} sm={12}>
             <Box sx={{ flexGrow: 1, display: 'flex' }}>

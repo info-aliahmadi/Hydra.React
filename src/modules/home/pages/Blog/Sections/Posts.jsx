@@ -1,4 +1,4 @@
-import { Grid, Stack, Typography } from '@mui/material';
+import { Grid, Paper, Stack, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import PreviewImage from 'assets/images/Image.png';
 import 'react';
@@ -7,16 +7,16 @@ import Author from './Author';
 export default function Posts() {
   function Post() {
     return (
-      <Grid Item xs={12} sm={12} md={6} lg={6} xl={6}>
+      <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
         <Grid>
-          <img alt="" src={PreviewImage} />
+          <img alt="" src={PreviewImage} width={'100%'} />
         </Grid>
         <Grid>
-          <Stack pb={15}>
+          <Stack>
             <Typography variant="h5" pt={2}>
               Category
             </Typography>
-            <a href="/blogpost">
+            <a href="/blogpost" className="post-title">
               <Typography variant="h3" pt={2}>
                 Blog title heading will go here
               </Typography>
@@ -35,7 +35,13 @@ export default function Posts() {
   return (
     <Box className="bg-white">
       <Container maxWidth="xl">
-        <Grid container pt={5}>
+        <Grid
+          container
+          pt={5}
+          spacing={{ xs: 5, sm: 5, md: 5, lg: 10, xl: 10 }}
+          pl={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
+          pr={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
+        >
           <Post /> <Post /> <Post /> <Post /> <Post /> <Post />
         </Grid>
       </Container>

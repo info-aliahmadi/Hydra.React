@@ -9,8 +9,14 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 export default function Features() {
   return (
-    <Box  className="bg-blue">
-      <img alt="" src={WaveFeaturesImage} width="100%" />
+    <Box className="bg-blue">
+      <Box
+        className="bg-wave"
+        sx={{
+          backgroundImage: `url(${WaveFeaturesImage})`
+        }}
+        height={{ xs: 230, sm: 250, md: 300, lg: 360, xl: 380 }}
+      ></Box>
       <Container maxWidth="xl">
         <Grid container>
           <Grid

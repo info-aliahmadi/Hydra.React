@@ -1,14 +1,20 @@
+import 'react';
 import { Button, Grid, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
-import WaveTeamImage from 'assets/images/wave-team.svg';
 import AppLogo from 'assets/images/app-logo.png';
 import AppLogo2 from 'assets/images/app-logo-2.png';
-import 'react';
+import WaveContactImage from 'assets/images/wave-contact.svg';
 
 export default function CTA() {
   return (
     <Box className="bg-blue">
-      <img alt="" src={WaveTeamImage} width="100%" />
+      <Box
+        className="bg-wave"
+        sx={{
+          backgroundImage: `url(${WaveContactImage})`
+        }}
+        height={{ xs: 300, sm: 350, md: 400, lg: 450, xl: 400 }}
+      ></Box>
       <Container maxWidth="xl">
         <Grid container>
           <Grid container item xs={12} sm={12} md={12} lg={12} xl={12} pb={{ xs: 5, sm: 8, md: 8, lg: 8, xl: 8 }} justifyContent="center">

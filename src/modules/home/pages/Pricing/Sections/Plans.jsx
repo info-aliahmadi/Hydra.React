@@ -36,14 +36,20 @@ export default function Plans() {
 
   return (
     <Box className="bg-blue">
-      <img alt="" src={WaveServiceImage} width="100%" />
+      <Box
+        className="bg-wave"
+        sx={{
+          backgroundImage: `url(${WaveServiceImage})`
+        }}
+        height={{ xs: 300, sm: 300, md: 320, lg: 350, xl: 380 }}
+      ></Box>
       <Container maxWidth="xl">
         <Grid container>
           <Grid
             container
             item
             rowSpacing={{ xs: 7, sm: 7, md: 5, lg: 7, xl: 7 }}
-            pt={{ xs: 3, sm: 10, md: 10, lg: 10, xl: 10 }}
+             pt={{ xs: 0, sm: 0, md: 0, lg: 5, xl: 5 }}
             pb={{ xs: 3, sm: 10, md: 10, lg: 10, xl: 10 }}
             xs={12}
             sm={12}
@@ -51,7 +57,14 @@ export default function Plans() {
             lg={12}
             xl={12}
           >
-            <Stack alignItems="center" textAlign={'center'} pt={15} pb={5}>
+            <Stack
+              alignItems="center"
+              textAlign={'center'}
+              pt={15}
+              pb={5}
+              pl={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
+              pr={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
+            >
               <Typography variant="h5" pt={2}>
                 Tagline
               </Typography>

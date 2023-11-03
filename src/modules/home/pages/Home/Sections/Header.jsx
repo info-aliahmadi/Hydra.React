@@ -16,7 +16,10 @@ const Header = () => {
               Turn Your Digital Experience
             </Typography>
             <Typography variant="header" sx={{ display: 'block' }}>
-              Into a Unique Interaction
+              Into a{' '}
+              <Typography variant="header" className="gradient-text">
+                Unique Interaction
+              </Typography>
             </Typography>
             <Typography variant="body3" sx={{ fontSize: '15px', display: 'block' }}>
               Welcome to OnWave Design, where we create stunning websites

@@ -7,7 +7,13 @@ import 'react';
 export default function Factory() {
   return (
     <Box className="bg-blue">
-      <img alt="" src={WaveAboutImage} width="100%" />
+      <Box
+        className="bg-wave"
+        sx={{
+          backgroundImage: `url(${WaveAboutImage})`
+        }}
+        height={{ xs: 250, sm: 280, md: 300, lg: 340, xl: 350 }}
+      ></Box>
       <Container maxWidth="xl">
         <img alt="" src={FactoryImage} width="100%" />
       </Container>

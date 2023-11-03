@@ -12,16 +12,23 @@ import SocialLinks from './Links/SocialLinks';
 export default function Footer() {
   return (
     <Box className="footer">
-      <img alt="" src={WaveFooterImage} width="100%" />
+      <Box
+        className="bg-wave"
+        sx={{
+          backgroundImage: `url(${WaveFooterImage})`
+        }}
+        height={{ xs: 200, sm: 280, md: 300, lg: 300, xl: 320 }}
+      ></Box>
       <Container maxWidth="xl">
         <Grid
           container
           pt={{ xs: 3, sm: 5, md: 8, lg: 8, xl: 8 }}
-          // pb={{ xs: 10, sm: 10, md: 10, lg: 10, xl: 10 }}
+          pr={{ xs: 0, sm: 0, md: 0, lg: 10, xl: 10 }}
+          pl={{ xs: 0, sm: 0, md: 10, lg: 10, xl: 10 }}
           justifyContent="space-between"
         >
-          <Grid container item xs={12} sm={12} md={6} lg={6} xl={6}>
-            <Grid item >
+          <Grid container item xs={12} sm={12} md={6} lg={6} xl={6} p={{ xs: 10, sm: 10, md: 0, lg: 0, xl: 0 }}>
+            <Grid item>
               <Box sx={{ textAlign: 'center' }}>
                 <img alt="" src={FooterLogoImage} />
               </Box>
@@ -35,13 +42,13 @@ export default function Footer() {
             item
             xs={12}
             sm={12}
-            md={6}
-            lg={6}
-            xl={6}
+            md={5}
+            lg={5}
+            xl={5}
             spacing={3}
             justifyContent="center"
             alignContent="center"
-            pt={{ xs: 10, sm: 10, md: 0, lg: 0, xl: 0 }}
+            pl={{ xs: 10, sm: 10, md: 0, lg: 0, xl: 0 }}
           >
             <Grid item xs={6} sm={6} md={5} lg={5} xl={5} spacing={3}>
               <FirstColumnLinks />

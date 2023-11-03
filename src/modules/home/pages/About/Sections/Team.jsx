@@ -1,10 +1,9 @@
 import { Avatar, Grid, Link, Stack, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
-import WaveTeamImage from 'assets/images/wave-team.svg';
 import 'react';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import XIcon from 'assets/images/X-social.svg';
 
+import WaveContactImage from 'assets/images/wave-contact.svg';
 function Person() {
   return (
     <Stack alignItems="center">
@@ -35,9 +34,15 @@ function Person() {
 export default function Team() {
   return (
     <Box className="bg-blue">
-      <img alt="" src={WaveTeamImage} width="100%" />
+      <Box
+        className="bg-wave"
+        sx={{
+          backgroundImage: `url(${WaveContactImage})`
+        }}
+        height={{ xs: 300, sm: 350, md: 380, lg: 400, xl: 400 }}
+      ></Box>
       <Container maxWidth="xl">
-        <Grid container>
+        <Grid container pl={{ xs: 5, sm: 5, md: 15, lg: 0, xl: 0 }} pr={{ xs: 5, sm: 5, md: 15, lg: 0, xl: 0 }}>
           <Grid
             container
             item
@@ -46,8 +51,8 @@ export default function Team() {
             md={12}
             lg={12}
             xl={12}
-            pb={{ xs: 3, sm: 10, md: 15, lg: 15, xl: 15 }}
             justifyContent="center"
+            pb={{ xs: 3, sm: 10, md: 15, lg: 15, xl: 15 }}
           >
             <Grid item sx={{ textAlign: 'center' }}>
               <Typography variant="h5" pt={2}>

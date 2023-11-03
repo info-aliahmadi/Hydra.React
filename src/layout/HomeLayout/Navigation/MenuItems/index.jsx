@@ -67,9 +67,9 @@ export default function MenuItems() {
         >
           {menuItems.map((item) => (
             <MenuItem key={item.id} onClick={handleCloseNavMenu}>
-              <Typography textAlign="center" href={item.url}>
+              <Link variant="text" key={item.id} href={item.url} sx={{ m: 2, display: 'block' }}>
                 {item.title}
-              </Typography>
+              </Link>
             </MenuItem>
           ))}
         </Menu>

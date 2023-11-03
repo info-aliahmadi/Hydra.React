@@ -8,8 +8,14 @@ import 'react';
 
 export default function Introduce() {
   return (
-    <Box  className="bg-white">
-      <img alt="" src={WaveIntroduceImage} width="100%" />
+    <Box className="bg-white">
+      <Box
+        className="bg-wave"
+        sx={{
+          backgroundImage: `url(${WaveIntroduceImage})`
+        }}
+        height={{ xs: 230, sm: 250, md: 300, lg: 360, xl: 380 }}
+      ></Box>
       <Container maxWidth="xl">
         <Grid container>
           <Grid

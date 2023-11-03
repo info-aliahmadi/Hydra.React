@@ -9,20 +9,28 @@ import 'react';
 export default function Features() {
   return (
     <Box className="bg-blue">
-      <img alt="" src={WaveServiceImage} width="100%" />
+      <Box
+        className="bg-wave"
+        sx={{
+          backgroundImage: `url(${WaveServiceImage})`
+        }}
+        height={{ xs: 250, sm: 280, md: 300, lg: 330, xl: 350 }}
+      ></Box>
       <Container maxWidth="xl">
         <Grid container>
           <Grid
             container
             item
-            rowSpacing={{ xs: 7, sm: 7, md: 5, lg: 7, xl: 7 }}
-            pt={{ xs: 3, sm: 10, md: 10, lg: 10, xl: 10 }}
-            pb={{ xs: 3, sm: 10, md: 10, lg: 10, xl: 10 }}
             xs={12}
             sm={12}
             md={12}
             lg={12}
             xl={12}
+            spacing={{ xs: 7, sm: 7, md: 5, lg: 7, xl: 7 }}
+            pt={{ xs: 3, sm: 10, md: 10, lg: 10, xl: 10 }}
+            pb={{ xs: 3, sm: 10, md: 10, lg: 10, xl: 10 }}
+            pl={{ xs: 5, sm: 5, md: 5, lg: 0, xl: 0 }}
+            pr={{ xs: 5, sm: 5, md: 5, lg: 0, xl: 0 }}
           >
             <Grid item xs={12} sm={12} md={4} lg={4} xl={4} textAlign={'center'}>
               <img alt="" src={Feature1Image} height="250px" />

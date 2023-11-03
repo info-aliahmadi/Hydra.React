@@ -23,7 +23,7 @@ export default function Typography(theme) {
         },
         h1: {
           [theme.breakpoints.up('xs')]: {
-            fontSize: '2.1rem'
+            fontSize: '2.3rem'
           },
           [theme.breakpoints.up('sm')]: {
             fontSize: '2.4rem'
@@ -57,19 +57,53 @@ export default function Typography(theme) {
         },
         h3: {
           [theme.breakpoints.up('xs')]: {
-            fontSize: '1.2rem'
+            fontSize: '1.5rem'
           },
           [theme.breakpoints.up('sm')]: {
-            fontSize: '1.3rem'
+            fontSize: '1.5rem'
           },
           [theme.breakpoints.up('md')]: {
-            fontSize: '1.5rem'
+            fontSize: '1.7rem'
           },
           [theme.breakpoints.up('lg')]: {
             fontSize: '1.9rem'
           },
           [theme.breakpoints.up('xl')]: {
             fontSize: '2rem'
+          }
+        },
+        h4: {
+          [theme.breakpoints.up('xs')]: {
+            fontSize: '1.1rem'
+          },
+          [theme.breakpoints.up('sm')]: {
+            fontSize: '1.1rem'
+          },
+          [theme.breakpoints.up('md')]: {
+            fontSize: '1.3rem'
+          },
+          [theme.breakpoints.up('lg')]: {
+            fontSize: '1.5rem'
+          },
+          [theme.breakpoints.up('xl')]: {
+            fontSize: '1.75rem'
+          }
+        },
+        h5: {
+          [theme.breakpoints.up('xs')]: {
+            fontSize: '1rem'
+          },
+          [theme.breakpoints.up('sm')]: {
+            fontSize: '1rem'
+          },
+          [theme.breakpoints.up('md')]: {
+            fontSize: '1.1rem'
+          },
+          [theme.breakpoints.up('lg')]: {
+            fontSize: '1.3rem'
+          },
+          [theme.breakpoints.up('xl')]: {
+            fontSize: '1.4rem'
           }
         },
         body3: {
