@@ -338,6 +338,31 @@
   text-shadow: none;
   background-position: top left 100%;
 }
+
+.link-body:link,
+.link-body:visited {
+  color: var(--black);
+  text-decoration: none;
+
+  background-image: linear-gradient(to right, var(--black), var(--black), #3982af, #4c34b1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 300% 100%;
+  background-position: top left;
+  text-shadow: none;
+
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.link-body:hover,
+.link-body:focus {
+  text-shadow: none;
+  background-position: top left 100%;
+}
+
 .gradient-text
 {
   background-image: linear-gradient(to right, #49aae5, #7c66d9);

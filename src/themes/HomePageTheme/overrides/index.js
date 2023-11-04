@@ -22,6 +22,7 @@ import Typography from './Typography';
 import Tooltip from './Tooltip';
 import DialogContent from './DialogContent';
 import Fab from './Fab';
+import Radio from './Radio';
 
 // ==============================|| OVERRIDES - MAIN ||============================== //
 
@@ -33,6 +34,7 @@ export default function ComponentsOverrides(theme) {
     Badge(theme),
     CardContent(),
     Checkbox(theme),
+    Radio(theme),
     Chip(theme),
     IconButton(theme),
     InputLabel(theme),

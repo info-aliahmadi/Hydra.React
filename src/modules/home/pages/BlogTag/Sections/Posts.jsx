@@ -1,4 +1,4 @@
-import { Grid, Stack, Typography } from '@mui/material';
+import { Grid, Paper, Stack, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import PreviewImage from 'assets/images/Image.png';
 import 'react';
@@ -35,11 +35,10 @@ export default function Posts() {
   }
 
   return (
-    <Box className="bg-white">
+    <Box className="bg-white" mt={10}>
       <Container maxWidth="xl">
         <Grid
           container
-          pt={5}
           spacing={{ xs: 5, sm: 5, md: 5, lg: 10, xl: 10 }}
           pl={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
           pr={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}

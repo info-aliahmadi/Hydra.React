@@ -3,7 +3,7 @@ import { Box, Container } from '@mui/system';
 import PreviewImage from 'assets/images/Image.png';
 import WaveContactImage from 'assets/images/wave-contact.svg';
 import 'react';
-import Author from './Author';
+import Author from '../../Shared/Author';
 
 export default function RelatedPosts() {
   function Post() {
@@ -14,10 +14,12 @@ export default function RelatedPosts() {
         </Grid>
         <Grid>
           <Stack>
-            <Typography variant="h5" pt={2}>
-              Category
-            </Typography>
-            <a href="#" className="post-title">
+            <a href="/blogcategory" className="post-title">
+              <Typography variant="h5" pt={2}>
+                Category
+              </Typography>
+            </a>
+            <a href="/blogpost" className="post-title">
               <Typography variant="h3" pt={2}>
                 Blog title heading will go here
               </Typography>
@@ -70,7 +72,7 @@ export default function RelatedPosts() {
 
             <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
               <Box textAlign="center" p={10}>
-                <Button variant="contained" color="info" size="large">
+                <Button href="/blog" variant="contained" color="info" size="large">
                   View All
                 </Button>
               </Box>

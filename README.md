@@ -1,7 +1,3 @@
-# Full React Project with dashboard (open to develop any requirement)
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
 ## Description
 
 This project is built using React version 18 and is designed to provide a robust authentication and authorization system. It utilizes JWT tokens and a combination of local storage and cookie storage to store user authentication information and permissions.
@@ -37,14 +33,6 @@ The project may require certain configurations to connect to your specific backe
 - src/config.js: Contains configuration variables such as API endpoints, Authentication and Authorization Storage Types and names, or any other environment-specific settings.
 
 ## Usage
-
-This project provides a starting point for building a React application with authentication and authorization features. Here are a few guidelines on how to use and extend it:
-
-- Authentication and Authorization: The project already includes a basic authentication and authorization system. You can customize it or extend it to fit your specific requirements. Look into the `src/modules/auth/services` folder to modify the authentication flow and user permissions.
-
-- Dashboard Theme: The project comes with a pre-built dashboard theme [Mantis Free React Material UI Dashboard Template](https://github.com/codedthemes/mantis-free-react-admin-template) free version. You can modify the styling and layout by editing the files in the `src/themes` folder. Feel free to add additional components or modify existing ones to match your desired design.
-
-- Adding New Features: To add new features to the project, follow these general steps:
 
 -- Create a new folder in `src/modules` folder and follow like other modules.
 -- Define the necessary routes in the `src/modules/YOUR_MODULE/routes` folder.

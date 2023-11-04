@@ -7,7 +7,7 @@ import 'react';
 export default function BottomPost() {
   return (
     <Box className="bg-blue">
-        <Box
+      <Box
         className="bg-wave"
         sx={{
           backgroundImage: `url(${WaveContactImage})`
@@ -32,10 +32,10 @@ export default function BottomPost() {
                   mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.
                 </Typography>
                 <Box sx={{ flexGrow: 0, display: 'flex' }} pb={{ xs: 8, sm: 8 }}>
-                  <Button variant="contained" color="primary" size="large">
+                  <Button href="/contact" variant="contained" color="primary" size="large">
                     Request
                   </Button>
-                  <Button variant="contained" color="info" size="large">
+                  <Button href="/contact" variant="contained" color="info" size="large">
                     Consult
                   </Button>
                 </Box>

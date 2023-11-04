@@ -30,7 +30,7 @@ export default function Introduce() {
             p={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
           >
             <Grid item>
-              <Typography variant="h1" pt={2}>
+              <Typography variant="h1" pt={6}>
                 Experience the Power of Cutting-Edge Web Design
               </Typography>
               <Typography variant="body2" pt={2}>

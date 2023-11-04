@@ -2,7 +2,7 @@ import { Grid, Stack, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import PreviewImage from 'assets/images/Image.png';
 import 'react';
-import Author from './Author';
+import Author from '../../Shared/Author';
 
 export default function TopPost() {
   return (
@@ -23,9 +23,11 @@ export default function TopPost() {
           </Grid>
           <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
             <Stack>
-              <Typography variant="h5" pt={2}>
-                Category
-              </Typography>
+              <a href="/blogcategory" className="post-title">
+                <Typography variant="h5" pt={2}>
+                  Category
+                </Typography>
+              </a>
               <a href="/blogpost" className="post-title">
                 <Typography variant="h1" pt={2}>
                   Blog title heading will go here

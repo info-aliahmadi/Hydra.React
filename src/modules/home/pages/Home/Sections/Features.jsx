@@ -72,10 +72,10 @@ export default function Features() {
           </Grid>
           <Grid item p={{ xs: 10, sm: 10, md: 10, lg: 12, xl: 12 }} pl={{ lg: 0, xl: 0 }}>
             <Box>
-              <Button variant="contained" color="info" size="large">
+              <Button href="/service" variant="contained" color="info" size="large">
                 Learn More
               </Button>
-              <Button color="primary" variant="text" size="large" endIcon={<ArrowForwardIosIcon fontSize="small" />}>
+              <Button href="/contact" color="primary" variant="text" size="large" endIcon={<ArrowForwardIosIcon fontSize="small" />}>
                 Request
               </Button>
             </Box>

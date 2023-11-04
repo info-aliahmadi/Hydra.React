@@ -1,4 +1,4 @@
-import { Grid, Stack, Typography } from '@mui/material';
+import { Grid,  Stack, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import PreviewImage from 'assets/images/Image.png';
 import 'react';

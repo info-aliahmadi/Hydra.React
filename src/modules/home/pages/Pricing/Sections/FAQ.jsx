@@ -96,7 +96,7 @@ export default function FAQ() {
               <Typography variant="body2" pt={4} pb={4}>
                 Lorem ipsum dolor sit amet
               </Typography>
-              <Button variant="contained" color="info" size="large">
+              <Button href="/contact" variant="contained" color="info" size="large">
                 Consult
               </Button>
             </Stack>

@@ -1,9 +1,10 @@
-import { Button, Grid, Stack, Typography } from '@mui/material';
+import { Grid, Stack, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import PreviewImage from 'assets/images/Image.png';
 import 'react';
-import Author from './Author';
 import ShareButtons from './ShareButtons';
+import Tags from './Tags';
+import Author from '../../Shared/Author';
 
 export default function Content() {
   return (
@@ -83,18 +84,7 @@ export default function Content() {
                   <ShareButtons />
                 </Grid>
                 <Grid item>
-                  <Button href="#" variant="contained" color="info">
-                    Tage 1
-                  </Button>
-                  <Button href="#" variant="contained" color="info">
-                    Tage 2
-                  </Button>
-                  <Button href="#" variant="contained" color="info">
-                    Tage 3
-                  </Button>
-                  <Button href="#" variant="contained" color="info">
-                    Tage 4
-                  </Button>
+                  <Tags />
                 </Grid>
               </Grid>
               <Box pt={5} mt={5} borderTop={'1px solid #00000069'}>

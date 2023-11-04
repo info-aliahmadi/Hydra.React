@@ -1,4 +1,3 @@
-import { CheckBox } from '@mui/icons-material';
 import { Button, Checkbox, FormControlLabel, Grid, InputLabel, OutlinedInput, TextareaAutosize, Typography } from '@mui/material';
 import { Box, Container, Stack } from '@mui/system';
 import WaveContactImage from 'assets/images/wave-contact.svg';

@@ -14,11 +14,23 @@ const About = Loadable(lazy(() => import('modules/home/pages/About')));
 
 const Service = Loadable(lazy(() => import('modules/home/pages/Service')));
 
+const Pricing = Loadable(lazy(() => import('modules/home/pages/Pricing')));
+
 const Blog = Loadable(lazy(() => import('modules/home/pages/Blog')));
 
 const BlogPost = Loadable(lazy(() => import('modules/home/pages/BlogPost')));
 
-const Pricing = Loadable(lazy(() => import('modules/home/pages/Pricing')));
+const BlogCategory = Loadable(lazy(() => import('modules/home/pages/BlogCategory')));
+
+const BlogTag = Loadable(lazy(() => import('modules/home/pages/BlogTag')));
+
+const Contact = Loadable(lazy(() => import('modules/home/pages/Contact')));
+
+const PrivacyPolicy = Loadable(lazy(() => import('modules/home/pages/Policy/PrivacyPolicy')));
+
+const TermsofService = Loadable(lazy(() => import('modules/home/pages/Policy/TermsofService')));
+
+const CookiesSettings = Loadable(lazy(() => import('modules/home/pages/Policy/CookiesSettings')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 
@@ -54,10 +66,46 @@ const HomeRoutes = [
     element: <Blog />
   },
   {
+    key: 'blogcategory',
+    path: '/blogcategory',
+    layout: <HomeLayout />,
+    element: <BlogCategory />
+  },
+  {
     key: 'blogPost',
     path: '/blogPost',
     layout: <HomeLayout />,
     element: <BlogPost />
+  },
+  {
+    key: 'blogtag',
+    path: '/blogtag',
+    layout: <HomeLayout />,
+    element: <BlogTag />
+  },
+  {
+    key: 'contact',
+    path: '/contact',
+    layout: <HomeLayout />,
+    element: <Contact />
+  },
+  {
+    key: 'privacypolicy',
+    path: '/privacypolicy',
+    layout: <HomeLayout />,
+    element: <PrivacyPolicy />
+  },
+  {
+    key: 'termsofservice',
+    path: '/termsofservice',
+    layout: <HomeLayout />,
+    element: <TermsofService />
+  },
+  {
+    key: 'cookiessettings',
+    path: '/cookiessettings',
+    layout: <HomeLayout />,
+    element: <CookiesSettings />
   },
   {
     key: 'loginkey',

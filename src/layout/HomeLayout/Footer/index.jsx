@@ -17,7 +17,7 @@ export default function Footer() {
         sx={{
           backgroundImage: `url(${WaveFooterImage})`
         }}
-        height={{ xs: 200, sm: 280, md: 300, lg: 300, xl: 320 }}
+        height={{ xs: 340, sm: 280, md: 300, lg: 350, xl: 380 }}
       ></Box>
       <Container maxWidth="xl">
         <Grid

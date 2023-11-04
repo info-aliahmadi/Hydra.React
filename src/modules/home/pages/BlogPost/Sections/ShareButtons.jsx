@@ -1,7 +1,6 @@
 import 'react';
 import { Button } from '@mui/material';
 import { Box } from '@mui/system';
-import Author from './Author';
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import LinkIcon from '@mui/icons-material/Link';

@@ -11,13 +11,13 @@ export default function Copyright() {
         <Grid item>
           <Box className="copyright-links">
             <Typography sx={{ minWidth: 100 }} variant="body1">
-              <a href="#"> Privacy Policy</a>
+              <a href="/privacypolicy"> Privacy Policy</a>
             </Typography>
             <Typography sx={{ minWidth: 100 }} variant="body1">
-              <a href="#"> Terms of Service</a>
+              <a href="/termsofservice"> Terms of Service</a>
             </Typography>
             <Typography sx={{ minWidth: 100 }} variant="body1">
-              <a href="#"> Cookies Settings</a>
+              <a href="/cookiessettings"> Cookies Settings</a>
             </Typography>
           </Box>
         </Grid>

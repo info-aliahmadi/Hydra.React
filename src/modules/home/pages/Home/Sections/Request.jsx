@@ -26,10 +26,10 @@ export default function Request() {
             </Grid>
           </Grid>
           <Grid item xs={12} sm={12} md={12} lg={3} xl={3} pt={{ xs: 5, sm: 5, md: 5, lg: 0, xl: 0 }}>
-            <Button variant="contained" color="primary" size="large">
+            <Button href="/contact" variant="contained" color="primary" size="large">
               Request
             </Button>
-            <Button variant="contained" color="info" size="large">
+            <Button href="/contact" variant="contained" color="info" size="large">
               Consult
             </Button>
           </Grid>
