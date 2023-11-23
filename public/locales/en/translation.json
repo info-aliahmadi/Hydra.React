@@ -49,6 +49,7 @@
     "linkSection": "Links",
     "fileStorage": "Storage",
     "filesList": "Files List",
+    "messageInbox": "Message Inbox",
     "cards": {
       "users-list": "Users List",
       "user-add": "Add New User",
@@ -76,7 +77,9 @@
       "link-edit": "Edit Link Link",
       "filesDirectory": "Directories",
       "files": "Files",
-      "fileStorage": "File Storage"
+      "fileStorage": "File Storage",
+      "messagesInbox": "Messages Inbox",
+      "messagesTrash": "Trash"
     }
   },
   "fields": {
@@ -186,6 +189,19 @@
       "imagePreviewId": "Image Preview",
       "userName": "Created By"
     },
+    "messageInbox": {
+      "messageType": {
+        "messageType": "Message Type",
+        "public": "Public",
+        "private": "Private",
+        "contact": "Contact",
+        "request": "Request"
+      },
+      "subject": "Url",
+      "content": "Description",
+      "registerDate": "Image Preview",
+      "from": "From"
+    },
     "fileStorage": {
       "files": "Files",
       "file": "File"
@@ -277,6 +293,13 @@
       "edit": "Edit Link",
       "delete": "Delete Link",
       "saveOrder": "Save Order"
+    },
+    "message": {
+      "messageInbox": {
+        "send": "Send Message",
+        "delete": "Delete Message",
+        "pin": "Pin Message"
+      }
     },
     "fileStorage": {
       "upload": "Upload",

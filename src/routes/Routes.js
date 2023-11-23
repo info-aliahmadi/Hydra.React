@@ -7,12 +7,13 @@ import Authenticate from 'modules/auth/services/Authentication/Authenticate';
 
 import AuthRoutes from 'modules/auth/routes/AuthRoutes';
 import CmsRoutes from 'modules/cms/routes/CmsRoutes';
+import CrmRoutes from 'modules/crm/routes/CrmRoutes';
 import FileStorageRoutes from 'modules/fileStorage/routes/FileStorageRoutes';
 import HomeRoutes from 'modules/home/routes/HomeRoutes';
 
 import Loader from 'components/Loader';
 
-let collectedRoutes = [...AuthRoutes, ...CmsRoutes, ...FileStorageRoutes];
+let collectedRoutes = [...AuthRoutes, ...CmsRoutes, ...CrmRoutes, ...FileStorageRoutes];
 export const PrivateRoutesCaller = (
   <Route
     key="MainLayoutKey"
