@@ -208,7 +208,7 @@ function SlideshowDataGrid() {
   return (
     <>
       <Notify notify={notify} setNotify={setNotify}></Notify>
-      <MainCard title={t('pages.cards.slideshow')}>
+      <MainCard title={AddOrOrderRow(showSaveBtn, data)}>
         <TableCard>
           <MaterialTable
             //key={'id' + refetch}
@@ -225,7 +225,7 @@ function SlideshowDataGrid() {
             enableColumnFilterModes={false}
             enableRowActions
             renderRowActions={DeleteOrEdit}
-            renderTopToolbarCustomActions={() => AddOrOrderRow(showSaveBtn, data)}
+            // renderTopToolbarCustomActions={() => AddOrOrderRow(showSaveBtn, data)}
             enableRowOrdering={true}
             autoResetPageIndex={false}
             muiTableBodyRowDragHandleProps={({ table }) => ({

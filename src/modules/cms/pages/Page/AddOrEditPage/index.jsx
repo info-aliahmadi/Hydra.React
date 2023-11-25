@@ -141,7 +141,7 @@ export default function AddOrEditPage() {
                             <OutlinedInput
                               id="pageTitle"
                               type="pageTitle"
-                              value={values.pageTitle || ''}
+                              value={values?.pageTitle || ''}
                               name="pageTitle"
                               onBlur={handleBlur}
                               onChange={handleChange}
@@ -163,7 +163,7 @@ export default function AddOrEditPage() {
                             <OutlinedInput
                               id="subject"
                               type="subject"
-                              value={values.subject || ''}
+                              value={values?.subject || ''}
                               name="subject"
                               onBlur={handleBlur}
                               onChange={handleChange}

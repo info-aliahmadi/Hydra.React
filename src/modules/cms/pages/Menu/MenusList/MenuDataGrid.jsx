@@ -202,7 +202,7 @@ function MenuDataGrid() {
   return (
     <>
       <Notify notify={notify} setNotify={setNotify}></Notify>
-      <MainCard title={t('pages.cards.menu')}>
+      <MainCard title={AddRow(showSaveBtn, data)}>
         <TableCard>
           <MaterialTable
             //key={'id' + refetch}
@@ -222,7 +222,7 @@ function MenuDataGrid() {
             enableColumnFilterModes={false}
             enableRowActions
             renderRowActions={DeleteOrEdit}
-            renderTopToolbarCustomActions={() => AddRow(showSaveBtn, data)}
+            // renderTopToolbarCustomActions={() => AddRow(showSaveBtn, data)}
             enableRowOrdering={true}
             autoResetPageIndex={false}
             muiTableBodyRowDragHandleProps={({ table }) => ({

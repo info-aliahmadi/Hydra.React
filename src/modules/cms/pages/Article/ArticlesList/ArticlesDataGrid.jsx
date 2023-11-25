@@ -314,7 +314,9 @@ function ArticlesDataGrid() {
   const ArticleHeader = ({ title }) => {
     return (
       <Grid container item direction="row" justifyContent="space-between" alignItems="center">
-        <Grid item>{title}</Grid>
+        <Grid item>
+          <AddRow />
+        </Grid>
         <Grid item>
           <Chip
             href="/ArticlesTrashList"
@@ -344,7 +346,6 @@ function ArticlesDataGrid() {
             dataApi={handleArticleList}
             enableRowActions={true}
             renderRowActions={DeleteOrEdit}
-            renderTopToolbarCustomActions={AddRow}
             renderDetailPanel={({ row }) => <ArticleDetail row={row} />}
             displayColumnDefOptions={{
               'mrt-row-actions': {

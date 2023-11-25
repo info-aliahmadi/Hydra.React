@@ -138,7 +138,7 @@ export default function AddOrEditArticle() {
                             <OutlinedInput
                               id="subject"
                               type="subject"
-                              value={values.subject || ''}
+                              value={values?.subject || ''}
                               name="subject"
                               onBlur={handleBlur}
                               onChange={handleChange}
@@ -246,7 +246,7 @@ export default function AddOrEditArticle() {
                               <OutlinedInput
                                 id="previewImageUrl"
                                 type="text"
-                                value={values.previewImageUrl || ''}
+                                value={values?.previewImageUrl || ''}
                                 name="previewImageUrl"
                                 onBlur={handleBlur}
                                 onChange={handleChange}

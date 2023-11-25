@@ -97,7 +97,7 @@ function PermissionDataGrid() {
   );
   return (
     <>
-      <MainCard title={t('pages.cards.permissions-list')}>
+      <MainCard title={<AddRow />}>
         <TableCard>
           <MaterialTable
             refetch={refetch}
@@ -105,7 +105,7 @@ function PermissionDataGrid() {
             dataApi={handlePermissionList}
             enableRowActions
             renderRowActions={DeleteOrEdit}
-            renderTopToolbarCustomActions={AddRow}
+            // renderTopToolbarCustomActions={AddRow}
           />
         </TableCard>
       </MainCard>

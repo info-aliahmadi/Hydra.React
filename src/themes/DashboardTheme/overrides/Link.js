@@ -1,10 +1,11 @@
 // ==============================|| OVERRIDES - LINK ||============================== //
 
-export default function Link() {
+export default function Link(theme) {
   return {
     MuiLink: {
       defaultProps: {
-        underline: 'hover'
+        underline: 'none',
+        color: theme.palette.grey[600]
       }
     }
   };

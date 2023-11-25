@@ -38,8 +38,8 @@ const FileUpload = ({
   fileType
 }) => {
   const [files, setFiles] = useState([]);
+  const [values, setValues] = useState(value);
   const [t, i18n] = useTranslation();
-
   const uploadUrl = CONFIG.API_BASEPATH + '/FileStorage/UploadFile';
 
   var fileUploadService = new FileStorageService();
@@ -64,50 +64,63 @@ const FileUpload = ({
     a.remove();
   }
 
-  const loadImage = async (fileId) => {
-    fileUploadService.getFileInfoById(fileId).then((fileInfo) => {
-      let fileUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory + fileInfo.fileName;
-      let imagePosterUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory;
-      let isVideo = CONFIG.VIDEOS_EXTENSIONS.some((extension) => extension == fileInfo.extension);
-      if (isVideo) {
-        imagePosterUrl += fileInfo.thumbnail;
-      } else {
-        imagePosterUrl += fileInfo.fileName;
-      }
-      setFiles([
-        {
-          // the server file reference
-          source: fileInfo.id,
-          // set type to local to indicate an already uploaded file
-          options: {
-            type: 'local',
-            // optional stub file information
-            file: {
-              name: fileInfo.fileName,
-              type: fileType + '/*',
-              size: fileInfo.size,
-              url: fileUrl
-            },
-            // pass poster property
-            metadata: {
-              poster: imagePosterUrl
-            }
-          }
-        }
-      ]);
+  const deleteImage = async (fileId) => {
+    fileUploadService.deleteFile(fileId).then((result) => {
+      return result;
     });
   };
-  const onupdatefiles = async (file) => {
-    if (setFieldValue) setFieldValue(id, file[0]?.serverId || undefined);
-    setFiles(file);
+
+  const loadImage = async (fileId) => {
+    fileUploadService.getFileInfoById(fileId).then((fileInfo) => {
+      debugger;
+      let fileUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory + fileInfo.fileName;
+      // let imagePosterUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory;
+      // let isVideo = CONFIG.VIDEOS_EXTENSIONS.some((extension) => extension == fileInfo.extension);
+      // if (isVideo) {
+      //   imagePosterUrl += fileInfo.thumbnail;
+      // } else {
+      //   imagePosterUrl += fileInfo.fileName;
+      // }
+      setFiles({
+        // the server file reference
+        source: fileInfo.id,
+        // set type to local to indicate an already uploaded file
+        options: {
+          type: 'local',
+          // optional stub file information
+          file: {
+            name: fileInfo.fileName,
+            type: fileType + '/*',
+            size: fileInfo.size,
+            url: fileUrl
+          }
+          // pass poster property
+          // metadata: {
+          //   poster: imagePosterUrl
+          // }
+        }
+      });
+    });
   };
-  useEffect(() => {
-    if (value > 0) {
-      loadImage(value);
-    } else {
-      setFiles([]);
+  const onupdatefiles = async (fileItems) => {
+    if (fileItems?.serverId) {
+      let response = JSON.parse(fileItems?.serverId);
+      if (response.succeeded) {
+        // let serverId = response.data?.id;
+        // if (setFieldValue) setFieldValue(id, serverId || undefined);
+        setFiles({
+          files: fileItems.map((fileItem) => fileItem.file)
+        });
+      }
     }
-  }, [value]);
+  };
+  // useEffect(() => {
+  //   if (value > 0) {
+  //     loadImage(value);
+  //   } else {
+  //     setFiles([]);
+  //   }
+  // }, [value]);
   const getError = (errorCode) => {
     switch (errorCode) {
       case 500:
@@ -136,11 +149,11 @@ const FileUpload = ({
     <FilePond
       disabled={disabled}
       id={id ? id : 'fileId'}
-      allowImagePreview={true}
-      filePosterMaxHeight={filePosterMaxHeight ?? 'auto'}
+      // allowImagePreview={true}
+      // filePosterMaxHeight={filePosterMaxHeight ?? 'auto'}
       allowDownloadByUrl={true}
       downloadFunction={downloadFunction}
-      allowFilePoster={true}
+      // allowFilePoster={true}
       allowFileTypeValidation={true}
       acceptedFileTypes={fileType ? fileType : undefined}
       allowFileSizeValidation={true}
@@ -166,8 +179,38 @@ const FileUpload = ({
       }}
       onprocessfile={(error, file) => {
         let response = JSON.parse(file?.serverId);
-        let fileInfo = response?.data;
-        if (setFieldValue) setFieldValue(id, fileInfo?.id);
+        if (response?.succeeded) {
+          let fileInfo = response?.data;
+          if (setFieldValue) {
+            if (allowMultiple) {
+              let newValue = values;
+              newValue.push(fileInfo?.id);
+              setFieldValue(id, newValue);
+              setValues((old) => [...old, fileInfo?.id]);
+            } else {
+              setFieldValue(newValue);
+            }
+          }
+        }
+      }}
+      onremovefile={(error, file) => {
+        debugger;
+        let response = JSON.parse(file?.serverId);
+        if (response?.succeeded) {
+          let fileInfo = response?.data;
+          if (setFieldValue) {
+            deleteImage(fileInfo?.id);
+            if (allowMultiple) {
+              let newValue = values;
+              const index = newValue.indexOf(fileInfo?.id);
+              newValue.splice(index, 1);
+              setFieldValue(id, newValue);
+              setValues(newValue);
+            } else {
+              setFieldValue(id, fileInfo?.id);
+            }
+          }
+        }
       }}
       labelFileProcessingError={(error) => {
         return getError(error.code);

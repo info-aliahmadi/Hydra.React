@@ -136,13 +136,13 @@ const ProfileForm = () => {
                         <input type="file" hidden accept="image/*" name="avatarFile" onChange={(e) => changeAvatar(e, setFieldValue)} />
                         <Avatar
                           alt=""
-                          src={avatarPreview ? avatarPreview : values.avatar ? CONFIG.AVATAR_BASEPATH + values.avatar : Anonymous}
+                          src={avatarPreview ? avatarPreview : values?.avatar ? CONFIG.AVATAR_BASEPATH + values?.avatar : Anonymous}
                           sx={{ width: 85, height: 85 }}
                         ></Avatar>
                       </ButtonBase>
                     </Tooltip>
                     <ButtonGroup variant="outlined" color="secondary" size="small" aria-label="outlined button group">
-                      {(avatarPreview || values.avatar) && (
+                      {(avatarPreview || values?.avatar) && (
                         <Tooltip title={t('tooltips.delete-avatar')}>
                           <Button onClick={() => deleteAvatar(setFieldValue)}>
                             <DeleteIcon />
@@ -168,7 +168,7 @@ const ProfileForm = () => {
                     <OutlinedInput
                       id="name"
                       type="name"
-                      value={values.name}
+                      value={values?.name || ''}
                       name="name"
                       onBlur={handleBlur}
                       onChange={handleChange}
@@ -190,8 +190,8 @@ const ProfileForm = () => {
                       fullWidth
                       error={Boolean(touched.userName && errors.userName)}
                       id="userName"
-                      type="lastname"
-                      value={values.userName}
+                      type="text"
+                      value={values?.userName || ''}
                       name="userName"
                       onBlur={handleBlur}
                       onChange={handleChange}
@@ -213,7 +213,7 @@ const ProfileForm = () => {
                       error={Boolean(touched.email && errors.email)}
                       id="email"
                       type="email"
-                      value={values.email}
+                      value={values?.email || ''}
                       name="email"
                       onBlur={handleBlur}
                       onChange={handleChange}
@@ -236,7 +236,7 @@ const ProfileForm = () => {
                       error={Boolean(touched.phoneNumber && errors.phoneNumber)}
                       id="phoneNumber-signup"
                       type="lastname"
-                      value={values.phoneNumber}
+                      value={values?.phoneNumber || ''}
                       name="phoneNumber"
                       onBlur={handleBlur}
                       onChange={handleChange}

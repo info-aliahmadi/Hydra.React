@@ -252,7 +252,7 @@ function PagesDataGrid() {
   return (
     <>
       <Notify notify={notify} setNotify={setNotify}></Notify>
-      <MainCard title={t('pages.cards.pages-list')}>
+      <MainCard title={<AddRow />}>
         <TableCard>
           <MaterialTable
             refetch={refetch}
@@ -260,7 +260,7 @@ function PagesDataGrid() {
             dataApi={handlePageList}
             enableRowActions={true}
             renderRowActions={DeleteOrEdit}
-            renderTopToolbarCustomActions={AddRow}
+            // renderTopToolbarCustomActions={AddRow}
             renderDetailPanel={({ row }) => <PageDetail row={row} />}
           />
         </TableCard>

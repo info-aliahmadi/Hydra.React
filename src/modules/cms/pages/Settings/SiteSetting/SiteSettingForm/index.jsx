@@ -88,7 +88,7 @@ const SiteSettingForm = () => {
                   <OutlinedInput
                     id="siteTitle"
                     type="name"
-                    value={values.siteTitle}
+                    value={values?.siteTitle || ''}
                     name="siteTitle"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -118,7 +118,7 @@ const SiteSettingForm = () => {
                     error={Boolean(touched.siteDescription && errors.siteDescription)}
                     id="siteDescription"
                     type="text"
-                    value={values.siteDescription}
+                    value={values?.siteDescription || ''}
                     name="siteDescription"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -150,7 +150,7 @@ const SiteSettingForm = () => {
                     error={Boolean(touched.siteKeywords && errors.siteKeywords)}
                     id="siteKeywords"
                     type="text"
-                    value={values.siteKeywords}
+                    value={values?.siteKeywords || ''}
                     name="siteKeywords"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -182,7 +182,7 @@ const SiteSettingForm = () => {
                     error={Boolean(touched.headerHtml && errors.headerHtml)}
                     id="headerHtml"
                     type="text"
-                    value={values.headerHtml}
+                    value={values?.headerHtml || ''}
                     name="headerHtml"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -212,7 +212,7 @@ const SiteSettingForm = () => {
                       borderRadius: '3px'
                     }}
                     id="footerHtml"
-                    defaultValue={values.footerHtml}
+                    defaultValue={values?.footerHtml || ''}
                     name="footerHtml"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -234,7 +234,7 @@ const SiteSettingForm = () => {
                   <OutlinedInput
                     id="numberOfPostsPerList"
                     type="number"
-                    value={values.numberOfPostsPerList}
+                    value={values?.numberOfPostsPerList || ''}
                     name="numberOfPostsPerList"
                     onBlur={handleBlur}
                     onChange={handleChange}

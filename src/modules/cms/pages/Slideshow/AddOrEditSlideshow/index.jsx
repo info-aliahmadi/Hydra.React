@@ -138,7 +138,7 @@ const AddOrEditSlideshow = ({ row, isNew, open, setOpen, refetch }) => {
                       <OutlinedInput
                         id="header"
                         type="text"
-                        value={values.header || ''}
+                        value={values?.header || ''}
                         name="header"
                         onBlur={handleBlur}
                         onChange={handleChange}
@@ -159,7 +159,7 @@ const AddOrEditSlideshow = ({ row, isNew, open, setOpen, refetch }) => {
                       <OutlinedInput
                         id="description"
                         type="text"
-                        value={values.description || ''}
+                        value={values?.description || ''}
                         name="description"
                         onBlur={handleBlur}
                         onChange={handleChange}
@@ -189,7 +189,7 @@ const AddOrEditSlideshow = ({ row, isNew, open, setOpen, refetch }) => {
                         <OutlinedInput
                           id="previewImageUrl"
                           type="text"
-                          value={values.previewImageUrl || ''}
+                          value={values?.previewImageUrl || ''}
                           name="previewImageUrl"
                           onBlur={handleBlur}
                           onChange={handleChange}

@@ -302,13 +302,13 @@ function UsersDataGrid() {
   };
   return (
     <>
-      <MainCard title={t('pages.cards.users-list')}>
+      <MainCard title={<AddRow />}>
         <TableCard>
           <MaterialTable
             columns={columns}
             dataApi={handleUserList}
             enableRowActions
-            renderTopToolbarCustomActions={AddRow}
+            // renderTopToolbarCustomActions={AddRow}
             renderRowActionMenuItems={RowActionMenuItems}
             renderDetailPanel={({ row }) => <UserDetail row={row} />}
           />

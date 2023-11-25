@@ -82,7 +82,7 @@ function TagDataGrid() {
   );
   return (
     <>
-      <MainCard title={t('pages.cards.tags-list')}>
+      <MainCard title={<AddRow />}>
         <TableCard>
           <MaterialTable
             refetch={refetch}
@@ -90,7 +90,7 @@ function TagDataGrid() {
             dataApi={handleTagList}
             enableRowActions
             renderRowActions={DeleteOrEdit}
-            renderTopToolbarCustomActions={AddRow}
+            // renderTopToolbarCustomActions={AddRow}
           />
         </TableCard>
       </MainCard>

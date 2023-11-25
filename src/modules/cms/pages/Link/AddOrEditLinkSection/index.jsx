@@ -138,7 +138,7 @@ const AddOrEditLinkSection = ({ row, isNew, open, setOpen, refetch }) => {
                       <OutlinedInput
                         id="key"
                         type="text"
-                        value={values.key || ''}
+                        value={values?.key || ''}
                         name="key"
                         onBlur={handleBlur}
                         onChange={handleChange}
@@ -159,7 +159,7 @@ const AddOrEditLinkSection = ({ row, isNew, open, setOpen, refetch }) => {
                       <OutlinedInput
                         id="title"
                         type="text"
-                        value={values.title || ''}
+                        value={values?.title || ''}
                         name="title"
                         onBlur={handleBlur}
                         onChange={handleChange}

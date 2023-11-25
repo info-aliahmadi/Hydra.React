@@ -94,7 +94,7 @@ function RoleDataGrid() {
   );
   return (
     <>
-      <MainCard title={t('pages.cards.roles-list')}>
+      <MainCard title={<AddRow />}>
         <TableCard>
           <MaterialTable
             refetch={refetch}
@@ -102,7 +102,7 @@ function RoleDataGrid() {
             dataApi={handleRoleList}
             enableRowActions
             renderRowActions={DeleteOrEdit}
-            renderTopToolbarCustomActions={AddRow}
+            // renderTopToolbarCustomActions={AddRow}
             renderDetailPanel={({ row }) => <PermissionRoleDataGrid row={row} />}
           />
         </TableCard>

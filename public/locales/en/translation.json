@@ -49,7 +49,7 @@
     "linkSection": "Links",
     "fileStorage": "Storage",
     "filesList": "Files List",
-    "messageInbox": "Message Inbox",
+    "messagesInbox": "Message Inbox",
     "cards": {
       "users-list": "Users List",
       "user-add": "Add New User",
@@ -79,6 +79,7 @@
       "files": "Files",
       "fileStorage": "File Storage",
       "messagesInbox": "Messages Inbox",
+      "sendMessage": "Send Message",
       "messagesTrash": "Trash"
     }
   },
@@ -189,18 +190,24 @@
       "imagePreviewId": "Image Preview",
       "userName": "Created By"
     },
-    "messageInbox": {
-      "messageType": {
-        "messageType": "Message Type",
-        "public": "Public",
-        "private": "Private",
-        "contact": "Contact",
-        "request": "Request"
-      },
-      "subject": "Url",
-      "content": "Description",
-      "registerDate": "Image Preview",
-      "from": "From"
+    "message": {
+      "messageInbox": {
+        "messageType": {
+          "messageType": "Message Type",
+          "public": "Public",
+          "private": "Private",
+          "contact": "Contact",
+          "request": "Request"
+        },
+        "subject": "Subject",
+        "content": "Content",
+        "registerDate": "Register Date",
+        "fromUser": "From",
+        "toUserIds": "To",
+        "recipients": "Recipients",
+        "attachments": "Attachments",
+        "publicMessageType": "Public Message"
+      }
     },
     "fileStorage": {
       "files": "Files",
@@ -296,9 +303,12 @@
     },
     "message": {
       "messageInbox": {
+        "inbox": "Message Inbox",
         "send": "Send Message",
+        "draft": "Save As Draft",
         "delete": "Delete Message",
-        "pin": "Pin Message"
+        "pin": "Pin Message",
+        "trash": "Messages Trash"
       }
     },
     "fileStorage": {
@@ -368,6 +378,10 @@
     "link": {
       "requiredTitle": "Title Is Required",
       "requiredUrl": "Url Is Required"
+    },
+    "message": {
+      "requiredSubject": "Subject Is Required",
+      "requiredUserIds": "Recipient of Message Is Required"
     }
   },
   "tooltips": {

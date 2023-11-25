@@ -90,7 +90,7 @@ const AuthRegister = () => {
                   <OutlinedInput
                     id="firstname-login"
                     type="firstname"
-                    value={values.firstname}
+                    value={values?.firstname || ''}
                     name="firstname"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -113,7 +113,7 @@ const AuthRegister = () => {
                     error={Boolean(touched.lastname && errors.lastname)}
                     id="lastname-signup"
                     type="lastname"
-                    value={values.lastname}
+                    value={values?.lastname|| ''}
                     name="lastname"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -134,7 +134,7 @@ const AuthRegister = () => {
                     fullWidth
                     error={Boolean(touched.company && errors.company)}
                     id="company-signup"
-                    value={values.company}
+                    value={values?.company|| ''}
                     name="company"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -156,7 +156,7 @@ const AuthRegister = () => {
                     error={Boolean(touched.email && errors.email)}
                     id="email-login"
                     type="email"
-                    value={values.email}
+                    value={values?.email|| ''}
                     name="email"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -178,7 +178,7 @@ const AuthRegister = () => {
                     error={Boolean(touched.password && errors.password)}
                     id="password-signup"
                     type={showPassword ? 'text' : 'password'}
-                    value={values.password}
+                    value={values?.password|| ''}
                     name="password"
                     onBlur={handleBlur}
                     onChange={(e) => {

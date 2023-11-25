@@ -160,7 +160,7 @@ const AddOrEditLink = ({ row, linkSection, data, setData, isNew, open, setOpen, 
                       <OutlinedInput
                         id="title"
                         type="text"
-                        value={values.title || ''}
+                        value={values?.title || ''}
                         name="title"
                         onBlur={handleBlur}
                         onChange={handleChange}
@@ -181,7 +181,7 @@ const AddOrEditLink = ({ row, linkSection, data, setData, isNew, open, setOpen, 
                       <OutlinedInput
                         id="url"
                         type="text"
-                        value={values.url || ''}
+                        value={values?.url || ''}
                         name="url"
                         onBlur={handleBlur}
                         onChange={handleChange}
@@ -202,7 +202,7 @@ const AddOrEditLink = ({ row, linkSection, data, setData, isNew, open, setOpen, 
                       <OutlinedInput
                         id="description"
                         type="text"
-                        value={values.description || ''}
+                        value={values?.description || ''}
                         name="description"
                         onBlur={handleBlur}
                         onChange={handleChange}

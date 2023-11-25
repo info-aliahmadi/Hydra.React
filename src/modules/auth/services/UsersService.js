@@ -18,6 +18,32 @@ export default class UsersService {
         });
     });
   };
+  getUserListForSelect = async (input) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(CONFIG.API_BASEPATH + '/auth/GetUserListForSelect', input)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          debugger;
+          reject(error);
+        });
+    });
+  };
+  getUserListForSelectByIds = async (userIds) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(CONFIG.API_BASEPATH + '/auth/GetUserListForSelectByIds', userIds)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          debugger;
+          reject(error);
+        });
+    });
+  };
   getUserById = async (userId) => {
     return new Promise((resolve, reject) => {
       axios

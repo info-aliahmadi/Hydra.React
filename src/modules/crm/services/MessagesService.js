@@ -97,6 +97,7 @@ export default class MessagesService {
       axios
         .get(CONFIG.API_BASEPATH + '/crm/GetMessageByIdForSender', { params: { messageId: messageId } })
         .then((response) => {
+          debugger;
           resolve(response.data.data);
         })
         .catch((error) => {
@@ -191,6 +192,7 @@ export default class MessagesService {
     });
   };
   sendPrivateMessage = async (message) => {
+
     return new Promise((resolve, reject) => {
       axios
         .post(CONFIG.API_BASEPATH + '/crm/SendPrivateMessage', message)

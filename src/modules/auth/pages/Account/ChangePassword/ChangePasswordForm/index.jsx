@@ -110,7 +110,7 @@ const ChangePasswordForm = () => {
                         error={Boolean(touched.oldPassword && errors.oldPassword)}
                         id="old-password"
                         type="password"
-                        value={values.oldPassword}
+                        value={values?.oldPassword || ''}
                         name="oldPassword"
                         onBlur={handleBlur}
                         onChange={handleChange}
@@ -131,7 +131,7 @@ const ChangePasswordForm = () => {
                         error={Boolean(touched.newPassword && errors.newPassword)}
                         id="new-password"
                         type={showPassword ? 'text' : 'password'}
-                        value={values.newPassword}
+                        value={values?.newPassword || ''}
                         name="newPassword"
                         onBlur={handleBlur}
                         onChange={(e) => {

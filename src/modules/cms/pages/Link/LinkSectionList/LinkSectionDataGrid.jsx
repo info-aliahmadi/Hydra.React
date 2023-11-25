@@ -122,7 +122,7 @@ function LinkSectionDataGrid() {
   );
   return (
     <>
-      <MainCard title={t('pages.cards.linkSection-list')}>
+      <MainCard title={<AddRow />}>
         <TableCard>
           <MaterialTable
             dataSet={data}
@@ -139,7 +139,7 @@ function LinkSectionDataGrid() {
             autoResetPageIndex={false}
             enableRowActions
             renderRowActions={DeleteOrEdit}
-            renderTopToolbarCustomActions={AddRow}
+            // renderTopToolbarCustomActions={AddRow}
             renderDetailPanel={({ row }) => <LinkDataGrid linkSection={row} />}
           />
         </TableCard>

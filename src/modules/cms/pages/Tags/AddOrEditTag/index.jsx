@@ -134,7 +134,7 @@ const AddOrEditTag = ({ row, isNew, open, setOpen, refetch }) => {
                       <OutlinedInput
                         id="title"
                         type="text"
-                        value={values.title || ''}
+                        value={values?.title || ''}
                         name="title"
                         onBlur={handleBlur}
                         onChange={handleChange}

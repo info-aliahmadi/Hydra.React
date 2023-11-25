@@ -8,15 +8,15 @@ import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MaterialTable from 'modules/shared/MaterialTable/MaterialTable';
 import MessagesService from 'modules/crm/services/MessagesService';
-import { Delete, RestoreFromTrash, PostAddOutlined, PushPin } from '@mui/icons-material';
+import { Delete, RestoreFromTrash, PushPin, Send } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import DeleteMessage from '../DeleteMessage';
 import Notify from 'components/@extended/Notify';
-import MessageTypeChip from '../MessagesTrashList/MessageTypeChip';
+import MessageTypeChip from '../MessageTypeChip';
 // ===============================|| COLOR BOX ||=============================== //
 
 function MessagesInboxDataGrid() {
-  const [t, i18n] = useTranslation();
+  const [t] = useTranslation();
 
   const [openDelete, setOpenDelete] = useState(false);
   const [row, setRow] = useState({});
@@ -27,59 +27,72 @@ function MessagesInboxDataGrid() {
 
   const navigate = useNavigate();
 
-  const [fieldsName, buttonName] = ['fields.messageInbox.', 'buttons.messageInbox.'];
+  const [fieldsName, buttonName] = ['fields.message.messageInbox.', 'buttons.message.messageInbox.'];
 
   const columns = useMemo(
     () => [
       {
         accessorKey: 'messageType',
-        header: t(fieldsName + 'messageType'),
+        header: t(fieldsName + 'messageType.messageType'),
         enableClickToCopy: true,
         type: 'string',
         enableResizing: true,
-        Cell: ({ renderedCellValue }) => <MessageTypeChip messageType={renderedCellValue} />
-      },
-      {
-        accessorKey: 'from',
-        header: t(fieldsName + 'from'),
-        enableClickToCopy: true,
-        type: 'string',
-        enableResizing: true,
-        Cell: ({ renderedCellValue, row }) => (
-          <Box
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '1rem'
-            }}
-          >
-            {row.fromUserId ? (
-              <Link href={'/sendMessage/' + row.fromUser.id}>{row.fromUser.UserName}</Link>
-            ) : (
-              <Link href={'/sendEmail/' + row.email} title={row.email}>
-                {row.name ? row.name : row.email}
-              </Link>
-            )}
-          </Box>
-        )
+        size: 50,
+        Cell: ({ renderedCellValue }) => <MessageTypeChip messageTypeId={renderedCellValue} />
       },
       {
         accessorKey: 'subject',
         header: t(fieldsName + 'subject'),
-        enableClickToCopy: true,
+        enableClickToCopy: false,
         type: 'string',
         enableResizing: true,
         Cell: ({ renderedCellValue, row }) => (
-          <Typography variant={row.toUser.isRead ? 'body1' : 'body2'}>
-            <Link href={'/message/view/' + row.id}>{renderedCellValue}</Link>
-          </Typography>
+          <Link
+            href={'/message/view/' + row.original.id}
+            underline="none"
+            variant={row.original.toUser.isRead ? 'subtitle2' : 'subtitle1'}
+            display="block"
+          >
+            {renderedCellValue}
+          </Link>
         )
+      },
+      {
+        accessorKey: 'fromUser',
+        header: t(fieldsName + 'fromUser'),
+        enableClickToCopy: false,
+        type: 'string',
+        enableResizing: true,
+
+        maxSize: 100,
+        Cell: ({ renderedCellValue, row }) =>
+          row.original.fromUserId > 0 ? (
+            <Link
+              href={'/message/view/' + row.original.id}
+              underline="none"
+              title={renderedCellValue.email}
+              variant={row.original.toUser.isRead ? 'subtitle2' : 'subtitle1'}
+              display="block"
+            >
+              {renderedCellValue.name}
+            </Link>
+          ) : (
+            <Link
+              href={'/sendEmail/' + row.original.email}
+              title={row.original.email}
+              variant={row.original.toUser.isRead ? 'subtitle2' : 'subtitle1'}
+              display="block"
+            >
+              {row.original.name ? row.original.name : row.original.email}
+            </Link>
+          )
       },
 
       {
         accessorKey: 'registerDate',
         header: t(fieldsName + 'registerDate'),
-        type: 'dateTime'
+        type: 'dateTime',
+        maxSize: 60
       }
     ],
     []
@@ -114,7 +127,7 @@ function MessagesInboxDataGrid() {
           onClick={() => {
             navigate('/message/new');
           }}
-          startIcon={<PostAddOutlined />}
+          startIcon={<Send />}
         >
           {t(buttonName + 'send')}
         </Button>
@@ -150,7 +163,7 @@ function MessagesInboxDataGrid() {
           </IconButton>
         </Tooltip> */}
         <Tooltip arrow placement="top-start" title={t('buttons.pin')}>
-          <IconButton onClick={() => handlePinRow(row.original.id)} color={row.original.isPinned ? 'warning' : 'secondary'}>
+          <IconButton onClick={() => handlePinRow(row.original.id)} color={row.original.toUser.isPin ? 'warning' : 'secondary'}>
             <PushPin />
           </IconButton>
         </Tooltip>
@@ -184,24 +197,24 @@ function MessagesInboxDataGrid() {
   return (
     <>
       <Notify notify={notify} setNotify={setNotify}></Notify>
-      <MainCard title={<MessageHeader title={t('pages.cards.messages-list')} />}>
-        <TableCard>
-          <MaterialTable
-            refetch={refetch}
-            columns={columns}
-            dataApi={handleMessageList}
-            enableRowActions={true}
-            renderRowActions={DeleteOrPin}
-            renderTopToolbarCustomActions={AddRow}
-            displayColumnDefOptions={{
-              'mrt-row-actions': {
-                //header: 'Change Account Settings', //change header text
-                size: 80 //make actions column wider
-              }
-            }}
-          />
-        </TableCard>
-      </MainCard>
+      {/* <MainCard title={<MessageHeader title={t(buttonName + 'inbox')} />}>
+        <TableCard> */}
+      <MaterialTable
+        refetch={refetch}
+        columns={columns}
+        dataApi={handleMessageList}
+        enableRowActions={true}
+        renderRowActions={DeleteOrPin}
+        // renderTopToolbarCustomActions={AddRow}
+        displayColumnDefOptions={{
+          'mrt-row-actions': {
+            //header: 'Change Account Settings', //change header text
+            size: 40 //make actions column wider
+          }
+        }}
+      />
+      {/* </TableCard>
+      </MainCard> */}
       <DeleteMessage row={row} open={openDelete} setOpen={setOpenDelete} refetch={handleRefetch} />
     </>
   );

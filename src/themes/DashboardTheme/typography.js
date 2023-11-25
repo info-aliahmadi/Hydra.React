@@ -48,18 +48,17 @@ const Typography = (fontFamily) => ({
   },
   body2: {
     fontSize: '0.75rem',
-    fontWeight: 900,
     lineHeight: 1.66
   },
   subtitle1: {
     fontSize: '0.875rem',
-    fontWeight: 600,
+    fontWeight: 700,
     lineHeight: 1.57
   },
   subtitle2: {
-    fontSize: '0.75rem',
-    fontWeight: 500,
-    lineHeight: 1.66
+    fontSize: '0.875rem',
+    fontWeight: 300,
+    lineHeight: 1.57
   },
   overline: {
     lineHeight: 1.66

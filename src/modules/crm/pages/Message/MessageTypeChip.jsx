@@ -1,14 +1,10 @@
-// material-ui
-import { Chip, Grid, Typography } from '@mui/material';
-
-// project import
-import MessageTrashDataGrid from './MessagesTashDataGrid';
+import { Chip } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 // ===============================|| COLOR BOX ||=============================== //
 
-function MessageTypeChip({ messageType }) {
+function MessageTypeChip({ messageTypeId }) {
   const [t] = useTranslation();
-  const fieldsName = 'fields.messageInbox.messageType.messageType.';
+  const fieldsName = 'fields.message.messageInbox.messageType.';
   function renderColor(m) {
     switch (m) {
       case 0:
@@ -26,18 +22,18 @@ function MessageTypeChip({ messageType }) {
   function renderTitle(m) {
     switch (m) {
       case 0:
-        return t(fieldsName + 'private');
+        return 'private';
       case 1:
-        return t(fieldsName + 'public');
+        return 'public';
       case 2:
-        return t(fieldsName + 'contact');
+        return 'contact';
       case 3:
-        return t(fieldsName + 'request');
+        return 'request';
       default:
         return 'default';
     }
   }
-  return <Chip color={renderColor(messageType)}>{renderTitle(messageType)}</Chip>;
+  return <Chip color={renderColor(messageTypeId)} label={t(fieldsName + renderTitle(messageTypeId))} />;
 }
 
 export default MessageTypeChip;

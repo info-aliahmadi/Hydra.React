@@ -236,7 +236,7 @@ export default function AddOrEditUser() {
                             <OutlinedInput
                               id="name"
                               type="text"
-                              value={values.name || ''}
+                              value={values?.name || ''}
                               name="name"
                               onBlur={handleBlur}
                               onChange={handleChange}
@@ -259,7 +259,7 @@ export default function AddOrEditUser() {
                               error={Boolean(touched.userName && errors.userName)}
                               id="userName"
                               type="lastname"
-                              value={values.userName || ''}
+                              value={values?.userName || ''}
                               name="userName"
                               onBlur={handleBlur}
                               onChange={handleChange}
@@ -281,7 +281,7 @@ export default function AddOrEditUser() {
                               error={Boolean(touched.email && errors.email)}
                               id="email"
                               type="email"
-                              value={values.email || ''}
+                              value={values?.email || ''}
                               name="email"
                               onBlur={handleBlur}
                               onChange={handleChange}
@@ -303,7 +303,7 @@ export default function AddOrEditUser() {
                               error={Boolean(touched.phoneNumber && errors.phoneNumber)}
                               id="phoneNumber"
                               type="lastname"
-                              value={values.phoneNumber || ''}
+                              value={values?.phoneNumber || ''}
                               name="phoneNumber"
                               onBlur={handleBlur}
                               onChange={handleChange}
@@ -326,8 +326,8 @@ export default function AddOrEditUser() {
                                 control={
                                   <Checkbox
                                     id="emailConfirmed"
-                                    checked={values.emailConfirmed ? true : false}
-                                    title={values.emailConfirmed ? 'Yes' : 'No'}
+                                    checked={values?.emailConfirmed ? true : false}
+                                    title={values?.emailConfirmed ? 'Yes' : 'No'}
                                     color="default"
                                     disabled
                                   />
@@ -346,8 +346,8 @@ export default function AddOrEditUser() {
                                 control={
                                   <Checkbox
                                     id="phoneNumberConfirmed"
-                                    checked={values.phoneNumberConfirmed ? true : false}
-                                    title={values.phoneNumberConfirmed ? 'Yes' : 'No'}
+                                    checked={values?.phoneNumberConfirmed ? true : false}
+                                    title={values?.phoneNumberConfirmed ? 'Yes' : 'No'}
                                     color="default"
                                     disabled
                                   />
@@ -364,7 +364,7 @@ export default function AddOrEditUser() {
                               key={values.defaultLanguage}
                               labelId="defaultLanguage"
                               id="defaultLanguage"
-                              value={values.defaultLanguage || ''}
+                              value={values?.defaultLanguage || ''}
                               onBlur={handleBlur}
                               // onChange={handleChange}
                               error={Boolean(touched.defaultLanguage && errors.defaultLanguage)}
@@ -396,7 +396,7 @@ export default function AddOrEditUser() {
                                 error={Boolean(touched.password && errors.password)}
                                 id="newPassword"
                                 type={showPassword ? 'text' : 'password'}
-                                value={values.password || ''}
+                                value={values?.password || ''}
                                 name="password"
                                 onBlur={handleBlur}
                                 onChange={(e) => {
@@ -480,13 +480,19 @@ export default function AddOrEditUser() {
                                 <Grid item xs={12} md={6} lg={6} xl={4}>
                                   <Stack spacing={1}>
                                     <InputLabel htmlFor="lockoutEnd">{t(fieldsName + 'lockoutEnd')}</InputLabel>
-                                    <OutlinedInput id="lockoutEnd" type="text" value={values.lockoutEnd} fullWidth disabled />
+                                    <OutlinedInput id="lockoutEnd" type="text" value={values?.lockoutEnd || ''} fullWidth disabled />
                                   </Stack>
                                 </Grid>
                                 <Grid item xs={12} md={6} lg={6} xl={4}>
                                   <Stack spacing={1}>
                                     <InputLabel htmlFor="accessFailedCount">{t(fieldsName + 'accessFailedCount')}</InputLabel>
-                                    <OutlinedInput id="accessFailedCount" type="text" value={values.accessFailedCount} fullWidth disabled />
+                                    <OutlinedInput
+                                      id="accessFailedCount"
+                                      type="text"
+                                      value={values?.accessFailedCount || ''}
+                                      fullWidth
+                                      disabled
+                                    />
                                   </Stack>
                                 </Grid>
                               </Grid>

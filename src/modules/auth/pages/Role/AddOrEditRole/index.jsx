@@ -139,7 +139,7 @@ const AddOrEditRole = ({ roleId, isNew, open, setOpen, refetch }) => {
                       <OutlinedInput
                         id="name"
                         type="text"
-                        value={values.name || ''}
+                        value={values?.name || ''}
                         name="name"
                         onBlur={handleBlur}
                         onChange={handleChange}
@@ -162,7 +162,7 @@ const AddOrEditRole = ({ roleId, isNew, open, setOpen, refetch }) => {
                         error={Boolean(touched.normalizedName && errors.normalizedName)}
                         id="normalizedName"
                         type="text"
-                        value={values.normalizedName || ''}
+                        value={values?.normalizedName || ''}
                         name="normalizedName"
                         onBlur={handleBlur}
                         onChange={handleChange}

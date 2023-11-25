@@ -10,7 +10,6 @@ import { Edit, Topic, Add, Delete } from '@mui/icons-material';
 import AddOrEditTopic from '../AddOrEditTopic';
 import DeleteTopic from '../DeleteTopic';
 
-
 function TopicDataGrid() {
   const [t] = useTranslation();
   const service = new TopicService();
@@ -86,7 +85,7 @@ function TopicDataGrid() {
   );
   return (
     <>
-      <MainCard title={t('pages.cards.topics-list')}>
+      <MainCard title={<AddRow />}>
         <TableCard>
           <MaterialTable
             refetch={refetch}
@@ -104,7 +103,7 @@ function TopicDataGrid() {
             enableColumnFilterModes={false}
             enableRowActions
             renderRowActions={DeleteOrEdit}
-            renderTopToolbarCustomActions={AddRow}
+            // renderTopToolbarCustomActions={AddRow}
           />
         </TableCard>
       </MainCard>

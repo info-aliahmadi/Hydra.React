@@ -89,7 +89,7 @@ const AuthLogin = () => {
                   <OutlinedInput
                     id="userName-login"
                     type="text"
-                    value={values.userName}
+                    value={values?.userName || ''}
                     name="userName"
                     onBlur={handleBlur}
                     onChange={handleChange}
@@ -112,7 +112,7 @@ const AuthLogin = () => {
                     error={Boolean(touched.password && errors.password)}
                     id="-password-login"
                     type={showPassword ? 'text' : 'password'}
-                    value={values.password}
+                    value={values?.password || ''}
                     name="password"
                     onBlur={handleBlur}
                     onChange={handleChange}
