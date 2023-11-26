@@ -66,7 +66,8 @@ function MaterialTable({
   displayColumnDefOptions,
   renderTopToolbarCustomActions,
   renderRowActionMenuItems,
-  renderDetailPanel
+  renderDetailPanel,
+  defaultDensity
 }) {
   const [t, i18n] = useTranslation();
   const [tableLocale, setTableLocale] = useState(null);
@@ -304,7 +305,7 @@ function MaterialTable({
       <MaterialReactTable
         columns={columns}
         data={dataApi ? data?.items ?? data ?? [] : data} //data is undefined on first render
-        initialState={{ showColumnFilters: false }}
+        initialState={{ showColumnFilters: false, density: defaultDensity ? defaultDensity : 'comfortable' }}
         enableTopToolbar={(enableTopToolbar && true) ?? true}
         enableColumnActions={(enableColumnActions && true) ?? true}
         enableColumnFilters={(enableColumnFilters && true) ?? true}

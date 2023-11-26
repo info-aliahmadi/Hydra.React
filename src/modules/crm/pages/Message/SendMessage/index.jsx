@@ -16,6 +16,7 @@ import setServerErrors from 'utils/setServerErrors';
 import Editor from 'modules/shared/Editor/Editor';
 import FileUpload from 'modules/shared/FileUpload/FileUpload';
 import SelectUser from 'modules/auth/pages/Shared/SelectUser';
+import ImageUpload from 'modules/shared/FileUpload/ImageUpload';
 
 export default function SendMessage() {
   const [t] = useTranslation();
@@ -27,12 +28,14 @@ export default function SendMessage() {
   const [fieldsName, validation, buttonName] = ['fields.message.messageInbox.', 'validation.message.', 'buttons.message.messageInbox.'];
   const [message, setMessage] = useState();
   const [isPublicMessage, setIsPublicMessage] = useState(false);
+  const [isLoad, setIsLoad] = useState(new Date());
   const [notify, setNotify] = useState({ open: false });
   const navigate = useNavigate();
 
   const loadMessage = () => {
     messageService.getMessageByIdForSender(id).then((result) => {
       setMessage(result);
+      setIsLoad(new Date());
     });
   };
   useEffect(() => {
@@ -48,6 +51,7 @@ export default function SendMessage() {
           .sendPublicMessage(message)
           .then(() => {
             resetForm();
+            setIsLoad(false);
             setNotify({ open: true });
           })
           .catch((error) => {
@@ -61,6 +65,7 @@ export default function SendMessage() {
         messageService
           .sendPrivateMessage(message)
           .then(() => {
+            setIsLoad(false);
             resetForm();
             setNotify({ open: true });
           })
@@ -77,6 +82,7 @@ export default function SendMessage() {
         .saveDraftMessage(message)
         .then((result) => {
           resetForm();
+          setIsLoad(false);
           setNotify({ open: true });
         })
         .catch((error) => {
@@ -231,9 +237,8 @@ export default function SendMessage() {
                               id="attachments"
                               name="attachments"
                               setFieldValue={setFieldValue}
-                              value={values?.attachments || []}
+                              value={values?.attachments || ''}
                               allowMultiple={true}
-                              // filePosterMaxHeight={400}
                             />
                           </Stack>
                         </Grid>

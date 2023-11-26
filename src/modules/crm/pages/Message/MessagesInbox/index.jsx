@@ -2,7 +2,6 @@
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 
 // project import
-import MessagesInboxDataGrid from './MessagesInboxDataGrid';
 import { useTranslation } from 'react-i18next';
 import { Inbox, Feed } from '@mui/icons-material';
 import { useState } from 'react';
@@ -14,10 +13,15 @@ import { RestoreFromTrash, Send } from '@mui/icons-material';
 
 import MainCard from 'components/MainCard';
 import TableCard from 'components/TableCard';
+import MessagesPrivateInboxDataGrid from './MessagesPrivateInboxDataGrid';
+import MessagesPublicInboxDataGrid from './MessagesPublicInboxDataGrid';
+
+import { useNavigate } from 'react-router-dom';
 // ===============================|| COLOR BOX ||=============================== //
 
 function MessagesInbox() {
   const [t] = useTranslation();
+  let navigate = useNavigate();
   const [value, setValue] = useState('1');
 
   const buttonName = 'buttons.message.messageInbox.';
@@ -25,10 +29,23 @@ function MessagesInbox() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const MessageHeader = ({ title }) => {
+  const MessageHeader = () => {
     return (
       <Grid container item direction="row" justifyContent="space-between" alignItems="center">
-        <Grid item>{title}</Grid>
+        <Grid item>
+          {
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={() => {
+                navigate('/message/new');
+              }}
+              startIcon={<Send />}
+            >
+              {t(buttonName + 'send')}
+            </Button>
+          }
+        </Grid>
         <Grid item>
           <Chip
             href="/MessagesTrashList"
@@ -55,33 +72,22 @@ function MessagesInbox() {
             <Typography variant="h5">{t('pages.messagesInbox')}</Typography>
           </Grid>
           <Grid item>
-            <MainCard
-              title={
-                <Button
-                  color="primary"
-                  variant="contained"
-                  onClick={() => {
-                    navigate('/message/new');
-                  }}
-                  startIcon={<Send />}
-                >
-                  {t(buttonName + 'send')}
-                </Button>
-              }
-            >
+            <MainCard title={<MessageHeader />}>
               <TableCard>
                 <Box sx={{ width: '100%', typography: 'body1' }} mt={-2}>
                   <TabContext value={value}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                       <TabList onChange={handleChange} aria-label="lab API tabs example">
-                        <Tab icon={<Inbox />} value="1" iconPosition="start" label="Primary" />
+                        <Tab icon={<Inbox />} value="1" iconPosition="start" label="Private" />
                         <Tab icon={<Feed />} value="2" iconPosition="start" label="Public" />
                       </TabList>
                     </Box>
                     <TabPanel value="1" sx={{ p: '0' }}>
-                      <MessagesInboxDataGrid />
+                      <MessagesPrivateInboxDataGrid />
                     </TabPanel>
-                    <TabPanel value="2">Item Two</TabPanel>
+                    <TabPanel value="2" sx={{ p: '0' }}>
+                      <MessagesPublicInboxDataGrid />
+                    </TabPanel>
                   </TabContext>
                 </Box>
               </TableCard>

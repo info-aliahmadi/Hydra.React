@@ -5,6 +5,8 @@ const MessagesInbox = Loadable(lazy(() => import('modules/crm/pages/Message/Mess
 
 const SendMessage = Loadable(lazy(() => import('modules/crm/pages/Message/SendMessage')));
 
+const ViewMessage = Loadable(lazy(() => import('modules/crm/pages/Message/ViewMessage')));
+
 // const MessagesTrashList = Loadable(lazy(() => import('modules/crm/pages/Message/MessagesTrashList')));
 
 // ==============================|| MAIN ROUTING ||============================== //
@@ -15,6 +17,12 @@ const CrmRoutes = [
     path: 'message/Inbox',
     permission: 'AUTH_GET.PERMISSION.LIST',
     element: <MessagesInbox />
+  },
+  {
+    key: 'viewMessage',
+    path: 'message/view/:id?',
+    permission: 'AUTH_GET.PERMISSION.LIST',
+    element: <ViewMessage />
   },
   {
     key: 'sendMessage',

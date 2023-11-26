@@ -55,6 +55,18 @@ export default class FileStorageService {
         });
     });
   };
+  getFilesInfoById = async (fileIds) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(CONFIG.API_BASEPATH + '/FileStorage/GetFilesInfo', fileIds)
+        .then((response) => {
+          resolve(response.data.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
   getFileInfoByName = async (fileName) => {
     return new Promise((resolve, reject) => {
       axios

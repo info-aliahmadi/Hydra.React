@@ -25,7 +25,7 @@ import { setTokenBearer } from 'utils/axiosHeaders';
 import CONFIG from 'config';
 import FileStorageService from 'modules/fileStorage/services/FileStorageService';
 
-const FileUpload = ({
+export default function FileUpload({
   id,
   name,
   setFieldValue,
@@ -34,15 +34,103 @@ const FileUpload = ({
   maxFileSize,
   disabled,
   filePosterMaxHeight,
-  allowMultiple,
-  fileType
-}) => {
+  allowMultiple
+}) {
   const [files, setFiles] = useState([]);
-  const [values, setValues] = useState(value);
+  const [values, setValues] = useState([]);
   const [t, i18n] = useTranslation();
+
   const uploadUrl = CONFIG.API_BASEPATH + '/FileStorage/UploadFile';
 
   var fileUploadService = new FileStorageService();
+
+  const loadFiles = async (fileIds) => {
+    fileUploadService.getFilesInfoById(fileIds).then((fileInfos) => {
+      let fileInfosData = [];
+      fileInfos.forEach((fileInfo) => {
+        let fileUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory + fileInfo.fileName;
+        let imagePosterUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory;
+        let isVideo = CONFIG.VIDEOS_EXTENSIONS.some((extension) => extension == fileInfo.extension);
+        if (isVideo) {
+          imagePosterUrl += fileInfo.thumbnail;
+        } else {
+          imagePosterUrl += fileInfo.fileName;
+        }
+
+        fileInfosData.push({
+          // the server file reference
+          source: fileInfo.id,
+          // set type to local to indicate an already uploaded file
+          options: {
+            type: 'local',
+            // optional stub file information
+            file: {
+              name: fileInfo.fileName,
+              type: isVideo ? 'video/*' : '/*',
+              size: fileInfo.size,
+              url: fileUrl
+            },
+            // pass poster property
+            metadata: {
+              poster: imagePosterUrl
+            }
+          }
+        });
+      });
+      setFiles(fileInfosData);
+    });
+  };
+  const loadFile = async (fileId) => {
+    fileUploadService.getFileInfoById(fileId).then((fileInfo) => {
+      let fileUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory + fileInfo.fileName;
+      let imagePosterUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory;
+      let isVideo = CONFIG.VIDEOS_EXTENSIONS.some((extension) => extension == fileInfo.extension);
+      if (isVideo) {
+        imagePosterUrl += fileInfo.thumbnail;
+      } else {
+        imagePosterUrl += fileInfo.fileName;
+      }
+
+      setFiles([
+        {
+          // the server file reference
+          source: fileInfo.id,
+          // set type to local to indicate an already uploaded file
+          options: {
+            type: 'local',
+            // optional stub file information
+            file: {
+              name: fileInfo.fileName,
+              type: isVideo ? 'video/*' : 'image/*',
+              size: fileInfo.size,
+              url: fileUrl
+            },
+            // pass poster property
+            metadata: {
+              poster: imagePosterUrl
+            }
+          }
+        }
+      ]);
+    });
+  };
+
+  useEffect(() => {
+    debugger;
+    if (allowMultiple) {
+      if (value.length > 0) {
+        loadFiles(value);
+      } else {
+        setFiles([]);
+      }
+    } else {
+      if (value > 0) {
+        loadFile(value);
+      } else {
+        setFiles([]);
+      }
+    }
+  }, [value]);
 
   function downloadFunction(item) {
     // create a temporary hyperlink to force the browser to download the file
@@ -64,64 +152,40 @@ const FileUpload = ({
     a.remove();
   }
 
-  const deleteImage = async (fileId) => {
-    fileUploadService.deleteFile(fileId).then((result) => {
-      return result;
-    });
-  };
-
-  const loadImage = async (fileId) => {
-    fileUploadService.getFileInfoById(fileId).then((fileInfo) => {
-      debugger;
-      let fileUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory + fileInfo.fileName;
-      // let imagePosterUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory;
-      // let isVideo = CONFIG.VIDEOS_EXTENSIONS.some((extension) => extension == fileInfo.extension);
-      // if (isVideo) {
-      //   imagePosterUrl += fileInfo.thumbnail;
-      // } else {
-      //   imagePosterUrl += fileInfo.fileName;
-      // }
-      setFiles({
-        // the server file reference
-        source: fileInfo.id,
-        // set type to local to indicate an already uploaded file
-        options: {
-          type: 'local',
-          // optional stub file information
-          file: {
-            name: fileInfo.fileName,
-            type: fileType + '/*',
-            size: fileInfo.size,
-            url: fileUrl
-          }
-          // pass poster property
-          // metadata: {
-          //   poster: imagePosterUrl
-          // }
-        }
-      });
-    });
-  };
   const onupdatefiles = async (fileItems) => {
-    if (fileItems?.serverId) {
-      let response = JSON.parse(fileItems?.serverId);
-      if (response.succeeded) {
-        // let serverId = response.data?.id;
-        // if (setFieldValue) setFieldValue(id, serverId || undefined);
-        setFiles({
-          files: fileItems.map((fileItem) => fileItem.file)
-        });
+    setFiles(fileItems);
+  };
+  function beforeRemoveFile(file) {
+    if (setFieldValue != undefined) {
+      fileUploadService.deleteFile(file?.serverId).then((result) => {
+        return result;
+      });
+      if (allowMultiple) {
+        let newValue = values;
+        const index = newValue.indexOf(file?.serverId);
+        newValue.splice(index, 1);
+        setFieldValue(id, newValue);
+        setValues(newValue);
+      } else {
+        setFieldValue(id, file?.serverId);
       }
     }
-  };
-  // useEffect(() => {
-  //   if (value > 0) {
-  //     loadImage(value);
-  //   } else {
-  //     setFiles([]);
-  //   }
-  // }, [value]);
-  const getError = (errorCode) => {
+  }
+  function onprocessfile(error, file) {
+    let response = JSON.parse(file?.serverId);
+    if (response?.succeeded) {
+      let fileInfo = response?.data;
+      if (allowMultiple) {
+        let newValues = values;
+        newValues.push(fileInfo?.id);
+        setFieldValue(id, newValues);
+        setValues((old) => [...old, fileInfo?.id]);
+      } else {
+        setFieldValue(fileInfo?.id);
+      }
+    }
+  }
+  const getError = async (errorCode) => {
     switch (errorCode) {
       case 500:
         return 'Operation Failed';
@@ -149,73 +213,39 @@ const FileUpload = ({
     <FilePond
       disabled={disabled}
       id={id ? id : 'fileId'}
-      // allowImagePreview={true}
-      // filePosterMaxHeight={filePosterMaxHeight ?? 'auto'}
+      allowImagePreview={true}
+      filePosterMaxHeight={filePosterMaxHeight ?? 'auto'}
       allowDownloadByUrl={true}
       downloadFunction={downloadFunction}
-      // allowFilePoster={true}
+      beforeRemoveFile={beforeRemoveFile}
+      allowFilePoster={true}
       allowFileTypeValidation={true}
-      acceptedFileTypes={fileType ? fileType : undefined}
-      allowFileSizeValidation={true}
-      minFileSize={minFileSize ? minFileSize : '1KB'}
-      //maxFileSize={maxFileSize ? maxFileSize : '500MB'}
-      // labelMaxFileSizeExceeded={t('validation.fileUpload.labelMaxFileSizeExceeded')}
-      // labelMaxFileSize={t('validation.fileUpload.labelMaxFileSize')}
-      labelMinFileSizeExceeded={t('validation.fileUpload.labelMinFileSizeExceeded')}
-      labelMinFileSize={t('validation.fileUpload.labelMinFileSize')}
-      labelIdle={t('validation.fileUpload.imagePreviewDescription')}
+      // acceptedFileTypes={['image/png', 'image/jpeg', 'video/*']}
       labelFileTypeNotAllowed={t('validation.fileUpload.labelFileTypeNotAllowed')}
       fileValidateTypeLabelExpectedTypes={t('validation.fileUpload.fileValidateTypeLabelExpectedTypes')}
+      allowFileSizeValidation={true}
+      minFileSize={minFileSize ? minFileSize : '5KB'}
+      maxFileSize={maxFileSize ? maxFileSize : '200MB'}
+      labelMaxFileSizeExceeded={t('validation.fileUpload.labelMaxFileSizeExceeded')}
+      labelMaxFileSize={t('validation.fileUpload.labelMaxFileSize')}
+      labelMinFileSizeExceeded={t('validation.fileUpload.labelMinFileSizeExceeded')}
+      labelMinFileSize={t('validation.fileUpload.labelMinFileSize')}
       allowReplace={true}
       instantUpload={true}
       allowMultiple={(allowMultiple && true) ?? false}
       credits={false}
       name="file" /* sets the file input name, it's filepond by default */
+      labelIdle={t('validation.fileUpload.imagePreviewDescription')}
       files={files}
       onupdatefiles={onupdatefiles}
       server={{
         url: uploadUrl,
         headers: { Authorization: setTokenBearer(), UploadAction: 'Rename' }
       }}
-      onprocessfile={(error, file) => {
-        let response = JSON.parse(file?.serverId);
-        if (response?.succeeded) {
-          let fileInfo = response?.data;
-          if (setFieldValue) {
-            if (allowMultiple) {
-              let newValue = values;
-              newValue.push(fileInfo?.id);
-              setFieldValue(id, newValue);
-              setValues((old) => [...old, fileInfo?.id]);
-            } else {
-              setFieldValue(newValue);
-            }
-          }
-        }
-      }}
-      onremovefile={(error, file) => {
-        debugger;
-        let response = JSON.parse(file?.serverId);
-        if (response?.succeeded) {
-          let fileInfo = response?.data;
-          if (setFieldValue) {
-            deleteImage(fileInfo?.id);
-            if (allowMultiple) {
-              let newValue = values;
-              const index = newValue.indexOf(fileInfo?.id);
-              newValue.splice(index, 1);
-              setFieldValue(id, newValue);
-              setValues(newValue);
-            } else {
-              setFieldValue(id, fileInfo?.id);
-            }
-          }
-        }
-      }}
+      onprocessfile={onprocessfile}
       labelFileProcessingError={(error) => {
         return getError(error.code);
       }}
     />
   );
-};
-export default FileUpload;
+}

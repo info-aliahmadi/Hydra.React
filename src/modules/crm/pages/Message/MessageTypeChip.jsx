@@ -33,7 +33,15 @@ function MessageTypeChip({ messageTypeId }) {
         return 'default';
     }
   }
-  return <Chip color={renderColor(messageTypeId)} label={t(fieldsName + renderTitle(messageTypeId))} />;
+  return (
+    <Chip
+      color={renderColor(messageTypeId)}
+      label={t(fieldsName + renderTitle(messageTypeId))}
+      sx={{ borderRadius: '16px' }}
+      variant="filled"
+      size="medium"
+    />
+  );
 }
 
 export default MessageTypeChip;

@@ -56,8 +56,8 @@ const Typography = (fontFamily) => ({
     lineHeight: 1.57
   },
   subtitle2: {
-    fontSize: '0.875rem',
-    fontWeight: 300,
+    fontSize: '0.86rem',
+    fontWeight: 500,
     lineHeight: 1.57
   },
   overline: {

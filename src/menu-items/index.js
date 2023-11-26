@@ -10,7 +10,7 @@ import support from './support';
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-  items: [dashboard, authentication, cms, fileStorage, utilities, support]
+  items: [dashboard, authentication, cms, crm, fileStorage]
 };
 
 export default menuItems;

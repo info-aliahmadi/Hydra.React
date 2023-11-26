@@ -28,6 +28,13 @@
     "menus": "Menus",
     "slideshow": "Slideshow",
     "links": "Links",
+    "messages": "Messages",
+    "messaging": "Messaging",
+    "messageInbox": "Message Inbox",
+    "messageOutbox": "Message Outbox",
+    "emails": "Emails",
+    "emailInbox": "Email Inbox",
+    "emailOutbox": "Email Outbox",
     "fileStorage": "Storage"
   },
   "pages": {
@@ -203,6 +210,7 @@
         "content": "Content",
         "registerDate": "Register Date",
         "fromUser": "From",
+        "viewMessage": "View Message",
         "toUserIds": "To",
         "recipients": "Recipients",
         "attachments": "Attachments",
@@ -218,6 +226,7 @@
     "submit": "Submit",
     "save": "Save",
     "cancel": "Cancel",
+    "back": "Back",
     "edit": "Edit",
     "delete": "Delete",
     "remove": "Remove",
@@ -305,6 +314,7 @@
       "messageInbox": {
         "inbox": "Message Inbox",
         "send": "Send Message",
+        "reply": "Reply",
         "draft": "Save As Draft",
         "delete": "Delete Message",
         "pin": "Pin Message",
