@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
 import MessagesService from 'modules/crm/services/MessagesService';
 
-const RemoveMessage = ({ row, open, setOpen, refetch }) => {
+const RemoveDraftMessage = ({ row, open, setOpen, refetch }) => {
   const [t] = useTranslation();
   let messageService = new MessagesService();
   const [notify, setNotify] = useState({ open: false });
@@ -22,7 +22,7 @@ const RemoveMessage = ({ row, open, setOpen, refetch }) => {
   const handleSubmit = () => {
     let messageId = row.original.id;
     messageService
-      .removeMessage(messageId)
+      .removeDraftMessage(messageId)
       .then(() => {
         onClose();
         setNotify({ open: true });
@@ -53,7 +53,7 @@ const RemoveMessage = ({ row, open, setOpen, refetch }) => {
       <Dialog open={open} onClose={onClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
         <DialogTitle id="alert-dialog-title">
           <Typography variant="caption" fontSize={17} fontWeight={600}>
-            {t('buttons.message.delete')}
+            {t('buttons.message.messageOutbox.remove')}
           </Typography>
           <CloseDialog />
         </DialogTitle>
@@ -68,7 +68,7 @@ const RemoveMessage = ({ row, open, setOpen, refetch }) => {
         <DialogActions sx={{ p: '1.25rem' }}>
           <Button onClick={onClose}>Cancel</Button>
           <Button disableElevation onClick={handleSubmit} size="large" variant="contained" color="error">
-            {t('buttons.delete')}
+            {t('buttons.remove')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -76,4 +76,4 @@ const RemoveMessage = ({ row, open, setOpen, refetch }) => {
   );
 };
 
-export default RemoveMessage;
+export default RemoveDraftMessage;

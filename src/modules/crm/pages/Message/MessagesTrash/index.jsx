@@ -2,7 +2,7 @@
 import { Grid, Typography } from '@mui/material';
 
 // project import
-import MessageTrashDataGrid from './MessagesTashDataGrid';
+import MessageTrashDataGrid from './MessagesTrashDataGrid';
 import { useTranslation } from 'react-i18next';
 // ===============================|| COLOR BOX ||=============================== //
 
@@ -13,7 +13,7 @@ function MessagesTrashList() {
       <Grid container justifyContent="center" direction="row" alignItems="flex-start">
         <Grid container spacing={3} item xs={12} sm={12} md={12} lg={12} direction="column">
           <Grid item>
-            <Typography variant="h5">{t('pages.articlesTrash')}</Typography>
+            <Typography variant="h5">{t('pages.messagesTrash')}</Typography>
           </Grid>
           <Grid item>
             <MessageTrashDataGrid />

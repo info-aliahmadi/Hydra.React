@@ -6,18 +6,17 @@ import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MaterialTable from 'modules/shared/MaterialTable/MaterialTable';
 import MessagesService from 'modules/crm/services/MessagesService';
-import { Delete, PushPin, AttachFile } from '@mui/icons-material';
-import DeleteMessage from '../DeleteMessage';
+import { AttachFile, RestoreFromTrash } from '@mui/icons-material';
 import Notify from 'components/@extended/Notify';
 import MessageTypeChip from '../MessageTypeChip';
+import MainCard from 'components/MainCard';
+import TableCard from 'components/TableCard';
 import { MessageTypes } from '../MessageType';
 // ===============================|| COLOR BOX ||=============================== //
 
-function MessagesPrivateInboxDataGrid() {
+export default function MessagesTrashDataGrid() {
   const [t] = useTranslation();
 
-  const [openDelete, setOpenDelete] = useState(false);
-  const [row, setRow] = useState({});
   const [refetch, setRefetch] = useState();
   const [notify, setNotify] = useState({ open: false });
 
@@ -64,7 +63,6 @@ function MessagesPrivateInboxDataGrid() {
         enableClickToCopy: false,
         type: 'string',
         enableResizing: true,
-
         maxSize: 100,
         Cell: ({ renderedCellValue, row }) =>
           row.original.fromUserId > 0 ? (
@@ -88,7 +86,6 @@ function MessagesPrivateInboxDataGrid() {
             </Link>
           )
       },
-
       {
         accessorKey: 'registerDate',
         header: t(fieldsName + 'registerDate'),
@@ -98,18 +95,16 @@ function MessagesPrivateInboxDataGrid() {
     ],
     []
   );
-  const handleDeleteRow = (row) => {
-    setRow(row);
-    setOpenDelete(true);
-  };
+
   const handleRefetch = () => {
     setRefetch(Date.now());
   };
-
-  const handlePinRow = (messageId) => {
+  const handleRestoreRow = (row) => {
+    let messageId = row.original.id;
     messagesService
-      .pinMessage(messageId)
+      .restoreMessage(messageId)
       .then(() => {
+        setNotify({ open: true });
         handleRefetch();
       })
       .catch((error) => {
@@ -117,21 +112,15 @@ function MessagesPrivateInboxDataGrid() {
       });
   };
   const handleMessageList = useCallback(async (filters) => {
-    return await messagesService.getInboxMessages(filters);
+    return await messagesService.getDeletedInboxMessages(filters);
   }, []);
 
-  const DeleteOrPin = useCallback(
+  const Restore = useCallback(
     ({ row }) => (
       <Box sx={{ display: 'flex', gap: '1rem', flexWrap: 'nowrap' }}>
-        <Tooltip arrow placement="top-start" title={t('buttons.delete')}>
-          <IconButton color="error" onClick={() => handleDeleteRow(row)}>
-            <Delete />
-          </IconButton>
-        </Tooltip>
-
-        <Tooltip arrow placement="top-start" title={t('buttons.pin')}>
-          <IconButton onClick={() => handlePinRow(row.original.id)} color={row.original.toUser.isPin ? 'warning' : 'secondary'}>
-            <PushPin />
+        <Tooltip arrow placement="top-start" title={t('buttons.restore')}>
+          <IconButton color="success" onClick={() => handleRestoreRow(row)}>
+            <RestoreFromTrash />
           </IconButton>
         </Tooltip>
       </Box>
@@ -142,23 +131,24 @@ function MessagesPrivateInboxDataGrid() {
   return (
     <>
       <Notify notify={notify} setNotify={setNotify}></Notify>
-      <MaterialTable
-        refetch={refetch}
-        columns={columns}
-        dataApi={handleMessageList}
-        enableRowActions={true}
-        renderRowActions={DeleteOrPin}
-        displayColumnDefOptions={{
-          'mrt-row-actions': {
-            //header: 'Change Account Settings', //change header text
-            size: 40 //make actions column wider
-          }
-        }}
-        defaultDensity="compact"
-      />
-      <DeleteMessage row={row} open={openDelete} setOpen={setOpenDelete} refetch={handleRefetch} />
+      <MainCard title={t('pages.cards.messagesDeleted')}>
+        <TableCard>
+          <MaterialTable
+            refetch={refetch}
+            columns={columns}
+            dataApi={handleMessageList}
+            enableRowActions={true}
+            renderRowActions={Restore}
+            displayColumnDefOptions={{
+              'mrt-row-actions': {
+                //header: 'Change Account Settings', //change header text
+                size: 40 //make actions column wider
+              }
+            }}
+            defaultDensity="compact"
+          />
+        </TableCard>
+      </MainCard>
     </>
   );
 }
-
-export default MessagesPrivateInboxDataGrid;

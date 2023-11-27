@@ -116,7 +116,6 @@ export default function FileUpload({
   };
 
   useEffect(() => {
-    debugger;
     if (allowMultiple) {
       if (value.length > 0) {
         loadFiles(value);

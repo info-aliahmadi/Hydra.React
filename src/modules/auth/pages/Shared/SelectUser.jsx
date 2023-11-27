@@ -42,6 +42,12 @@ export default function SelectUser({ defaultValues, id, name, setFieldValue, err
     loadUsers();
   }, [JSON.stringify(defaultValues)]);
 
+  useEffect(() => {
+    if (defaultValues.length > 0) {
+      setFieldValue(id, defaultValues);
+    }
+  }, []);
+
   return (
     <FormControl error={error} key={values}>
       <Autocomplete

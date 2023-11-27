@@ -1,20 +1,18 @@
 // material-ui
-import { Box, Chip, IconButton, Link, Tooltip } from '@mui/material';
+import { Chip, Link } from '@mui/material';
 
 // project import
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MaterialTable from 'modules/shared/MaterialTable/MaterialTable';
 import MessagesService from 'modules/crm/services/MessagesService';
-import { Delete, PushPin } from '@mui/icons-material';
-import DeleteMessage from '../DeleteMessage';
+import { AttachFile } from '@mui/icons-material';
 import Notify from 'components/@extended/Notify';
+import { MessageTypes } from '../MessageType';
 
 function MessagesPublicInboxDataGrid() {
   const [t] = useTranslation();
 
-  const [openDelete, setOpenDelete] = useState(false);
-  const [row, setRow] = useState({});
   const [refetch, setRefetch] = useState();
   const [notify, setNotify] = useState({ open: false });
 
@@ -28,9 +26,14 @@ function MessagesPublicInboxDataGrid() {
         accessorKey: 'messageType',
         header: t(fieldsName + 'messageType.messageType'),
         enableClickToCopy: true,
-        type: 'string',
+        type: 'number',
         enableResizing: true,
         size: 50,
+        filterVariant: 'select',
+        filterSelectOptions: MessageTypes.filter((x) => x.id == 1).map((a) => ({
+          value: a.id,
+          text: t('fields.message.messageInbox.messageType.' + a.title)
+        })),
         Cell: () => (
           <Chip color="success" label={t(fieldsName + 'messageType.public')} sx={{ borderRadius: '16px' }} variant="filled" size="medium" />
         )
@@ -42,8 +45,9 @@ function MessagesPublicInboxDataGrid() {
         type: 'string',
         enableResizing: true,
         Cell: ({ renderedCellValue, row }) => (
-          <Link href={'/message/view/' + row.original.id} underline="none" variant="subtitle1" display="block">
+          <Link href={'/message/inbox/view/' + row.original.id} underline="none" variant="subtitle1" display="block">
             {renderedCellValue}
+            {row.original.haveAttachment && <AttachFile fontSize="medium" sx={{ verticalAlign: 'middle' }} />}
           </Link>
         )
       },
@@ -56,7 +60,7 @@ function MessagesPublicInboxDataGrid() {
         maxSize: 100,
         Cell: ({ renderedCellValue, row }) => (
           <Link
-            href={'/message/view/' + row.original.id}
+            href={'/message/inbox/view/' + row.original.id}
             underline="none"
             title={renderedCellValue.email}
             variant="subtitle1"

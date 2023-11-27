@@ -57,6 +57,9 @@
     "fileStorage": "Storage",
     "filesList": "Files List",
     "messagesInbox": "Message Inbox",
+    "messagesOutbox": "Message Outbox",
+    "messagesDraft": "Message Draft",
+    "messagesTrash": "Message Trash",
     "cards": {
       "users-list": "Users List",
       "user-add": "Add New User",
@@ -86,8 +89,11 @@
       "files": "Files",
       "fileStorage": "File Storage",
       "messagesInbox": "Messages Inbox",
+      "messagesOutbox": "Messages Outbox",
+      "messagesDraft": "Drafts",
       "sendMessage": "Send Message",
-      "messagesTrash": "Trash"
+      "messagesTrash": "Messages Trash",
+      "messagesDeleted": "Deleted Messages"
     }
   },
   "fields": {
@@ -212,6 +218,7 @@
         "fromUser": "From",
         "viewMessage": "View Message",
         "toUserIds": "To",
+        "toUsers": "To",
         "recipients": "Recipients",
         "attachments": "Attachments",
         "publicMessageType": "Public Message"
@@ -319,6 +326,10 @@
         "delete": "Delete Message",
         "pin": "Pin Message",
         "trash": "Messages Trash"
+      },
+      "messageOutbox": {
+        "outbox": "Message Out",
+        "remove": "Remove Message"
       }
     },
     "fileStorage": {
@@ -398,7 +409,8 @@
     "switch-to-darkmode": "Switch to Dark Theme",
     "switch-to-lightmode": "Switch to Light Theme",
     "edit-avatar": "Change Avatar",
-    "delete-avatar": "Delete Avatar"
+    "delete-avatar": "Delete Avatar",
+    "reply": "Reply"
   },
   "notification": {
     "success": "Success!",

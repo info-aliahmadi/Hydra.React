@@ -9,7 +9,7 @@ import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { RestoreFromTrash, Send } from '@mui/icons-material';
+import { RestoreFromTrash, Send, Drafts } from '@mui/icons-material';
 
 import MainCard from 'components/MainCard';
 import TableCard from 'components/TableCard';
@@ -33,28 +33,36 @@ function MessagesInbox() {
     return (
       <Grid container item direction="row" justifyContent="space-between" alignItems="center">
         <Grid item>
-          {
-            <Button
-              color="primary"
-              variant="contained"
-              onClick={() => {
-                navigate('/message/new');
-              }}
-              startIcon={<Send />}
-            >
-              {t(buttonName + 'send')}
-            </Button>
-          }
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={() => {
+              navigate('/message/new');
+            }}
+            startIcon={<Send />}
+          >
+            {t(buttonName + 'send')}
+          </Button>{' '}
+          <Button
+            color="warning"
+            variant="contained"
+            onClick={() => {
+              navigate('/messages/draft');
+            }}
+            startIcon={<Drafts />}
+            sx={{ m: '0 15px' }}
+          >
+            {t('pages.cards.messagesDraft')}
+          </Button>
         </Grid>
         <Grid item>
           <Chip
-            href="/MessagesTrashList"
+            href="/messages/inbox/trash"
             clickable
             component="a"
             target="_blank"
             icon={<RestoreFromTrash />}
-            title={t('pages.messagesTrash')}
-            label={t(buttonName + 'trash')}
+            label={t('pages.messagesTrash')}
             variant="outlined"
             size="medium"
             color="error"

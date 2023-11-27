@@ -1,43 +1,24 @@
-import { useEffect, useState } from 'react';
-import { Button, Chip, Grid, InputLabel, Link, OutlinedInput, Stack, Typography } from '@mui/material';
+import { Button, Chip, Grid, InputLabel, Link, OutlinedInput, Stack, Tooltip, Typography } from '@mui/material';
 import { ArrowBack, Reply, EventNote, Person } from '@mui/icons-material';
 
 import AnimateButton from 'components/@extended/AnimateButton';
 
-import { useTranslation } from 'react-i18next';
-import Notify from 'components/@extended/Notify';
-import MessagesService from 'modules/crm/services/MessagesService';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import MainCard from 'components/MainCard';
 
 import FileUpload from 'modules/shared/FileUpload/FileUpload';
 import MessageTypeChip from '../MessageTypeChip';
 import CONFIG from 'config';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
-export default function ViewMessage() {
-  const [t, i18n] = useTranslation();
-  const params = useParams();
-  const id = params.id;
-
-  let messageService = new MessagesService();
+export default function ViewMessage({ message, fromPage }) {
   const [fieldsName, buttonName] = ['fields.message.messageInbox.', 'buttons.message.messageInbox.'];
-  const [message, setMessage] = useState();
-  const [notify, setNotify] = useState({ open: false });
   const navigate = useNavigate();
-
-  const loadMessage = () => {
-    messageService.getMessageByIdForReceiver(id).then((result) => {
-      setMessage(result);
-    });
-  };
-  useEffect(() => {
-    if (id > 0) loadMessage();
-  }, [id]);
-
+  const [t, i18n] = useTranslation();
   return (
     <>
-      <Notify notify={notify} setNotify={setNotify}></Notify>
+      {/* <Notify notify={notify} setNotify={setNotify}></Notify> */}
 
       <Grid container justifyContent="center" direction="row" alignItems="flex-start" key={message}>
         <Grid container item spacing={3} xs={12} sm={12} md={12} lg={12} xl={12} direction="column">
@@ -50,17 +31,52 @@ export default function ViewMessage() {
                 <Grid container item spacing={3} xs={12} sm={12} md={12} lg={12} xl={8}>
                   <Grid item xs={12} sm={12} md={10} lg={10} xl={10}>
                     <Stack spacing={1}>
-                      <InputLabel htmlFor="fromUser">{t(fieldsName + 'fromUser')}</InputLabel>
-                      <Link display="block">
-                        <Chip
-                          icon={<Person />}
-                          title={t(fieldsName + 'fromUser')}
-                          label={message?.fromUserId > 0 ? message?.fromUser?.userName : message?.name + '(' + message?.email + ')'}
-                          variant="filled"
-                          size="medium"
-                          sx={{ borderRadius: '16px' }}
-                        />
-                      </Link>
+                      {fromPage == 'inbox' && (
+                        <>
+                          <InputLabel htmlFor="fromUser">{t(fieldsName + 'fromUser')}</InputLabel>
+                          <Link display="block">
+                            <Tooltip title={t('tooltips.reply')}>
+                              <Chip
+                                onClick={() => {
+                                  navigate(
+                                    message?.fromUserId > 0 ? '/message/new/0/' + message?.fromUserId : '/email/new/0/' + message?.email
+                                  );
+                                }}
+                                icon={<Person />}
+                                title={t(fieldsName + 'fromUser')}
+                                label={message?.fromUserId > 0 ? message?.fromUser?.userName : message?.name + '(' + message?.email + ')'}
+                                variant="filled"
+                                size="medium"
+                                sx={{ borderRadius: '16px' }}
+                              />
+                            </Tooltip>
+                          </Link>
+                        </>
+                      )}
+                      {fromPage == 'outbox' && (
+                        <>
+                          <InputLabel htmlFor="toUsers">{t(fieldsName + 'toUsers')}</InputLabel>
+                          <Link display="block">
+                            {message?.toUsers?.map((user) => {
+                              return (
+                                <Tooltip title={t('tooltips.reply')} key={user?.toUserId}>
+                                  <Chip
+                                    onClick={() => {
+                                      navigate('/message/new/0/' + user?.toUserId);
+                                    }}
+                                    icon={<Person />}
+                                    title={user?.toUser?.name}
+                                    label={user?.toUser?.userName}
+                                    variant="filled"
+                                    size="medium"
+                                    sx={{ borderRadius: '16px', m: '0 2px' }}
+                                  />
+                                </Tooltip>
+                              );
+                            })}
+                          </Link>
+                        </>
+                      )}
                     </Stack>
                   </Grid>
                   <Grid item xs={12} sm={12} md={2} lg={2} xl={2} p={0} mt={3}>
@@ -122,7 +138,7 @@ export default function ViewMessage() {
                         <Button
                           size="large"
                           onClick={() => {
-                            navigate('/message/inbox');
+                            navigate(-1);
                           }}
                           variant="outlined"
                           color="secondary"
@@ -131,18 +147,24 @@ export default function ViewMessage() {
                           {t('buttons.back')}
                         </Button>
                       </AnimateButton>
-                      <AnimateButton>
-                        <Button
-                          size="large"
-                          type="submit"
-                          variant="contained"
-                          color="info"
-                          onClick={() => setFieldValue('isDraft', false)}
-                          startIcon={<Reply />}
-                        >
-                          {t(buttonName + 'reply')}
-                        </Button>
-                      </AnimateButton>
+                      {fromPage == 'inbox' && (
+                        <AnimateButton>
+                          <Button
+                            size="large"
+                            type="submit"
+                            variant="contained"
+                            color="info"
+                            onClick={() => {
+                              navigate(
+                                message?.fromUserId > 0 ? '/message/new/0/' + message?.fromUserId : '/email/new/0/' + message?.email
+                              );
+                            }}
+                            startIcon={<Reply />}
+                          >
+                            {t(buttonName + 'reply')}
+                          </Button>
+                        </AnimateButton>
+                      )}
                     </Stack>
                   </Grid>
                 </Grid>

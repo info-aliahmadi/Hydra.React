@@ -42,6 +42,18 @@ export default class MessagesService {
         });
     });
   };
+  getDraftMessages = async (searchParams) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(CONFIG.API_BASEPATH + '/crm/GetDraftMessages', searchParams)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
   getPublicInboxMessages = async (searchParams) => {
     return new Promise((resolve, reject) => {
       axios
@@ -78,7 +90,6 @@ export default class MessagesService {
         });
     });
   };
-
 
   getMessageByIdForPublic = async (messageId) => {
     return new Promise((resolve, reject) => {
@@ -165,10 +176,22 @@ export default class MessagesService {
         });
     });
   };
-  removeMessage = async (messageId) => {
+  restoreMessage = async (messageId) => {
     return new Promise((resolve, reject) => {
       axios
-        .get(CONFIG.API_BASEPATH + '/crm/RemoveMessage', { params: { messageId: messageId } })
+        .get(CONFIG.API_BASEPATH + '/crm/RestoreMessage', { params: { messageId: messageId } })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+  removeDraftMessage = async (messageId) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(CONFIG.API_BASEPATH + '/crm/RemoveDraftMessage', { params: { messageId: messageId } })
         .then((response) => {
           resolve(response.data);
         })
@@ -191,7 +214,6 @@ export default class MessagesService {
     });
   };
   sendPrivateMessage = async (message) => {
-
     return new Promise((resolve, reject) => {
       axios
         .post(CONFIG.API_BASEPATH + '/crm/SendPrivateMessage', message)
@@ -239,5 +261,4 @@ export default class MessagesService {
         });
     });
   };
- 
 }

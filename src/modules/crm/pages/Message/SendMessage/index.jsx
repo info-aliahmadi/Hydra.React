@@ -16,26 +16,24 @@ import setServerErrors from 'utils/setServerErrors';
 import Editor from 'modules/shared/Editor/Editor';
 import FileUpload from 'modules/shared/FileUpload/FileUpload';
 import SelectUser from 'modules/auth/pages/Shared/SelectUser';
-import ImageUpload from 'modules/shared/FileUpload/ImageUpload';
 
 export default function SendMessage() {
   const [t] = useTranslation();
   const params = useParams();
   const operation = params.operation;
+  const toUserId = params.toUser;
   const id = params.id;
 
   let messageService = new MessagesService();
   const [fieldsName, validation, buttonName] = ['fields.message.messageInbox.', 'validation.message.', 'buttons.message.messageInbox.'];
   const [message, setMessage] = useState();
   const [isPublicMessage, setIsPublicMessage] = useState(false);
-  const [isLoad, setIsLoad] = useState(new Date());
   const [notify, setNotify] = useState({ open: false });
   const navigate = useNavigate();
 
   const loadMessage = () => {
     messageService.getMessageByIdForSender(id).then((result) => {
       setMessage(result);
-      setIsLoad(new Date());
     });
   };
   useEffect(() => {
@@ -50,23 +48,25 @@ export default function SendMessage() {
         messageService
           .sendPublicMessage(message)
           .then(() => {
-            resetForm();
-            setIsLoad(false);
+            if (operation == 'new') {
+              resetForm();
+              setSubmitting(true);
+            }
             setNotify({ open: true });
           })
           .catch((error) => {
             setServerErrors(error, setErrors);
             setNotify({ open: true, type: 'error', description: error });
           })
-          .finally((x) => {
-            setSubmitting(false);
-          });
+          .finally((x) => {});
       } else {
         messageService
           .sendPrivateMessage(message)
           .then(() => {
-            setIsLoad(false);
-            resetForm();
+            if (operation == 'new') {
+              resetForm();
+              setSubmitting(true);
+            }
             setNotify({ open: true });
           })
           .catch((error) => {
@@ -74,7 +74,7 @@ export default function SendMessage() {
             setNotify({ open: true, type: 'error', description: error });
           })
           .finally((x) => {
-            setSubmitting(false);
+            // setSubmitting(false);
           });
       }
     } else {
@@ -82,7 +82,6 @@ export default function SendMessage() {
         .saveDraftMessage(message)
         .then((result) => {
           resetForm();
-          setIsLoad(false);
           setNotify({ open: true });
         })
         .catch((error) => {
@@ -152,7 +151,7 @@ export default function SendMessage() {
                               multiple={true}
                               disabled={isPublicMessage}
                               setFieldValue={setFieldValue}
-                              defaultValues={values?.toUserIds || []}
+                              defaultValues={operation == 'edit' ? values?.toUserIds || [] : toUserId > 0 ? [toUserId] : []}
                               error={Boolean(touched.toUserIds && errors.toUserIds)}
                             />
                             {touched.toUserIds && errors.toUserIds && (
@@ -250,13 +249,13 @@ export default function SendMessage() {
                               <Button
                                 size="large"
                                 onClick={() => {
-                                  navigate('/message/inbox');
+                                  navigate(-1);
                                 }}
                                 variant="outlined"
                                 color="secondary"
                                 startIcon={<ArrowBack />}
                               >
-                                {t('buttons.cancel')}
+                                {t('buttons.back')}
                               </Button>
                             </AnimateButton>
                             <AnimateButton>

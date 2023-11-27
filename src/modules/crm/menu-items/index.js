@@ -1,9 +1,11 @@
 // assets
-import { Message, Email } from '@mui/icons-material';
+import { Message, Email, Outbox, ForwardToInbox } from '@mui/icons-material';
 // icons
 const icons = {
   Message,
-  Email
+  Email,
+  Outbox,
+  ForwardToInbox
 };
 
 // ==============================|| MENU ITEMS - EXTRA PAGES ||============================== //
@@ -17,8 +19,17 @@ const pages = {
       id: 'messageInbox',
       title: 'Message Inbox',
       type: 'item',
-      url: '/message/inbox',
+      url: '/messages/inbox',
       icon: icons.Message,
+      breadcrumbs: false,
+      permission: 'AUTH_GET.PERMISSION.LIST'
+    },
+    {
+      id: 'messageOutbox',
+      title: 'Message Outbox',
+      type: 'item',
+      url: '/messages/outbox',
+      icon: icons.Outbox,
       breadcrumbs: false,
       permission: 'AUTH_GET.PERMISSION.LIST'
     },
@@ -26,8 +37,17 @@ const pages = {
       id: 'emailInbox',
       title: 'Email Inbox',
       type: 'item',
-      url: '/email/inbox',
+      url: '/emails/inbox',
       icon: icons.Email,
+      breadcrumbs: false,
+      permission: 'AUTH_GET.PERMISSION.LIST'
+    },
+    {
+      id: 'emailOutbox',
+      title: 'Email Outbox',
+      type: 'item',
+      url: '/emails/outbox',
+      icon: icons.ForwardToInbox,
       breadcrumbs: false,
       permission: 'AUTH_GET.PERMISSION.LIST'
     }
