@@ -30,7 +30,7 @@ import CONFIG from 'config';
 import MainCard from 'components/MainCard';
 import setServerErrors from 'utils/setServerErrors';
 
-import Editor from 'modules/shared/Editor/Editor';
+import Editor from 'components/Editor/Editor';
 import SelectTag from '../../Tags/SelectTag';
 import moment from 'moment';
 

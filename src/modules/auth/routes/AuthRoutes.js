@@ -1,7 +1,6 @@
 import Loadable from 'components/Loadable';
 import { lazy } from 'react';
 
-
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('modules/auth/pages/home/dashboard')));
 
@@ -14,8 +13,6 @@ const Typography = Loadable(lazy(() => import('pages/components-overview/Typogra
 const Profile = Loadable(lazy(() => import('modules/auth/pages/Account/Profile/Profile')));
 
 const ChangePassword = Loadable(lazy(() => import('modules/auth/pages/Account/ChangePassword/ChangePassword')));
-
-const ChangeLanguage = Loadable(lazy(() => import('modules/auth/pages/Settings/Language/ChangeLanguage')));
 
 const RoleList = Loadable(lazy(() => import('modules/auth/pages/Role/RoleList')));
 
@@ -58,12 +55,6 @@ const AuthRoutes = [
     path: 'changepassword',
     permission: 'AUTH_GET.PERMISSION.LIST',
     element: <ChangePassword />
-  },
-  {
-    key: 'change-language',
-    path: 'changelanguage',
-    permission: 'AUTH_GET.PERMISSION.LIST',
-    element: <ChangeLanguage />
   },
   {
     key: 'role-list',

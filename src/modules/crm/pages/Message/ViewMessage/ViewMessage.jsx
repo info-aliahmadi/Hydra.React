@@ -6,7 +6,7 @@ import AnimateButton from 'components/@extended/AnimateButton';
 import { useNavigate } from 'react-router-dom';
 import MainCard from 'components/MainCard';
 
-import FileUpload from 'modules/shared/FileUpload/FileUpload';
+import FileUpload from 'components/FileUpload/FileUpload';
 import MessageTypeChip from '../MessageTypeChip';
 import CONFIG from 'config';
 import moment from 'moment';

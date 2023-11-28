@@ -26,7 +26,7 @@ import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
 import SlideshowService from 'modules/cms/services/SlideshowsService';
 import setServerErrors from 'utils/setServerErrors';
-import ImageUpload from 'modules/shared/FileUpload/ImageUpload';
+import ImageUpload from 'components/FileUpload/ImageUpload';
 
 const AddOrEditSlideshow = ({ row, isNew, open, setOpen, refetch }) => {
   const [t] = useTranslation();

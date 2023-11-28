@@ -13,8 +13,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import MainCard from 'components/MainCard';
 import setServerErrors from 'utils/setServerErrors';
 
-import Editor from 'modules/shared/Editor/Editor';
-import FileUpload from 'modules/shared/FileUpload/FileUpload';
+import Editor from 'components/Editor/Editor';
+import FileUpload from 'components/FileUpload/FileUpload';
 import SelectUser from 'modules/auth/pages/Shared/SelectUser';
 
 export default function SendMessage() {
@@ -125,7 +125,7 @@ export default function SendMessage() {
             handleSubmit(values, resetForm, setErrors, setSubmitting);
           } catch (err) {
             console.error(err);
-            setStatus({ success: false });
+            setStatus({ success: false }); 
             setErrors({ submit: err.message });
             setSubmitting(false);
           }
@@ -273,9 +273,9 @@ export default function SendMessage() {
                             </AnimateButton>
                             <AnimateButton>
                               <Button
-                                disabled={isSubmitting}
                                 size="large"
                                 type="submit"
+                                disabled={isSubmitting}
                                 variant="contained"
                                 color="warning"
                                 onClick={() => setFieldValue('isDraft', true)}

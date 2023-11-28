@@ -6,7 +6,7 @@ import MainCard from 'components/MainCard';
 import TableCard from 'components/TableCard';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import MaterialTable from 'modules/shared/MaterialTable/MaterialTable';
+import MaterialTable from 'components/MaterialTable/MaterialTable';
 import LinkSectionService from 'modules/cms/services/LinkSectionService';
 import { Delete, Visibility, VisibilityOff } from '@mui/icons-material';
 import { Edit } from '@mui/icons-material';

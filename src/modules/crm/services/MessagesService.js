@@ -6,6 +6,31 @@ export default class MessagesService {
   constructor() {
     setDefaultHeader();
   }
+  getSettings = async () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(CONFIG.API_BASEPATH + '/crm/getSettings')
+        .then((response) => {
+          resolve(response.data.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+  addOrUpdateSettings = async (setting) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .post(CONFIG.API_BASEPATH + '/crm/addOrUpdateSettings', setting)
+        .then((response) => {
+          resolve(response.data.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+
   getAllMessages = async (searchParams) => {
     return new Promise((resolve, reject) => {
       axios

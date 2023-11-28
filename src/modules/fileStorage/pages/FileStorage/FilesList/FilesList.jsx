@@ -33,7 +33,7 @@ import { useParams } from 'react-router-dom';
 import CONFIG from 'config';
 import DeleteFile from './DeleteFile';
 import { DateViewer } from 'utils/DateViewer';
-import FileUpload from 'modules/shared/FileUpload/FileUpload';
+import FileUpload from 'components/FileUpload/FileUpload';
 // ===============================|| COLOR BOX ||=============================== //
 
 function FilesList() {

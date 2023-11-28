@@ -20,7 +20,7 @@ import MainCard from 'components/MainCard';
 import TableCard from 'components/TableCard';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import MaterialTable from 'modules/shared/MaterialTable/MaterialTable';
+import MaterialTable from 'components/MaterialTable/MaterialTable';
 import UsersService from 'modules/auth/services/UsersService';
 import { AccountCircle, Send, PersonAdd, PeopleAlt } from '@mui/icons-material';
 import Anonymous from 'assets/images/users/anonymous.png';

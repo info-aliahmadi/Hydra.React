@@ -4,7 +4,7 @@ import { Box, Button, FormHelperText, Grid, IconButton, Tooltip } from '@mui/mat
 // project import
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import MaterialTable from 'modules/shared/MaterialTable/MaterialTable';
+import MaterialTable from 'components/MaterialTable/MaterialTable';
 import { Delete } from '@mui/icons-material';
 import DeletePermissionRole from '../DeletePermissionRole';
 import PermissionAutoComplete from '../../Permission/PermissionAutoComplete';

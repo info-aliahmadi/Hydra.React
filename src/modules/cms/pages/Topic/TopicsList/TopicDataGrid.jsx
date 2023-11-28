@@ -4,7 +4,7 @@ import MainCard from 'components/MainCard';
 import TableCard from 'components/TableCard';
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import MaterialTable from 'modules/shared/MaterialTable/MaterialTable';
+import MaterialTable from 'components/MaterialTable/MaterialTable';
 import TopicService from 'modules/cms/services/TopicService';
 import { Edit, Topic, Add, Delete } from '@mui/icons-material';
 import AddOrEditTopic from '../AddOrEditTopic';

@@ -13,20 +13,20 @@ import Save from '@mui/icons-material/Save';
 
 // assets
 import { useTranslation } from 'react-i18next';
-import SiteSettingsService from 'modules/cms/services/SiteSettingsService';
 import Notify from 'components/@extended/Notify';
+import MessagesService from 'modules/crm/services/MessagesService';
 // ============================|| FIREBASE - REGISTER ||============================ //
 
-const SiteSettingForm = () => {
+const MessageSetting = () => {
   const [t] = useTranslation();
-  let siteSettingsService = new SiteSettingsService();
+  let settingsService = new MessagesService();
 
-  const [fieldsName, validation, buttonName] = ['fields.siteSetting.', 'validation.siteSetting', 'buttons.'];
+  const [fieldsName, validation, buttonName] = ['fields.messageSetting.', 'validation.messageSetting', 'buttons.'];
   const [settings, setSettings] = useState();
   const [notify, setNotify] = useState({ open: false });
 
   const loadSettings = () => {
-    siteSettingsService.getSettings().then((result) => {
+    settingsService.getSettings().then((result) => {
       setSettings(result);
     });
   };
@@ -36,7 +36,7 @@ const SiteSettingForm = () => {
   }, []);
 
   const handleAddOrUpdateSettings = (setting, setSubmitting) => {
-    siteSettingsService
+    settingsService
       .addOrUpdateSettings(setting)
       .then(() => {
         setNotify({ open: true });
@@ -54,19 +54,15 @@ const SiteSettingForm = () => {
       <Notify notify={notify} setNotify={setNotify}></Notify>
       <Formik
         initialValues={{
-          siteTitle: settings?.siteTitle,
-          siteDescription: settings?.siteDescription,
-          siteKeywords: settings?.siteKeywords,
-          headerHtml: settings?.headerHtml,
-          footerHtml: settings?.footerHtml,
-          numberOfPostsPerList: settings?.numberOfPostsPerList
+          recipientIdsForContactMessage: settings?.recipientIdsForContactMessage,
+          recipientIdsForRequestMessage: settings?.recipientIdsForRequestMessage
         }}
         enableReinitialize={true}
-        validationSchema={Yup.object().shape({
-          siteTitle: Yup.string()
-            .max(255)
-            .required(t(validation + 'requiredSiteTitle'))
-        })}
+        // validationSchema={Yup.object().shape({
+        //   siteTitle: Yup.string()
+        //     .max(255)
+        //     .required(t(validation + 'requiredSiteTitle'))
+        // })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
           try {
             handleAddOrUpdateSettings(values, setSubmitting);
@@ -277,4 +273,4 @@ const SiteSettingForm = () => {
   );
 };
 
-export default SiteSettingForm;
+export default MessageSetting;

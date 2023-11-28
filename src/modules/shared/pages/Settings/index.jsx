@@ -3,12 +3,12 @@ import { Grid, Typography } from '@mui/material';
 
 // project import
 import MainCard from 'components/MainCard';
-import SiteSettingForm from './SiteSettingForm';
+import SiteSetting from 'modules/cms/pages/Settings';
 import { useTranslation } from 'react-i18next';
 
 // ===============================|| COLOR BOX ||=============================== //
 
-function Profile() {
+function Setting() {
   const [t] = useTranslation();
   return (
     <>
@@ -19,7 +19,7 @@ function Profile() {
           </Grid>
           <Grid item>
             <MainCard>
-              <SiteSettingForm />
+              <SiteSetting />
             </MainCard>
           </Grid>
         </Grid>
@@ -28,4 +28,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Setting;

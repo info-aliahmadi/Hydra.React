@@ -33,7 +33,7 @@ const SettingTab = () => {
         </ListItemIcon>
         <ListItemText primary={t('pages.accountSettings')} />
       </ListItemButton>
-      <ListItemButton selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1)} href="/sitesetting">
+      <ListItemButton selected={selectedIndex === 1} onClick={(event) => handleListItemClick(event, 1)} href="/setting">
         <ListItemIcon>
           <Settings fontSize="small" />
         </ListItemIcon>

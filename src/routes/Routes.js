@@ -10,10 +10,11 @@ import CmsRoutes from 'modules/cms/routes/CmsRoutes';
 import CrmRoutes from 'modules/crm/routes/CrmRoutes';
 import FileStorageRoutes from 'modules/fileStorage/routes/FileStorageRoutes';
 import HomeRoutes from 'modules/home/routes/HomeRoutes';
+import SharedRoutes from 'modules/shared/routes/SharedRoutes';
 
 import Loader from 'components/Loader';
 
-let collectedRoutes = [...AuthRoutes, ...CmsRoutes, ...CrmRoutes, ...FileStorageRoutes];
+let collectedRoutes = [...AuthRoutes, ...CmsRoutes, ...CrmRoutes, ...FileStorageRoutes, ...SharedRoutes];
 export const PrivateRoutesCaller = (
   <Route
     key="MainLayoutKey"

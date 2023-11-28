@@ -42,7 +42,7 @@ export default function ComponentsOverrides(theme) {
     Link(),
     ListItemIcon(),
     OutlinedInput(theme),
-    TextareaAutosize(theme),
+    // TextareaAutosize(theme),
     Tab(theme),
     TableCell(theme),
     Tabs(),

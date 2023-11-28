@@ -4,7 +4,7 @@ import { Avatar, Box, Button, Grid, IconButton, Stack, Tooltip } from '@mui/mate
 // project import
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import MaterialTable from 'modules/shared/MaterialTable/MaterialTable';
+import MaterialTable from 'components/MaterialTable/MaterialTable';
 import { Delete, Edit, ImageNotSupported, Save } from '@mui/icons-material';
 import LinkIcon from '@mui/icons-material/Link';
 
