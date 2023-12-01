@@ -15,13 +15,14 @@ import Save from '@mui/icons-material/Save';
 import { useTranslation } from 'react-i18next';
 import Notify from 'components/@extended/Notify';
 import MessagesService from 'modules/crm/services/MessagesService';
+import SelectUser from 'modules/auth/pages/Shared/SelectUser';
 // ============================|| FIREBASE - REGISTER ||============================ //
 
 const MessageSetting = () => {
   const [t] = useTranslation();
   let settingsService = new MessagesService();
 
-  const [fieldsName, validation, buttonName] = ['fields.messageSetting.', 'validation.messageSetting', 'buttons.'];
+  const [fieldsName, validation, buttonName] = ['fields.message.messageSettings.', 'validation.message.messageSettings', 'buttons.'];
   const [settings, setSettings] = useState();
   const [notify, setNotify] = useState({ open: false });
 
@@ -80,171 +81,29 @@ const MessageSetting = () => {
             <Grid container item spacing={3} justifyContent="flex-start">
               <Grid item xs={12} md={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="siteTitle">{t(fieldsName + 'siteTitle')}</InputLabel>
-                  <OutlinedInput
-                    id="siteTitle"
-                    type="name"
-                    value={values?.siteTitle || ''}
-                    name="siteTitle"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder={t(fieldsName + 'siteTitle')}
-                    fullWidth
-                    error={Boolean(touched.siteTitle && errors.siteTitle)}
-                  />
-                  {touched.siteTitle && errors.siteTitle && (
-                    <FormHelperText error id="helper-text-siteTitle">
-                      {errors.siteTitle}
-                    </FormHelperText>
-                  )}
-                </Stack>
-              </Grid>
-              <Grid item xs={12} md={12}>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="siteDescription">{t(fieldsName + 'siteDescription')}</InputLabel>
-                  <TextareaAutosize
-                    style={{
-                      backgroundColor: 'inherit',
-                      color: 'inherit',
-                      fontFamily: 'inherit',
-                      fontSize: 'inherit',
-                      borderRadius: '3px'
-                    }}
-                    fullWidth
-                    error={Boolean(touched.siteDescription && errors.siteDescription)}
-                    id="siteDescription"
-                    type="text"
-                    value={values?.siteDescription || ''}
-                    name="siteDescription"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder={t(fieldsName + 'siteDescription')}
-                    multiline={true}
-                    minRows={3}
-                    inputProps={{}}
-                  />
-                  {touched.siteDescription && errors.siteDescription && (
-                    <FormHelperText error id="helper-text-siteDescription">
-                      {errors.siteDescription}
-                    </FormHelperText>
-                  )}
-                </Stack>
-              </Grid>
-
-              <Grid item xs={12} md={12}>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="siteKeywords">{t(fieldsName + 'siteKeywords')}</InputLabel>
-                  <TextareaAutosize
-                    style={{
-                      backgroundColor: 'inherit',
-                      color: 'inherit',
-                      fontFamily: 'inherit',
-                      fontSize: 'inherit',
-                      borderRadius: '3px'
-                    }}
-                    fullWidth
-                    error={Boolean(touched.siteKeywords && errors.siteKeywords)}
-                    id="siteKeywords"
-                    type="text"
-                    value={values?.siteKeywords || ''}
-                    name="siteKeywords"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder={t(fieldsName + 'siteKeywords')}
-                    multiline={true}
-                    minRows={4}
-                    inputProps={{}}
-                  />
-                  {touched.siteKeywords && errors.siteDescription && (
-                    <FormHelperText error id="helper-text-siteKeywords">
-                      {errors.siteKeywords}
-                    </FormHelperText>
-                  )}
-                </Stack>
-              </Grid>
-
-              <Grid item xs={12} md={12}>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="headerHtml">{t(fieldsName + 'headerHtml')}</InputLabel>
-                  <TextareaAutosize
-                    style={{
-                      backgroundColor: 'inherit',
-                      color: 'inherit',
-                      fontFamily: 'inherit',
-                      fontSize: 'inherit',
-                      borderRadius: '3px'
-                    }}
-                    fullWidth
-                    error={Boolean(touched.headerHtml && errors.headerHtml)}
-                    id="headerHtml"
-                    type="text"
-                    value={values?.headerHtml || ''}
-                    name="headerHtml"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder={t(fieldsName + 'headerHtml')}
-                    multiline={true}
-                    minRows={5}
-                    inputProps={{}}
-                  />
-                  {touched.headerHtml && errors.headerHtml && (
-                    <FormHelperText error id="helper-text-headerHtml">
-                      {errors.headerHtml}
-                    </FormHelperText>
-                  )}
-                </Stack>
-              </Grid>
-
-              <Grid item xs={12} md={12}>
-                <Stack spacing={1}>
-                  <InputLabel htmlFor="footerHtml">{t(fieldsName + 'footerHtml')}</InputLabel>
-                  <TextareaAutosize
-                    fullWidth
-                    style={{
-                      backgroundColor: 'inherit',
-                      color: 'inherit',
-                      fontFamily: 'inherit',
-                      fontSize: 'inherit',
-                      borderRadius: '3px'
-                    }}
-                    id="footerHtml"
-                    defaultValue={values?.footerHtml || ''}
-                    name="footerHtml"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder={t(fieldsName + 'footerHtml')}
+                  <InputLabel htmlFor="recipientIdsForContactMessage">{t(fieldsName + 'recipientIdsForContactMessage')}</InputLabel>
+                  <SelectUser
+                    id="recipientIdsForContactMessage"
+                    name="recipientIdsForContactMessage"
                     multiple={true}
-                    minRows={5}
+                    setFieldValue={setFieldValue}
+                    defaultValues={values?.recipientIdsForContactMessage || []}
                   />
-
-                  {touched.footerHtml && errors.footerHtml && (
-                    <FormHelperText error id="helper-text-footerHtml">
-                      {errors.footerHtml}
-                    </FormHelperText>
-                  )}
                 </Stack>
               </Grid>
-              <Grid item xs={12} md={3}>
+              <Grid item xs={12} md={12}>
                 <Stack spacing={1}>
-                  <InputLabel htmlFor="numberOfPostsPerList">{t(fieldsName + 'numberOfPostsPerList')}</InputLabel>
-                  <OutlinedInput
-                    id="numberOfPostsPerList"
-                    type="number"
-                    value={values?.numberOfPostsPerList || ''}
-                    name="numberOfPostsPerList"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    placeholder={t(fieldsName + 'numberOfPostsPerList')}
-                    fullWidth
-                    error={Boolean(touched.numberOfPostsPerList && errors.numberOfPostsPerList)}
+                  <InputLabel htmlFor="recipientIdsForRequestMessage">{t(fieldsName + 'recipientIdsForRequestMessage')}</InputLabel>
+                  <SelectUser
+                    id="recipientIdsForRequestMessage"
+                    name="recipientIdsForRequestMessage"
+                    multiple={true}
+                    setFieldValue={setFieldValue}
+                    defaultValues={values?.recipientIdsForRequestMessage || []}
                   />
-                  {touched.numberOfPostsPerList && errors.numberOfPostsPerList && (
-                    <FormHelperText error id="helper-text-siteTitle">
-                      {errors.numberOfPostsPerList}
-                    </FormHelperText>
-                  )}
                 </Stack>
               </Grid>
+
               <Grid container item spacing={3} direction="row" justifyContent="space-between" alignItems="center">
                 <Grid item>
                   <Stack direction="row" spacing={2}>

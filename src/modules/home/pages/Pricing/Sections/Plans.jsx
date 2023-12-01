@@ -5,12 +5,12 @@ import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 import 'react';
 
 export default function Plans() {
-  function PlanBox() {
+  function PlanBox({plan,price,features}) {
     return (
       <Box className="plan-box" p={{ xs: 2, sm: 3, md: 4, lg: 5, xl: 5 }} textAlign="center">
-        <Typography variant="h3">Basic plan</Typography>
+        <Typography variant="h3">{plan}</Typography>
         <Typography variant="h1" lineHeight={2}>
-          $19/mo
+        {price}  $19/mo
         </Typography>
         <Typography variant="body1" lineHeight={3}>
           Feature text goes here

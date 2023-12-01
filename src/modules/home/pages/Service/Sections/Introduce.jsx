@@ -18,14 +18,17 @@ export default function Introduce() {
           <Grid item xs={10} sm={10} md={8} lg={8} xl={8}>
             <Stack alignItems="center" textAlign={'center'} pt={15} pb={15}>
               <Typography variant="h5" pt={2}>
-                Tagline
+                Our Vision
               </Typography>
               <Typography variant="h1" pt={2}>
-                Medium length section heading goes here
+                {/* Elevating Your Brand With Innovative Website Solutions */}
+                Let Us Turn Your <strong className="gradient-text"> Vision </strong> Into{' '}
+                <strong className="gradient-text"> Reality </strong>
               </Typography>
               <Typography variant="body2" pt={4}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus,
-                mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.
+                Our team will collaborate with you to bring your vision to life through expert website design and development. With a focus
+                on delivering exceptional results, we&apos;ll work tirelessly to ensure that your website exceeds your expectations and
+                effectively communicates your brand and message.
               </Typography>
             </Stack>
           </Grid>

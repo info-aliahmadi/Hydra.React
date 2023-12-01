@@ -37,11 +37,11 @@ export default function ContactForm() {
         .then(() => {
           resetForm();
           setSubmitting(true);
-          setNotify({ open: true });
+          setNotify({ open: true, description: 'Your Message Sent Successfully' });
         })
         .catch((error) => {
           setServerErrors(error, setErrors);
-          setNotify({ open: true, type: 'error', description: error });
+          setNotify({ open: true, type: 'error', description: 'Your message could not be sent, please send your message via email' });
         })
         .finally((x) => {
           setSubmitting(false);
@@ -52,11 +52,11 @@ export default function ContactForm() {
         .then(() => {
           resetForm();
           setSubmitting(true);
-          setNotify({ open: true });
+          setNotify({ open: true, description: 'Your Message Sent Successfully' });
         })
         .catch((error) => {
           setServerErrors(error, setErrors);
-          setNotify({ open: true, type: 'error', description: error });
+          setNotify({ open: true, type: 'error', description: 'Your message could not be sent, please send your message via email' });
         })
         .finally((x) => {
           setSubmitting(false);
@@ -66,7 +66,7 @@ export default function ContactForm() {
 
   return (
     <>
-      <Notify notify={notify} setNotify={setNotify}></Notify>
+      <Notify notify={notify} setNotify={setNotify} sx={{ mt: '55px' }}></Notify>
 
       <Formik
         initialValues={{
@@ -195,7 +195,7 @@ export default function ContactForm() {
                     value={values?.subject || ''}
                     onBlur={handleBlur}
                     onChange={handleChange}
-                    error={Boolean(touched.name && errors.name)}
+                    error={Boolean(touched.subject && errors.subject)}
                   >
                     {/* value={age} label="Age" onChange={handleChange} */}
                     <MenuItem value={'Porfolio/News/Gallery'}>Porfolio/News/Gallery</MenuItem>

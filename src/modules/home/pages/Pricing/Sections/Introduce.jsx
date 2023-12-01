@@ -8,49 +8,42 @@ import PricingShadowImage from 'assets/images/price-shadow.svg';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
 
 export default function Introduce() {
-  function PriceItem() {
+  function PriceItem({ plan, price, monthlyPrice, features, commingSoon }) {
     return (
       <Box>
         <Box className="pricing-box" pt={15} pb={15}>
           <img className="bg-wave" src={PricingBaxImage} alt="" />
           <Box mt={{ xs: -35, sm: -35, md: -25, lg: -30, xl: -35 }} p={{ xs: 7, sm: 7, md: 4, lg: 5, xl: 7 }}>
-            <Box className="price-title" textAlign="center" pb={{ xs: 5, sm: 10, md: 4, lg: 10, xl: 10 }}>
-              <Typography variant="h3">Basic plan</Typography>
+            <Box className="price-title" textAlign="center" pb={{ xs: 5, sm: 10, md: 4, lg: 10, xl: 7 }}>
+              <Typography variant="h3">{plan}</Typography>
               <Typography variant="h1" lineHeight={2}>
-                $19/mo
+                {price}
               </Typography>
-              <Typography variant="body2">or $199 yearly</Typography>
+              <Typography variant="body2">{monthlyPrice}</Typography>
             </Box>
             <Box pt={{ xs: 2, sm: 2, md: 0, lg: 3, xl: 3 }}>
               <Typography variant="body2" lineHeight={{ xs: 2, sm: 3, md: 2, lg: 5, xl: 5 }} fontWeight={700}>
                 Includes:
               </Typography>
               <Box>
-                <Typography className="feature" variant="body2">
-                  <CheckOutlinedIcon />
-                  Feature text goes here
-                </Typography>
-                <Typography className="feature" variant="body2">
-                  <CheckOutlinedIcon />
-                  Feature text goes here
-                </Typography>
-                <Typography className="feature" variant="body2">
-                  <CheckOutlinedIcon />
-                  Feature text goes here
-                </Typography>
-                <Typography className="feature" variant="body2">
-                  <CheckOutlinedIcon />
-                  Feature text goes here
-                </Typography>
-                <Typography className="feature" variant="body2">
-                  <CheckOutlinedIcon />
-                  Feature text goes here
-                </Typography>
+                {features.map((item, index) => (
+                  <Typography key={'f-' + index} className="feature" variant="body2">
+                    <CheckOutlinedIcon />
+                    {item}
+                  </Typography>
+                ))}
               </Box>
             </Box>
             <Box pt={6} textAlign="center">
-              <Button variant="contained" color="primary" size="large" fullWidth>
-                Request
+              <Button
+                href={'/contact'}
+                variant="contained"
+                color="primary"
+                size="large"
+                fullWidth
+                className={commingSoon ? 'btn-comming-soon' : ''}
+              >
+                {commingSoon ? 'Comming Soon' : 'Request'}
               </Button>
             </Box>
           </Box>
@@ -80,13 +73,54 @@ export default function Introduce() {
           pr={{ xs: 5, sm: 5, md: 5, lg: 0, xl: 0 }}
         >
           <Grid item xs={8} sm={7} md={4} lg={4} xl={4}>
-            <PriceItem />
+            <PriceItem
+              plan="Portfolio"
+              price="$2,000"
+              monthlyPrice="or 200$ Monthly Support"
+              features={[
+                'Fully responsive design',
+                'Multi-page website',
+                'Unlimited portfolio items',
+                // 'Advanced filtering for portfolio',
+                'Custom contact form',
+                'SEO optimization',
+                'Content management system(CMS)',
+                'Hosting setup'
+              ]}
+            />
           </Grid>
           <Grid item xs={8} sm={7} md={4} lg={4} xl={4}>
-            <PriceItem />
+            <PriceItem
+              commingSoon={true}
+              plan="E-Commerce"
+              price="$4,000"
+              monthlyPrice="or 200$ Monthly Support"
+              features={[
+                'Advanced product catalog',
+                'Product reviews',
+                'Customized shopping cart',
+                'Stock management',
+                'Discount and coupon functionality',
+                'Tax and shipping calculation',
+                'payment gateway integration'
+              ]}
+            />
           </Grid>
           <Grid item xs={8} sm={7} md={4} lg={4} xl={4}>
-            <PriceItem />
+            <PriceItem
+              plan="Web Application"
+              price="$10/ph"
+              monthlyPrice="or 200$ Monthly Support"
+              features={[
+                'Custom application design',
+                'Database setup and management',
+                'Advanced user security features',
+                'Scalable architecture',
+                'High-performance application',
+                'Integrates with existing systems',
+                'Custom API integration'
+              ]}
+            />
           </Grid>
         </Grid>
       </Container>

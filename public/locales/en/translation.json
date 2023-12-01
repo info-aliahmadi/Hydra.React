@@ -42,7 +42,7 @@
     "change-password": "Change Password",
     "language": "Language",
     "accountSettings": "Account Settings",
-    "siteSettings": "Site Settings",
+    "settings": "Configuration and Settings",
     "users": "Users",
     "roles": "Roles",
     "permissions": "Permissions",
@@ -93,7 +93,9 @@
       "messagesDraft": "Drafts",
       "sendMessage": "Send Message",
       "messagesTrash": "Messages Trash",
-      "messagesDeleted": "Deleted Messages"
+      "messagesDeleted": "Deleted Messages",
+      "siteSettings": "Site Settings",
+      "messageSettings": "Message Settings"
     }
   },
   "fields": {
@@ -222,6 +224,10 @@
         "recipients": "Recipients",
         "attachments": "Attachments",
         "publicMessageType": "Public Message"
+      },
+      "messageSettings": {
+        "recipientIdsForContactMessage": "Recipient Users For Contact Message",
+        "recipientIdsForRequestMessage": "Recipient Users For Request Message"
       }
     },
     "fileStorage": {

@@ -6,7 +6,7 @@ import 'react';
 export default function Story() {
   return (
     <Box className="bg-white">
-        <Box
+      <Box
         className="bg-wave"
         sx={{
           backgroundImage: `url(${WaveAboutImage})`
@@ -36,14 +36,24 @@ export default function Story() {
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <Typography variant="body2" p={{ xs: 1, sm: 1, md: 3, lg: 10, xl: 10 }}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce varius faucibus massa sollicitudin amet augue. Nibh metus a
-                semper purus mauris duis. Lorem eu neque, tristique quis duis. Nibh scelerisque ac adipiscing velit non nulla in amet
-                pellentesque. Sit turpis pretium eget maecenas. Vestibulum dolor mattis consectetur eget commodo vitae. Amet pellentesque
-                sit pulvinar lorem mi a, euismod risus rhoncus. Elementum ullamcorper nec, habitasse vulputate. Eget dictum quis est sed
-                egestas tellus, a lectus. Quam ullamcorper in fringilla arcu aliquet fames arcu.Lacinia eget faucibus urna, nam risus nec
-                elementum cras porta. Sed elementum, sed dolor purus dolor dui. Ut dictum nulla pulvinar vulputate sit sagittis in eleifend
-                dignissim. Natoque mauris cras molestie velit. Maecenas eget adipiscing quisque viverra lectus arcu, tincidunt ultrices
-                pellentesque.
+                Welcome to <strong className="gradient-text">OnWaveDesign</strong> , the website of a team of professional web developers
+                based in Karlsruhe, Germany. We have over <strong className="gradient-text"> 15 years of combined experience</strong> in
+                creating beautiful, responsive, and user-friendly websites for various clients and purposes. We specialize in{' '}
+                <strong className="gradient-text"> front-end development </strong> , using the latest technologies and frameworks such as
+                <strong className="gradient-text"> HTML5, CSS3, JavaScript, React, Bootstrap and Material Design(MUI) </strong> . We also
+                have skills in <strong className="gradient-text"> back-end development </strong> , working with
+                <strong className="gradient-text"> .NET, ASP.Net, SQL Server and MongoDB </strong> . We can create websites from scratch, or
+                redesign and improve existing ones. We can also integrate various features and functionalities such as e-commerce, blogs,
+                contact forms, social media, and more. We are passionate about web development and always eager to learn new things and
+                challenge ourselves. We value quality, creativity, and customer satisfaction. We work closely with our clients to understand
+                their needs and expectations, and deliver the <strong className="gradient-text"> best solutions </strong> for their
+                projects. If you are looking for a team of web developers who can create a stunning and functional website for you, you have
+                come to the right place. Please feel free to browse our website. You can also read the testimonials from our previous
+                clients, who were happy with our work and service. If you are interested in hiring us, or have any questions or inquiries,
+                please do not hesitate to
+                <strong className="gradient-text"> contact us </strong> . You can use the contact form on this website, or send us an email
+                at<strong className="gradient-text"> info@OnWaveDesign.com </strong> . We will get back to you as soon as possible. Thank
+                you for visiting our website. We hope to hear from you soon.
               </Typography>
             </Grid>
           </Grid>

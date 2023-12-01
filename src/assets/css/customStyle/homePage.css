@@ -153,12 +153,22 @@
   color: #c9cedd;
   fill: #c9cedd;
   text-decoration: none;
+  text-shadow: none;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 .footer .footer-links a:hover,
 .footer .footer-links a:focus,
 .footer .footer-links a:hover svg path {
-  color: #adb2c2;
-  fill: #adb2c2;
+  color: #49aae5;
+  fill: #49aae5;
+  background-image: linear-gradient(to right, #49aae5, #8a76e2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 100% 100%;
+  background-position: top left 100%;
 }
 
 .footer .footer-links.social-link {
@@ -374,4 +384,19 @@
   text-shadow: none;
   background-size: 100% 100%;
   background-position: top left 100%;
+}
+.gradient-text2 {
+  background-image: linear-gradient(to right, #03a4e1, #6c51dd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: none;
+  background-size: 100% 100%;
+  background-position: top left 100%;
+}
+.centerTab .MuiTabs-flexContainer {
+  justify-content: center;
+}
+.btn-comming-soon
+{
+  background : linear-gradient(180deg, #f68eff 0%, #7f68db 100%)
 }
