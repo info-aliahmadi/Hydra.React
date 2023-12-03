@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from '@mui/material';
+import { Button, Fade, Grid, Grow, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import WaveAboutImage from 'assets/images/wave-about.svg';
 import 'react';
@@ -17,7 +17,6 @@ import figma from 'assets/images/tech/figma.png';
 import material from 'assets/images/tech/material.png';
 import blender from 'assets/images/tech/blender.png';
 import spline from 'assets/images/tech/spline.png';
-
 export default function Story() {
   return (
     <Box className="bg-white">
@@ -40,14 +39,16 @@ export default function Story() {
             xl={12}
             rowSpacing={{ xs: 5, sm: 5, md: 5, lg: 5, xl: 5 }}
             p={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
+            className="xyz-in"
           >
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-              <Typography variant="h5" pt={2}>
+              <Typography variant="h5" pt={2} xyz="fade small stagger ease-out-back">
                 Innovative
               </Typography>
-              <Typography variant="h1" pt={2}>
+              <Typography variant="h1" pt={2} xyz="fade small stagger ease-out-back">
                 <span className="gradient-text">Transforming Ideas</span> into Stunning Web Experiences
               </Typography>
+
               <Grid
                 container
                 item
@@ -61,54 +62,52 @@ export default function Story() {
                 pt={10}
                 pb={10}
               >
-                <Xyz
-                < appear duration="auto">
-                  <Box m={1} xyz="fade small stagger">
-                    <img alt="Visual Studio" title="Visual Studio" src={visualStudio} height={'100px'} />
-                  </Box>
-                  <Box m={1}>
-                    <img alt=".Net" title=".Net" src={dontNet} height={'100px'} />
-                  </Box>
-                  <Box m={1}>
-                    <img alt="ASP.Net" title="ASP.Net" src={aspNet} height={'100px'} />
-                  </Box>
-                  <Box m={1}>
-                    <img alt="C#" title="C#" src={csharp} height={'100px'} />
-                  </Box>
-                  <Box m={1}>
-                    <img alt="Sql Server" title="Sql Server" src={sqlserver} height={'100px'} />
-                  </Box>
-                  <Box m={1}>
-                    <img alt="MongoDB" title="MongoDB" src={mongo} height={'100px'} />
-                  </Box>
-                  <Box m={1}>
-                    <img alt="Elastic" title="Elastic" src={elastic} height={'100px'} />
-                  </Box>
-                  <Box m={1}>
-                    <img alt="Kibana" title="Kibana" src={kibana} height={'100px'} />
-                  </Box>
-                  <Box m={1}>
-                    <img alt="Redis" title="Redis" src={redis} height={'100px'} />
-                  </Box>
-                  <Box m={1}>
-                    <img alt="Javascript" title="Javascript" src={javascript} height={'100px'} />
-                  </Box>
-                  <Box m={1}>
-                    <img alt="Reactjs" title="Reactjs" src={reactjs} height={'100px'} />
-                  </Box>
-                  <Box m={1}>
-                    <img alt="Figma" title="Figma" src={figma} height={'100px'} />
-                  </Box>
-                  <Box m={1}>
-                    <img alt="Blender" title="Blender" src={material} height={'100px'} />
-                  </Box>
-                  <Box m={1}>
-                    <img alt="Blender" title="Blender" src={blender} height={'100px'} />
-                  </Box>
-                  <Box m={1}>
-                    <img alt="Spline" title="Spline" src={spline} height={'100px'} />
-                  </Box>
-                </>
+                <Box m={1}>
+                  <img alt="Visual Studio" title="Visual Studio" src={visualStudio} height={'100px'} />
+                </Box>
+
+                <Box m={1}>
+                  <img alt=".Net" title=".Net" src={dontNet} height={'100px'} />
+                </Box>
+                <Box m={1}>
+                  <img alt="ASP.Net" title="ASP.Net" src={aspNet} height={'100px'} />
+                </Box>
+                <Box m={1}>
+                  <img alt="C#" title="C#" src={csharp} height={'100px'} />
+                </Box>
+                <Box m={1}>
+                  <img alt="Sql Server" title="Sql Server" src={sqlserver} height={'100px'} />
+                </Box>
+                <Box m={1}>
+                  <img alt="MongoDB" title="MongoDB" src={mongo} height={'100px'} />
+                </Box>
+                <Box m={1}>
+                  <img alt="Elastic" title="Elastic" src={elastic} height={'100px'} />
+                </Box>
+                <Box m={1}>
+                  <img alt="Kibana" title="Kibana" src={kibana} height={'100px'} />
+                </Box>
+                <Box m={1}>
+                  <img alt="Redis" title="Redis" src={redis} height={'100px'} />
+                </Box>
+                <Box m={1}>
+                  <img alt="Javascript" title="Javascript" src={javascript} height={'100px'} />
+                </Box>
+                <Box m={1}>
+                  <img alt="Reactjs" title="Reactjs" src={reactjs} height={'100px'} />
+                </Box>
+                <Box m={1}>
+                  <img alt="Figma" title="Figma" src={figma} height={'100px'} />
+                </Box>
+                <Box m={1} className="xyz-nested">
+                  <img alt="Blender" title="Blender" src={material} height={'100px'} />
+                </Box>
+                <Box m={1} className="xyz-nested">
+                  <img alt="Blender" title="Blender" src={blender} height={'100px'} />
+                </Box>
+                <Box m={1} className="xyz-nested">
+                  <img alt="Spline" title="Spline" src={spline} height={'100px'} />
+                </Box>
               </Grid>
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>

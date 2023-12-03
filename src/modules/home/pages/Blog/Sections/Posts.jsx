@@ -3,31 +3,44 @@ import { Box, Container } from '@mui/system';
 import PreviewImage from 'assets/images/Image.png';
 import 'react';
 import Author from '../../Shared/Author';
+import CONFIG from 'config';
+import _ from 'lodash';
 
-export default function Posts() {
-  function Post() {
+export default function Posts({ blogPost }) {
+  function Post({ post }) {
     return (
       <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
         <Grid>
-          <img alt="" src={PreviewImage} width={'100%'} />
+          <img
+            alt=""
+            src={
+              post?.previewImageUrl
+                ? post?.previewImageUrl
+                : CONFIG.UPLOAD_BASEPATH + post?.previewImage.directory + post?.previewImage.fileName
+            }
+            width={'100%'}
+          />
         </Grid>
         <Grid>
           <Stack>
-            <a href="/blogcategory" className="post-title">
-              <Typography variant="h5" pt={2}>
-                Category
-              </Typography>
-            </a>
+            {post?.topics.map((index, category) => {
+              <a href="/blogcategory" className="post-title">
+                <Typography variant="h5" pt={2}>
+                  {category}
+                </Typography>
+              </a>;
+            })}
             <a href="/blogpost" className="post-title">
               <Typography variant="h3" pt={2}>
-                Blog title heading will go here
+                {post?.Subject}
               </Typography>
             </a>
             <Typography variant="body2" pt={2} pb={2}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi
-              quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.
+              {_.truncate(post?.Body, {
+                length: 250
+              })}
             </Typography>
-            <Author />
+            <Author author={post?.writer} date={post?.publishDate} />
           </Stack>
         </Grid>
       </Grid>
@@ -44,7 +57,10 @@ export default function Posts() {
           pl={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
           pr={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
         >
-          <Post /> <Post /> <Post /> <Post /> <Post /> <Post />
+          {blogPost?.map((index, post) => {
+            <Post post={post} />;
+          })}
+          {/* <Post /> <Post /> <Post /> <Post /> <Post /> <Post /> */}
         </Grid>
       </Container>
     </Box>

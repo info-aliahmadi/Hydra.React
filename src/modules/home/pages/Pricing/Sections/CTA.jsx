@@ -1,21 +1,6 @@
 import 'react';
 import { Button, Grid, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
-import visualStudio from 'assets/images/tech/visualStudio.png';
-import dontNet from 'assets/images/tech/dotnet.png';
-import aspNet from 'assets/images/tech/aspnet.png';
-import csharp from 'assets/images/tech/csharp.png';
-import sqlserver from 'assets/images/tech/sqlserver.png';
-import mongo from 'assets/images/tech/mongo.png';
-import elastic from 'assets/images/tech/elastic.png';
-import kibana from 'assets/images/tech/kibana.png';
-import redis from 'assets/images/tech/redis.png';
-import javascript from 'assets/images/tech/javascript.png';
-import reactjs from 'assets/images/tech/reactjs.png';
-import figma from 'assets/images/tech/figma.png';
-import material from 'assets/images/tech/material.png';
-import blender from 'assets/images/tech/blender.png';
-import spline from 'assets/images/tech/spline.png';
 import WaveContactImage from 'assets/images/wave-contact.svg';
 
 export default function CTA() {

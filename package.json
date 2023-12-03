@@ -4,7 +4,6 @@
   "private": true,
   "homepage": ".",
   "dependencies": {
-    "@animxyz/react": "^0.6.7",
     "@ant-design/colors": "^6.0.0",
     "@ant-design/icons": "^4.7.0",
     "@emotion/cache": "^11.10.3",

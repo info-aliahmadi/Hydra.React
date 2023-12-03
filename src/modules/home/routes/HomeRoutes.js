@@ -61,25 +61,25 @@ const HomeRoutes = [
   },
   {
     key: 'blog',
-    path: '/blog',
+    path: '/blog/:page?',
     layout: <HomeLayout />,
     element: <Blog />
   },
   {
     key: 'blogcategory',
-    path: '/blogcategory',
+    path: '/blogcategory/:category?',
     layout: <HomeLayout />,
     element: <BlogCategory />
   },
   {
     key: 'blogPost',
-    path: '/blogPost',
+    path: '/blogPost/:id/:title',
     layout: <HomeLayout />,
     element: <BlogPost />
   },
   {
     key: 'blogtag',
-    path: '/blogtag',
+    path: '/blogtag/:tag',
     layout: <HomeLayout />,
     element: <BlogTag />
   },

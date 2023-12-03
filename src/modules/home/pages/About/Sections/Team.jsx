@@ -1,4 +1,4 @@
-import { Avatar, Grid, Link, Stack, Typography } from '@mui/material';
+import { Avatar, Grid, Grow, Link, Stack, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import 'react';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
