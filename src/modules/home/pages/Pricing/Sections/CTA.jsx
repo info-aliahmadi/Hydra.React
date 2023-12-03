@@ -1,8 +1,21 @@
 import 'react';
 import { Button, Grid, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
-import AppLogo from 'assets/images/app-logo.png';
-import AppLogo2 from 'assets/images/app-logo-2.png';
+import visualStudio from 'assets/images/tech/visualStudio.png';
+import dontNet from 'assets/images/tech/dotnet.png';
+import aspNet from 'assets/images/tech/aspnet.png';
+import csharp from 'assets/images/tech/csharp.png';
+import sqlserver from 'assets/images/tech/sqlserver.png';
+import mongo from 'assets/images/tech/mongo.png';
+import elastic from 'assets/images/tech/elastic.png';
+import kibana from 'assets/images/tech/kibana.png';
+import redis from 'assets/images/tech/redis.png';
+import javascript from 'assets/images/tech/javascript.png';
+import reactjs from 'assets/images/tech/reactjs.png';
+import figma from 'assets/images/tech/figma.png';
+import material from 'assets/images/tech/material.png';
+import blender from 'assets/images/tech/blender.png';
+import spline from 'assets/images/tech/spline.png';
 import WaveContactImage from 'assets/images/wave-contact.svg';
 
 export default function CTA() {
@@ -17,10 +30,10 @@ export default function CTA() {
       ></Box>
       <Container maxWidth="xl">
         <Grid container>
-          <Grid container item xs={12} sm={12} md={12} lg={12} xl={12} pb={{ xs: 5, sm: 8, md: 8, lg: 8, xl: 8 }} justifyContent="center">
+          <Grid container item xs={12} sm={12} md={12} lg={12} xl={12} pt={{ xs: 5, sm: 8, md: 8, lg: 8, xl: 8 }} justifyContent="center">
             <Grid item sx={{ textAlign: 'center' }}>
               <Typography variant="h1" pt={2}>
-                Medium length heading goes here
+                <span className="gradient-text2">Invest</span> in Your Future: Build a Website with Us
               </Typography>
               <Typography variant="body2" pt={4} pb={4}>
                 At OnWave Design, we specialize in proving cutting-edge web design
@@ -35,32 +48,53 @@ export default function CTA() {
               </Box>
             </Grid>
           </Grid>
-          <Grid container item xs={12} sm={12} md={12} lg={12} xl={12} justifyContent="space-evenly" alignItems="center">
-            <Box m={3}>
-              <img alt="" src={AppLogo} />
+          {/* <Grid container item xs={12} sm={12} md={12} lg={12} xl={12} justifyContent="space-evenly" alignItems="center">
+            <Box m={1}>
+              <img alt="Visual Studio" title="Visual Studio" src={visualStudio} height={'100px'} />
             </Box>
-            <Box>
-              <img alt="" src={AppLogo2} />
+            <Box m={1}>
+              <img alt=".Net" title=".Net" src={dontNet} height={'100px'} />
             </Box>
-            <Box>
-              <img alt="" src={AppLogo} />
+            <Box m={1}>
+              <img alt="ASP.Net" title="ASP.Net" src={aspNet} height={'100px'} />
             </Box>
-            <Box>
-              <img alt="" src={AppLogo2} />
+            <Box m={1}>
+              <img alt="C#" title="C#" src={csharp} height={'100px'} />
             </Box>
-            <Box>
-              <img alt="" src={AppLogo} />
+            <Box m={1}>
+              <img alt="Sql Server" title="Sql Server" src={sqlserver} height={'100px'} />
             </Box>
-            <Box>
-              <img alt="" src={AppLogo2} />
+            <Box m={1}>
+              <img alt="MongoDB" title="MongoDB" src={mongo} height={'100px'} />
             </Box>
-            <Box>
-              <img alt="" src={AppLogo} />
+            <Box m={1}>
+              <img alt="Elastic" title="Elastic" src={elastic} height={'100px'} />
             </Box>
-            <Box>
-              <img alt="" src={AppLogo2} />
+            <Box m={1}>
+              <img alt="Kibana" title="Kibana" src={kibana} height={'100px'} />
             </Box>
-          </Grid>
+            <Box m={1}>
+              <img alt="Redis" title="Redis" src={redis} height={'100px'} />
+            </Box>
+            <Box m={1}>
+              <img alt="Javascript" title="Javascript" src={javascript} height={'100px'} />
+            </Box>
+            <Box m={1}>
+              <img alt="Reactjs" title="Reactjs" src={reactjs} height={'100px'} />
+            </Box>
+            <Box m={1}>
+              <img alt="Figma" title="Figma" src={figma} height={'100px'} />
+            </Box>
+            <Box m={1}>
+              <img alt="Blender" title="Blender" src={material} height={'100px'} />
+            </Box>
+            <Box m={1}>
+              <img alt="Blender" title="Blender" src={blender} height={'100px'} />
+            </Box>
+            <Box m={1}>
+              <img alt="Spline" title="Spline" src={spline} height={'100px'} />
+            </Box>
+          </Grid> */}
         </Grid>
       </Container>
     </Box>

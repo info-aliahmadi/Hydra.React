@@ -4,9 +4,8 @@ import { Box, Container } from '@mui/system';
 import WaveAboutImage from 'assets/images/wave-about.svg';
 import PricingBaxImage from 'assets/images/pricing-box-wave.svg';
 import PricingShadowImage from 'assets/images/price-shadow.svg';
-
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
-
 export default function Introduce() {
   function PriceItem({ plan, price, monthlyPrice, features, commingSoon }) {
     return (
@@ -36,14 +35,14 @@ export default function Introduce() {
             </Box>
             <Box pt={6} textAlign="center">
               <Button
-                href={'/contact'}
+                href={commingSoon ? '' : '/contact'}
                 variant="contained"
                 color="primary"
                 size="large"
                 fullWidth
                 className={commingSoon ? 'btn-comming-soon' : ''}
               >
-                {commingSoon ? 'Comming Soon' : 'Request'}
+                {commingSoon ? 'Comming Soon' : 'Request'} {!commingSoon && <ChevronRightIcon />}
               </Button>
             </Box>
           </Box>
@@ -76,7 +75,7 @@ export default function Introduce() {
             <PriceItem
               plan="Portfolio"
               price="$2,000"
-              monthlyPrice="or 200$ Monthly Support"
+              monthlyPrice="and 200$ Monthly Support"
               features={[
                 'Fully responsive design',
                 'Multi-page website',
@@ -94,7 +93,7 @@ export default function Introduce() {
               commingSoon={true}
               plan="E-Commerce"
               price="$4,000"
-              monthlyPrice="or 200$ Monthly Support"
+              monthlyPrice="and 200$ Monthly Support"
               features={[
                 'Advanced product catalog',
                 'Product reviews',
@@ -110,7 +109,7 @@ export default function Introduce() {
             <PriceItem
               plan="Web Application"
               price="$10/ph"
-              monthlyPrice="or 200$ Monthly Support"
+              monthlyPrice="and 200$ Monthly Support"
               features={[
                 'Custom application design',
                 'Database setup and management',

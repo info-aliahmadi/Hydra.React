@@ -2,6 +2,21 @@ import { Button, Grid, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import WaveAboutImage from 'assets/images/wave-about.svg';
 import 'react';
+import visualStudio from 'assets/images/tech/visualStudio.png';
+import dontNet from 'assets/images/tech/dotnet.png';
+import aspNet from 'assets/images/tech/aspnet.png';
+import csharp from 'assets/images/tech/csharp.png';
+import sqlserver from 'assets/images/tech/sqlserver.png';
+import mongo from 'assets/images/tech/mongo.png';
+import elastic from 'assets/images/tech/elastic.png';
+import kibana from 'assets/images/tech/kibana.png';
+import redis from 'assets/images/tech/redis.png';
+import javascript from 'assets/images/tech/javascript.png';
+import reactjs from 'assets/images/tech/reactjs.png';
+import figma from 'assets/images/tech/figma.png';
+import material from 'assets/images/tech/material.png';
+import blender from 'assets/images/tech/blender.png';
+import spline from 'assets/images/tech/spline.png';
 
 export default function Story() {
   return (
@@ -31,8 +46,70 @@ export default function Story() {
                 Innovative
               </Typography>
               <Typography variant="h1" pt={2}>
-                Transforming Ideas into Stunning Web Experiences
+                <span className="gradient-text">Transforming Ideas</span> into Stunning Web Experiences
               </Typography>
+              <Grid
+                container
+                item
+                xs={12}
+                sm={12}
+                md={12}
+                lg={12}
+                xl={10}
+                justifyContent="space-evenly"
+                alignItems="center"
+                pt={10}
+                pb={10}
+              >
+                <Xyz
+                < appear duration="auto">
+                  <Box m={1} xyz="fade small stagger">
+                    <img alt="Visual Studio" title="Visual Studio" src={visualStudio} height={'100px'} />
+                  </Box>
+                  <Box m={1}>
+                    <img alt=".Net" title=".Net" src={dontNet} height={'100px'} />
+                  </Box>
+                  <Box m={1}>
+                    <img alt="ASP.Net" title="ASP.Net" src={aspNet} height={'100px'} />
+                  </Box>
+                  <Box m={1}>
+                    <img alt="C#" title="C#" src={csharp} height={'100px'} />
+                  </Box>
+                  <Box m={1}>
+                    <img alt="Sql Server" title="Sql Server" src={sqlserver} height={'100px'} />
+                  </Box>
+                  <Box m={1}>
+                    <img alt="MongoDB" title="MongoDB" src={mongo} height={'100px'} />
+                  </Box>
+                  <Box m={1}>
+                    <img alt="Elastic" title="Elastic" src={elastic} height={'100px'} />
+                  </Box>
+                  <Box m={1}>
+                    <img alt="Kibana" title="Kibana" src={kibana} height={'100px'} />
+                  </Box>
+                  <Box m={1}>
+                    <img alt="Redis" title="Redis" src={redis} height={'100px'} />
+                  </Box>
+                  <Box m={1}>
+                    <img alt="Javascript" title="Javascript" src={javascript} height={'100px'} />
+                  </Box>
+                  <Box m={1}>
+                    <img alt="Reactjs" title="Reactjs" src={reactjs} height={'100px'} />
+                  </Box>
+                  <Box m={1}>
+                    <img alt="Figma" title="Figma" src={figma} height={'100px'} />
+                  </Box>
+                  <Box m={1}>
+                    <img alt="Blender" title="Blender" src={material} height={'100px'} />
+                  </Box>
+                  <Box m={1}>
+                    <img alt="Blender" title="Blender" src={blender} height={'100px'} />
+                  </Box>
+                  <Box m={1}>
+                    <img alt="Spline" title="Spline" src={spline} height={'100px'} />
+                  </Box>
+                </>
+              </Grid>
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <Typography variant="body2" p={{ xs: 1, sm: 1, md: 3, lg: 10, xl: 10 }}>
