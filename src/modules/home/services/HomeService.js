@@ -30,4 +30,30 @@ export default class HomeService {
         });
     });
   };
+  getArticle = async (articleId) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(CONFIG.API_BASEPATH + '/cms/GetArticle', {
+          params: { articleId: articleId }
+        })
+        .then((response) => {
+          resolve(response.data.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+  getCategories = async () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(CONFIG.API_BASEPATH + '/cms/GetTopicsList')
+        .then((response) => {
+          resolve(response.data.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
 }

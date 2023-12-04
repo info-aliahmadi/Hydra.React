@@ -67,21 +67,21 @@ const HomeRoutes = [
   },
   {
     key: 'blogcategory',
-    path: '/blogcategory/:category?',
+    path: '/blogcategory/:category/:page?',
     layout: <HomeLayout />,
     element: <BlogCategory />
   },
   {
-    key: 'blogPost',
-    path: '/blogPost/:id/:title',
-    layout: <HomeLayout />,
-    element: <BlogPost />
-  },
-  {
     key: 'blogtag',
-    path: '/blogtag/:tag',
+    path: '/blogtag/:tag/:page?',
     layout: <HomeLayout />,
     element: <BlogTag />
+  },
+  {
+    key: 'blogPost',
+    path: '/blogPost/:id/:title?',
+    layout: <HomeLayout />,
+    element: <BlogPost />
   },
   {
     key: 'contact',

@@ -3,7 +3,7 @@ import { Box } from '@mui/system';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import 'react';
 
-export default function Author({ author, date }) {
+export default function Author({ author, date, readingTime }) {
   return (
     <Box alignItems="center" display="flex">
       <Avatar sx={{ width: 50, height: 50 }} />
@@ -15,7 +15,7 @@ export default function Author({ author, date }) {
           </Typography>
           <AccessTimeIcon fontSize="small" color="action" />
           <Typography variant="body12" component="span" pl={1}>
-            5 min read
+            {readingTime} min read
           </Typography>
         </Box>
       </Box>

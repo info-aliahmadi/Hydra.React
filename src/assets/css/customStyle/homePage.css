@@ -316,17 +316,29 @@
 }
 .category a:link,
 .category a:visited {
+  border-radius: 30px;
   padding: 10px 25px;
   margin: 5px;
-  outline: 2px solid;
+  /* outline: 2px solid; */
   outline-color: var(--white);
-  transition: outline-color 0.5s;
+  transition: all 0.5s;
 }
-
 .category a:hover,
 .category a:focus {
-  outline: 2px solid;
-  outline-color: #2c302e94;
+  /* outline: 1px solid rgb(161, 212, 248); */
+  /* outline: 1px solid rgb(161, 212, 248); */
+  background: rgb(206, 235, 255);
+  background: linear-gradient(rgb(206, 235, 255), rgb(161, 212, 248));
+  box-shadow: rgba(54, 131, 187, 0.3) 0px 10px 15px -6px, rgba(255, 255, 255, 0.2) 0px 4px 0px 0px inset;
+}
+.category .active {
+  cursor: default;
+  border: none;
+  /* outline: 1px solid rgb(161, 212, 248); */
+  outline-color: rgb(161, 212, 248) !important;
+  background: rgb(206, 235, 255);
+  background: linear-gradient(rgb(206, 235, 255), rgb(161, 212, 248));
+  box-shadow: rgba(54, 131, 187, 0.3) 0px 10px 15px -6px, rgba(255, 255, 255, 0.2) 0px 4px 0px 0px inset;
 }
 
 .post-title:link,
@@ -349,6 +361,29 @@
 
 .post-title:hover,
 .post-title:focus {
+  text-shadow: none;
+  background-position: top left 100%;
+}
+.post-category:link,
+.post-category:visited {
+  color: var(--black);
+  text-decoration: none;
+  display: inline-block;
+  background-image: linear-gradient(to right, var(--black), var(--black), #49aae5, #7c66d9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 300% 100%;
+  background-position: top left;
+  text-shadow: none;
+
+  -webkit-transition: all 0.7s ease-in-out;
+  -moz-transition: all 0.7s ease-in-out;
+  -o-transition: all 0.7s ease-in-out;
+  transition: all 0.7s ease-in-out;
+}
+
+.post-category:hover,
+.post-category:focus {
   text-shadow: none;
   background-position: top left 100%;
 }
@@ -396,7 +431,19 @@
 .centerTab .MuiTabs-flexContainer {
   justify-content: center;
 }
-.btn-comming-soon
-{
-  background : linear-gradient(180deg, #f68eff 0%, #7f68db 100%)
+.btn-comming-soon {
+  background: linear-gradient(180deg, #f68eff 0%, #7f68db 100%);
+}
+.MuiPaginationItem-root {
+  cursor: pointer;
+  color: rgb(44, 48, 46);
+  border-radius: 30px;
+  /* border: 1px solid rgb(161, 212, 248); */
+  background: linear-gradient(rgb(206, 235, 255), rgb(161, 212, 248));
+  box-shadow: rgba(54, 131, 187, 0.3) 0px 10px 15px -6px, rgba(255, 255, 255, 0.2) 0px 4px 0px 0px inset;
+}
+.MuiPaginationItem-root.Mui-selected {
+  /* border: 1px solid rgb(161 212 248 / 52%); */
+  background: linear-gradient(rgb(206 235 255 / 34%), rgb(161 212 248 / 45%));
+  box-shadow: rgba(54, 131, 187, 0.3) 0px 10px 15px -6px, rgba(255, 255, 255, 0.2) 0px 4px 0px 0px inset;
 }

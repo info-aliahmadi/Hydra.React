@@ -15,7 +15,7 @@ export default function SelectTopic({ defaultValues, id, name, setFieldValue, er
 
   const loadTopics = () => {
     topicService.getTopicListForSelect().then((result) => {
-      setOptions(result.data);
+      setOptions(result?.data);
       setLoading(false);
     });
   };
@@ -62,17 +62,17 @@ export default function SelectTopic({ defaultValues, id, name, setFieldValue, er
         onChange={handleChange}
         MenuProps={MenuProps}
         input={<OutlinedInput label={t('pages.topics')} />}
-        defaultValue={options.filter((x) => defaultValues?.find((c) => c === x.id)) ?? []}
+        defaultValue={options?.filter((x) => defaultValues?.find((c) => c === x.id)) ?? []}
         renderValue={(selected) => (
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
             {selected.map((value, index) => {
-              let title = options.find((x) => x.id == value)?.title;
+              let title = options?.find((x) => x.id == value)?.title;
               return <Chip key={'chip-' + name + index} label={title} />;
             })}
           </Box>
         )}
       >
-        {options.map((item) => {
+        {options?.map((item) => {
           return (
             <MenuItem key={'menu-' + name + item.id} value={item.id} style={getStyles(item.id, values, theme)}>
               <span style={{ 'white-space': 'pre-wrap' }}>{item.title}</span>

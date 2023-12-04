@@ -1,52 +1,67 @@
-import { Grid, Stack, Typography } from '@mui/material';
+import { Alert, AlertTitle, Grid, Pagination, Stack, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import PreviewImage from 'assets/images/Image.png';
 import 'react';
 import Author from '../../Shared/Author';
 import CONFIG from 'config';
 import _ from 'lodash';
+import readingTime from 'utils/readingTime';
+import { DateTimeViewer } from 'utils/DateViewer';
+import { useNavigate } from 'react-router-dom';
 
-export default function Posts({ blogPost }) {
-  function Post({ post }) {
-    return (
-      <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-        <Grid>
-          <img
-            alt=""
-            src={
-              post?.previewImageUrl
-                ? post?.previewImageUrl
-                : CONFIG.UPLOAD_BASEPATH + post?.previewImage.directory + post?.previewImage.fileName
-            }
-            width={'100%'}
-          />
-        </Grid>
-        <Grid>
-          <Stack>
-            {post?.topics.map((index, category) => {
-              <a href="/blogcategory" className="post-title">
-                <Typography variant="h5" pt={2}>
-                  {category}
-                </Typography>
-              </a>;
-            })}
-            <a href="/blogpost" className="post-title">
-              <Typography variant="h3" pt={2}>
-                {post?.Subject}
-              </Typography>
-            </a>
-            <Typography variant="body2" pt={2} pb={2}>
-              {_.truncate(post?.Body, {
-                length: 250
-              })}
-            </Typography>
-            <Author author={post?.writer} date={post?.publishDate} />
-          </Stack>
-        </Grid>
+function Post({ post }) {
+  return (
+    <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+      <Grid>
+        <img
+          alt=""
+          src={
+            post?.previewImageUrl
+              ? post?.previewImageUrl
+              : post?.previewImageId
+              ? CONFIG.UPLOAD_BASEPATH + post?.previewImage.directory + post?.previewImage.thumbnail
+              : PreviewImage
+          }
+          width={'100%'}
+        />
       </Grid>
-    );
-  }
-
+      <Grid>
+        <Stack>
+          <Typography variant="h5" pt={2}>
+            {post?.topics.map((category, index) => (
+              <a key={'c-' + index} href={'/blogcategory/' + category} className="post-category">
+                {category}
+                {post?.topics.length - 1 == index ? '' : ', '}
+              </a>
+            ))}
+          </Typography>
+          <a href={'/blogpost/' + post?.id + '/' + post?.subject} className="post-title">
+            <Typography variant="h3" pt={2}>
+              {post?.subject}
+            </Typography>
+          </a>
+          <Typography
+            variant="body1"
+            pt={2}
+            pb={2}
+            dangerouslySetInnerHTML={{
+              __html: _.truncate(post?.body, {
+                length: 250,
+                seperator: '.'
+              })
+            }}
+          ></Typography>
+          <Author
+            author={post?.writer}
+            date={DateTimeViewer(CONFIG.DEFAULT_LANGUAGE, post?.publishDate)}
+            readingTime={readingTime(post?.body)}
+          />
+        </Stack>
+      </Grid>
+    </Grid>
+  );
+}
+export default function Posts({ blogPost }) {
   return (
     <Box className="bg-white">
       <Container maxWidth="xl">
@@ -57,10 +72,17 @@ export default function Posts({ blogPost }) {
           pl={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
           pr={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}
         >
-          {blogPost?.map((index, post) => {
-            <Post post={post} />;
-          })}
-          {/* <Post /> <Post /> <Post /> <Post /> <Post /> <Post /> */}
+          {blogPost?.map((post, index) => (
+            <Post key={'p-' + index} post={post} />
+          ))}
+          {blogPost?.length == 0 && (
+            <Container justifyContent="center" sx={{ paddingTop: '20px' }}>
+              <Alert severity="info">
+                <AlertTitle>Info</AlertTitle>
+                <strong> There is no data to display </strong>
+              </Alert>
+            </Container>
+          )}
         </Grid>
       </Container>
     </Box>

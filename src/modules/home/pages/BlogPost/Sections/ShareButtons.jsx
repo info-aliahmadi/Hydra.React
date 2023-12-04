@@ -22,18 +22,32 @@ function XIcon() {
 }
 
 export default function ShareButtons() {
+  function handleChange() {
+    var url = window.location.href;
+    // facebook
+    //window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, 'facebook-share-dialog', 'width=800,height=600');
+
+    //linkedIn
+    // window.open('https://www.linkedin.com/share?url=' + url, 'linkedin-share-dialog', 'width=800,height=600');
+
+    //twitter
+    window.open('http://www.twitter.com/share?url=' + url, 'twitter-share-dialog', 'width=800,height=600');
+
+
+    return false;
+  }
   return (
     <Box>
-      <Button href="#" variant="contained" color="info" sx={{ minWidth: '51px', padding: '7px 7px' }}>
+      <Button variant="contained" color="info" sx={{ minWidth: '51px', padding: '7px 7px' }}>
         <LinkIcon fontSize="large" />
       </Button>
-      <Button href="#" variant="contained" color="info" sx={{ minWidth: '51px', padding: '7px 7px' }}>
+      <Button variant="contained" color="info" sx={{ minWidth: '51px', padding: '7px 7px' }} onClick={handleChange}>
         <XIcon size="large" color={'#000'} />
       </Button>
-      <Button href="#" variant="contained" color="info" sx={{ minWidth: '51px', padding: '7px 7px' }}>
+      <Button variant="contained" color="info" sx={{ minWidth: '51px', padding: '7px 7px' }} onClick={handleChange}>
         <LinkedInIcon fontSize="large" />
       </Button>
-      <Button href="#" variant="contained" color="info" sx={{ minWidth: '51px', padding: '7px 7px' }}>
+      <Button variant="contained" color="info" sx={{ minWidth: '51px', padding: '7px 7px' }} onClick={handleChange}>
         <FacebookOutlinedIcon fontSize="large" />
       </Button>
     </Box>

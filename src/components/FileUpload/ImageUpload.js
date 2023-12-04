@@ -54,7 +54,9 @@ const ImageUpload = ({ id, name, setFieldValue, value, minFileSize, maxFileSize,
   }
 
   const loadImage = async (fileId) => {
+    debugger
     fileUploadService.getFileInfoById(fileId).then((fileInfo) => {
+      debugger
       let fileUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory + fileInfo.fileName;
       let imagePosterUrl = CONFIG.UPLOAD_BASEPATH + fileInfo.directory;
       let isVideo = CONFIG.VIDEOS_EXTENSIONS.some((extension) => extension == fileInfo.extension);
