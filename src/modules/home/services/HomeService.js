@@ -30,6 +30,32 @@ export default class HomeService {
         });
     });
   };
+  getRelatedArticles = async (articleId) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(CONFIG.API_BASEPATH + '/cms/GetRelatedArticlesList', {
+          params: { articleId: articleId }
+        })
+        .then((response) => {
+          resolve(response.data.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+  getTopArticle = async () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(CONFIG.API_BASEPATH + '/cms/GetTopArticle')
+        .then((response) => {
+          resolve(response.data.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
   getArticle = async (articleId) => {
     return new Promise((resolve, reject) => {
       axios
@@ -48,6 +74,32 @@ export default class HomeService {
     return new Promise((resolve, reject) => {
       axios
         .get(CONFIG.API_BASEPATH + '/cms/GetTopicsList')
+        .then((response) => {
+          resolve(response.data.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+  getTags = async () => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(CONFIG.API_BASEPATH + '/cms/GetTagsList')
+        .then((response) => {
+          resolve(response.data.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  };
+  getLinksByKeyList = async (sectionKey) => {
+    return new Promise((resolve, reject) => {
+      axios
+        .get(CONFIG.API_BASEPATH + '/cms/GetLinksByKeyList', {
+          params: { sectionKey: sectionKey }
+        })
         .then((response) => {
           resolve(response.data.data);
         })

@@ -1,9 +1,11 @@
 import 'react';
-import { Button } from '@mui/material';
+import { Button, styled } from '@mui/material';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { Box } from '@mui/system';
 import FacebookOutlinedIcon from '@mui/icons-material/FacebookOutlined';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import LinkIcon from '@mui/icons-material/Link';
+import { useState } from 'react';
 
 function XIcon() {
   return (
@@ -22,32 +24,62 @@ function XIcon() {
 }
 
 export default function ShareButtons() {
-  function handleChange() {
+  const LightTooltip = styled(({ className, ...props }) => <Tooltip {...props} classes={{ popper: className }} />)(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: theme.palette.common.white,
+      color: 'rgba(0, 0, 0, 0.87)',
+      boxShadow: theme.shadows[1],
+      fontSize: 11
+    }
+  }));
+  const [open, setOpen] = useState(false);
+  function handleChange(redirectUrl) {
     var url = window.location.href;
-    // facebook
-    //window.open('https://www.facebook.com/sharer/sharer.php?u=' + url, 'facebook-share-dialog', 'width=800,height=600');
-
-    //linkedIn
-    // window.open('https://www.linkedin.com/share?url=' + url, 'linkedin-share-dialog', 'width=800,height=600');
-
-    //twitter
-    window.open('http://www.twitter.com/share?url=' + url, 'twitter-share-dialog', 'width=800,height=600');
-
-
+    window.open(redirectUrl + url, 'share-dialog', 'width=800,height=600');
     return false;
+  }
+  function handleCopyToCliboard(value) {
+    navigator.clipboard.writeText(value);
+    setOpen(true);
+    setTimeout(function () {
+      setOpen(false);
+    }, 4000);
   }
   return (
     <Box>
-      <Button variant="contained" color="info" sx={{ minWidth: '51px', padding: '7px 7px' }}>
-        <LinkIcon fontSize="large" />
-      </Button>
-      <Button variant="contained" color="info" sx={{ minWidth: '51px', padding: '7px 7px' }} onClick={handleChange}>
+      <LightTooltip open={open} title="The URL Copied to Clipboard">
+        <Button
+          variant="contained"
+          color="info"
+          sx={{ minWidth: '51px', padding: '7px 7px' }}
+          onClick={() => handleCopyToCliboard(window.location.href)}
+        >
+          <LinkIcon fontSize="large" />
+        </Button>
+      </LightTooltip>
+
+      <Button
+        variant="contained"
+        color="info"
+        sx={{ minWidth: '51px', padding: '7px 7px' }}
+        onClick={() => handleChange('http://www.twitter.com/share?url=')}
+      >
         <XIcon size="large" color={'#000'} />
       </Button>
-      <Button variant="contained" color="info" sx={{ minWidth: '51px', padding: '7px 7px' }} onClick={handleChange}>
+      <Button
+        variant="contained"
+        color="info"
+        sx={{ minWidth: '51px', padding: '7px 7px' }}
+        onClick={() => handleChange('https://www.linkedin.com/share?url=')}
+      >
         <LinkedInIcon fontSize="large" />
       </Button>
-      <Button variant="contained" color="info" sx={{ minWidth: '51px', padding: '7px 7px' }} onClick={handleChange}>
+      <Button
+        variant="contained"
+        color="info"
+        sx={{ minWidth: '51px', padding: '7px 7px' }}
+        onClick={() => handleChange('https://www.facebook.com/sharer/sharer.php?u=')}
+      >
         <FacebookOutlinedIcon fontSize="large" />
       </Button>
     </Box>

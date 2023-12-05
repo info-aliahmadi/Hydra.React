@@ -64,6 +64,7 @@ export default function MenuItems() {
           sx={{
             display: { xs: 'block', md: 'none' }
           }}
+          className="menu-link"
         >
           {menuItems.map((item) => (
             <MenuItem key={item.id} onClick={handleCloseNavMenu}>

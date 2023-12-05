@@ -18,17 +18,16 @@ export default function Category({ active }) {
   }, []);
 
   return (
-    <Box className="bg-white" pt={{ xs: 10, sm: 10, md: 0, lg: 0, xl: 0 }}>
+    <Box className="bg-white">
       <Container maxWidth="xl">
         <Grid container>
-          <Box className="category" p={5} pl={{ xs: 5, sm: 5, md: 15, lg: 0, xl: 0 }} pr={{ xs: 5, sm: 5, md: 5, lg: 0, xl: 0 }}>
+          <Box className="category" m={5} ml={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }} mr={{ xs: 3, sm: 10, md: 15, lg: 0, xl: 0 }}>
             <Link href={'/blog'}>View all</Link>
             {categories?.map((category, index) => (
               <Link
                 key={'cat-' + index}
                 href={category?.title == active ? '#' : '/blogcategory/' + category?.title}
                 className={category?.title == active ? 'active' : ''}
-                disabled
               >
                 {category?.title}
               </Link>

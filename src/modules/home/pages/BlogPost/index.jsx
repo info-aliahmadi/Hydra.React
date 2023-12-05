@@ -7,13 +7,12 @@ import { Box, Typography } from '@mui/material';
 import ShareButtons from './Sections/ShareButtons';
 import Author from '../Shared/Author';
 import HomeService from 'modules/home/services/HomeService';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { DateTimeViewer } from 'utils/DateViewer';
 import readingTime from 'utils/readingTime';
 import CONFIG from 'config';
 
 export default function BlogPost() {
-  let navigate = useNavigate();
   const params = useParams();
   var homeService = new HomeService();
 
@@ -23,7 +22,6 @@ export default function BlogPost() {
 
   function loadPost(postId) {
     homeService.getArticle(postId).then((result) => {
-      debugger;
       setPost(result);
     });
   }
@@ -59,7 +57,7 @@ export default function BlogPost() {
         </Box>
       </Header>
       <Content post={post} />
-      <RelatedPosts />
+      <RelatedPosts postId={postId} />
     </>
   );
 }

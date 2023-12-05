@@ -5,8 +5,8 @@ import FooterLogoImage from 'assets/images/logo-footer.png';
 import 'react';
 import Newsletter from './Newsletter';
 import Copyright from './Copyright';
-import FirstColumnLinks from './Links/FirstColumnLinks';
-import SecondColumnLinks from './Links/SecondColumnLinks';
+import RecentPostLinks from './Links/RecentPostLinks';
+import CategoriesLinks from './Links/CategoriesLinks';
 import SocialLinks from './Links/SocialLinks';
 
 export default function Footer() {
@@ -27,7 +27,7 @@ export default function Footer() {
           pl={{ xs: 0, sm: 0, md: 10, lg: 10, xl: 10 }}
           justifyContent="space-between"
         >
-          <Grid container item xs={12} sm={12} md={6} lg={6} xl={6} p={{ xs: 10, sm: 10, md: 0, lg: 0, xl: 0 }}>
+          <Grid container item xs={12} sm={12} md={5} lg={5} xl={5} p={{ xs: 10, sm: 10, md: 0, lg: 0, xl: 0 }}>
             <Grid item>
               <Box sx={{ textAlign: 'center' }}>
                 <img alt="" src={FooterLogoImage} />
@@ -42,19 +42,19 @@ export default function Footer() {
             item
             xs={12}
             sm={12}
-            md={5}
-            lg={5}
-            xl={5}
+            md={6}
+            lg={6}
+            xl={6}
             spacing={3}
             justifyContent="center"
             alignContent="center"
             pl={{ xs: 10, sm: 10, md: 0, lg: 0, xl: 0 }}
           >
-            <Grid item xs={6} sm={6} md={5} lg={5} xl={5} spacing={3}>
-              <FirstColumnLinks />
+            <Grid item xs={6} sm={6} md={7} lg={7} xl={7} spacing={3}>
+              <RecentPostLinks />
             </Grid>
             <Grid item xs={6} sm={6} md={5} lg={5} xl={5} spacing={3}>
-              <SecondColumnLinks />
+              <CategoriesLinks />
             </Grid>
           </Grid>
         </Grid>
