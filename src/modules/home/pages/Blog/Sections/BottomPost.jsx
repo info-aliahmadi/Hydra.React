@@ -25,11 +25,12 @@ export default function BottomPost() {
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6} display="flex" alignItems="center">
               <Stack>
                 <Typography variant="h1" pt={2}>
-                  Blog title heading will go here
+                  Elevate Your Brand And Stand Out From The Competition
                 </Typography>
                 <Typography variant="body2" pt={2} pb={2}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus,
-                  mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.
+                  At OnWave Design, we understand that every business is different, and that&apos;s why we offer personalized website
+                  solutions tailored to meet your specific needs and objectives. Contact us today to learn more and take the first step
+                  towards transforming your online presence
                 </Typography>
                 <Box sx={{ flexGrow: 0, display: 'flex' }} pb={{ xs: 8, sm: 8 }}>
                   <Button href="/contact" variant="contained" color="primary" size="large">

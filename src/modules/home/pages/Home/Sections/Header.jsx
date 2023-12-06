@@ -8,6 +8,10 @@ const Header = () => {
     <>
       <div className="header">
         <Box className="fullscreen-container">
+          {/* <spline-viewer
+            loading-anim-type="spinner-small-dark"
+            url="https://prod.spline.design/SHWZ2zeilKfflD8Q/scene.splinecode"
+          ></spline-viewer> */}
           <img alt="" src={header} className="fullscreen-image" />
         </Box>
         <Container maxWidth="xl">

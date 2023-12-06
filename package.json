@@ -17,6 +17,7 @@
     "@mui/system": "^5.13.7",
     "@mui/x-date-pickers": "^6.9.1",
     "@reduxjs/toolkit": "^1.8.5",
+    "@splinetool/runtime": "^0.9.518",
     "@tanstack/react-query": "^4.29.15",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
