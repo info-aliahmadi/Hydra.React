@@ -3,6 +3,9 @@ import { Stack } from '@mui/system';
 import 'react';
 
 export default function Newsletter() {
+  function newsLetterSubscribe() {
+    
+  }
   return (
     <>
       <Grid container justifyContent="flex-end">
@@ -23,7 +26,13 @@ export default function Newsletter() {
                 sx={{ paddingRight: 0 }}
                 endAdornment={
                   <InputAdornment position="end">
-                    <Button variant="contained" color="secondary" size="large" sx={{ margin: 0, borderRadius: '0 30px 30px 0' }}>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={newsLetterSubscribe}
+                      size="large"
+                      sx={{ margin: 0, borderRadius: '0 30px 30px 0' }}
+                    >
                       Subscribe
                     </Button>
                   </InputAdornment>

@@ -2,7 +2,8 @@ import { StrictMode, Suspense } from 'react';
 import { createRoot } from 'react-dom/client';
 
 // scroll bar
-import 'simplebar/src/simplebar.css';
+// import 'simplebar/src/simplebar.css';
+// import 'assets/css/flexslider.min.css';
 
 // third-party
 import { Provider as ReduxProvider } from 'react-redux';

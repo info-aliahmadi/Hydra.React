@@ -1,6 +1,5 @@
 import { Grid, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
-import StatisticsImage from 'assets/images/statistics2.png';
 import WaveAboutImage from 'assets/images/wave-about-3.svg';
 import 'react';
 
@@ -51,7 +50,10 @@ export default function Statistics() {
             </Grid>
           </Grid>
           <Grid item xl={7} lg={7} md={12} sm={12}>
-            <img alt="" src={StatisticsImage} width="100%" />
+            <spline-viewer
+              loading-anim-type="spinner-big-dark"
+              url="https://prod.spline.design/KgA3aaU0zTZTmCeu/scene.splinecode"
+            ></spline-viewer>
           </Grid>
         </Grid>
       </Container>

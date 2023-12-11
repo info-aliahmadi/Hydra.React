@@ -1,7 +1,5 @@
-import { Button, Grid, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import WaveAboutImage from 'assets/images/wave-about-2.svg';
-import FactoryImage from 'assets/images/statistics.png';
 import 'react';
 
 export default function Factory() {
@@ -15,7 +13,10 @@ export default function Factory() {
         height={{ xs: 250, sm: 280, md: 300, lg: 340, xl: 350 }}
       ></Box>
       <Container maxWidth="xl">
-        <img alt="" src={FactoryImage} width="100%" />
+        <spline-viewer
+          loading-anim-type="spinner-big-dark"
+          url="https://prod.spline.design/KgA3aaU0zTZTmCeu/scene.splinecode"
+        ></spline-viewer>
       </Container>
     </Box>
   );
