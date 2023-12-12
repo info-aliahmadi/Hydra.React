@@ -19,7 +19,9 @@ export default function CategoriesLinks() {
 
   return (
     <>
-      <Typography variant="h5">CATEGORIES</Typography>
+      <Typography variant="h5" className="footer-title">
+        CATEGORIES
+      </Typography>
       <ul className="footer-links">
         {categories?.map((link, index) => (
           <li key={'ls-' + index}>

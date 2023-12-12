@@ -19,7 +19,9 @@ export default function RecentPostLinks() {
 
   return (
     <>
-      <Typography variant="h5">RECENT POSTS</Typography>
+      <Typography variant="h5" className="footer-title">
+        RECENT POSTS
+      </Typography>
       <ul className="footer-links">
         {recentPost?.map((link, index) => (
           <li key={'lf-' + index}>

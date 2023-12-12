@@ -3,7 +3,7 @@ import { styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 
 // project import
-import { drawerWidth,drawerMinimizeWidth } from 'config';
+import { drawerWidth, drawerMinimizeWidth } from 'config';
 
 // ==============================|| HEADER - APP BAR STYLED ||============================== //
 

@@ -1,6 +1,5 @@
 import Loadable from 'components/Loadable';
 const HomeLayout = Loadable(lazy(() => import('layout/HomeLayout')));
-const CleanHomeLayout = Loadable(lazy(() => import('layout/HomeLayout/CleanHomeLayout')));
 const MinimalLayout = Loadable(lazy(() => import('layout/MinimalLayout')));
 
 import { lazy } from 'react';
@@ -120,12 +119,6 @@ const HomeRoutes = [
     path: 'register',
     layout: <MinimalLayout />,
     element: <AuthRegister />
-  },
-  {
-    key: 'introduceIFrame',
-    path: '/introduce',
-    layout: <CleanHomeLayout />,
-    element: <Introduce />
   }
 ];
 

@@ -88,11 +88,11 @@ export default function Navigation(props) {
       <ElevationScroll {...props} style={{ zIndex: 99999999 }}>
         <AppBar style={{ zIndex: 99999999 }}>
           <Container maxWidth="xl">
-            <Toolbar disableGutters>
-              <Logo sx={{ order: 0, flexGrow: 1, mr: 1 }} />
+            <Toolbar disableGutters sx={{ alignItems: 'flex-start' }}>
+              <Logo sx={{ order: 0, flexGrow: 1, mr: 1, mt: '5px' }} />
               <MenuItems />
 
-              <Box sx={{ order: 3, flexGrow: 0, display: 'flex' }}>
+              <Box sx={{ order: 3, flexGrow: 0, display: 'flex', m: '5px 5px 15px 5px' }}>
                 <RequestButtons />
               </Box>
             </Toolbar>

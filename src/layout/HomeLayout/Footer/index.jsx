@@ -27,7 +27,7 @@ export default function Footer() {
           pl={{ xs: 0, sm: 0, md: 10, lg: 10, xl: 10 }}
           justifyContent="space-between"
         >
-          <Grid container item xs={12} sm={12} md={5} lg={5} xl={5} p={{ xs: 10, sm: 10, md: 0, lg: 0, xl: 0 }}>
+          <Grid container item xs={12} sm={12} md={5} lg={5} xl={5} pb={{ xs: 10, sm: 10, md: 0, lg: 0, xl: 0 }}>
             <Grid item>
               <Box sx={{ textAlign: 'center' }}>
                 <img alt="" src={FooterLogoImage} />
@@ -48,12 +48,13 @@ export default function Footer() {
             spacing={3}
             justifyContent="center"
             alignContent="center"
-            pl={{ xs: 10, sm: 10, md: 0, lg: 0, xl: 0 }}
+            pl={{ xs: 3, sm: 3, md: 0, lg: 0, xl: 0 }}
+            pb={{ xs: 5, sm: 5, md: 0, lg: 0, xl: 0 }}
           >
-            <Grid item xs={6} sm={6} md={7} lg={7} xl={7} spacing={3}>
+            <Grid item xs={7} sm={7} md={7} lg={7} xl={7} spacing={3}>
               <RecentPostLinks />
             </Grid>
-            <Grid item xs={6} sm={6} md={5} lg={5} xl={5} spacing={3}>
+            <Grid item xs={5} sm={5} md={5} lg={5} xl={5} spacing={3}>
               <CategoriesLinks />
             </Grid>
           </Grid>

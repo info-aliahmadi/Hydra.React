@@ -6,7 +6,9 @@ export default function Copyright() {
     <>
       <Grid container className="copyright" p={3} justifyContent={'space-between'}>
         <Grid item>
-          <Typography variant="body1">© 2023 OnWaveDesign. All rights reserved.</Typography>
+          <Typography variant="body1" className="text">
+            © 2023 OnWaveDesign. All rights reserved.
+          </Typography>
         </Grid>
         <Grid item>
           <Box className="copyright-links">

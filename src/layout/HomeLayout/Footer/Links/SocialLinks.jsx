@@ -8,25 +8,25 @@ export default function SocialLinks() {
   return (
     <>
       <ul className="footer-links social-link">
-        <li>
+        <li className="facebook">
           <a href="#">
             <FacebookOutlinedIcon fontSize="medium" />
             <span>Facebook</span>
           </a>
         </li>
-        <li>
+        <li className="instagram">
           <a href="#">
             <InstagramIcon fontSize="medium" />
             <span>Instagram</span>
           </a>
         </li>
-        <li>
+        <li className="linkedin">
           <a href="#">
             <LinkedInIcon fontSize="medium" />
             <span>LinkedIn</span>
           </a>
         </li>
-        <li>
+        <li className="twitter">
           <a href="#">
             <svg width="19" height="17" viewBox="0 0 19 17" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path

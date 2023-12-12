@@ -11,9 +11,9 @@ const Header = () => {
       var hls = new Hls();
       hls.loadSource(CONFIG.FRONT_PATH + '/videos/media/wavesphere.m3u8');
       hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, function () {
-        video.play();
-      });
+      // hls.on(Hls.Events.MANIFEST_PARSED, function () {
+      //   video.play();
+      // });
       // HLS.js is not supported on platforms that do not have Media Source
       // Extensions (MSE) enabled.
       //
@@ -23,9 +23,9 @@ const Header = () => {
       // of the plain video element, without using HLS.js.
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
       video.src = CONFIG.FRONT_PATH + '/videos/wavesphere.mp4';
-      video.addEventListener('loadedmetadata', function () {
-        video.play();
-      });
+      // video.addEventListener('loadedmetadata', function () {
+      //   video.play();
+      // });
     }
     // playVideo();
   }

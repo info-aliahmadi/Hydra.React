@@ -1,5 +1,5 @@
 import 'react';
-import { Box, Button, IconButton, Link, Menu, MenuItem, Typography } from '@mui/material';
+import { Box, Button, Link, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useEffect, useState } from 'react';
 import HomeService from 'modules/home/services/HomeService';

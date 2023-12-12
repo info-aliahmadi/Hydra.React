@@ -35,7 +35,7 @@ export default function Features() {
                 Innovative
               </Typography>
               <Typography variant="h1" pt={2}>
-                Transforming Ideas into Stunning Web Experiences
+              <span className="gradient-text"> Transforming</span> Ideas into Stunning Web Experiences
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
@@ -47,7 +47,7 @@ export default function Features() {
               </Typography>
             </Grid>
           </Grid>
-          <Grid container item rowSpacing={{ xs: 7, sm: 7, md: 5, lg: 7, xl: 7 }} xs={12} sm={12} md={12} lg={12} xl={12}>
+          <Grid container item rowSpacing={{ xs: 7, sm: 7, md: 3, lg: 7, xl: 7 }} xs={12} sm={12} md={12} lg={12} xl={12}>
             <Grid
               item
               xs={12}
@@ -83,7 +83,10 @@ export default function Features() {
               sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
             >
               <Box sx={{ maxWidth: '480px' }}>
-                <spline-viewer url="https://prod.spline.design/YVcMpYg7QYp3CdP8/scene.splinecode"></spline-viewer>
+                <spline-viewer
+                  loading-anim-type="spinner-small-dark"
+                  url="https://prod.spline.design/YVcMpYg7QYp3CdP8/scene.splinecode"
+                ></spline-viewer>
               </Box>
               {/* <img alt="" src={Feature2Image} height="200px" /> */}
               <Box sx={{ width: '100%', background: '#a1d4f8', marginTop: '-70px', position: 'relative', zIndex: 999 }}>
@@ -104,7 +107,10 @@ export default function Features() {
               sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
             >
               <Box sx={{ maxWidth: '480px' }}>
-                <spline-viewer url="https://prod.spline.design/BR18NVUSCCzfjn5m/scene.splinecode"></spline-viewer>
+                <spline-viewer
+                  loading-anim-type="spinner-small-dark"
+                  url="https://prod.spline.design/BR18NVUSCCzfjn5m/scene.splinecode"
+                ></spline-viewer>
               </Box>
               {/* <img alt="" src={Feature3Image} height="200px" /> */}
               <Box sx={{ width: '100%', background: '#a1d4f8', marginTop: '-70px', position: 'relative', zIndex: 999 }}>
