@@ -25,7 +25,7 @@ export default function BottomPost() {
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6} display="flex" alignItems="center">
               <Stack>
                 <Typography variant="h1" pt={2}>
-                  Elevate Your Brand And Stand Out From The Competition
+                  <span className="gradient-text">Elevate</span> Your Brand And Stand Out From The Competition
                 </Typography>
                 <Typography variant="body2" pt={2} pb={2}>
                   At OnWave Design, we understand that every business is different, and that&apos;s why we offer personalized website
@@ -43,7 +43,11 @@ export default function BottomPost() {
               </Stack>
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-              <img alt="" src={PreviewImage} width="100%" />
+              <spline-viewer
+                loading-anim-type="spinner-big-dark"
+                url="https://prod.spline.design/KWvBnCCQGs8XMgUO/scene.splinecode"
+              ></spline-viewer>
+              {/* <img alt="" src={PreviewImage} width="100%" /> */}
             </Grid>
           </Grid>
         </Grid>

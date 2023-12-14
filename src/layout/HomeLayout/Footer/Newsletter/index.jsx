@@ -57,10 +57,10 @@ export default function Newsletter() {
         </Grid>
 
         <Grid item xs={11} sm={11} md={11} lg={11} xl={11}>
-          <Typography variant="body1" fontSize={11} pl={4} className="text">
+          <Typography variant="body1" fontSize={11} className="text">
             By subscribing you agree to with our Privacy Policy
           </Typography>
-          <Typography variant="body1" fontSize={11} pl={4} className="text">
+          <Typography variant="body1" fontSize={11} className="text">
             and provide consent to receive updates from our company.
           </Typography>
         </Grid>

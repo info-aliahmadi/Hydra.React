@@ -13,7 +13,7 @@ import {
 import { Box, Container, Stack } from '@mui/system';
 import WaveContactImage from 'assets/images/wave-contact.svg';
 import SquareIcon from '@mui/icons-material/Square';
-import EmailIcon from '@mui/icons-material/Email';
+import { Email, Place } from '@mui/icons-material';
 import 'react';
 import { useState } from 'react';
 import { Formik } from 'formik';
@@ -72,7 +72,10 @@ export default function Contact() {
                 Have a question or need assistance? Contact us!
               </Typography>
               <Typography variant="body2" pt={2} sx={{ display: 'flex', alignItems: 'center' }}>
-                <EmailIcon sx={{ marginRight: '5px' }} /> info@onwavedesign.com
+                <Email sx={{ marginRight: '5px' }} /> info@onwavedesign.com
+              </Typography>
+              <Typography variant="body2" pt={2} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Place sx={{ marginRight: '5px' }} /> We are international developers. We are from Canada, Iran, India and Holland
               </Typography>
             </Grid>
           </Grid>

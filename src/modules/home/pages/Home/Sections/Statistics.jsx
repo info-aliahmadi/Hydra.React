@@ -29,10 +29,13 @@ export default function Statistics() {
             <Grid container>
               <Grid item>
                 <Typography variant="h5" pt={2}>
-                  Innovative
+                  Structurize
                 </Typography>
                 <Typography variant="h1" pt={2}>
-                  Transforming Ideas into Exceptional Web Experiences
+                  We <span className="gradient-text">Structure</span> Your Business
+                  {/* We Structure Your Business */}
+                  {/* Your Dream and Our Dream Are On the Same Line */}
+                  {/* Transforming Ideas into Exceptional Web Experiences */}
                 </Typography>
                 <Typography variant="body2" pt={2}>
                   With a track record of successful projects, satisfied clients, and seamless launches, OnWave Design is the go-to web
@@ -41,11 +44,11 @@ export default function Statistics() {
               </Grid>
               <Grid container item columnSpacing={{ xs: 2, sm: 2, md: 5, lg: 5, xl: 5 }} pt={{ xs: 2, sm: 2, md: 5, lg: 12, xl: 12 }}>
                 <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                  <Typography variant="h1">50%</Typography>
+                  <Typography variant="h1">100%</Typography>
                   <Typography variant="h3">Satisfied Clients</Typography>
                 </Grid>
                 <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-                  <Typography variant="h1">50%</Typography>
+                  <Typography variant="h1">100%</Typography>
                   <Typography variant="h3">Project Completed</Typography>
                 </Grid>
               </Grid>

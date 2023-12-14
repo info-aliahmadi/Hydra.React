@@ -32,10 +32,10 @@ export default function Features() {
           >
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <Typography variant="h5" pt={2}>
-                Innovative
+                Features
               </Typography>
               <Typography variant="h1" pt={2}>
-              <span className="gradient-text"> Transforming</span> Ideas into Stunning Web Experiences
+                <span className="gradient-text"> Transforming</span> Ideas into Stunning Web Experiences
               </Typography>
             </Grid>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>

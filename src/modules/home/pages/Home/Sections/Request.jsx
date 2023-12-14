@@ -18,7 +18,8 @@ export default function Request() {
           <Grid item xs={12} sm={12} md={12} lg={9} xl={9}>
             <Grid item>
               <Typography variant="h1" pt={2}>
-                Transforming your web development dreams
+                Request a Website That Reflects Your <span className="gradient-text"> Vision</span> 
+                {/* <span className="gradient-text">Stand Out</span> From the Competition With a Unique Website */}
               </Typography>
               <Typography variant="body2" pt={2}>
                 Get a quote or consultation for your web development needs

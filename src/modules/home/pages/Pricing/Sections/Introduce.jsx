@@ -6,6 +6,7 @@ import PricingBaxImage from 'assets/images/pricing-box-wave.svg';
 import PricingShadowImage from 'assets/images/price-shadow.svg';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CheckOutlinedIcon from '@mui/icons-material/CheckOutlined';
+import WaveBlogImage from 'assets/images/wave-blog.svg';
 export default function Introduce() {
   function PriceItem({ plan, price, monthlyPrice, features, commingSoon }) {
     return (
@@ -52,14 +53,14 @@ export default function Introduce() {
     );
   }
   return (
-    <Box className="bg-white">
-      <Box
+    <Box className="bg-white" pt={{ xs: 5, sm: 5, md: 5, lg: 8, xl: 10 }}>
+      {/* <Box
         className="bg-wave"
         sx={{
           backgroundImage: `url(${WaveAboutImage})`
         }}
         height={{ xs: 300, sm: 350, md: 400, lg: 400, xl: 480 }}
-      ></Box>
+      ></Box> */}
       <Container maxWidth="xl">
         <Grid
           container
@@ -67,7 +68,6 @@ export default function Introduce() {
           alignContent="center"
           justifyContent="center"
           spacing={5}
-          pt={{ xs: 5, sm: 5, md: 5, lg: 8, xl: 10 }}
           pl={{ xs: 5, sm: 5, md: 5, lg: 0, xl: 0 }}
           pr={{ xs: 5, sm: 5, md: 5, lg: 0, xl: 0 }}
         >
@@ -75,7 +75,7 @@ export default function Introduce() {
             <PriceItem
               plan="Portfolio"
               price="$2,000"
-              monthlyPrice="and 200$ Monthly Support"
+              monthlyPrice="and 100$ Monthly Support"
               features={[
                 'Fully responsive design',
                 'Multi-page website',
@@ -93,7 +93,7 @@ export default function Introduce() {
               commingSoon={true}
               plan="E-Commerce"
               price="$4,000"
-              monthlyPrice="and 200$ Monthly Support"
+              monthlyPrice="and 100$ Monthly Support"
               features={[
                 'Advanced product catalog',
                 'Product reviews',

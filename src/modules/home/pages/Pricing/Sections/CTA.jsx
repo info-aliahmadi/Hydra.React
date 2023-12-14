@@ -18,7 +18,7 @@ export default function CTA() {
           <Grid container item xs={12} sm={12} md={12} lg={12} xl={12} pt={{ xs: 5, sm: 8, md: 8, lg: 8, xl: 8 }} justifyContent="center">
             <Grid item sx={{ textAlign: 'center' }}>
               <Typography variant="h1" pt={2}>
-                <span className="gradient-text2">Invest</span> in Your Future: Build a Website with Us
+                <span className="gradient-text">Invest</span> in Your Future: Build a Website with Us
               </Typography>
               <Typography variant="body2" pt={4} pb={4}>
                 At OnWave Design, we specialize in proving cutting-edge web design

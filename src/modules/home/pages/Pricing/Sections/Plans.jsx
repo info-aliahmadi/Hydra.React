@@ -95,7 +95,7 @@ export default function Plans() {
                 Our Mission
               </Typography>
               <Typography variant="h1" pt={2}>
-                <span className="gradient-text2"> Grow Your Business</span> with Custom Web Solutions
+                <span className="gradient-text"> Grow Your Business</span> with Custom Web Solutions
               </Typography>
               <Typography variant="body2" pt={4}>
                 Revolutionize your business with OnWave Design – where tailored solutions meet digital excellence, fueling growth and
@@ -116,10 +116,10 @@ export default function Plans() {
                     <TableRow>
                       <TableCell component="th" align="center"></TableCell>
                       <TableCell component="th">
-                        <PlanBox plan="Portfolio" price="$2,000" description="and 200$ Monthly Support" />
+                        <PlanBox plan="Portfolio" price="$2,000" description="and 100$ Monthly Support" />
                       </TableCell>
                       <TableCell component="th" align="center">
-                        <PlanBox plan="E-Commerce" price="$4,000" description="and 200$ Monthly Support" commingSoon={true} />
+                        <PlanBox plan="E-Commerce" price="$4,000" description="and 100$ Monthly Support" commingSoon={true} />
                       </TableCell>
                       <TableCell component="th" align="center">
                         <PlanBox plan="Web Application" price="$10/ph" description="and 200$ Monthly Support" />

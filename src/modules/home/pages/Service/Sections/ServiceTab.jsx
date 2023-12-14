@@ -93,7 +93,7 @@ export default function ServiceTab() {
                 <Tab label="E-Commerce" icon={<ShoppingBag />} iconPosition="start" {...a11yProps(1)} />
                 <Tab label="Web Application" icon={<DesktopMacOutlined />} iconPosition="start" {...a11yProps(1)} {...a11yProps(2)} />
               </Tabs>
-              <Box pt={5} pl={5} pb={4}>
+              <Box pt={5} pl={5} pb={4} className="text-card">
                 <TabPanel value={value} index={0}>
                   <Typography variant="h3">What Is Portfolio Website?</Typography>
                   <Typography variant="body2" pt={4}>
@@ -148,9 +148,6 @@ export default function ServiceTab() {
                     </ul>
                     Overall, a portfolio website serves as a powerful marketing tool, helping individuals and organizations to establish
                     credibility, showcase their expertise, and attract new opportunities.
-                    <Box textAlign="center">
-                      <img src={StatisticsImage} alt="" width={'50%'} />
-                    </Box>
                   </Typography>
                 </TabPanel>
                 <TabPanel value={value} index={1}>
@@ -215,9 +212,6 @@ export default function ServiceTab() {
                     </ul>
                     Each feature is designed to enhance the shopping experience and encourage customer loyalty. Ecommerce websites can be
                     built from scratch by a company or individual, or they can use pre-built platforms.
-                    <Box textAlign="center">
-                      <img src={StatisticsImage} alt="" width={'50%'} />
-                    </Box>
                   </Typography>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
@@ -295,9 +289,6 @@ export default function ServiceTab() {
                       By investing in a custom web application, customers can gain a competitive edge by having a tool that is specifically
                       designed to meet their needs, improve operational efficiency, and enhance the user experience.
                     </p>
-                    <Box textAlign="center">
-                      <img src={StatisticsImage} alt="" width={'50%'} />
-                    </Box>
                   </Typography>
                 </TabPanel>
               </Box>

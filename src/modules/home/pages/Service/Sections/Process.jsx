@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material';
+import { Checkbox, Grid, Stack, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
 import 'react';
 import Timeline from '@mui/lab/Timeline';
@@ -8,7 +8,18 @@ import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import TimelineDot from '@mui/lab/TimelineDot';
-import { QuestionAnswer, ViewTimeline, Handshake, Preview, DeveloperMode, RocketLaunch, Feedback, ThumbUpAlt } from '@mui/icons-material';
+import SquareIcon from '@mui/icons-material/Square';
+import {
+  QuestionAnswer,
+  ViewTimeline,
+  Handshake,
+  Preview,
+  DeveloperMode,
+  RocketLaunch,
+  Feedback,
+  ThumbUpAlt,
+  CheckBox
+} from '@mui/icons-material';
 
 export default function Process() {
   return (
@@ -183,10 +194,75 @@ export default function Process() {
                   </TimelineSeparator>
                   <TimelineContent sx={{ py: '30px', px: 4 }}>
                     <Typography variant="subtitle2">Project Closure</Typography>
+                    <Typography variant="body1" p={2}></Typography>
                   </TimelineContent>
                 </TimelineItem>
               </Timeline>
             </Grid>
+          </Grid>
+        </Grid>
+      </Container>
+      <Container maxWidth="xl">
+        <Grid container alignItems="center" alignContent="center" justifyContent="center">
+          <Grid item xs={10} sm={10} md={10} lg={10} xl={10}>
+            <Stack alignItems="center" textAlign={'center'} pb={15} pt={5}>
+              <Typography variant="h5" pt={2}>
+                Criteria
+              </Typography>
+              <Typography variant="h1" pt={2}>
+                Acceptance Criteria <span className="gradient-text">Checklist</span>
+              </Typography>
+              <Typography variant="body2" pt={4} textAlign="justify">
+                <Typography variant="body2" pt={4} pl={'30px'}>
+                  The following checklist outlines the acceptance criteria for the{' '}
+                  <strong className="gradient-text">completed Website</strong> :
+                </Typography>
+
+                <ul className="criteria-chcklist">
+                  <li>
+                    <Checkbox required size="medium" checked={true} />
+                    <strong className="gradient-text">Functionality:</strong> All functions and features specified in the scope of work are
+                    fully operational.
+                  </li>
+                  <li>
+                    <Checkbox required size="medium" checked={true} />
+                    <strong className="gradient-text">Design:</strong> The design is consistent with the approved mockups and meets the
+                    requirements specified in the scope of work.
+                  </li>
+                  <li>
+                    <Checkbox required size="medium" checked={true} />
+                    <strong className="gradient-text">Content:</strong> All content, including text and images, is accurate, complete, and
+                    consistent with the approved content strategy.
+                  </li>
+                  <li>
+                    <Checkbox required size="medium" checked={true} />{' '}
+                    <strong className="gradient-text">Search Engine Optimization (SEO):</strong> The Website is optimized for search
+                    engines, including meta tags, titles, and descriptions.
+                  </li>
+                  <li>
+                    <Checkbox required size="medium" checked={true} />
+                    <strong className="gradient-text">Browser Compatibility:</strong> The Website is compatible with all major browsers,
+                    including Chrome, Firefox, Safari, and Edge.
+                  </li>
+                  <li>
+                    <Checkbox required size="medium" checked={true} /> <strong className="gradient-text">Mobile Responsiveness:</strong> The
+                    Website is mobile-friendly and responsive across different devices and screen sizes.
+                  </li>
+                  <li>
+                    <Checkbox required size="medium" checked={true} /> <strong className="gradient-text">Speed and Performance:</strong> The
+                    Website loads quickly and performs well under heavy traffic and usage.
+                  </li>
+                  <li>
+                    <Checkbox required size="medium" checked={true} /> <strong className="gradient-text">Security:</strong> The Website is
+                    secure, with valid SSL certificates and up-to-date software.
+                  </li>
+                  <li>
+                    <Checkbox required size="medium" checked={true} /> <strong className="gradient-text">Testing:</strong> The Website has
+                    been thoroughly tested for bugs and errors, and all issues have been resolved.
+                  </li>
+                </ul>
+              </Typography>
+            </Stack>
           </Grid>
         </Grid>
       </Container>
